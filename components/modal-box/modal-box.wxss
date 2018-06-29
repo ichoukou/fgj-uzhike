@@ -1,0 +1,53 @@
+/* components/modal-box/modal-box.wxss */
+.position-full {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+.modal-bg {
+  background-color: rgba(0, 0, 0, .5);
+}
+.modal-content {
+  margin: 30% auto auto auto;
+  border-radius: 8rpx;
+  padding: 30rpx;
+  width: 80%;
+  height: 320rpx;
+  background-color: #fff;
+}
+.modal__title {
+  font-size: 36rpx;
+  text-align: center;
+}
+.modal__input {
+  margin-top: 40rpx;
+  padding: 10rpx 30rpx;
+  border: 1px solid #ddd;
+  border-radius: 8rpx;
+  font-size: 16px;
+}
+.modal__btn {
+  margin-top: 40rpx;
+  margin-left: 100rpx;
+  margin-right: 100rpx;
+}
+.modal--show {
+  display: block;
+}
+.modal--show .modal-bg {
+  animation: fadeIn .3s both;
+}
+.modal--show .modal-content {
+  animation: fadeInUp .3s both;
+}

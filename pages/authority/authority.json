@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "modal-box": "/components/modal-box/modal-box"
+  }
+}
