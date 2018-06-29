@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/authority-set/index",
     "pages/authority/authority",
     "components/modal-box/modal-box",
     "pages/scrollable-test/scrollable-test",

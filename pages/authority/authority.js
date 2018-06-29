@@ -1,5 +1,6 @@
 
-var app = getApp();
+const app = getApp();
+const { $Message } = require('../../iview/base/index');
 
 Page({
   data: {
@@ -106,9 +107,16 @@ Page({
     }
   },
   onReady() {
-    this.modal = this.selectComponent("#modal");
+    this.modal = this.selectComponent('#modal');
   },
   onShow() {
+  },
+  // 删除成功提醒
+  messageError() {
+    $Message({
+      content: '删除成功',
+      type: 'error'
+    });
   },
   // 打开模态输入框
   bindOpenModal(e) {
@@ -158,6 +166,10 @@ Page({
       this.newItem(inputValue);
     };
     this.modal.onHideModal();
+    $Message({
+      content: '新建成功',
+      type: 'success'
+    });
   },
   // 新建项
   newItem(value) {
@@ -218,6 +230,7 @@ Page({
                           sides: false
                         }
                       });
+                      _this.messageError();
                       return;
                     }
                   }
@@ -280,6 +293,7 @@ Page({
                       sides: false
                     }
                   });
+                  _this.messageError();
                   return;
                 }
               }
@@ -326,6 +340,7 @@ Page({
                   sides: false
                 }
               });
+              _this.messageError();
               return;
             }
           };

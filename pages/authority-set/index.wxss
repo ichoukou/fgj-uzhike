@@ -1,0 +1,4 @@
+/* pages/authority-set/index.wxss */
+.align-center {
+  text-align: center;
+}

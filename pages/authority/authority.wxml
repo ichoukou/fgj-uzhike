@@ -1,14 +1,9 @@
-<modal-box 
-  id="modal"
-  titleText="{{modalTitleText}}" 
-  bind:bandModalSubmit="_modalSubmit">
-</modal-box>
-
 <!-- 新建组 -->
 <view class="new-group" bindtap="bindOpenModal" data-type="group">
   <text class="new-group__text">新建组</text>
 </view>
 
+<!-- 主体内容 -->
 <view class="page">
   <view class="page__bd page__bd_spacing">
     <view class="kind-list">
@@ -16,7 +11,7 @@
         <!-- 组 -->
         <view class="kind-list__item">
           <view 
-            class="list-transition weui-flex kind-list__item-hd {{group.open ? 'kind-list__item-hd_show' : ''}}" 
+            class="group-item weui-flex kind-list__item-hd {{group.open ? 'kind-list__item-hd_show' : ''}}" 
             id="{{group.id}}" 
             data-type="group" 
             bindtap="kindToggle" 
@@ -55,7 +50,7 @@
                 <view class="table-item-wrap">
                   <view 
                     id="{{table.id}}" 
-                    class="list-transition weui-cell kind-list__item-hd table-item {{table.open ? 'kind-list__item-hd_show' : ''}}" 
+                    class="weui-cell kind-list__item-hd table-item {{table.open ? 'kind-list__item-hd_show' : ''}}" 
                     bindtap="kindToggleTable" 
                     data-groupid="{{group.id}}" 
                     data-type="table" 
@@ -95,7 +90,7 @@
                       <block wx:for="{{table.item}}" wx:key="{{item.id}}">
                         <view class="item-list">
                           <view 
-                            class="list-transition weui-cell item-list-title" 
+                            class="weui-cell item-list__title" 
                             id="{{item.id}}"
                             data-groupid="{{group.id}}" 
                             data-tableid="{{table.id}}" 
@@ -134,3 +129,12 @@
     </view>
   </view>
 </view>
+
+<!-- 模态输入框 -->
+<modal-box 
+  id="modal"
+  titleText="{{modalTitleText}}" 
+  bind:bandModalSubmit="_modalSubmit">
+</modal-box>
+
+<i-message id="message" />
