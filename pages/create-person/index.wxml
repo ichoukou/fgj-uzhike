@@ -1,0 +1,53 @@
+<!--创建个人信息-->
+<view class="display-flex column">
+  <view class="title">个人信息</view>
+  <view class="person flex-1">
+    <view class="person__list person__pic">
+      <text class="person__title">设置头像</text>
+      <view class="person__content person__pic-content" bindtap="uploadPic">
+        <view class="person__img-wrap">
+          <image class="person__img" mode="aspectFill" src="{{pic}}"></image>
+        </view>
+      </view>
+    </view>
+    <view class="person__list">
+      <text class="person__title">公司码</text>
+      <view class="person__content">
+        <input class="person__input" type="number" placeholder="请填写公司名称" />
+      </view>
+    </view>
+    <view class="person__list">
+      <text class="person__title">姓名</text>
+      <view class="person__content">
+        <input class="person__input" type="text" placeholder="请填写姓名" />
+      </view>
+    </view>
+    <view class="person__list"> 
+      <text class="person__title">电话</text>
+      <view class="person__content">
+        <input class="person__input" type="number" placeholder="请填写电话号码" />
+      </view>
+      <view class="person__get-code" bindtap="bindGetCode">
+        <text class="person__code-text" wx:if="{{!countIsClick}}">获取验证码</text>
+        <text class="person__code-text" wx:else>{{countNum}}秒后再获取</text>
+      </view>
+    </view>
+    <view class="person__list">
+      <text class="person__title">短信验证码</text>
+      <view class="person__content">
+        <input class="person__input" type="number" placeholder="请填写短信验证码" />
+      </view>
+    </view>
+    <view class="person__list">
+      <text class="person__title">设置密码</text>
+      <view class="person__content">
+        <input class="person__input" type="text" placeholder="请设置密码" />
+      </view>
+    </view>
+  </view>
+  <view class="submit">
+    <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="warn"><text hidden="{{loading}}">立即注册</text></button>
+  </view> 
+</view>
+
+<i-message id="message" />

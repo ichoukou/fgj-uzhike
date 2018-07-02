@@ -1,0 +1,72 @@
+/* pages/create-person/index.wxss */
+
+page {
+  height: 100%;
+  background-color: #fff;
+}
+.title {
+  padding-left: 30rpx;
+  height: 80rpx;
+  font-size: 36rpx;
+  color: #333;
+  line-height: 80rpx;
+}
+.person {
+  padding: 30rpx;
+}
+.person__list {
+  display: flex;
+  align-items: center;
+  height: 90rpx;
+  border-bottom: 1rpx solid rgb(230,230,230);
+}
+.person__pic {
+  position: relative;
+  height: 180rpx;
+}
+.person__pic-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -90rpx;
+  margin-top: -70rpx;
+}
+.person__title {
+  min-width: 240rpx;
+  font-size: 32rpx;
+  color: #333;
+}
+.person__content {
+  flex: 1;
+  height: 100%;
+}
+.person__img-wrap {
+  border-radius: 50%;
+  overflow: hidden; 
+  width: 140rpx;
+  height: 140rpx;
+  margin: 0 auto;
+}
+.person__img {
+  width: 140rpx; 
+  height: 140rpx;   
+}
+.person__input {
+  height: 100%;
+  line-height: 90rpx;
+  font-size: 30rpx;
+}
+.person__get-code {
+  min-width: 200rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 28rpx;
+  color: rgb(255,127,1);
+}
+.person__code-text {
+  padding-left: 20rpx;
+  border-left: 1rpx solid rgb(230,230,230);
+}
+.submit {
+  margin: 40rpx 50rpx;
+}

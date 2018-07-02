@@ -1,0 +1,16 @@
+/* 按钮样式 */
+
+.btn-primery {
+  box-shadow: -1px 1px 4px 0px rgba(255, 189, 103, .3), 1px 1px 4px 0 rgba(250, 119, 48, .3);
+  border: none;
+  font-size: 32rpx;
+  color: #fff;
+  background-color: #FA7730;
+  background-image: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+}
+.btn-primery:after {
+  display: none;
+}
+.btn-primery:active {
+  opacity: .8;
+}

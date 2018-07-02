@@ -1,13 +1,19 @@
+import { $wuxBackdrop } from '../../components/index'
 
 Page({
   data: {
   },
-  onLoad: function (options) {
+  onLoad() {
+    this.$wuxBackdrop = $wuxBackdrop();
   },
-  onReady: function () {
-  
+  retain() {
+    this.$wuxBackdrop.retain()
   },
-  onShow: function () {
-  
+  release() {
+    this.$wuxBackdrop.release()
   },
+  clickbackdrop() {
+    console.log('隐藏')
+    this.release();
+  }
 })

@@ -1,16 +1,16 @@
 {
   "pages": [
+    "pages/create-person/index",
+    "pages/authority/index",
     "pages/authority-set/index",
-    "pages/authority/authority",
-    "components/modal-box/modal-box",
     "pages/scrollable-test/scrollable-test",
     "pages/index/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "fgj",
-    "navigationBarBackgroundColor": "#f8f8f8",
-    "backgroundColor": "#f8f8f8"
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#ffffff"
   },
   "networkTimeout": {
     "request": 10000,

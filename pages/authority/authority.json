@@ -1,6 +1,0 @@
-{
-  "usingComponents": {
-    "modal-box": "/components/modal-box/modal-box",
-    "i-message": "../../iview/message/index"
-  }
-}

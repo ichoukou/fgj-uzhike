@@ -1,0 +1,15 @@
+<!--弹出输入框-->
+
+<wux-backdrop id="wux-backdrop2" />
+
+<wux-animation-group wux-class="modal" in="{{isShow}}" class-names="wux-animate--slideInDown" bindtap="clickBackdrop">
+  <view class="modal-content position-full">
+    <view class="modal__title">{{titleText}}</view>
+    <view class="modal__input">
+      <input placeholder="请输入名称" value="{{inputValue}}" bindinput="changeInput"/>
+    </view>
+    <view class="modal__btn">
+      <button type="primary" bindtap="onSubmit">确定</button>
+    </view>
+  </view>
+</wux-animation-group>

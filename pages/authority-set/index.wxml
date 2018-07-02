@@ -1,0 +1,5 @@
+
+<wux-backdrop id="wux-backdrop" bind:click="clickbackdrop" />
+
+<button class="weui-btn" type="default" bindtap="retain">保持背景幕 retain</button>
+<button class="weui-btn" type="primary" bindtap="release">释放背景幕 release</button>
