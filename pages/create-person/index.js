@@ -20,7 +20,9 @@ Page({
     this.getList();
   },
   onShow: function () {
-  
+    // wx.setNavigationBarTitle({
+    //   title: '页面标题为路由参数'
+    // })
   },
   getList() {
     getList({

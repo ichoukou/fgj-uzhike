@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/create-person/index",
     "pages/authority/index",
+    "pages/create-person/index",
     "pages/authority-set/index",
     "pages/scrollable-test/scrollable-test",
     "pages/index/index"

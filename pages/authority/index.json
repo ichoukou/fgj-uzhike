@@ -1,6 +1,6 @@
 {
+  "navigationBarTitleText": "权限模板",
   "usingComponents": {
-    "modal-input": "/components/modal-input/index",
     "i-message": "/components/message/index"
   }
 }
