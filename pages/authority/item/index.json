@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "项",
+  "usingComponents": {
+    "i-message": "/components/message/index"
+  }
+}

@@ -1,15 +1,17 @@
-
 <view class="nav">
   <text class="nav__item">权限模板</text>
+    <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
+  <text class="nav__item">权限组</text>
 </view>
+
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
-     <view class="content__scroll"> 
-      <view class="content__item" wx:for="{{list}}" wx:key="{{index}}">
+    <view class="content__scroll">
+      <view class="content__item" wx:for="{{tableData}}" wx:key="{{index}}">
         <view 
           class="content__text" 
-          data-group-id="{{item.PurviewIndex}}" 
-          bindtap="bindOpenTable" 
+          data-index="{{item.PurviewIndex}}" 
+          bindtap="bindOpenItem" 
           bindtouchstart="handlerStart" 
           catchtouchmove="handlerMove" 
           bindtouchend="handlerEnd" 
@@ -17,17 +19,17 @@
           {{item.PurviewName}}
         </view>
         <view class="content__operation">
-          <!-- <button class="content__button content__button--yellow">设置权限</button> -->
           <button class="content__button content__button--blue">启用</button>
           <button class="content__button content__button--red">作废</button>
         </view>
       </view>
-     </view> 
+    </view>
   </scroll-view>
 </view>
+
 <view class="footer">
-  <text class="footer__new" bindtap="bindNew">新建</text>
+  <text class="footer__new">新建</text>
   <text class="footer__edit">编辑</text>
 </view>
+
 <i-message id="message" />
-<!-- <wux-backdrop id="wux-backdrop" bind:click="clickBackdrop" /> -->

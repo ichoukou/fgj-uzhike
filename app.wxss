@@ -1,19 +1,20 @@
-@import 'style/weui.wxss';
+@import "font/iconfont.wxss";
 @import 'style/animate.wxss';
 @import 'style/btn.wxss';
+@import 'style/flex.wxss';
 
+view,
+text {
+  box-sizing: border-box;
+}
 page{
     background-color: #F8F8F8;
     font-size: 32rpx;
     font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
 }
-.display-flex {
-  display: flex;
+.w-full {
+  width: 100%;
 }
-.column {
-  flex-direction: column;
+.h-full {
   height: 100%;
-}
-.flex-1 {
-  flex: 1;
 }

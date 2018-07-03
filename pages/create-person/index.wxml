@@ -1,5 +1,5 @@
 <!--创建个人信息-->
-<view class="display-flex column">
+<view class="h-full d-flex flex-column">
   <view class="title">个人信息</view>
   <view class="person flex-1">
     <view class="person__list person__pic">

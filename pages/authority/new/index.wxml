@@ -1,0 +1,69 @@
+<view class="content">
+  <view class="list-wrap">
+
+    <view class="list">
+      <text class="list__title">当前层级</text>
+      <view class="list__content">
+        <input class="list__input" type="text" disabled value="{{LevelType}}" />
+      </view>
+    </view>
+    <view class="list">
+      <text class="list__title">名称</text>
+      <view class="list__content">
+        <input class="list__input" type="text" placeholder="请填写名称" />
+      </view>
+    </view>
+    <view class="list">
+      <text class="list__title">索引</text>
+      <view class="list__content">
+         <input class="list__input" type="number" placeholder="请填写索引" /> 
+      </view>
+    </view>
+    <view class="list">
+      <text class="list__title">备注名</text>
+      <view class="list__content">
+         <input class="list__input" type="text" placeholder="请填写备注名" /> 
+      </view>
+    </view>
+    <view class="list">
+      <text class="list__title">权限类型</text>
+      <view class="list__content">
+        <picker mode="selector" bindchange="bindPickerChange" data-name="pickerTypeIndex" value="{{pickerTypeIndex}}" range="{{pickerType}}">
+         <text class="list__picker">{{pickerType[pickerTypeIndex]}}</text>
+        </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list">
+      <text class="list__title">企业类型</text>
+      <view class="list__content">
+      <picker mode="selector" bindchange="bindPickerChange" data-name="pickerCompanyIndex" value="{{pickerCompanyIndex}}" range="{{pickerCompany}}">
+         <text class="list__picker">{{pickerCompany[pickerCompanyIndex]}}</text>
+        </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list">
+      <text class="list__title">权限价值</text>
+      <view class="list__content">
+         <picker mode="selector" bindchange="bindPickerChange" data-name="pickerValueIndex" value="{{pickerValueIndex}}" range="{{pickerValue}}" range-key="name">
+         <text class="list__picker">{{pickerValue[pickerValueIndex].name}}</text>
+          </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list">
+      <text class="list__title">是否显示</text>
+      <view class="list__content list__switch">
+        <switch checked color="#ff6714" bindchange="switchChange"/>
+      </view>
+    </view>
+
+  </view>
+</view>
+
+<view class="footer">
+  <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}">
+    <text hidden="{{loading}}">完成</text>
+  </button>
+</view>
