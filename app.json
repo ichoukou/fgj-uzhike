@@ -1,11 +1,11 @@
 {
   "pages": [
-    "pages/authority/index",
-    "pages/authority/new/index",
-    "pages/authority/item/index",
-    "pages/authority/table/index",
+    "pages/purview/index",
+    "pages/purview/new/index",
+    "pages/purview/item/index",
+    "pages/purview/table/index",
     "pages/create-person/index",
-    "pages/authority-set/index",
+    "pages/purview-set/index",
     "pages/scrollable-test/scrollable-test",
     "pages/index/index"
   ],

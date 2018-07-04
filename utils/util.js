@@ -1,56 +1,20 @@
-function convertToStarsArray(stars) {
-  var num = stars.toString().substring(0, 1);
-  var array = [];
-  for (var i = 1; i <= 5; i++) {
-    if (i <= num) {
-      array.push(1);
+const _fgj = {
+  // 字段验证
+  verify: function (strings, type) {
+    let value = strings.replace(/\s/g, '');   // 去掉空白字符
+    // 非空验证
+    if (type === 'require') {
+      return !!value
     }
-    else {
-      array.push(0);
+    // 手机号验证
+    if (type === 'phone') {
+      return /^1[3-9]\d{9}$/.test(value);
     }
-  }
-  return array;
-}
-
-function http(url, callBack) {
-  wx.request({
-    url: url,
-    method: 'GET',
-    header: {
-      "Content-Type": "json"
-    },
-    success: function (res) {
-      callBack(res.data);
-    },
-    fail: function (error) {
-      console.log(error)
+    // 邮箱号验证
+    if (type === 'email') {
+      return /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(value);
     }
-  })
-}
+  },
+};
 
-function convertToCastString(casts) {
-  var castsjoin = "";
-  for (var idx in casts) {
-    castsjoin = castsjoin + casts[idx].name + " / ";
-  }
-  return castsjoin.substring(0, castsjoin.length - 2);
-}
-
-function convertToCastInfos(casts) {
-  var castsArray = []
-  for (var idx in casts) {
-    var cast = {
-      img: casts[idx].avatars ? casts[idx].avatars.large : "",
-      name: casts[idx].name
-    }
-    castsArray.push(cast);
-  }
-  return castsArray;
-}
-
-module.exports = {
-  convertToStarsArray: convertToStarsArray,
-  http: http,
-  convertToCastString:convertToCastString,
-  convertToCastInfos:convertToCastInfos
-}
+export default _fgj;

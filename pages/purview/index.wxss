@@ -81,6 +81,10 @@ page {
   width: 180rpx;
   background-color: #ff6714;
 }
+.content__button--orange {
+  width: 120rpx;
+  background-color: #ff6714;
+}
 .content__button--blue {
   width: 120rpx;
   background-color: #1671fd;

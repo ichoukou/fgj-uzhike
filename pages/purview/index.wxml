@@ -5,19 +5,21 @@
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
      <view class="content__scroll"> 
-      <view class="content__item" wx:for="{{list}}" wx:key="{{index}}">
+      <view class="content__item" wx:for="{{groupData}}" wx:key="{{index}}">
         <view 
           class="content__text" 
-          data-group-id="{{item.PurviewIndex}}" 
+          data-purview-id="{{item.PurviewID}}" 
+          data-parent-note="{{item.PurviewNote}}"
           bindtap="bindOpenTable" 
           bindtouchstart="handlerStart" 
           catchtouchmove="handlerMove" 
           bindtouchend="handlerEnd" 
           style="transform: translate3d({{item.offsetLeft}}rpx, 0, 0)">
-          {{item.PurviewName}}
+          {{item.PurviewNote}}
         </view>
         <view class="content__operation">
           <!-- <button class="content__button content__button--yellow">设置权限</button> -->
+          <button class="content__button content__button--orange" data-purview-id="{{item.PurviewID}}" bindtap="bindEdit">编辑</button>
           <button class="content__button content__button--blue">启用</button>
           <button class="content__button content__button--red">作废</button>
         </view>
@@ -26,8 +28,7 @@
   </scroll-view>
 </view>
 <view class="footer">
-  <text class="footer__new" bindtap="bindNew">新建</text>
-  <text class="footer__edit">编辑</text>
+  <text class="footer__new" bindtap="bindNew">新建组</text>
 </view>
 <i-message id="message" />
 <!-- <wux-backdrop id="wux-backdrop" bind:click="clickBackdrop" /> -->

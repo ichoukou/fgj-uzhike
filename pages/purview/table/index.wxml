@@ -1,25 +1,28 @@
 <view class="nav">
   <text class="nav__item">权限模板</text>
-  <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
-  <text class="nav__item">权限组</text>
-  <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
-  <text class="nav__item">权限表</text>
+  <block wx:for="{{ParentNote}}" wx:key="{{index}}">
+    <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
+    <text class="nav__item">{{item}}</text>
+  </block>
 </view>
 
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
     <view class="content__scroll">
-      <view class="content__item" wx:for="{{itemData}}" wx:key="{{index}}">
+      <view class="content__item" wx:if="{{tableData.length}}" wx:for="{{tableData}}" wx:key="{{index}}">
         <view 
           class="content__text" 
-          data-index="{{item.PurviewIndex}}" 
+          data-parent-note="{{item.PurviewNote}}"
+          data-purview-id="{{item.PurviewID}}" 
+          bindtap="bindOpenItem" 
           bindtouchstart="handlerStart" 
           catchtouchmove="handlerMove" 
           bindtouchend="handlerEnd" 
           style="transform: translate3d({{item.offsetLeft}}rpx, 0, 0)">
-          {{item.PurviewName}}
+          {{item.PurviewNote}}
         </view>
         <view class="content__operation">
+        <button class="content__button content__button--orange" data-purview-id="{{item.PurviewID}}" bindtap="bindEdit">编辑</button>
           <button class="content__button content__button--blue">启用</button>
           <button class="content__button content__button--red">作废</button>
         </view>
@@ -29,6 +32,7 @@
 </view>
 
 <view class="footer">
-  <text class="footer__new">新建</text>
-  <text class="footer__edit">编辑</text>
+  <text class="footer__new" bindtap="bindNew">新建表</text>
 </view>
+
+<i-message id="message" />

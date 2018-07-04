@@ -3,9 +3,17 @@ const app = getApp();
 const { $Message } = require('../../components/base/index');
 import { $wuxBackdrop } from '../../components/index';
 
+import { GetPurviewListByLayer } from '../../api/purview/purview';
+
 Page({
   data: {
+    params: {
+      pagetype: '',   // 传递页面类型
+      ParentID: '',   // 父级id
+      LevelType: 0,   // 层级，当前层级是 0
+    },
     modalTitleText: '',
+    groupData: [],    // 组数据
     list: [
       {
         PurviewName: '组名1',
@@ -77,56 +85,60 @@ Page({
     // this.$wuxBackdrop = $wuxBackdrop();
   },
   onShow() {
-    // 把拿到权限模板保存到缓存
-    wx.setStorage({
-      key: "authorityTempData",
-      data: this.data.list
-    });
+    this.getGroupData();    // 获取组数据，新建完成之后，再次求情
+    this.data.touch.sides = false;    // 编辑成功后，返回要重置sides滑动
+  },
+  // 获取组数据
+  getGroupData() {
+    let params = this.data.params;
+    GetPurviewListByLayer(params).then(res => {
+      let data = res.data;
+      if (data.result === 'success') {
+        data.temptable.forEach(item => {
+          item.offsetLeft = 0;    // 添加 offsetLeft 用来滑动
+        });
+        this.setData({
+          groupData: data.temptable
+        });
+      } else {
+        $Message({ content: data.msg, type: 'warning' });
+      }
+    })
+  },
+  // 编辑组
+  bindEdit(e) {
+    let { purviewId } = e.currentTarget.dataset;
+    console.log(purviewId)
+    wx.navigateTo({
+      url: './new/index?isNew=false&LevelType=0' + '&PurviewID=' + purviewId
+    })
   },
   // 新建组
   bindNew() {
     wx.navigateTo({
-      url: './new/index?LevelType=0'
+      url: './new/index?isNew=true&LevelType=0'
     })
   },
   // 打开表
   bindOpenTable(e) {
     console.log(e.currentTarget)
-    let { groupId } = e.currentTarget.dataset;
+    let { purviewId, parentNote } = e.currentTarget.dataset;
     wx.navigateTo({
-      url: './table/index?groupId=' + groupId
+      url: './table/index?ParentID=' + purviewId + '&ParentNote=' + parentNote
     })
-  },
-  // 删除成功提醒
-  messageError() {
-    $Message({
-      content: '删除成功',
-      type: 'error'
-    });
-  },
-  // 弹出框确定返回按钮
-  _modalSubmit(e, option) {
-    let { inputValue } = e.detail;
-    let { whoType } = this.data.parents;
-
-    this.modalInput.onHideModal();
-    $Message({
-      content: '新建成功',
-      type: 'success'
-    });
   },
   // 列表滑动按下
   handlerStart(e) {
-    let { list, touch } = this.data,
+    let { groupData, touch } = this.data,
         { clientX, clientY } = e.touches[0];
 
     if (touch.sides) {
       // 已经有滑动，全部收起
-      for (let i = 0, length = list.length; i < length; i++) {
-        list[i].offsetLeft = 0;
+      for (let i = 0, length = groupData.length; i < length; i++) {
+        groupData[i].offsetLeft = 0;
       };
       this.setData({
-        list: list
+        groupData
       });
       touch.sides = false
       return
@@ -155,33 +167,20 @@ Page({
   },
   // 列表滑动抬起
   handlerEnd(e) {
-    let { list, touch } = this.data;
-    let { groupId } = e.currentTarget.dataset;
-
-    console.log(touch)
+    let { groupData, touch } = this.data;
+    let { purviewId } = e.currentTarget.dataset;
 
     if (touch.sides) {
-      for (let i = 0, length = list.length; i < length; i++) {
-        if (list[i].PurviewIndex === groupId) {
-          list[i].offsetLeft = -240;
+      for (let i = 0, length = groupData.length; i < length; i++) {
+        if (groupData[i].PurviewID === purviewId) {
+          groupData[i].offsetLeft = -360;
           this.setData({
-            list: list
+            groupData
           });
-          console.log(list)
           touch.startX = 0;
           return;
         }
       };
     }
   },
-  // retainBackdrop() {
-  //   this.$wuxBackdrop.retain()
-  // },
-  // releaseBackdrop() {
-  //   this.$wuxBackdrop.release()
-  // },
-  // clickBackdrop() {
-  //   console.log('隐藏')
-  //   this.releaseBackdrop();
-  // }
 });
