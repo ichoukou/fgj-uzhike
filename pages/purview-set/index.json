@@ -1,5 +1,7 @@
 {
+  "navigationBarTitleText": "权限模板",
   "usingComponents": {
-    "wux-backdrop": "/components/backdrop/index"
+    "i-message": "/components/message/index",
+    "wux-animation-group": "/components/animation-group/index"
   }
 }

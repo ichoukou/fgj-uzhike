@@ -5,100 +5,106 @@ import { GetPurviewListByLayer } from '../../../api/purview/purview';
 
 Page({
   data: {
+    ParentNo: '',     // 父级编号
+    ParentNote: [],   // 父级层级，用来显示
     params: {
-      pagetype: '0',   // 传递页面类型
+      pagetype: '1',   // 传递页面类型
       ParentID: '',   // 父级id
-      LevelType: 2,   // 层级，当前层级是 1
+      LevelType: 1,   // 层级，当前层级是 1
     },
-    ParentNo: [],     // 父级编号
-    ParentNote: [],   // 父级名称，用来显示
-    itemData: [],
+    tableData: [], // 当前表数据
     touch: {},      // 保存滑动的操作
+    isLoader: true,    // 数据加载中
   },
   onLoad: function (options) {
-    console.log('项参数', options)
+    console.log('表', options);
     let { ParentID, ParentNo, ParentNote } = options;
     let params = this.data.params;
     params.ParentID = ParentID;
     this.setData({
-      params,
       ParentNo,
-      ParentNote: ParentNote.split(/,/)    // 当前层级，传过来的是一个用 , 分割的字符串，要把他变成数组
+      ParentNote: ParentNote.split(/,/),
+      params
     });
   },
   onReady: function () {
-
+  
   },
   onShow: function () {
-    this.getItemData();    // 获取表数据
+    this.getTableData();    // 获取表数据
     this.data.touch.sides = false;    // 编辑成功后，返回要重置sides滑动
   },
   // 获取表数据
-  getItemData() {
+  getTableData() {
     GetPurviewListByLayer(this.data.params).then(res => {
       console.log(res)
       let data = res.data;
       if (data.result === 'success') {
         data.temptable.forEach(item => {
           item.offsetLeft = 0;    // 添加 offsetLeft 用来滑动
-          // 判断ValueType权限值类型显示操作类型
-          switch (item.ValueType) {
-            case '0':
-              item.ValueTypeName = '开关'
-            break;
-            case '1':
-              item.ValueTypeName = '分级'
-            break;
-            case '2':
-              item.ValueTypeName = '控量'
-            break;
-            default:
-              console.log('ValueType is error');
-              item.ValueTypeName = '空';
-          }
         });
         this.setData({
-          itemData: data.temptable
+          tableData: data.temptable
         })
       } else {
         $Message({ content: data.msg, type: 'warning' });
       }
     })
   },
-  // 编辑项
+  // 编辑表
   bindEdit(e) {
     let { purviewId } = e.currentTarget.dataset;
-    console.log(purviewId)
-    wx.navigateTo({
-      url: '../new/index?isNew=false&LevelType=2' + '&PurviewID=' + purviewId
-    })
-  },
-  // 新建项
-  bindNew() {
     let data = this.data;
+    console.log(purviewId)
     let params = {
-      isNew: true,
-      LevelType: 2,
-      ParentNo: data.ParentNo,
+      isNew: false,
+      LevelType: 1,
+      PurviewID: purviewId,
       ParentNote: data.ParentNote,
-      ParentID: data.params.ParentID
     };
     wx.navigateTo({
       url: '../new/index?' + _fgj.param(params)
     })
   },
+  // 新建表
+  bindNew() {
+    let data = this.data;
+    let params = {
+      isNew: true,
+      LevelType: 1,
+      ParentID: data.params.ParentID,
+      ParentNo: data.ParentNo,
+      ParentNote: data.ParentNote,
+    };
+    wx.navigateTo({
+      url: '../new/index?' + _fgj.param(params)
+    })
+  },
+  // 打开项
+  bindOpenItem(e) {
+    console.log(e.currentTarget)
+    let { purviewId, parentNo, parentNote } = e.currentTarget.dataset;
+    let params = {
+      ParentID: purviewId,
+      ParentNo: parentNo,
+      ParentNote: this.data.ParentNote[0] + ',' + parentNote,
+    };
+    wx.navigateTo({
+      url: '../item/index?' + _fgj.param(params)
+    })
+  },
   // 列表滑动按下
   handlerStart(e) {
-    let { itemData, touch } = this.data,
+    let { tableData, touch } = this.data,
       { clientX, clientY } = e.touches[0];
 
     if (touch.sides) {
       // 已经有滑动，全部收起
-      for (let i = 0, length = itemData.length; i < length; i++) {
-        itemData[i].offsetLeft = 0;
+      for (let i = 0, length = tableData.length; i < length; i++) {
+        tableData[i].offsetLeft = 0;
       };
       this.setData({
-        itemData: itemData
+        tableData: tableData
       });
       touch.sides = false
       return
@@ -127,15 +133,15 @@ Page({
   },
   // 列表滑动抬起
   handlerEnd(e) {
-    let { itemData, touch } = this.data;
+    let { tableData, touch } = this.data;
     let { purviewId } = e.currentTarget.dataset;
 
     if (touch.sides) {
-      for (let i = 0, length = itemData.length; i < length; i++) {
-        if (itemData[i].PurviewID === purviewId) {
-          itemData[i].offsetLeft = -360;
+      for (let i = 0, length = tableData.length; i < length; i++) {
+        if (tableData[i].PurviewID === purviewId) {
+          tableData[i].offsetLeft = -360;
           this.setData({
-            itemData: itemData
+            tableData: tableData
           });
           touch.startX = 0;
           return;

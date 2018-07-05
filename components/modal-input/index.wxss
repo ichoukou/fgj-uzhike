@@ -1,11 +1,5 @@
-/* components/modal-box/modal-box.wxss */
-.position-full {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
+@import "../../style/btn.wxss";
+
 .modal {
   /* display: none; */
   position: fixed;
@@ -16,16 +10,31 @@
   z-index: 1001;
 }
 .modal-content {
-  margin: 30% auto auto auto;
+  position: absolute;
+  top: 26%;
+  left: 50%;
+  z-index: 2;
   border-radius: 8rpx;
   padding: 30rpx;
   width: 80%;
-  height: 320rpx;
   background-color: #fff;
+  transform: translateX(-50%);
+}
+.modal-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
 }
 .modal__title {
   font-size: 36rpx;
   text-align: center;
+}
+.modal__close {
+  position: absolute;
+  z-index: 2;
 }
 .modal__input {
   margin-top: 40rpx;

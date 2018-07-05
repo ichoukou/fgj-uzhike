@@ -1,0 +1,24 @@
+
+<view class="content">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="content__item" wx:for="{{groupData}}" wx:key="{{index}}">
+      <view class="content__text">{{item.GroupName}}</view>
+      <view 
+        class="content__operation iconfont icon-gengduo" 
+        data-user-group-id="{{item.UserGroupID}}" 
+        data-group-name="{{item.GroupName}}" 
+        bindtap="bindActionSheet"
+      ></view>
+    </view>
+     <view class="empty" wx:if="{{!groupData.length && loader}}">
+      <text class="iconfont icon-kong empty__icon"></text>
+      <text class="empty__desc">暂无数据</text>
+    </view> 
+  </scroll-view>
+</view>
+<view class="footer">
+  <text class="footer__new" bindtap="bindNew">新建用户组</text>
+</view>
+
+<modal-input id="modalInput" titleText="新建用户组" bindsubmit="bindModalInput" />
+<i-message id="message" />

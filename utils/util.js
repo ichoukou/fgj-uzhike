@@ -1,10 +1,23 @@
 const _fgj = {
+  // 把对象拼接成url参数
+  param(data) {
+    let url = ''
+    for (var k in data) {
+      let value = data[k] !== undefined ? data[k] : ''
+      url += '&' + k + '=' + value
+    };
+    return url ? url.substring(1) : ''
+  },
   // 字段验证
-  verify: function (strings, type) {
+  verify (strings, type) {
     let value = strings.replace(/\s/g, '');   // 去掉空白字符
     // 非空验证
     if (type === 'require') {
       return !!value
+    }
+    // 单词字符和数字
+    if (type === 'word') {
+      return /^[\w\d]+$/.test(value);
     }
     // 手机号验证
     if (type === 'phone') {

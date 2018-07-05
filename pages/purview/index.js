@@ -2,13 +2,13 @@
 const app = getApp();
 const { $Message } = require('../../components/base/index');
 import { $wuxBackdrop } from '../../components/index';
-
+import _fgj from '../../utils/util';
 import { GetPurviewListByLayer } from '../../api/purview/purview';
 
 Page({
   data: {
     params: {
-      pagetype: '',   // 传递页面类型
+      pagetype: '0',   // 传递页面类型
       ParentID: '',   // 父级id
       LevelType: 0,   // 层级，当前层级是 0
     },
@@ -78,6 +78,7 @@ Page({
       }
     ],
     touch: {},      // 保存滑动的操作
+    loader: false,  // 数据加载中
   },
   onLoad() {
     this.modalInput = this.selectComponent('#modalInput');
@@ -92,6 +93,9 @@ Page({
   getGroupData() {
     let params = this.data.params;
     GetPurviewListByLayer(params).then(res => {
+      this.setData({
+        loader: true
+      });
       let data = res.data;
       if (data.result === 'success') {
         data.temptable.forEach(item => {
@@ -108,9 +112,13 @@ Page({
   // 编辑组
   bindEdit(e) {
     let { purviewId } = e.currentTarget.dataset;
-    console.log(purviewId)
+    let params = {
+      isNew: false,
+      LevelType: 0,
+      PurviewID: purviewId
+    };
     wx.navigateTo({
-      url: './new/index?isNew=false&LevelType=0' + '&PurviewID=' + purviewId
+      url: './new/index?' + _fgj.param(params)
     })
   },
   // 新建组
@@ -121,10 +129,14 @@ Page({
   },
   // 打开表
   bindOpenTable(e) {
-    console.log(e.currentTarget)
-    let { purviewId, parentNote } = e.currentTarget.dataset;
+    let { purviewId, parentNo, parentNote } = e.currentTarget.dataset;
+    let params = {
+      ParentID: purviewId,    // 父级ID
+      ParentNo: parentNo,     // 父级编号
+      ParentNote: parentNote  // 父级名称
+    };
     wx.navigateTo({
-      url: './table/index?ParentID=' + purviewId + '&ParentNote=' + parentNote
+      url: './table/index?' + _fgj.param(params)
     })
   },
   // 列表滑动按下

@@ -10,49 +10,82 @@
     <view class="list">
       <text class="list__title">名称</text>
       <view class="list__content">
-        <input class="list__input" type="text" disabled="{{PurviewID}}" value="{{params.PurviewName}}" bindinput="changePurviewName" placeholder="请填写名称" />
+        <input 
+          class="list__input" 
+          type="text" 
+          disabled="{{PurviewID}}" 
+          value="{{params.PurviewName}}" 
+          data-type="PurviewName" 
+          bindinput="changeInput" 
+          placeholder="请填写名称" />
       </view>
     </view>
     <view class="list">
       <text class="list__title">索引</text>
       <view class="list__content">
-         <input class="list__input" type="number" value="{{params.PurviewIndex}}" bindinput="changePurviewIndex" placeholder="请填写索引" /> 
+         <input 
+          class="list__input" 
+          type="number" 
+          value="{{params.PurviewIndex}}" 
+          data-type="PurviewIndex" 
+          bindinput="changeInput" 
+          placeholder="请填写索引" /> 
       </view>
     </view>
     <view class="list">
       <text class="list__title">备注名</text>
       <view class="list__content">
-         <input class="list__input" type="text" value="{{params.PurviewNote}}" bindinput="changePurviewNote" placeholder="请填写备注名" /> 
+         <input 
+          class="list__input" 
+          type="text" 
+          value="{{params.PurviewNote}}" 
+          data-type="PurviewNote" 
+          bindinput="changeInput" 
+          placeholder="请填写备注名" /> 
+      </view>
+    </view>
+    <view class="list" wx:if="{{params.LevelType !== '0'}}">
+      <text class="list__title">价值额</text>
+      <view class="list__content">
+         <input 
+          class="list__input" 
+          type="number" 
+          value="{{params.Cost}}" 
+          data-type="Cost" 
+          bindinput="changeInput"
+          placeholder="请填写价值额" /> 
       </view>
     </view>
     <view class="list" wx:if="{{params.LevelType === '2'}}">
       <text class="list__title">权限类型</text>
       <view class="list__content">
-        <picker mode="selector" bindchange="bindPickerChange" data-name="pickerTypeIndex" value="{{pickerTypeIndex}}" range="{{pickerType}}">
-         <text class="list__picker">{{pickerType[pickerTypeIndex]}}</text>
+        <picker 
+          disabled="{{PurviewID}}"
+          mode="selector" 
+          bindchange="bindPickerChange" 
+          data-type="ValueType" 
+          value="{{pickerValueTypeIndex}}" 
+          range="{{pickerValueType}}" 
+          range-key="label"
+        >
+         <text class="list__picker">{{pickerValueType[pickerValueTypeIndex].label}}</text>
         </picker>
       </view>
       <text class="iconfont icon-jiantou2 list__arrow"></text>
     </view>
     <view class="list" wx:if="{{params.LevelType !== '0'}}">
-      <text class="list__title">价值额</text>
-      <view class="list__content">
-         <input class="list__input" type="number" value="{{params.Cost}}" bindinput="changeCost" placeholder="请填写价值额" /> 
-      </view>
-    </view>
-    <view class="list" wx:if="{{params.LevelType !== '0'}}">
       <text class="list__title">公司类型</text>
-      <view class="list__content" bindtap="bindNeedActionSheet">
-        <text class="list__picker">{{params.NeedType}}</text>
-      </view>
-      <text class="iconfont icon-jiantou2 list__arrow"></text>
-    </view>
-    <view class="list" wx:if="{{params.LevelType === '2'}}">
-      <text class="list__title">权限价值</text>
       <view class="list__content">
-         <picker mode="selector" bindchange="bindPickerChange" data-name="pickerValueIndex" value="{{pickerValueIndex}}" range="{{pickerValue}}" range-key="name">
-         <text class="list__picker">{{pickerValue[pickerValueIndex].name}}</text>
-          </picker>
+        <picker 
+          mode="selector" 
+          bindchange="bindPickerChange" 
+          data-type="NeedType" 
+          value="{{pickerNeedTypeIndex}}" 
+          range="{{pickerNeedType}}" 
+          range-key="label"
+        >
+         <text class="list__picker">{{pickerNeedType[pickerNeedTypeIndex].label}}</text>
+        </picker>
       </view>
       <text class="iconfont icon-jiantou2 list__arrow"></text>
     </view>
@@ -62,7 +95,6 @@
         <switch checked="{{params.DenyOP == 1}}" color="#ff6714" bindchange="switchChange"/>
       </view>
     </view>
-
   </view>
 </view>
 

@@ -9,20 +9,24 @@ Component({
     },
     titleText: {
       type: String,
-      value: '新建组'
+      value: '标题'
     }
   },
-
   data: {
     inputValue: '', // input的值
   },
-
-  ready: function () {
+  created() {
+    this.$wuxBackdrop = $wuxBackdrop('#wux-backdrop2', this)
   },
-
   methods: {
     // 显示模态框
-    onShowModal() {
+    onShowModal(params) {
+      // 有值的话，就回填
+      if (params && params.inputValue) {
+        this.setData({
+          inputValue: params.inputValue
+        })
+      };
       this.setData({
         isShow: true
       })
@@ -54,7 +58,7 @@ Component({
         return;
       };
 
-      this.triggerEvent('bandModalSubmit', {
+      this.triggerEvent('submit', {
         inputValue: inputValue
       });
       // 发送成功后清空
@@ -70,9 +74,6 @@ Component({
     },
     clickBackdrop() {
       this.onHideModal();
-    }
-  },
-  created() {
-    this.$wuxBackdrop = $wuxBackdrop('#wux-backdrop2', this)
+    },
   },
 });

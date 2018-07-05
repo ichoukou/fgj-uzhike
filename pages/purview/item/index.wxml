@@ -9,16 +9,17 @@
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
     <view class="content__scroll">
-      <view class="content__item" wx:for="{{itemData}}" wx:key="{{index}}">
+      <view class="content__item" wx:if="{{itemData.length}}" wx:for="{{itemData}}" wx:key="{{index}}">
         <view 
           class="content__text" 
-          data-parent-note="{{item.PurviewNote}}"
+          data-parent-no="{{item.PurviewNote}}"
           data-purview-id="{{item.PurviewID}}" 
           bindtouchstart="handlerStart" 
           catchtouchmove="handlerMove" 
           bindtouchend="handlerEnd" 
           style="transform: translate3d({{item.offsetLeft}}rpx, 0, 0)">
           {{item.PurviewNote}}
+          <text class="content__text-desc">{{item.ValueTypeName}}</text>
         </view>
         <view class="content__operation">
         <button class="content__button content__button--orange" data-purview-id="{{item.PurviewID}}" bindtap="bindEdit">编辑</button>
@@ -26,6 +27,10 @@
           <button class="content__button content__button--red">作废</button>
         </view>
       </view>
+      <view class="empty" wx:if="{{!itemData.length}}">
+        <text class="iconfont icon-kong empty__icon"></text>
+        <text class="empty__desc">暂无数据</text>
+      </view> 
     </view>
   </scroll-view>
 </view>

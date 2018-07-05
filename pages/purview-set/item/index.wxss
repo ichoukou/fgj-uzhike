@@ -1,0 +1,41 @@
+@import "../index.wxss";
+
+.submit {
+  width: 100%;
+  margin: 40rpx 50rpx;
+}
+.content__value-type {
+  display: flex;
+  align-items: center;
+  margin-right: 30rpx;
+}
+.content__switch {
+  margin-right: 30rpx;
+  text-align: right;
+}
+.content__number-jia {
+  width: 72rpx;
+  height: 66rpx;
+  font-size: 44rpx;
+  color: rgb(201,201,201);
+  background-color: rgb(245,245,245);
+  text-align: center;
+  line-height: 66rpx;
+}
+.content__number-input {
+  padding: 0 12rpx;
+  width: 72rpx;
+  min-height: 66rpx;
+  text-align: center;
+}
+.list__picker {
+  display: block;
+  margin-right: 10rpx;
+  text-align: right;
+}
+.list__arrow {
+  margin-right: 30rpx;
+  color: #999;
+  transform: rotate(180deg);
+}
+  

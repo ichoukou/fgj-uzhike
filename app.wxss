@@ -2,6 +2,7 @@
 @import 'style/animate.wxss';
 @import 'style/btn.wxss';
 @import 'style/flex.wxss';
+@import 'style/loader.wxss';
 
 view,
 text {

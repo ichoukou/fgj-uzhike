@@ -1,0 +1,75 @@
+<view class="nav">
+  <text class="nav__item">权限设置</text>
+  <block wx:for="{{ParentNote}}" wx:key="{{index}}">
+    <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
+    <text class="nav__item">{{item}}</text>
+  </block>
+</view>
+
+<view class="content">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="content__scroll">
+      <view class="content__item" wx:if="{{itemData.length}}" wx:for="{{itemData}}" wx:key="{{index}}">
+        <!-- 开关 -->
+        <view class="d-flex justify-between" wx:if="{{item.ValueType === '0'}}">
+          <view 
+            class="content__text" 
+            data-parent-no="{{item.PurviewNote}}"
+            data-purview-id="{{item.PurviewID}}" >
+            {{item.PurviewNote}}
+          </view>
+          <view class="flex-1 content__switch">
+            <switch color="#ff6714" bindchange="switchChange"/>
+          </view>
+        </view>
+        <!-- 分级 -->
+        <view class="d-flex justify-between" wx:if="{{item.ValueType === '1'}}">
+          <view 
+            class="content__text" 
+            data-parent-no="{{item.PurviewNote}}"
+            data-purview-id="{{item.PurviewID}}" >
+            {{item.PurviewNote}}
+          </view>
+          <view class="flex-1">
+            <picker 
+              mode="selector" 
+              bindchange="bindPickerChange" 
+              value="{{pickerItemValueIndex}}" 
+              range="{{pickerItemValue}}" 
+              range-key="label"
+            >
+              <text class="list__picker">{{pickerItemValue[pickerItemValueIndex].label}}</text>
+            </picker>
+          </view>
+          <text class="iconfont icon-jiantou2 list__arrow"></text>
+        </view>
+        <!-- 控数 -->
+        <view class="d-flex justify-between" wx:if="{{item.ValueType === '2'}}">
+          <view 
+            class="content__text" 
+            data-parent-no="{{item.PurviewNote}}"
+            data-purview-id="{{item.PurviewID}}" >
+            {{item.PurviewNote}}
+          </view>
+          <view class="content__value-type">
+            <text class="content__number-jia">+</text>
+            <input class="content__number-input" type="number" value="{{itemValue0}}" />
+            <text class="content__number-jia">-</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty" wx:if="{{!itemData.length}}">
+        <text class="iconfont icon-kong empty__icon"></text>
+        <text class="empty__desc">暂无数据</text>
+      </view> 
+    </view>
+  </scroll-view>
+</view>
+
+<view class="footer">
+  <view class="submit">
+    <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}"><text hidden="{{loading}}">完成</text></button>
+  </view> 
+</view>
+
+<i-message id="message" />

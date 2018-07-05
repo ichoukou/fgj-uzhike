@@ -1,5 +1,26 @@
 
-<wux-backdrop id="wux-backdrop" bind:click="clickbackdrop" />
+<view class="nav">
+  <text class="nav__item">权限设置</text>
+</view>
+<view class="content">
+  <scroll-view scroll-y style="height: 100%;">
+     <view class="content__scroll"> 
+      <view class="content__item" wx:for="{{groupData}}" wx:key="{{index}}">
+        <view 
+          class="content__text" 
+          data-purview-id="{{item.PurviewID}}" 
+          data-parent-no="{{item.PurviewNo}}"
+          data-parent-Note="{{item.PurviewNote}}"
+          bindtap="bindOpenTable">
+          {{item.PurviewNote}}
+        </view>
+      </view>
+      <view class="empty" wx:if="{{!groupData.length && loader}}">
+        <text class="iconfont icon-kong empty__icon"></text>
+        <text class="empty__desc">暂无数据</text>
+      </view>
+     </view> 
+  </scroll-view>
+</view>
 
-<button class="weui-btn" type="default" bindtap="retain">保持背景幕 retain</button>
-<button class="weui-btn" type="primary" bindtap="release">释放背景幕 release</button>
+<i-message id="message" />

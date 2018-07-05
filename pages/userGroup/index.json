@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "用户组管理",
+  "usingComponents": {
+    "i-message": "/components/message/index",
+    "modal-input": "/components/modal-input/index"
+  }
+}

@@ -1,24 +1,29 @@
 
 const { $Message } = require('../../../components/base/index');
+import _fgj from '../../../utils/util';
 import { GetPurviewListByLayer } from '../../../api/purview/purview';
 
 Page({
   data: {
-    ParentNote: [],   // 父级编号，用来显示
+    ParentNo: '',     // 父级编号
+    ParentNote: [],   // 父级层级，用来显示
     params: {
-      pagetype: '表',   // 传递页面类型
+      pagetype: '0',   // 传递页面类型
       ParentID: '',   // 父级id
       LevelType: 1,   // 层级，当前层级是 1
     },
     tableData: [], // 当前表数据
     touch: {},      // 保存滑动的操作
+    isLoader: true,    // 数据加载中
   },
   onLoad: function (options) {
-    let { ParentID, ParentNote } = options;
+    console.log('表', options);
+    let { ParentID, ParentNo, ParentNote } = options;
     let params = this.data.params;
     params.ParentID = ParentID;
     this.setData({
-      ParentNote: ParentNote.split(/,/),    // 当前层级，传过来的是一个用 , 分割的字符串，要把他变成数组
+      ParentNo,
+      ParentNote: ParentNote.split(/,/),
       params
     });
   },
@@ -49,25 +54,43 @@ Page({
   // 编辑表
   bindEdit(e) {
     let { purviewId } = e.currentTarget.dataset;
+    let data = this.data;
     console.log(purviewId)
+    let params = {
+      isNew: false,
+      LevelType: 1,
+      PurviewID: purviewId,
+      ParentNote: data.ParentNote,
+    };
     wx.navigateTo({
-      url: '../new/index?isNew=false&LevelType=1' + '&PurviewID=' + purviewId
+      url: '../new/index?' + _fgj.param(params)
     })
   },
   // 新建表
   bindNew() {
     let data = this.data;
+    let params = {
+      isNew: true,
+      LevelType: 1,
+      ParentID: data.params.ParentID,
+      ParentNo: data.ParentNo,
+      ParentNote: data.ParentNote,
+    };
     wx.navigateTo({
-      url: `../new/index?isNew=true&LevelType=1&ParentNote=${data.ParentNote}&ParentID=${data.params.ParentID}`
+      url: '../new/index?' + _fgj.param(params)
     })
   },
   // 打开项
   bindOpenItem(e) {
     console.log(e.currentTarget)
-    let { purviewId, parentNote } = e.currentTarget.dataset;
-
+    let { purviewId, parentNo, parentNote } = e.currentTarget.dataset;
+    let params = {
+      ParentID: purviewId,
+      ParentNo: parentNo,
+      ParentNote: this.data.ParentNote[0] + ',' + parentNote,
+    };
     wx.navigateTo({
-      url: '../item/index?ParentID=' + purviewId + '&ParentNote=' + this.data.ParentNote[0] + ',' +parentNote
+      url: '../item/index?' + _fgj.param(params)
     })
   },
   // 列表滑动按下
