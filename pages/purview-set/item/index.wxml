@@ -12,49 +12,35 @@
       <view class="content__item" wx:if="{{itemData.length}}" wx:for="{{itemData}}" wx:key="{{index}}">
         <!-- 开关 -->
         <view class="d-flex justify-between" wx:if="{{item.ValueType === '0'}}">
-          <view 
-            class="content__text" 
-            data-parent-no="{{item.PurviewNote}}"
-            data-purview-id="{{item.PurviewID}}" >
-            {{item.PurviewNote}}
-          </view>
+          <view class="content__text">{{item.PurviewNote}}</view>
           <view class="flex-1 content__switch">
-            <switch color="#ff6714" bindchange="switchChange"/>
+            <switch color="#ff6714" checked="{{item.itemValue === '1'}}" bindchange="switchChange" data-purview-id="{{item.PurviewID}}" />
           </view>
         </view>
         <!-- 分级 -->
         <view class="d-flex justify-between" wx:if="{{item.ValueType === '1'}}">
-          <view 
-            class="content__text" 
-            data-parent-no="{{item.PurviewNote}}"
-            data-purview-id="{{item.PurviewID}}" >
-            {{item.PurviewNote}}
-          </view>
+          <view class="content__text">{{item.PurviewNote}}</view>
           <view class="flex-1">
             <picker 
               mode="selector" 
+              data-purview-id="{{item.PurviewID}}"
               bindchange="bindPickerChange" 
               value="{{pickerItemValueIndex}}" 
               range="{{pickerItemValue}}" 
               range-key="label"
             >
-              <text class="list__picker">{{pickerItemValue[pickerItemValueIndex].label}}</text>
+              <text class="list__picker">{{item.itemValue}}</text>
             </picker>
           </view>
           <text class="iconfont icon-jiantou2 list__arrow"></text>
         </view>
         <!-- 控数 -->
         <view class="d-flex justify-between" wx:if="{{item.ValueType === '2'}}">
-          <view 
-            class="content__text" 
-            data-parent-no="{{item.PurviewNote}}"
-            data-purview-id="{{item.PurviewID}}" >
-            {{item.PurviewNote}}
-          </view>
+          <view class="content__text">{{item.PurviewNote}}</view>
           <view class="content__value-type">
-            <text class="content__number-jia">+</text>
-            <input class="content__number-input" type="number" value="{{itemValue0}}" />
-            <text class="content__number-jia">-</text>
+            <text class="content__number-jia" bindtap="bindNumberJian" data-purview-id="{{item.PurviewID}}">-</text>
+            <input class="content__number-input" type="number" value="{{item.itemValue}}" bindinput="changeInput" data-purview-id="{{item.PurviewID}}" />
+            <text class="content__number-jia" bindtap="bindNumberJia" data-purview-id="{{item.PurviewID}}">+</text>
           </view>
         </view>
       </view>
@@ -67,7 +53,7 @@
 </view>
 
 <view class="footer">
-  <view class="submit">
+  <view class="submit" bindtap="bindSubmit">
     <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}"><text hidden="{{loading}}">完成</text></button>
   </view> 
 </view>

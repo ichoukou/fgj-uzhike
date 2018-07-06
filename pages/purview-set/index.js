@@ -5,6 +5,8 @@ import { GetPurviewListByLayer } from '../../api/purview/purview';
 
 Page({
   data: {
+    ObjType: '',    // 对象类型   0：人员  1：用户组
+    ObjID: '',      // 对象id
     params: {
       pagetype: '1',   // 传递页面类型
       ParentID: '',   // 父级id
@@ -14,7 +16,12 @@ Page({
     groupData: [],    // 组数据
     loader: false,  // 数据加载中
   },
-  onLoad() {
+  onLoad(options) {
+    console.log('设置权限', options)
+    this.setData({
+      ObjType: options.ObjType,
+      ObjID: options.ObjID
+    });
     this.getGroupData();    // 获取组数据
   },
   onShow() {
@@ -38,10 +45,13 @@ Page({
   },
   // 打开表
   bindOpenTable(e) {
-    let { purviewId, parentNo, parentNote } = e.currentTarget.dataset;
+    let { purviewId, groupName, parentNote } = e.currentTarget.dataset;
+    let data = this.data;
     let params = {
+      ObjType: data.ObjType,    // 对象类型   0：人员  1：用户组
+      ObjID: data.ObjID,      // 对象id
       ParentID: purviewId,    // 父级ID
-      ParentNo: parentNo,     // 父级编号
+      groupName: groupName,   // 组名
       ParentNote: parentNote  // 父级名称
     };
     wx.navigateTo({

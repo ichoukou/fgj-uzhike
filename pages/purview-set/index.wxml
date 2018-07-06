@@ -9,7 +9,7 @@
         <view 
           class="content__text" 
           data-purview-id="{{item.PurviewID}}" 
-          data-parent-no="{{item.PurviewNo}}"
+          data-group-name="{{item.PurviewName}}"
           data-parent-Note="{{item.PurviewNote}}"
           bindtap="bindOpenTable">
           {{item.PurviewNote}}

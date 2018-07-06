@@ -17,7 +17,7 @@ const _fgj = {
     }
     // 单词字符和数字
     if (type === 'word') {
-      return /^[\w\d]+$/.test(value);
+      return /^[\w]+$/.test(value);
     }
     // 手机号验证
     if (type === 'phone') {

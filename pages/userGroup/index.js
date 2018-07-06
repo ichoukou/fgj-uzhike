@@ -17,6 +17,26 @@ Page({
     this.getGroupData();    // 获取所有用户组数据
   },
   onShow: function () {
+    // let str = "Employee-Select-1,Employee-Insert-1,Employee-Update-1,Employee-Delete-1,testTable1-testItem1-1,testTable1-testItem2-本师,testTable1-testItem3-1,"
+
+    // let oneArr = str.split(',');
+    // let obj = {};
+    // let listArr = [];
+
+    // oneArr.forEach(item => {
+    //   if (item) {
+    //     listArr = item.split('-');
+    //     console.log(listArr)
+    //     if (!obj[listArr[0]]) {
+    //       obj[listArr[0]] = {
+    //         [listArr[1]]: listArr[2]
+    //       }
+    //     } else {
+    //       obj[listArr[0]][listArr[1]] = listArr[2]
+    //     }
+    //   }
+    // })
+    // console.log(obj)
 
   },
   // 获取所有用户组数据
@@ -94,7 +114,7 @@ Page({
           case 3:
             // 设置权限
             wx.navigateTo({
-              url: '../purview-set/index?UserGroupID=' + userGroupId
+              url: '../purview-set/index?ObjType=1&ObjID=' + userGroupId
             });
           break;
           default:

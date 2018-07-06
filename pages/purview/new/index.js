@@ -42,8 +42,8 @@ Page({
         label: '本部',
         value: '本部'
       }, {
-        label: '本师',
-        value: '本师'
+        label: '本司',
+        value: '本司'
       }, {
         label: '跨部',
         value: '跨部'
