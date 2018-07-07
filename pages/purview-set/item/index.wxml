@@ -44,7 +44,7 @@
           </view>
         </view>
       </view>
-      <view class="empty" wx:if="{{!itemData.length}}">
+      <view class="empty" wx:if="{{!itemData.length && loading}}">
         <text class="iconfont icon-kong empty__icon"></text>
         <text class="empty__desc">暂无数据</text>
       </view> 
@@ -54,7 +54,7 @@
 
 <view class="footer">
   <view class="submit" bindtap="bindSubmit">
-    <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}"><text hidden="{{loading}}">完成</text></button>
+    <button class="btn-primery" loading="{{btnLoading}}" disabled="{{disabled}}"><text hidden="{{btnLoading}}">完成</text></button>
   </view> 
 </view>
 

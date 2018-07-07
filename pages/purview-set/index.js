@@ -14,7 +14,7 @@ Page({
     },
     modalTitleText: '',
     groupData: [],    // 组数据
-    loader: false,  // 数据加载中
+    loading: false,  // 数据加载中
   },
   onLoad(options) {
     console.log('设置权限', options)
@@ -28,11 +28,11 @@ Page({
   },
   // 获取组数据
   getGroupData() {
+    wx.showLoading({ title: '加载中' });
     let params = this.data.params;
     GetPurviewListByLayer(params).then(res => {
-      this.setData({
-        loader: true
-      });
+      wx.hideLoading();
+      this.setData({ loading: true });
       let data = res.data;
       if (data.result === 'success') {
         this.setData({

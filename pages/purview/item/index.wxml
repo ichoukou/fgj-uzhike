@@ -23,11 +23,11 @@
         </view>
         <view class="content__operation">
         <button class="content__button content__button--orange" data-purview-id="{{item.PurviewID}}" bindtap="bindEdit">编辑</button>
-          <button class="content__button content__button--blue">启用</button>
-          <button class="content__button content__button--red">作废</button>
+          <button class="content__button content__button--blue" data-purview-id="{{item.PurviewID}}" data-status="1" bindtap="bindUpStatus">启用</button>
+          <button class="content__button content__button--red" data-purview-id="{{item.PurviewID}}" data-status="0" bindtap="bindUpStatus">作废</button>
         </view>
       </view>
-      <view class="empty" wx:if="{{!itemData.length}}">
+      <view class="empty" wx:if="{{!itemData.length && loading}}">
         <text class="iconfont icon-kong empty__icon"></text>
         <text class="empty__desc">暂无数据</text>
       </view> 

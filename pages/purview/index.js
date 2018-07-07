@@ -3,7 +3,7 @@ const app = getApp();
 const { $Message } = require('../../components/base/index');
 import { $wuxBackdrop } from '../../components/index';
 import _fgj from '../../utils/util';
-import { GetPurviewListByLayer } from '../../api/purview/purview';
+import { GetPurviewListByLayer, UpPurviewStatus } from '../../api/purview/purview';
 
 Page({
   data: {
@@ -14,76 +14,14 @@ Page({
     },
     modalTitleText: '',
     groupData: [],    // 组数据
-    list: [
-      {
-        PurviewName: '组名1',
-        PurviewIndex: 'group-0',
-        offsetLeft: 0,
-        table: [
-          {
-            PurviewName: '表名1',
-            PurviewIndex: 'table-0',
-            offsetLeft: 0,
-            item: [
-              {
-                PurviewName: '项名1',
-                PurviewIndex: 'item-0',
-              },
-              {
-                PurviewName: '项名2',
-                PurviewIndex: 'item-1',
-              },
-              {
-                PurviewName: '项名3',
-                PurviewIndex: 'item-2',
-              },
-              {
-                PurviewName: '项名4',
-                PurviewIndex: 'item-3',
-              },
-            ]
-          },
-          {
-            PurviewName: '表名2',
-            PurviewIndex: 'table-1',
-            offsetLeft: 0,
-            item: [
-              {
-                PurviewName: '项名1',
-                PurviewIndex: 'item-0',
-              },
-              {
-                PurviewName: '项名2',
-                PurviewIndex: 'item-1',
-              },
-            ]
-          },
-          {
-            PurviewName: '表名3',
-            PurviewIndex: 'table-2',
-            offsetLeft: 0,
-            item: [
-              {
-                PurviewName: '项名1',
-                PurviewIndex: 'item-0',
-              },
-            ]
-          },
-        ]
-      },
-      {
-        PurviewName: '组名2',
-        PurviewIndex: 'group-1',
-        offsetLeft: 0,
-      }
-    ],
     touch: {},      // 保存滑动的操作
-    loader: false,  // 数据加载中
+    loading: false,  // 数据加载中
   },
   onLoad() {
     this.modalInput = this.selectComponent('#modalInput');
     // this.modalInput.onShowModal();
     // this.$wuxBackdrop = $wuxBackdrop();
+    wx.showLoading({ title: '加载中' });
   },
   onShow() {
     this.getGroupData();    // 获取组数据，新建完成之后，再次求情
@@ -93,9 +31,8 @@ Page({
   getGroupData() {
     let params = this.data.params;
     GetPurviewListByLayer(params).then(res => {
-      this.setData({
-        loader: true
-      });
+      wx.hideLoading();
+      this.setData({ loading: true });
       let data = res.data;
       if (data.result === 'success') {
         data.temptable.forEach(item => {
@@ -139,10 +76,40 @@ Page({
       url: './table/index?' + _fgj.param(params)
     })
   },
+  // 修改状态，启用还是作废
+  bindUpStatus(e) {
+    let { purviewId, status } = e.currentTarget.dataset;
+
+    wx.showModal({
+      title: '操作提示',
+      content: '本次修改将同步修改所有下级，是否继续？',
+      success: function (res) {
+        if (res.confirm) {
+
+          wx.showLoading({ title: '稍等' });
+
+          UpPurviewStatus({
+            PurviewID: purviewId,
+            FlagStatus: status
+          }).then(res => {
+            wx.hideLoading();
+            if (res.data.result === 'success') {
+              $Message({ content: '设置成功', type: 'success' });
+            } else {
+              $Message({ content: res.data.msg, type: 'error' });
+            }
+          })
+
+        } else if (res.cancel) {
+          // console.log('用户点击取消')
+        }
+      }
+    })
+  },
   // 列表滑动按下
   handlerStart(e) {
     let { groupData, touch } = this.data,
-        { clientX, clientY } = e.touches[0];
+      { clientX, clientY } = e.touches[0];
 
     if (touch.sides) {
       // 已经有滑动，全部收起
@@ -161,9 +128,9 @@ Page({
   // 列表滑动
   handlerMove(e) {
     let { clientX, clientY } = e.touches[0],
-        touch = this.data.touch,
-        deltaX = clientX - touch.startX,
-        deltaY = clientY - touch.startY;
+      touch = this.data.touch,
+      deltaX = clientX - touch.startX,
+      deltaY = clientY - touch.startY;
 
     if (Math.abs(deltaY) > Math.abs(deltaX)) {      // 如果是Y轴滑动，就不执行
       touch.sides = false;

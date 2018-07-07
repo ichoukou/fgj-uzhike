@@ -15,7 +15,7 @@ Page({
       LevelType: 1,   // 层级，当前层级是 1
     },
     tableData: [], // 当前表数据
-    isLoader: true,    // 数据加载中
+    loading: false,    // 数据加载中
   },
   onLoad: function (options) {
     console.log('表', options);
@@ -30,17 +30,19 @@ Page({
       ParentNote: ParentNote.split(/,/),
       params
     });
+
+    this.getTableData();    // 获取表数据
   },
   onReady: function () {
-  
   },
   onShow: function () {
-    this.getTableData();    // 获取表数据
   },
   // 获取表数据
   getTableData() {
+    wx.showLoading({ title: '加载中' });
     GetPurviewListByLayer(this.data.params).then(res => {
-      console.log(res)
+      wx.hideLoading();
+      this.setData({ loading: true });
       let data = res.data;
       if (data.result === 'success') {
         this.setData({

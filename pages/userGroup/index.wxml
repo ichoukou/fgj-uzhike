@@ -10,10 +10,10 @@
         bindtap="bindActionSheet"
       ></view>
     </view>
-     <view class="empty" wx:if="{{!groupData.length && loader}}">
+    <view class="empty" wx:if="{{!groupData.length && loading}}">
       <text class="iconfont icon-kong empty__icon"></text>
       <text class="empty__desc">暂无数据</text>
-    </view> 
+    </view>
   </scroll-view>
 </view>
 <view class="footer">

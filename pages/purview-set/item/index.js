@@ -23,6 +23,7 @@ Page({
     },
     itemData: [],
     loading: false,
+    btnLoading: false,
     disabled: false,
     pickerItemValue: [
       {
@@ -92,14 +93,35 @@ Page({
           }
         }
       }
-    }
+    };
     setPurview.PurviewValue = groupName + ':' + str;
     console.log(setPurview)
 
+    this.setData({
+      btnLoading: true,
+      disabled: true
+    });
     SetPurview(setPurview).then(res => {
+      this.setData({
+        btnLoading: false,
+        disabled: false
+      });
       let data = res.data;
       if (data.result === 'success') {
         $Message({ content: '设置成功', type: 'success' });
+      } else {
+        $Message({ content: data.msg, type: 'warning' });
+      }
+    })
+  },
+  // 获取表数据
+  getItemData() {
+    wx.showLoading({ title: '加载中' });
+    GetPurviewListByLayer(this.data.params).then(res => {
+      // console.log(res)
+      let data = res.data;
+      if (data.result === 'success') {
+        this.getUserGroupPurview(data.temptable);   // 获取用户组权限
       } else {
         $Message({ content: data.msg, type: 'warning' });
       }
@@ -112,7 +134,7 @@ Page({
       UserGroupID: this.data.setPurview.ObjID
     })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.data.result === 'success') {
           let temptable = res.data.temptable[0];
           console.log('data', data)
@@ -174,20 +196,11 @@ Page({
           });
         } else {
           $Message({ content: res.data.msg, type: 'warning' })
-        }
+        };
+        // 上面处理数据渲染要花点时间，加载完毕放在下面可以减少空白间隙
+        wx.hideLoading();
+        this.setData({ loading: true });
       })
-  },
-  // 获取表数据
-  getItemData() {
-    GetPurviewListByLayer(this.data.params).then(res => {
-      // console.log(res)
-      let data = res.data;
-      if (data.result === 'success') {
-        this.getUserGroupPurview(data.temptable);   // 获取用户组权限
-      } else {
-        $Message({ content: data.msg, type: 'warning' });
-      }
-    })
   },
   // 控数，减少
   bindNumberJian(e) {

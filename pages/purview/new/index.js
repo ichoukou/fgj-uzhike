@@ -6,21 +6,21 @@ import { InsertPurview, UpPurview, GetPurviewByID } from '../../../api/purview/p
 
 Page({
   data: {
-    isNew: true,      // true是新建，false是编辑
-    PurviewID: '',    // 需要编辑的那个的权限ID 
+    isNew: true,          // true是新建，false是编辑
+    PurviewID: '',        // 需要编辑的那个的权限ID 
     params: {
-      LevelType: '0',    // 当前层级，可以用来判断新建类型，组/表和项的选项不一样
-      PurviewName: '',  // 名称
-      PurviewIndex: '',  // 索引
-      PurviewNote: '',  // 备注
-      DenyOP: 1,    // 无权限时是否显示  0：隐藏  1：显示（添加组时默认传1）
-      ParentID: '',   // 父级ID
-      ParentNo: '',   // 父级编号
-      ValueType: '0',  // 权限值类型
-      Cost: '',       // 价值额（添加组时不传）
+      LevelType: '0',     // 当前层级，可以用来判断新建类型，组/表和项的选项不一样
+      PurviewName: '',    // 名称
+      PurviewIndex: '',   // 索引
+      PurviewNote: '',    // 备注
+      DenyOP: 1,          // 无权限时是否显示  0：隐藏  1：显示（添加组时默认传1）
+      ParentID: '',       // 父级ID
+      ParentNo: '',       // 父级编号
+      ValueType: '0',     // 权限值类型
+      Cost: '',           // 价值额（添加组时不传）
       NeedType: '本人',   // 应用的公司类型（添加组时不传）
     },
-    ParentNote: '顶级',  // 当前层级的显示
+    ParentNote: '顶级',   // 当前层级的显示
     pickerValueType: [
       {
         label: '开关',
@@ -52,7 +52,6 @@ Page({
     pickerNeedTypeIndex: 0,
     disabled: false,
     loading: false,
-    onceTime: null,
   },
   onLoad(options) {
     console.log('参数', options)
@@ -85,9 +84,11 @@ Page({
   },
   // 获取需要修改的数据
   getPurviewData(PurviewID) {
+    wx.showLoading({ title: '加载中' });
     let { params, pickerNeedType, pickerValueType } = this.data;
 
     GetPurviewByID({PurviewID}).then(res => {
+      wx.hideLoading();
       let data = res.data;
       let newObj = {};
       if (data.result === 'success') {
@@ -145,13 +146,10 @@ Page({
   changeInput(e) {
     let { type } = e.currentTarget.dataset;
     let params = this.data.params;
-    this.data.onceTime && clearTimeout(this.data.onceTime);
-    this.data.onceTime = setTimeout(() => {
-      params[type] = e.detail.value;
-      this.setData({
-        params
-      })
-    }, 300);
+    params[type] = e.detail.value;
+    this.setData({
+      params
+    });
   },
   // picker改变事件
   bindPickerChange: function (e) {
@@ -186,7 +184,7 @@ Page({
     let params = this.data.params;
     let verify = this.verifyData(params);   // 验证数据
     if (verify.status) {
-      console.log(params)
+      // console.log(params)
       // 判断isNew是新建还是编辑
       this.setData({
         disabled: true,
@@ -204,8 +202,10 @@ Page({
   // 新建
   InsertPurview() {
     let params = this.data.params;
+    wx.showLoading({ title: '加载中' });
     InsertPurview(params).then(res => {
       // console.log(res)
+      wx.hideLoading();
       this.setData({
         disabled: false,
         loading: false
@@ -222,9 +222,11 @@ Page({
   },
   // 编辑
   UpPurview() {
+    wx.showLoading({ title: '加载中' });
     let params = this.data.params;
     UpPurview(params).then(res => {
       // console.log(res)
+      wx.hideLoading();
       this.setData({
         disabled: false,
         loading: false

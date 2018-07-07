@@ -20,7 +20,7 @@
           {{item.PurviewNote}}
         </view>
       </view>
-      <view class="empty" wx:if="{{!tableData.length}}">
+      <view class="empty" wx:if="{{!tableData.length && loading}}">
         <text class="iconfont icon-kong empty__icon"></text>
         <text class="empty__desc">暂无数据</text>
       </view>

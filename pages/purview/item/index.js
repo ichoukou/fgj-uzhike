@@ -1,7 +1,7 @@
 
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util';
-import { GetPurviewListByLayer } from '../../../api/purview/purview';
+import { GetPurviewListByLayer, UpPurviewStatus } from '../../../api/purview/purview';
 
 Page({
   data: {
@@ -14,6 +14,7 @@ Page({
     ParentNote: [],   // 父级名称，用来显示
     itemData: [],
     touch: {},      // 保存滑动的操作
+    loading: false,
   },
   onLoad: function (options) {
     console.log('项参数', options)
@@ -26,17 +27,17 @@ Page({
       ParentNote: ParentNote.split(/,/)    // 当前层级，传过来的是一个用 , 分割的字符串，要把他变成数组
     });
   },
-  onReady: function () {
-
-  },
   onShow: function () {
     this.getItemData();    // 获取表数据
     this.data.touch.sides = false;    // 编辑成功后，返回要重置sides滑动
   },
   // 获取表数据
   getItemData() {
+    wx.showLoading({ title: '加载中' });
     GetPurviewListByLayer(this.data.params).then(res => {
-      console.log(res)
+      // console.log(res)
+      wx.hideLoading();
+      this.setData({ loading: true });
       let data = res.data;
       if (data.result === 'success') {
         data.temptable.forEach(item => {
@@ -85,6 +86,24 @@ Page({
     };
     wx.navigateTo({
       url: '../new/index?' + _fgj.param(params)
+    })
+  },
+  // 修改状态，启用还是作废
+  bindUpStatus(e) {
+    let { purviewId, status } = e.currentTarget.dataset;
+
+    wx.showLoading({ title: '稍等' });
+
+    UpPurviewStatus({
+      PurviewID: purviewId,
+      FlagStatus: status
+    }).then(res => {
+      wx.hideLoading();
+      if (res.data.result === 'success') {
+        $Message({ content: '设置成功', type: 'success' });
+      } else {
+        $Message({ content: res.data.msg, type: 'error' });
+      }
     })
   },
   // 列表滑动按下

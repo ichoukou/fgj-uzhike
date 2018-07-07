@@ -1,7 +1,7 @@
 
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util';
-import { GetPurviewListByLayer } from '../../../api/purview/purview';
+import { GetPurviewListByLayer, UpPurviewStatus } from '../../../api/purview/purview';
 
 Page({
   data: {
@@ -14,7 +14,7 @@ Page({
     },
     tableData: [], // 当前表数据
     touch: {},      // 保存滑动的操作
-    isLoader: true,    // 数据加载中
+    loading: false,    // 数据加载中
   },
   onLoad: function (options) {
     console.log('表', options);
@@ -27,17 +27,17 @@ Page({
       params
     });
   },
-  onReady: function () {
-  
-  },
   onShow: function () {
     this.getTableData();    // 获取表数据
     this.data.touch.sides = false;    // 编辑成功后，返回要重置sides滑动
   },
   // 获取表数据
   getTableData() {
+    wx.showLoading({ title: '加载中' });
     GetPurviewListByLayer(this.data.params).then(res => {
       console.log(res)
+      wx.hideLoading();
+      this.setData({ loading: true });
       let data = res.data;
       if (data.result === 'success') {
         data.temptable.forEach(item => {
@@ -91,6 +91,36 @@ Page({
     };
     wx.navigateTo({
       url: '../item/index?' + _fgj.param(params)
+    })
+  },
+  // 修改状态，启用还是作废
+  bindUpStatus(e) {
+    let { purviewId, status } = e.currentTarget.dataset;
+
+    wx.showModal({
+      title: '操作提示',
+      content: '本次修改将同步修改所有下级，是否继续？',
+      success: function (res) {
+        if (res.confirm) {
+
+          wx.showLoading({ title: '稍等' });
+
+          UpPurviewStatus({
+            PurviewID: purviewId,
+            FlagStatus: status
+          }).then(res => {
+            wx.hideLoading();
+            if (res.data.result === 'success') {
+              $Message({ content: '设置成功', type: 'success' });
+            } else {
+              $Message({ content: res.data.msg, type: 'error' });
+            }
+          })
+
+        } else if (res.cancel) {
+          // console.log('用户点击取消')
+        }
+      }
     })
   },
   // 列表滑动按下

@@ -1,51 +1,30 @@
 
 const { $Message } = require('../../components/base/index');
-import { InsertUserGroup, GetAllUserGroup, UpUserGroup } from '../../api/userGroup/userGroup';
+import { InsertUserGroup, GetAllUserGroup, UpUserGroup, UpGroupStatus } from '../../api/userGroup/userGroup';
 
 Page({
   data: {
     groupData: [],
     modalType: 'new',    // 记录弹窗当前的作用，是新建还是编辑
     UserGroupID: '',    // 记录要编辑的用户组ID
-    loader: false,    // 加载中
+    loading: false,    // 加载中
     isClick: false,   // 只能点一次
   },
   onLoad: function (options) {
     this.modalInput = this.selectComponent('#modalInput');
-  },
-  onReady: function () {
     this.getGroupData();    // 获取所有用户组数据
   },
+  onReady: function () {
+  },
   onShow: function () {
-    // let str = "Employee-Select-1,Employee-Insert-1,Employee-Update-1,Employee-Delete-1,testTable1-testItem1-1,testTable1-testItem2-本师,testTable1-testItem3-1,"
-
-    // let oneArr = str.split(',');
-    // let obj = {};
-    // let listArr = [];
-
-    // oneArr.forEach(item => {
-    //   if (item) {
-    //     listArr = item.split('-');
-    //     console.log(listArr)
-    //     if (!obj[listArr[0]]) {
-    //       obj[listArr[0]] = {
-    //         [listArr[1]]: listArr[2]
-    //       }
-    //     } else {
-    //       obj[listArr[0]][listArr[1]] = listArr[2]
-    //     }
-    //   }
-    // })
-    // console.log(obj)
-
   },
   // 获取所有用户组数据
   getGroupData() {
+    wx.showLoading({ title: '加载中' });
     GetAllUserGroup().then(res => {
       console.log(res)
-      this.setData({
-        loader: true
-      });
+      wx.hideLoading();
+      this.setData({loading: true});
       let data = res.data;
       if (data.result === 'success') {
         this.setData({
@@ -78,10 +57,12 @@ Page({
   },
   // 新建用户组
   newGroup(GroupName) {
+    wx.showLoading({ title: '加载中' });
     InsertUserGroup({
       GroupName
     })
       .then(res => {
+        wx.hideLoading();
         this.data.isClick = false;
         this.modalInput.onHideModal();
         console.log(res)
@@ -101,18 +82,18 @@ Page({
     wx.showActionSheet({
       itemList: ['启用', '禁用', '编辑', '设置权限'],
       success: function (res) {
-        console.log(res.tapIndex)
         _this.data.UserGroupID = userGroupId;
         switch(res.tapIndex) {
           case 0:
+            _this.UpGroupStatus(userGroupId, '1');
           break;
           case 1:
+            _this.UpGroupStatus(userGroupId, '0');
           break;
           case 2:
             _this.actionEdit(groupName);
           break;
           case 3:
-            // 设置权限
             wx.navigateTo({
               url: '../purview-set/index?ObjType=1&ObjID=' + userGroupId
             });
@@ -122,7 +103,7 @@ Page({
         }
       },
       fail: function (res) {
-        console.log(res.errMsg)
+        // console.log(res.errMsg)
       }
     })
   },
@@ -135,12 +116,14 @@ Page({
   },
   // 编辑用户组
   editGroup(GroupName) {
+    wx.showLoading({ title: '加载中' });
     let UserGroupID = this.data.UserGroupID;
     UpUserGroup({
       UserGroupID,
       GroupName
     })
       .then(res => {
+        wx.hideLoading();
         this.data.isClick = false;
         this.modalInput.onHideModal();
         console.log(res)
@@ -152,4 +135,21 @@ Page({
         }
       })
   },
+  // 修改用户组状态
+  UpGroupStatus(UserGroupID, FlagStatus) {
+    wx.showLoading({ title: '加载中' });
+    UpGroupStatus({
+      UserGroupID,
+      FlagStatus
+    })
+    .then(res => {
+      // console.log(res)
+      wx.hideLoading();
+      if (res.data.result === 'success') {
+        $Message({ content: '修改成功', type: 'success' });
+      } else {
+        $Message({ content: res.data.msg, type: 'error' });
+      }
+    })
+  }
 })
