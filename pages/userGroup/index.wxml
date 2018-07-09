@@ -1,12 +1,13 @@
 
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
-    <view class="content__item" wx:for="{{groupData}}" wx:key="{{index}}">
+    <view class="content__item {{item.FlagStatus === '0' ? 'content__item--void' : ''}}" wx:for="{{groupData}}" wx:key="{{index}}">
       <view class="content__text">{{item.GroupName}}</view>
       <view 
         class="content__operation iconfont icon-gengduo" 
         data-user-group-id="{{item.UserGroupID}}" 
         data-group-name="{{item.GroupName}}" 
+        data-flag-status="{{item.FlagStatus}}" 
         bindtap="bindActionSheet"
       ></view>
     </view>

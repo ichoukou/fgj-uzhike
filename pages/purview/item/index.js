@@ -29,11 +29,11 @@ Page({
   },
   onShow: function () {
     this.getItemData();    // 获取表数据
-    this.data.touch.sides = false;    // 编辑成功后，返回要重置sides滑动
+    wx.showLoading({ title: '加载中' });
   },
   // 获取表数据
   getItemData() {
-    wx.showLoading({ title: '加载中' });
+    this.data.touch.sides = false;    // 获取数据要重置sides滑动
     GetPurviewListByLayer(this.data.params).then(res => {
       // console.log(res)
       wx.hideLoading();
@@ -90,17 +90,19 @@ Page({
   },
   // 修改状态，启用还是作废
   bindUpStatus(e) {
-    let { purviewId, status } = e.currentTarget.dataset;
+    let { purviewNo, status } = e.currentTarget.dataset;
+    let _this = this;
 
     wx.showLoading({ title: '稍等' });
 
     UpPurviewStatus({
-      PurviewID: purviewId,
+      PurviewNo: purviewNo,
       FlagStatus: status
     }).then(res => {
       wx.hideLoading();
       if (res.data.result === 'success') {
         $Message({ content: '设置成功', type: 'success' });
+        _this.getItemData();    // 修改状态之后，再次求情
       } else {
         $Message({ content: res.data.msg, type: 'error' });
       }
@@ -152,7 +154,7 @@ Page({
     if (touch.sides) {
       for (let i = 0, length = itemData.length; i < length; i++) {
         if (itemData[i].PurviewID === purviewId) {
-          itemData[i].offsetLeft = -360;
+          itemData[i].offsetLeft = -240;
           this.setData({
             itemData: itemData
           });

@@ -22,10 +22,18 @@ page {
 .content__item + .content__item {
   border-top: 1rpx solid #e6e6e6;
 }
+.content__item--void.content__item + .content__item--void.content__item {
+  border-top: 1rpx solid #fff;
+} 
+.content__item--void {
+  background-color: #e6e6e6;
+}
+.content__item--void .content__operation {
+  color: #fff;
+}
 .content__text {
   position: relative;
   z-index: 2;
-  background-color: #fff;
   transition: all .3s;
 }
 .content__operation { 

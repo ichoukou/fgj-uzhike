@@ -39,7 +39,6 @@ page {
 .content__item {
   overflow: hidden;
   position: relative;
-  padding-left: 30rpx;
   width: 100%;
   height: 130rpx;
   line-height: 130rpx;
@@ -47,10 +46,17 @@ page {
 }
 .content__item + .content__item {
   border-top: 1rpx solid #e6e6e6;
+} 
+.content__item--void.content__item + .content__item--void.content__item {
+  border-top: 1rpx solid #fff;
+} 
+.content__item--void .content__text {
+  background-color: #e6e6e6;
 }
 .content__text {
   position: relative;
   z-index: 2;
+   padding-left: 30rpx; 
   background-color: #fff;
   transition: all .3s;
 }

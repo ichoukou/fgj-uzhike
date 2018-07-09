@@ -15,6 +15,7 @@ export default function fetch(params) {
       },
       fail(err) {
         console.log('error')
+        wx.hideLoading();
         wx.showModal({
           title: '请求失败',
           content: '有一个网络请求发生了异常',

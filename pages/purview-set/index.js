@@ -19,8 +19,8 @@ Page({
   onLoad(options) {
     console.log('设置权限', options)
     this.setData({
-      ObjType: options.ObjType,
-      ObjID: options.ObjID
+      ObjType: options.ObjType || '',
+      ObjID: options.ObjID || ''
     });
     this.getGroupData();    // 获取组数据
   },
@@ -31,8 +31,6 @@ Page({
     wx.showLoading({ title: '加载中' });
     let params = this.data.params;
     GetPurviewListByLayer(params).then(res => {
-      wx.hideLoading();
-      this.setData({ loading: true });
       let data = res.data;
       if (data.result === 'success') {
         this.setData({
@@ -40,7 +38,9 @@ Page({
         });
       } else {
         $Message({ content: data.msg, type: 'warning' });
-      }
+      };
+      wx.hideLoading();
+      this.setData({ loading: true });
     })
   },
   // 打开表

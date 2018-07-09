@@ -41,8 +41,6 @@ Page({
   getTableData() {
     wx.showLoading({ title: '加载中' });
     GetPurviewListByLayer(this.data.params).then(res => {
-      wx.hideLoading();
-      this.setData({ loading: true });
       let data = res.data;
       if (data.result === 'success') {
         this.setData({
@@ -50,7 +48,9 @@ Page({
         })
       } else {
         $Message({ content: data.msg, type: 'warning' });
-      }
+      };
+      wx.hideLoading();
+      this.setData({ loading: true });
     })
   },
   // 打开项

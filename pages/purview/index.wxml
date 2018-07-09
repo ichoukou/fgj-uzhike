@@ -5,7 +5,7 @@
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
      <view class="content__scroll"> 
-      <view class="content__item" wx:if="{{groupData.length}}" wx:for="{{groupData}}" wx:key="{{index}}">
+      <view class="content__item {{item.FlagStatus === '0' ? 'content__item--void' : ''}}" wx:if="{{groupData.length}}" wx:for="{{groupData}}" wx:key="{{index}}">
         <view 
           class="content__text" 
           data-purview-id="{{item.PurviewID}}" 
@@ -20,9 +20,25 @@
         </view>
         <view class="content__operation">
           <!-- <button class="content__button content__button--yellow">设置权限</button> -->
-          <button class="content__button content__button--orange" data-purview-id="{{item.PurviewID}}" bindtap="bindEdit">编辑</button>
-          <button class="content__button content__button--blue" data-purview-id="{{item.PurviewID}}" data-status="1" bindtap="bindUpStatus">启用</button>
-          <button class="content__button content__button--red" data-purview-id="{{item.PurviewID}}" data-status="0" bindtap="bindUpStatus">作废</button>
+          <button 
+            class="content__button content__button--orange" 
+            data-purview-id="{{item.PurviewID}}" 
+            bindtap="bindEdit"
+            >编辑</button>
+          <button 
+            hidden="{{item.FlagStatus === '1'}}"
+            class="content__button content__button--blue" 
+            data-purview-no="{{item.PurviewNo}}" 
+            data-status="1" 
+            bindtap="bindUpStatus"
+            >启用</button>
+          <button 
+            hidden="{{item.FlagStatus === '0'}}"
+            class="content__button content__button--red" 
+            data-purview-no="{{item.PurviewNo}}" 
+            data-status="0" 
+            bindtap="bindUpStatus"
+            >作废</button>
         </view>
       </view>
       <view class="empty" wx:if="{{!groupData.length && loading}}">

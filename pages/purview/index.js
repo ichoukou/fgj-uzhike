@@ -25,10 +25,10 @@ Page({
   },
   onShow() {
     this.getGroupData();    // 获取组数据，新建完成之后，再次求情
-    this.data.touch.sides = false;    // 编辑成功后，返回要重置sides滑动
   },
   // 获取组数据
   getGroupData() {
+    this.data.touch.sides = false;    // 获取数据要重置sides滑动
     let params = this.data.params;
     GetPurviewListByLayer(params).then(res => {
       wx.hideLoading();
@@ -78,7 +78,8 @@ Page({
   },
   // 修改状态，启用还是作废
   bindUpStatus(e) {
-    let { purviewId, status } = e.currentTarget.dataset;
+    let { purviewNo, status } = e.currentTarget.dataset;
+    let _this = this;
 
     wx.showModal({
       title: '操作提示',
@@ -89,12 +90,13 @@ Page({
           wx.showLoading({ title: '稍等' });
 
           UpPurviewStatus({
-            PurviewID: purviewId,
+            PurviewNo: purviewNo,
             FlagStatus: status
           }).then(res => {
             wx.hideLoading();
             if (res.data.result === 'success') {
               $Message({ content: '设置成功', type: 'success' });
+              _this.getGroupData();    // 修改状态之后，再次求情
             } else {
               $Message({ content: res.data.msg, type: 'error' });
             }
@@ -152,7 +154,7 @@ Page({
     if (touch.sides) {
       for (let i = 0, length = groupData.length; i < length; i++) {
         if (groupData[i].PurviewID === purviewId) {
-          groupData[i].offsetLeft = -360;
+          groupData[i].offsetLeft = -240;
           this.setData({
             groupData
           });

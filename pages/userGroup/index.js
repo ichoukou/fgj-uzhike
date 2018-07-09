@@ -12,6 +12,7 @@ Page({
   },
   onLoad: function (options) {
     this.modalInput = this.selectComponent('#modalInput');
+    wx.showLoading({ title: '加载中' });
     this.getGroupData();    // 获取所有用户组数据
   },
   onReady: function () {
@@ -20,7 +21,6 @@ Page({
   },
   // 获取所有用户组数据
   getGroupData() {
-    wx.showLoading({ title: '加载中' });
     GetAllUserGroup().then(res => {
       console.log(res)
       wx.hideLoading();
@@ -77,23 +77,39 @@ Page({
   // 用户组操作
   bindActionSheet(e) {
     let _this = this;
-    console.log(e.currentTarget)
-    let { userGroupId, groupName } = e.currentTarget.dataset;
+    let { userGroupId, groupName, flagStatus } = e.currentTarget.dataset;
+    let itemList = [];
+  
+    // 判断当前状态，显示相应的操作
+    if (flagStatus === '0') {
+      itemList = ['启用']
+    } else {
+      itemList = ['禁用', '编辑', '设置权限']
+    }
+
     wx.showActionSheet({
-      itemList: ['启用', '禁用', '编辑', '设置权限'],
+      itemList: itemList,
       success: function (res) {
         _this.data.UserGroupID = userGroupId;
+
+        // 禁用状态下只有一个操作
+        if (flagStatus === '0' && res.tapIndex === 0) {
+          _this.UpGroupStatus(userGroupId, '1');
+          return;
+        };
+
+        // 启用状态下有三个操作
+        if (flagStatus !== '1') {
+          return;
+        };
         switch(res.tapIndex) {
           case 0:
-            _this.UpGroupStatus(userGroupId, '1');
-          break;
-          case 1:
             _this.UpGroupStatus(userGroupId, '0');
           break;
-          case 2:
+          case 1:
             _this.actionEdit(groupName);
           break;
-          case 3:
+          case 2:
             wx.navigateTo({
               url: '../purview-set/index?ObjType=1&ObjID=' + userGroupId
             });
@@ -146,7 +162,8 @@ Page({
       // console.log(res)
       wx.hideLoading();
       if (res.data.result === 'success') {
-        $Message({ content: '修改成功', type: 'success' });
+        $Message({ content: '修改成功', type: 'success' }); 
+        this.getGroupData();    // 获取所有用户组数据
       } else {
         $Message({ content: res.data.msg, type: 'error' });
       }
