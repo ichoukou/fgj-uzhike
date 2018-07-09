@@ -1,0 +1,19 @@
+/*
+* ====================================
+* 没有相关数据
+* ====================================
+*/
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40rpx;
+}
+.empty__icon {
+  font-size: 160rpx;
+  color: #666;
+}
+.empty__desc {
+  font-size: 28rpx;
+  color: #333;
+}

@@ -19,6 +19,14 @@ const _fgj = {
     if (type === 'word') {
       return /^[\w]+$/.test(value);
     }
+    // 只能是数字
+    if (type === 'number') {
+      return /^\d+$/.test(value);
+    }
+    // 数字或有小数位
+    if (type === 'number-dot') {
+      return /^\d+[\.]?\d+$/.test(value)
+    }
     // 手机号验证
     if (type === 'phone') {
       return /^1[3-9]\d{9}$/.test(value);
