@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/position/index",
+    "pages/position/new/index",
     "pages/userGroup/index",
     "pages/purview-set/index",
     "pages/purview/index",

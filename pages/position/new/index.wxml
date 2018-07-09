@@ -1,0 +1,67 @@
+<view class="content">
+  <view class="list-wrap">
+
+    <view class="list">
+      <text class="list__title">职务名称</text>
+      <view class="list__content">
+        <input 
+          class="list__input" 
+          type="text" 
+          value="{{params.PositionName}}" 
+          data-type="PositionName" 
+          bindinput="changeInput" 
+          placeholder="请填写职务名称" />
+      </view>
+    </view>
+    <view class="list">
+      <text class="list__title">职务等级</text>
+      <view class="list__content">
+        <picker 
+          mode="selector" 
+          bindchange="bindPickerChange" 
+          value="{{pickerValueTypeIndex}}" 
+          range="{{pickerValueType}}" 
+          range-key="label"
+        >
+         <text class="list__picker">{{params.PositionLevel}}</text>
+        </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list">
+      <text class="list__title">基本薪资</text>
+      <view class="list__content">
+        <input 
+          class="list__input" 
+          type="number" 
+          value="{{params.BaseSalary}}" 
+          data-type="BaseSalary" 
+          bindinput="changeInput" 
+          placeholder="请填写基本薪资" />
+      </view>
+      <text class="list__unit">元</text>
+    </view>
+    <view class="list">
+      <text class="list__title">浮动薪资</text>
+      <view class="list__content">
+        <input 
+          class="list__input" 
+          type="number" 
+          value="{{params.FloatSalary}}" 
+          data-type="FloatSalary" 
+          bindinput="changeInput" 
+          placeholder="请填写浮动薪资" />
+      </view>
+      <text class="list__unit">元</text>
+    </view>
+    
+  </view>
+</view>
+
+<view class="footer">
+  <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="bindSubmit">
+    <text hidden="{{loading}}">完成</text>
+  </button>
+</view>
+
+<i-message id="message" />

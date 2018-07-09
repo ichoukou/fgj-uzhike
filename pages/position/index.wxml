@@ -1,0 +1,22 @@
+
+<view class="content">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="content__item {{item.FlagStatus === '0' ? 'content__item--void' : ''}}" wx:for="{{listData}}" wx:key="{{index}}">
+      <view class="content__text">{{item.PositionName}}</view>
+      <view 
+        class="content__operation iconfont icon-gengduo" 
+        data-position-id="{{item.PositionID}}" 
+        bindtap="bindActionSheet"
+      ></view>
+    </view>
+    <view class="empty" wx:if="{{!listData.length && loading}}">
+      <text class="iconfont icon-kong empty__icon"></text>
+      <text class="empty__desc">暂无数据</text>
+    </view>
+  </scroll-view>
+</view>
+<view class="footer">
+  <text class="footer__new" bindtap="bindNew">新建职务</text>
+</view>
+
+<i-message id="message" />

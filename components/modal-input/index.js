@@ -20,15 +20,10 @@ Component({
   },
   methods: {
     // 显示模态框
-    onShowModal(params) {
-      // 有值的话，就回填
-      if (params && params.inputValue) {
-        this.setData({
-          inputValue: params.inputValue
-        })
-      };
+    onShowModal(params = {}) {
       this.setData({
-        isShow: true
+        isShow: true,
+        inputValue: params.inputValue || ''
       })
       this.retainBackdrop();
     },
