@@ -1,0 +1,71 @@
+<view class="content">
+  <view class="list-wrap">
+
+    <view class="list">
+      <text class="list__title">上一级</text>
+      <view class="list__content">
+        <text class="list__desc">他的爸爸</text>
+      </view>
+    </view>
+    <view class="list">
+      <text class="list__title">部门名称</text>
+      <view class="list__content">
+        <input 
+          class="list__input" 
+          type="text" 
+          value="{{params.DeptName}}" 
+          data-type="DeptName" 
+          bindinput="changeInput" 
+          placeholder="请填写部门名称" />
+      </view>
+    </view>
+    <view class="list">
+      <text class="list__title">部门类型</text>
+      <view class="list__content">
+        <picker 
+          mode="selector" 
+          bindchange="bindPickerChange" 
+          value="{{pickerValueTypeIndex}}" 
+          range="{{pickerValueType}}" 
+          range-key="label"
+        >
+           <text class="list__picker">{{params.DeptType}}</text> 
+        </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list">
+      <text class="list__title">电话</text>
+      <view class="list__content">
+        <input 
+          class="list__input" 
+          type="number" 
+          value="{{params.Tel}}" 
+          data-type="Tel" 
+          bindinput="changeInput" 
+          placeholder="请填写电话" />
+      </view>
+    </view>
+    <view class="list">
+      <text class="list__title">地址</text>
+      <view class="list__content">
+        <input 
+          class="list__input" 
+          type="text" 
+          value="{{params.Address}}" 
+          data-type="Address" 
+          bindinput="changeInput" 
+          placeholder="请填写地址" />
+      </view>
+    </view>
+    
+  </view>
+</view>
+
+<view class="footer">
+  <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="bindSubmit">
+    <text hidden="{{loading}}">完成</text>
+  </button>
+</view>
+
+<i-message id="message" />

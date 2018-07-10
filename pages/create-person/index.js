@@ -1,6 +1,5 @@
 // pages/create-person/index.js
 const { $Message } = require('../../components/base/index');
-import { InsertPurview } from '../../api/api';
 
 const countNum = 30;
 

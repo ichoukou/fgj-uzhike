@@ -12,7 +12,7 @@
 .list {
   display: flex;
   align-items: center;
-  height: 100rpx;
+  height: 130rpx;
 }
 .list + .list {
   border-top: 1rpx solid rgb(230,230,230);
@@ -26,13 +26,22 @@
   flex: 1;
   height: 100%;
 }
+.list__desc {
+  font-size: 32rpx;
+  color: #666;
+  line-height: 130rpx;
+}
 .list__input {
-  min-height: 100rpx;
-  /* font-size: 16px;s */
+  min-height: 130rpx;
+  /* font-size: 16px; */
 }
 .list__arrow {
   color: #999;
   transform: rotate(180deg);
+}
+.list__unit {
+  font-size: 32rpx;
+  color: #333;
 }
 .list__switch {
   display: flex;
@@ -40,7 +49,7 @@
   justify-content: flex-end;
 }
 .list__picker {
-  line-height: 100rpx;
+  line-height: 130rpx;
 }
 .footer {
   position: absolute;

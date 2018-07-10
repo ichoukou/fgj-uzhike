@@ -1,6 +1,6 @@
 
 const { $Message } = require('../../components/base/index');
-import { GetPositionByID } from '../../api/position/position';
+import { GetAllDepartment } from '../../api/organizational/organizational';
 
 Page({
   data: {
@@ -16,11 +16,11 @@ Page({
   },
   onShow: function () {
     wx.showLoading({ title: '加载中' });
-    this.getListData();    // 获取列表数据
+    this.GetAllDepartment();    // 获取所有部门
   },
-  // 获取列表数据
-  getListData() {
-    GetPositionByID(this.data.params).then(res => {
+  // 获取所有部门
+  GetAllDepartment() {
+    GetAllDepartment(this.data.params).then(res => {
       console.log(res)
       let data = res.data;
       if (data.result === 'success') {
@@ -37,13 +37,21 @@ Page({
   // 新建职务
   bindNew() {
     wx.navigateTo({
-      url: './new/index?isNew=true'
+      url: './new/index?isNew=true&Layer=0'
+    })
+  },
+  // 打开下一级
+  bindOpenChild(e) {
+    let { deptNo } = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: './child-1/index?&DeptNo=' + deptNo
     })
   },
   // 用户组操作
   bindActionSheet(e) {
     let _this = this;
-    let { positionId } = e.currentTarget.dataset;
+    console.log(e.currentTarget.dataset)
+    let { deptId } = e.currentTarget.dataset;
     let itemList = ['编辑', '作废'];
 
     wx.showActionSheet({
@@ -52,7 +60,7 @@ Page({
         switch(res.tapIndex) {
           case 0:
             wx.navigateTo({
-              url: './new/index?isNew=false&PositionID=' + positionId
+              url: './new/index?&DeptID=' + deptId
             });
           break;
           case 1:
@@ -77,9 +85,6 @@ Page({
       }
     })
   },
-  // 编辑权限
-  actionEdit(GroupName) {
-  },
   // 修改权限状态
   UpGroupStatus(UserGroupID, FlagStatus) {
     wx.showLoading({ title: '加载中' });
@@ -92,7 +97,7 @@ Page({
       wx.hideLoading();
       if (res.data.result === 'success') {
         $Message({ content: '修改成功', type: 'success' }); 
-        this.getListData();    // 再次获取数据
+        this.GetAllDepartment();    // 获取所有用户组数据
       } else {
         $Message({ content: res.data.msg, type: 'error' });
       }
