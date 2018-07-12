@@ -4,7 +4,7 @@ import _fgj from '../../../utils/util';
 import { maximum } from '../../../utils/config';
 import { GetDepartmentByDeptNo, UpDepartmentStatus } from '../../../api/organizational/department';
 
-const path = 2;   // 当前级别，也是页面索引
+const path = 4;   // 当前级别，也是页面索引
 
 Page({
   data: {
@@ -72,6 +72,10 @@ Page({
   },
   // 打开下一级
   bindOpenChild(e) {
+    if (path >= maximum) {
+      $Message({ content: '最多' + (maximum + 1) + '级', type: 'warning' })
+      return;
+    };
     let { deptNo, deptName } = e.currentTarget.dataset;
     let data = this.data;
     let ParentNote = [].concat(data.ParentNote);

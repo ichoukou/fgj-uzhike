@@ -1,0 +1,12 @@
+@import "../index.wxss";
+
+.content {
+  overflow: hidden;
+  position: absolute;
+  top: 98rpx;
+  bottom: 0;
+  width: 100%;
+}
+.search__input {
+  color: #333;
+}

@@ -2,7 +2,7 @@
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util.js';
 
-import { InsertDepartment, GetDepartmentByID, UpDepartment } from '../../../api/organizational/organizational';
+import { InsertDepartment, GetDepartmentByID, UpDepartment } from '../../../api/organizational/department';
 
 Page({
   data: {

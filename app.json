@@ -1,12 +1,15 @@
 {
   "pages": [
+    "pages/organizational/emp-edit/index",
+    "pages/create-person/index",
     "pages/organizational/index",
+    "pages/organizational/search/index",
     "pages/organizational/child-1/index",
     "pages/organizational/child-2/index",
     "pages/organizational/child-3/index",
+    "pages/organizational/child-4/index",
     "pages/organizational/new/index",
     "pages/index/index",
-    "pages/test/index",
     "pages/position/index",
     "pages/position/new/index",
     "pages/userGroup/index",
@@ -16,8 +19,7 @@
     "pages/purview/index",
     "pages/purview/new/index",
     "pages/purview/item/index",
-    "pages/purview/table/index",
-    "pages/create-person/index"
+    "pages/purview/table/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

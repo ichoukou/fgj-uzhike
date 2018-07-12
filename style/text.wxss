@@ -1,0 +1,16 @@
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.extend-click {
+  position: relative;
+}
+.extend-click::before {
+  content: '';
+  position: absolute;
+  top: -20rpx;
+  left: -20rpx;
+  right: -20rpx;
+  bottom: -20rpx;
+}

@@ -7,12 +7,16 @@
 <view class="nav">
   <block wx:for="{{ParentNote}}" wx:key="{{index}}">
     <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
-    <text class="nav__item {{(index + 1) === ParentNote.length ? 'nav__item--disable': ''}}"  bindtap="bindBack" data-index="{{index}}">{{item}}</text>
+    <text 
+      class="nav__item {{(index + 1) === ParentNote.length ? 'nav__item--disable': ''}}" 
+      bindtap="bindBack" 
+      data-index="{{index}}"
+    >{{item}}</text>
   </block>
 </view>
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
-    <view class="content__item {{item.FlagStatus === '0' ? 'content__item--void' : ''}}" wx:for="{{listData}}" wx:key="{{index}}">
+    <view class="content__item {{item.FlagStatus === '无效' ? 'content__item--void' : ''}}" wx:for="{{listData}}" wx:key="{{index}}">
       <view 
         class="content__text" 
         bindtap="bindOpenChild" 
@@ -22,6 +26,7 @@
       <view 
         class="content__operation iconfont icon-gengduo" 
         data-dept-id="{{item.DeptID}}" 
+        data-flag-status="{{item.FlagStatus}}"
         bindtap="bindActionSheet"
       ></view>
     </view>

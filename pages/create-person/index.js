@@ -16,7 +16,7 @@ Page({
     countIsClick: false,  // 是否能够点了获取验证码
   },
   onLoad: function (options) {
-    this.getList();
+    // this.getList();
   },
   onShow: function () {
     // wx.setNavigationBarTitle({
@@ -57,6 +57,7 @@ Page({
           name: 'file',
           success(res) {
             var data = JSON.parse(res.data);
+            console.log(data)
             if (data.result === 'success') {
               $Message({ content: '上传成功', type: 'success' });
               _this.setData({

@@ -35,6 +35,8 @@ page {
   color: rgb(210,210,210);
 }
 .nav {
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
   padding-left: 24rpx;
@@ -62,9 +64,15 @@ page {
 .content {
   overflow: hidden;
   position: absolute;
-  top: 196rpx;
+  top: 156rpx;
   bottom: 100rpx;
   width: 100%;
+}
+.content__space {
+  padding: 20rpx 0;
+}
+.content__space:nth-child(1n + 2) {
+  padding-top: 0;
 }
 .content__item {
   overflow: hidden;
@@ -88,9 +96,44 @@ page {
   color: #fff;
 }
 .content__text {
+  display: flex;
+  align-items: center;
   position: relative;
   z-index: 2;
-  transition: all .3s;
+  height: 100%;
+}
+.content__item-emp {
+  line-height: 1;
+}
+.content__pic {
+  border-radius: 50%;
+  width: 88rpx;
+  height: 88rpx;
+}
+.content__emp-cont {
+  flex: 1;
+  padding-left: 24rpx;
+  padding-right: 130rpx;
+}
+.content__emp-title {
+  display: flex;
+  align-items: center;
+}
+.content__emp-name {
+  display: inline-block;
+  padding-right: 10rpx;
+  max-width: 240rpx;
+  font-size: 32rpx;
+  color: #222;
+}
+.content__emp-tel{
+  font-size: 32rpx;
+  color: #ff6714;
+}
+.content__dept-name {
+  padding-top: 12rpx;
+  font-size: 28rpx;
+  color: #999;
 }
 .content__operation { 
   display: flex;
@@ -105,6 +148,11 @@ page {
   font-size: 42rpx;
   color: rgb(193,193,193);
 }
+.icon-img__edit {
+  width: 48rpx;
+  height: 48rpx;
+}
+
 .footer {
   border-top: 1rpx solid #e6e6e6;
   position: absolute;

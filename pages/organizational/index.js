@@ -1,7 +1,7 @@
 
 const { $Message } = require('../../components/base/index');
 import _fgj from '../../utils/util.js';
-import { GetDepartmentByDeptNo, UpDepartmentStatus } from '../../api/organizational/organizational';
+import { GetDepartmentByDeptNo, UpDepartmentStatus } from '../../api/organizational/department';
 
 Page({
   data: {
@@ -46,7 +46,7 @@ Page({
   },
   // 打开下一级
   bindOpenChild(e) {
-    let { deptNo, deptName } = e.currentTarget.dataset;
+    let { deptNo, deptName, deptId } = e.currentTarget.dataset;
     let data = this.data;
     let ParentNote = [].concat(data.ParentNote);
 
@@ -56,6 +56,7 @@ Page({
       Layer: data.params.Layer,
       DeptNo: deptNo,
       DeptName: deptName,
+      DeptID: deptId,
       ParentNote: ParentNote.join(',')
     };
 
@@ -78,8 +79,12 @@ Page({
   bindActionSheet(e) {
     let _this = this;
     console.log(e.currentTarget.dataset)
-    let { deptId } = e.currentTarget.dataset;
-    let itemList = ['编辑', '作废'];
+    let { deptId, flagStatus } = e.currentTarget.dataset;
+    let itemList = ['编辑', '无效'];
+
+    if (flagStatus === '无效') {
+      itemList = ['编辑', '有效']
+    };
 
     wx.showActionSheet({
       itemList: itemList,
@@ -91,7 +96,7 @@ Page({
             });
           break;
           case 1:
-            this.UpDepartmentStatus(deptId, 0)
+            _this.UpDepartmentStatus(deptId, itemList[res.tapIndex])
           break;
           default:
             console.log('tapIndex异常')
@@ -102,11 +107,11 @@ Page({
       }
     })
   },
-  // 修改权限状态
+  // 修改状态
   UpDepartmentStatus(DeptID, FlagStatus) {
     wx.showLoading({ title: '加载中' });
     UpDepartmentStatus({
-      UserGroupID,
+      DeptID,
       FlagStatus
     })
     .then(res => {

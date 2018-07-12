@@ -2,7 +2,8 @@
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util';
 import { maximum } from '../../../utils/config';
-import { GetDepartmentByDeptNo } from '../../../api/organizational/organizational';
+import { GetDepartmentByDeptNo, UpDepartmentStatus } from '../../../api/organizational/department';
+import { GetEmployeeByDeptID } from '../../../api/organizational/employee';
 
 const path = 1;   // 当前级别，也是页面索引
 
@@ -13,15 +14,17 @@ Page({
       ParentDeptName: '', // 上级部门名称
       ParentDeptNo: '',   // 上级部门编号
     },
+    DeptID: '',         // 部门ID
     ParentNote: [],     // 页面层级导航
-    listData: [],
+    depData: [],        // 部门数据
+    empData: [],        // 人员数据
     UserGroupID: '',    // 记录要编辑的用户组ID
     loading: false,    // 加载中
     isClick: false,   // 只能点一次
   },
   onLoad: function (options) {
     console.log('child-' + path, options)
-    let { DeptName, DeptNo, ParentNote } = options;
+    let { DeptName, DeptNo, ParentNote, DeptID } = options;
     let params = this.data.params;
 
     params.ParentDeptName = DeptName;
@@ -34,7 +37,8 @@ Page({
     
     this.setData({
       params,
-      ParentNote: ParentNote.split(/,/)
+      ParentNote: ParentNote.split(/,/),
+      DeptID: DeptID || ''
     });
   },
   onReady: function () {
@@ -42,7 +46,32 @@ Page({
   onShow: function () {
     wx.showLoading({ title: '加载中' });
     this.GetDepartmentByDeptNo();    // 获取所有部门
-    console.log('onShow', this.data.ParentNote)
+    this.GetEmployeeByDeptID();      // 获取所有人员
+  },
+  // 获取所有人员
+  GetEmployeeByDeptID() {
+    GetEmployeeByDeptID({
+      DeptID: this.data.DeptID
+    }).then(res => {
+      let data = res.data;
+      if (data.result === 'success') {
+        // 手动添加图片，测试用途
+        data.temptable.forEach(item => {
+          item.EmpImg = 'https://mp.weixin.qq.com/debug/wxadoc/dev/image/cat/0.jpg?t=201879'
+        });
+        this.setData({
+          empData: data.temptable
+        });
+      }
+    })
+  },
+  // 编辑人员信息
+  bindEmpEdit(e) {
+    let { empId } = e.currentTarget.dataset;
+
+    wx.navigateTo({
+      url: '../emp-edit/index?EmpID=' + empId
+    })
   },
   // 获取所有部门
   GetDepartmentByDeptNo() {
@@ -52,11 +81,11 @@ Page({
       DeptNo: ParentDeptNo,
       Layer
     }).then(res => {
-      console.log(res)
+      // console.log(res)
       let data = res.data;
       if (data.result === 'success') {
         this.setData({
-          listData: data.temptable
+          depData: data.temptable
         });
       } else {
         $Message({ content: data.msg, type: 'warning' })
@@ -73,10 +102,6 @@ Page({
   },
   // 打开下一级
   bindOpenChild(e) {
-    if (path >= maximum) {
-      $Message({ content: '最多' + (maximum + 1) + '级', type: 'warning' })
-      return;
-    };
     let { deptNo, deptName } = e.currentTarget.dataset;
     let data = this.data;
     let ParentNote = [].concat(data.ParentNote);
@@ -99,7 +124,7 @@ Page({
     let ParentNote = this.data.ParentNote;
     ++index;      // 默认是从 0 开始，所以要加 1
 
-    // 最后一个不能点
+    // 最后一个是不能点的
     if (index === ParentNote.length) {
       return
     };
@@ -111,9 +136,12 @@ Page({
   // 用户组操作
   bindActionSheet(e) {
     let _this = this;
-    console.log(e.currentTarget.dataset)
-    let { deptId } = e.currentTarget.dataset;
-    let itemList = ['编辑', '作废'];
+    let { deptId, flagStatus } = e.currentTarget.dataset;
+    let itemList = ['编辑', '无效'];
+
+    if (flagStatus === '无效') {
+      itemList = ['编辑', '有效']
+    };
 
     wx.showActionSheet({
       itemList: itemList,
@@ -125,17 +153,7 @@ Page({
             });
           break;
           case 1:
-            wx.showModal({
-              title: '操作提示',
-              content: '作废之后无法恢复，确定吗？',
-              success: function (res) {
-                if (res.confirm) {
-                  // 
-                } else if (res.cancel) {
-                  // console.log('用户点击取消')
-                }
-              }
-            })
+            _this.UpDepartmentStatus(deptId, itemList[res.tapIndex])
           break;
           default:
             console.log('tapIndex异常')
@@ -146,22 +164,22 @@ Page({
       }
     })
   },
-  // 修改权限状态
-  UpGroupStatus(UserGroupID, FlagStatus) {
+  // 修改状态
+  UpDepartmentStatus(DeptID, FlagStatus) {
     wx.showLoading({ title: '加载中' });
-    UpGroupStatus({
-      UserGroupID,
+    UpDepartmentStatus({
+      DeptID,
       FlagStatus
     })
-    .then(res => {
-      // console.log(res)
-      wx.hideLoading();
-      if (res.data.result === 'success') {
-        $Message({ content: '修改成功', type: 'success' }); 
-        this.GetAllDepartment();    // 获取所有用户组数据
-      } else {
-        $Message({ content: res.data.msg, type: 'error' });
-      }
-    })
+      .then(res => {
+        // console.log(res)
+        wx.hideLoading();
+        if (res.data.result === 'success') {
+          $Message({ content: '修改成功', type: 'success' });
+          this.GetDepartmentByDeptNo();    // 获取所有用户组数据
+        } else {
+          $Message({ content: res.data.msg, type: 'error' });
+        }
+      })
   }
 })

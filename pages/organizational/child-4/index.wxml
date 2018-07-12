@@ -36,8 +36,5 @@
     </view>
   </scroll-view>
 </view>
-<view class="footer">
-  <text class="footer__new" bindtap="bindNew">新建</text>
-</view>
 
 <i-message id="message" />

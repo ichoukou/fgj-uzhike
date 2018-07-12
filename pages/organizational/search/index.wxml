@@ -1,15 +1,8 @@
 <view class="search">
-  <navigator url="/pages/organizational/search/index" hover-class="navigator-hover">
-    <view class="search__content">
-      <input class="search__input" disabled placeholder="搜索关键字" />
-      <text class="iconfont icon-sousuo search__icon"></text>
-    </view>
-  </navigator> 
-</view>
-<view class="nav">
-  <block wx:for="{{ParentNote}}" wx:key="{{index}}">
-    <text class="nav__item" bindtap="bindBack" data-index="{{index}}">{{item}}</text>
-  </block>
+  <view class="search__content">
+    <input class="search__input" bindinput="changeInput" placeholder="搜索关键字" />
+    <text class="iconfont icon-sousuo search__icon"></text>
+  </view>
 </view>
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
@@ -20,7 +13,6 @@
           bindtap="bindOpenChild" 
           data-dept-no="{{item.DeptNo}}"
           data-dept-name="{{item.DeptName}}"
-          data-dept-id="{{item.DeptID}}" 
         >{{item.DeptName}}</view> 
         <view 
           class="content__operation iconfont icon-gengduo" 
@@ -31,13 +23,10 @@
       </view>
       <view class="empty" wx:if="{{!listData.length && loading}}">
         <text class="iconfont icon-kong empty__icon"></text>
-        <text class="empty__desc">暂无数据</text>
+        <text class="empty__desc">没有找到相关数据</text>
       </view>
     </view>
   </scroll-view>
-</view>
-<view class="footer">
-  <text class="footer__new" bindtap="bindNew">新建</text>
 </view>
 
 <i-message id="message" />
