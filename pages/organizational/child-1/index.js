@@ -1,30 +1,57 @@
 
-const { $Message } = require('../../components/base/index');
-import _fgj from '../../utils/util.js';
-import { GetDepartmentByDeptNo, UpDepartmentStatus } from '../../api/organizational/organizational';
+const { $Message } = require('../../../components/base/index');
+import _fgj from '../../../utils/util';
+import { maximum } from '../../../utils/config';
+import { GetDepartmentByDeptNo } from '../../../api/organizational/organizational';
+
+const path = 1;   // 当前级别，也是页面索引
 
 Page({
   data: {
     params: {
-      Layer: '0',     // 当前级别
+      Layer: path,         // 当前级别
+      ParentDeptName: '', // 上级部门名称
+      ParentDeptNo: '',   // 上级部门编号
     },
-    ParentNote: ['组织架构'], // 页面层级导航
+    ParentNote: [],     // 页面层级导航
     listData: [],
-    UserGroupID: '',  // 记录要编辑的用户组ID
-    loading: false,   // 加载中
+    UserGroupID: '',    // 记录要编辑的用户组ID
+    loading: false,    // 加载中
     isClick: false,   // 只能点一次
   },
   onLoad: function (options) {
+    console.log('child-' + path, options)
+    let { DeptName, DeptNo, ParentNote } = options;
+    let params = this.data.params;
+
+    params.ParentDeptName = DeptName;
+    params.ParentDeptNo = DeptNo;
+
+    // 设置标题
+    wx.setNavigationBarTitle({
+      title: DeptName
+    });
+    
+    this.setData({
+      params,
+      ParentNote: ParentNote.split(/,/)
+    });
   },
   onReady: function () {
   },
   onShow: function () {
     wx.showLoading({ title: '加载中' });
     this.GetDepartmentByDeptNo();    // 获取所有部门
+    console.log('onShow', this.data.ParentNote)
   },
   // 获取所有部门
   GetDepartmentByDeptNo() {
-    GetDepartmentByDeptNo(this.data.params).then(res => {
+    let { ParentDeptNo, Layer } = this.data.params;
+
+    GetDepartmentByDeptNo({
+      DeptNo: ParentDeptNo,
+      Layer
+    }).then(res => {
       console.log(res)
       let data = res.data;
       if (data.result === 'success') {
@@ -41,26 +68,29 @@ Page({
   // 新建职务
   bindNew() {
     wx.navigateTo({
-      url: './new/index?Layer=' + this.data.params.Layer
+      url: '../new/index?' + _fgj.param(this.data.params)
     })
   },
   // 打开下一级
   bindOpenChild(e) {
+    if (path >= maximum) {
+      $Message({ content: '最多' + (maximum + 1) + '级', type: 'warning' })
+      return;
+    };
     let { deptNo, deptName } = e.currentTarget.dataset;
     let data = this.data;
     let ParentNote = [].concat(data.ParentNote);
 
     ParentNote.push(deptName);   // 拼接导航地址
 
-    let query = {
+    let params = {
       Layer: data.params.Layer,
       DeptNo: deptNo,
       DeptName: deptName,
       ParentNote: ParentNote.join(',')
     };
-
     wx.navigateTo({
-      url: './child-1/index?' + _fgj.param(query)
+      url: '../child-' + (path + 1) + '/index?' + _fgj.param(params)
     })
   },
   // 返回
@@ -68,8 +98,12 @@ Page({
     let { index } = e.currentTarget.dataset;
     let ParentNote = this.data.ParentNote;
     ++index;      // 默认是从 0 开始，所以要加 1
-    console.log('关闭时候的note', ParentNote)
-    console.log(Math.abs(index - ParentNote.length))
+
+    // 最后一个不能点
+    if (index === ParentNote.length) {
+      return
+    };
+    
     wx.navigateBack({
       delta: Math.abs(index - ParentNote.length)
     });
@@ -87,11 +121,21 @@ Page({
         switch(res.tapIndex) {
           case 0:
             wx.navigateTo({
-              url: './new/index?&DeptID=' + deptId
+              url: '../new/index?&DeptID=' + deptId
             });
           break;
           case 1:
-            this.UpDepartmentStatus(deptId, 0)
+            wx.showModal({
+              title: '操作提示',
+              content: '作废之后无法恢复，确定吗？',
+              success: function (res) {
+                if (res.confirm) {
+                  // 
+                } else if (res.cancel) {
+                  // console.log('用户点击取消')
+                }
+              }
+            })
           break;
           default:
             console.log('tapIndex异常')
@@ -103,9 +147,9 @@ Page({
     })
   },
   // 修改权限状态
-  UpDepartmentStatus(DeptID, FlagStatus) {
+  UpGroupStatus(UserGroupID, FlagStatus) {
     wx.showLoading({ title: '加载中' });
-    UpDepartmentStatus({
+    UpGroupStatus({
       UserGroupID,
       FlagStatus
     })
@@ -114,7 +158,7 @@ Page({
       wx.hideLoading();
       if (res.data.result === 'success') {
         $Message({ content: '修改成功', type: 'success' }); 
-        this.GetDepartmentByDeptNo();    // 获取所有用户组数据
+        this.GetAllDepartment();    // 获取所有用户组数据
       } else {
         $Message({ content: res.data.msg, type: 'error' });
       }

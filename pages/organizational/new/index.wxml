@@ -1,10 +1,10 @@
 <view class="content">
   <view class="list-wrap">
 
-    <view class="list">
+    <view class="list" wx:if="{{upLevel}}">
       <text class="list__title">上一级</text>
       <view class="list__content">
-        <text class="list__desc">他的爸爸</text>
+        <text class="list__desc">{{upLevel}}</text>
       </view>
     </view>
     <view class="list">

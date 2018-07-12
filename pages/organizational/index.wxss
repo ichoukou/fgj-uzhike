@@ -3,10 +3,66 @@ page {
   position: relative;
   height: 100%;
 }
+
+.search {
+  overflow: hidden;
+  padding: 0 24rpx;
+  background-color: #fff; 
+}
+.search__content {
+  position: relative;
+  margin-top: 24rpx;
+  margin-bottom: 10rpx;
+  border-radius: 8rpx;
+  width: 100%;
+  height: 60rpx;
+  background-color: rgb(241,241,241);
+}
+.search__icon {
+  position: absolute;
+  left: 16rpx;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: 60rpx;
+  font-size: 32rpx;
+  color: rgb(210,210,210);
+}
+.search__input {
+  padding-left: 60rpx;
+  font-size: 28rpx;
+  min-height: 60rpx;
+  color: rgb(210,210,210);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  padding-left: 24rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+  width: 100%;
+  height: 68rpx;
+  background-color: #fff;
+}
+.nav__item {
+  padding: 0 4rpx;
+  height: 68rpx;
+  line-height: 68rpx;
+  font-size: 24rpx;
+  color: #222;
+}
+.nav__iconfont:first-child {
+  display: none;
+}
+.nav__item--disable {
+  color: #999;
+}
+.nav__iconfont {
+  color: #e6e6e6;
+}
 .content {
   overflow: hidden;
   position: absolute;
-  top: 0;
+  top: 196rpx;
   bottom: 100rpx;
   width: 100%;
 }

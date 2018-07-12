@@ -6,11 +6,12 @@ import { InsertDepartment, GetDepartmentByID, UpDepartment } from '../../../api/
 
 Page({
   data: {
+    upLevel: '',          // 显示上一级
     params: {
       DeptName: '',       // 部门名称
       Tel: '',            // 电话
       Address: '',        // 地址
-      DeptType: '默认值',  // 部门类型
+      DeptType: '类型1',  // 部门类型
       FlagStatus: '1',     // 状态，默认是1
       ParentDeptNo: '',    // 上级部门编号
       Layer: '',           // 级别
@@ -22,6 +23,9 @@ Page({
       }, {
         label: '类型2',
         value: '类型2'
+      }, {
+        label: '类型3',
+        value: '类型3'
       }
     ],
     pickerValueTypeIndex: 0,
@@ -30,14 +34,16 @@ Page({
   },
   onLoad(options) {
     console.log('参数', options)
-    let { DeptID, Layer } = options;
+    let { DeptID, Layer, ParentDeptNo, ParentDeptName } = options;
     let params = this.data.params;
 
-    Layer && (params.Layer = Layer);
     DeptID && (params.DeptID = DeptID);
+    Layer && (params.Layer = Layer);
+    ParentDeptNo && (params.ParentDeptNo = ParentDeptNo);
 
     this.setData({
-      params
+      params,
+      upLevel: ParentDeptName || ''
     });
 
     // 有部门ID就是编辑
@@ -101,7 +107,7 @@ Page({
     let { params, pickerValueType, pickerValueTypeIndex } = this.data;
     let index = e.detail.value;
 
-    params.PositionLevel = pickerValueType[index].value;
+    params.DeptType = pickerValueType[index].value;
     this.setData({
       params,
       pickerValueTypeIndex: index

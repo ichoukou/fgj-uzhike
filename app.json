@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/organizational/index",
+    "pages/organizational/child-1/index",
+    "pages/organizational/child-2/index",
+    "pages/organizational/child-3/index",
     "pages/organizational/new/index",
     "pages/index/index",
     "pages/test/index",
@@ -23,10 +26,10 @@
     "backgroundColor": "#ffffff"
   },
   "networkTimeout": {
-    "request": 10000,
-    "connectSocket": 10000,
-    "uploadFile": 10000,
-    "downloadFile": 10000
+    "request": 60000,
+    "connectSocket": 60000,
+    "uploadFile": 60000,
+    "downloadFile": 60000
   },
   "debug": true
 }
