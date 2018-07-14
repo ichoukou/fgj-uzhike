@@ -12,7 +12,7 @@
 .list {
   display: flex;
   align-items: center;
-  height: 100rpx;
+  height: 90rpx;
 }
 .list + .list {
   border-top: 1rpx solid rgb(230,230,230);
@@ -27,7 +27,7 @@
   height: 100%;
 }
 .list__input {
-  min-height: 100rpx;
+  min-height: 90rpx;
   /* font-size: 16px;s */
 }
 .list__arrow {
@@ -40,7 +40,7 @@
   justify-content: flex-end;
 }
 .list__picker {
-  line-height: 100rpx;
+  line-height: 90rpx;
 }
 .footer {
   position: absolute;

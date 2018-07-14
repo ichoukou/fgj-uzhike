@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "i-message": "/components/message/index"
+    "i-message": "/components/message/index",
+    "select-dept": "/components/select-dept/index"
   }
 }

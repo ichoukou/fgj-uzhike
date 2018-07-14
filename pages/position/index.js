@@ -92,7 +92,7 @@ Page({
       wx.hideLoading();
       if (res.data.result === 'success') {
         $Message({ content: '修改成功', type: 'success' }); 
-        this.getListData();    // 再次获取数据
+        this.getGroupData();    // 获取所有用户组数据
       } else {
         $Message({ content: res.data.msg, type: 'error' });
       }

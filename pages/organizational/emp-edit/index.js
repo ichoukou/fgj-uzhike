@@ -1,8 +1,10 @@
 
 const { $Message } = require('../../../components/base/index');
 import { GetEmployeeByID } from '../../../api/organizational/employee';
-import { GetDepartmentByDeptNo } from '../../../api/organizational/department';
+// import {  } from '../../../api/organizational/department';
 import { FileUpLoad } from '../../../api/public';
+
+import { maximum } from '../../../utils/config';
 
 Page({
   data: {
@@ -18,6 +20,7 @@ Page({
       JoinDate: '',     // 加入时间
       Source: '',       // 来源
       EmpImg: '',       // 头像
+      DeptName: '请选择部门',     // 选项
     },
     EmpImg: 'https://licong96.github.io/lib/image/licong.jpg',
     pickerValueSex: [
@@ -51,62 +54,15 @@ Page({
     pickerValueTypeIndex: 0,
     disabled: false,
     loading: false,
-    departmert: {     // 记录部门选项
-      offsetLeft: '-0%',
-      Layer: 0,
-      DeptNo: '',
-      data: [
-        [{
-          name: '列表1'
-        },
-        {
-          name: '列表1'
-        }, {
-          name: '列表1'
-        }, {
-          name: '列表1'
-        }, {
-          name: '列表1'
-        }, {
-          name: '列表1'
-        }, {
-          name: '列表1'
-        }, {
-          name: '列表1'
-        },
-        {
-          name: '列表1'
-        }],
-        [{
-          name: '列表2'
-        },
-        {
-          name: '列表2'
-        }],
-        [{
-          name: '列表3'
-        },
-        {
-          name: '列表3'
-        }],
-        [{
-          name: '列表4'
-        },
-        {
-          name: '列表4'
-        }]
-      ]
-    }
   },
   onLoad: function (options) {
     console.log('emp-edit', options)
     // let { EmpID } = options;
 
     this.GetEmployeeByID('76B7D769409E4A10B843356515B75C7A');
-    this.GetDepartmentByDeptNo();    // 获取第一级部门
   },
   onReady: function () {
-
+    this.selectDept = this.selectComponent('#selectDept');
   },
   onShow: function () {
   
@@ -166,25 +122,20 @@ Page({
       }
     })
   },
-  // 获取对应的部门
-  GetDepartmentByDeptNo() {
-    let departmert = this.data.departmert;
-    let { Layer, DeptNo } = departmert;
+  // 打开部门选择器
+  bindOpenSelectDept() {
+    this.selectDept.show();
+  },
+  // 选择部门返回值
+  bindSelectConfirm(data) {
+    let { DeptID, DeptName } = data.detail.value;
+    let params = this.data.params;
 
-    GetDepartmentByDeptNo({
-      Layer,
-      DeptNo
-    }).then(res => {
-      if (res.data.result === 'success') {
-        console.log(res.data)
-        
-        departmert.data.splice(Layer, 1, res.data.temptable);
+    params.DeptID = DeptID;
+    params.DeptName = DeptName;
 
-        this.setData({
-          departmert
-        })
-
-      }
+    this.setData({
+      params
     })
-  }
+  },
 })

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "新建",
+  "usingComponents": {
+    "i-message": "/components/message/index"
+  }
+}

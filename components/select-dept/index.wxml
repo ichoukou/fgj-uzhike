@@ -1,0 +1,40 @@
+<!--选择部门-->
+<wux-animation-group wux-class="select" in="{{isShow}}" class-names="wux-animate--slideInUp">
+  <view class="select__content">
+    <view class="select-title">
+      <text class="select-title__text" bindtap="hide">取消</text>
+      <text class="select-title__text select-title__text--full">选择部门</text>
+      <text class="select-title__text" bindtap="confirm">确定</text>
+    </view>
+    <view class="select-nav">
+      <block wx:for="{{departmert.nav}}" wx:key="{{index}}">
+        <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
+        <text class="select-nav__list" data-index="{{index}}" bindtap="bindSelectNav">{{item}}</text>
+      </block>
+      <text class="select-nav__list--gray" wx:if="{{!departmert.nav.length}}">请选择部门</text>
+    </view>
+    <view class="select-content">
+      <view class="select-content__full" style="transform: translate3d({{departmert.offsetLeft}}, 0, 0)">
+        <view class="select-content__scroll" wx:for="{{departmert.data}}" wx:key="{{index}}">
+          <scroll-view scroll-y style="height: 100%;">
+            <text 
+              class="select-content__item {{list.DeptName === departmert.nav[list.Layer] ? 'select__item--active': ''}}" 
+              wx:for="{{item}}" 
+              wx:for-item="list" 
+              wx:key="{{index}}"
+              data-layer="{{list.Layer}}"
+              data-dept-no="{{list.DeptNo}}"
+              data-dept-name="{{list.DeptName}}"
+              data-dept-id="{{list.DeptID}}"
+              bindtap="bindChangeSelect"
+            >{{list.DeptName}}</text>
+            <!-- <text wx:if="{{!item.length}}" class="iconfont icon-kong empty__icon"></text> -->
+          </scroll-view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="select__bg-click" bindtap="hide"></view> 
+</wux-animation-group>
+
+<wux-backdrop id="wux-backdrop" />

@@ -1,7 +1,11 @@
-
 <view class="content">
-  <navigator class="content__item" url="/pages/purview/index" hover-class="navigator-hover">权限模板管理</navigator>
-  <navigator class="content__item" url="/pages/userGroup/index" hover-class="navigator-hover">用户组管理</navigator>
-  <navigator class="content__item" url="/pages/position/index" hover-class="navigator-hover">职务管理</navigator>
-  <navigator class="content__item" url="/pages/organizational/index" hover-class="navigator-hover">组织架构</navigator> 
+  <navigator class="content__item" url="/pages/purview/index" hover-class="navigator-hover">权限模板管理
+  </navigator>
+  <navigator class="content__item" url="/pages/userGroup/index" hover-class="navigator-hover">用户组管理
+  </navigator>
+  <navigator class="content__item" url="/pages/position/index" hover-class="navigator-hover">职务管理
+  </navigator>
+  <navigator class="content__item" url="/pages/dictionary/index" hover-class="navigator-hover">字典管理
+  </navigator>
+  <navigator class="content__item" url="/pages/organizational/index" hover-class="navigator-hover">组织架构</navigator>
 </view>

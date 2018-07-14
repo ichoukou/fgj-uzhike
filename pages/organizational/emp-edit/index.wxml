@@ -9,8 +9,10 @@
       </view>
       <view class="list">
         <text class="list__title">部门</text>
-        <view class="list__content">
+        <view class="list__content" bindtap="bindOpenSelectDept">
+           <text class="list__content-text">{{params.DeptName}}</text> 
         </view>
+        <text class="iconfont icon-jiantou2 list__arrow"></text>
       </view>
       <view class="list">
         <text class="list__title">职务</text>
@@ -87,6 +89,9 @@
 
 <i-message id="message" />
 
+<select-dept id="selectDept" bindconfirm="bindSelectConfirm"></select-dept>
+
+<!-- 
 <view class="select">
   <view class="select-title">
     <text class="select-title__text">取消</text>
@@ -94,35 +99,29 @@
     <text class="select-title__text">确定</text>
   </view>
   <view class="select-nav">
-    <text class="select-nav__list">导航</text>
+    <block wx:for="{{departmert.nav}}" wx:key="{{index}}">
+      <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
+      <text class="select-nav__list" data-index="{{index}}" bindtap="bindSelectNav">{{item}}</text>
+    </block>
+    <text class="select-nav__list--gray" wx:if="{{!departmert.nav.length}}">请选择部门</text>
   </view>
   <view class="select-content">
     <view class="select-content__full" style="transform: translate3d({{departmert.offsetLeft}}, 0, 0)">
       <view class="select-content__scroll" wx:for="{{departmert.data}}" wx:key="{{index}}">
         <scroll-view scroll-y style="height: 100%;">
           <text 
-            class="select-content__item" 
+            class="select-content__item {{list.DeptName === departmert.nav[list.Layer] ? 'select__item--active': ''}}" 
             wx:for="{{item}}" 
             wx:for-item="list" 
             wx:key="{{index}}"
+            data-layer="{{list.Layer}}"
+            data-dept-no="{{list.DeptNo}}"
+            data-dept-name="{{list.DeptName}}"
+            data-dept-id="{{list.DeptID}}"
+            bindtap="bindChangeSelect"
           >{{list.DeptName}}</text>
         </scroll-view>
       </view>
-      <!-- <view class="select-content__scroll">
-        <scroll-view scroll-y style="height: 100%;">
-          <text class="select-content__item">列表2</text>
-        </scroll-view>
-      </view>
-      <view class="select-content__scroll">
-        <scroll-view scroll-y style="height: 100%;">
-          <text class="select-content__item">列表3</text>
-        </scroll-view>
-      </view>
-      <view class="select-content__scroll">
-        <scroll-view scroll-y style="height: 100%;">
-          <text class="select-content__item">列表4</text>
-        </scroll-view>
-      </view> -->
     </view>
   </view>
-</view>
+</view> -->

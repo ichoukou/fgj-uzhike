@@ -1,0 +1,67 @@
+<view class="container">
+  <view class="list">
+    <view class="item">
+      <text class="item-title">引用名称解释名</text>
+      <input
+        class="item-input"
+        placeholder-class="phcolor"
+        type="text"
+        data-type="RefNameCn"
+        bindinput="inputChange"
+        placeholder="请填写" />
+    </view>
+     <view class="item">
+      <text class="item-title">引用名称</text>
+      <input
+        class="item-input"
+        placeholder-class="phcolor"
+        type="text"
+        data-type="RefName"
+        bindinput="inputChange"
+        placeholder="请填写" />
+    </view>
+     <view class="item">
+      <text class="item-title">引用项排序编号</text>
+      <input
+        class="item-input"
+        placeholder-class="phcolor"
+        type="number"
+        data-type="ItemNo"
+        bindinput="inputChange"
+        placeholder="请填写" />
+    </view>
+     <view class="item">
+      <text class="item-title">引用项值</text>
+      <input
+        class="item-input"
+        placeholder-class="phcolor"
+        type="text"
+        data-type="ItemValue"
+        bindinput="inputChange"
+        placeholder="请填写" />
+    </view>
+     <view class="item">
+      <text class="item-title">引用项扩展信息</text>
+      <input
+        class="item-input"
+        placeholder-class="phcolor"
+        type="text"
+        data-type="ItemInfo"
+        bindinput="inputChange"
+        placeholder="请填写" />
+    </view>
+     <view class="item">
+      <text class="item-title">限制操作</text>
+      <!-- <picker class="flex-1" bindchange="bindPickerChange" value="{{ index }}" range="{{ array }}">
+        <text>{{array[index]}}</text>
+      </picker> -->
+      <input class="item-input" placeholder-class="phcolor" type="text" placeholder="请设置" disabled /> 
+      <text class="iconfont icon-jiantou2 item-arrow"></text> 
+    </view>
+  </view>
+  <view class="footer">
+    <text class="footer-text" bindtap="bindSubmit">完成</text>
+  </view>
+</view>
+
+<i-message id="message" />
