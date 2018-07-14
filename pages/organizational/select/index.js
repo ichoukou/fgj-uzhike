@@ -1,8 +1,9 @@
-
+const { $Message } = require('../../../components/base/index');
+import { GetAllPosition } from '../../../api/position/position';
+import { GetAllUserGroup } from '../../../api/userGroup/userGroup';
 
 Page({
   data: {
-    sideNav: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'],
     map: [
       // {
       //   title: 'A',
@@ -11,17 +12,23 @@ Page({
       //   ]
       // }
     ],
-    // currentIndex: 'A',
-    // scrollTop: 0,
+    currentType: '',
+    params: {},     // 筛选条件
+    onceTime: null,
     currentNodes: {
       title: 'A',
       scrollTop: 0,
-      prevTitle: 'A',        // 记录上一个的位置
-      prevScrollTop: 0,     // 记录上一个的滚动位置
-    }
+      isNavShowN: false,
+    },
+    loading: false,
   },
   onLoad: function (options) {
-    this.filterMap();   // 处理数据
+    console.log('select', options);
+    let { type } = options;
+    this.data.currentType = type;
+
+    // 判断类型，决定加载什么数据
+    this.judgeType(type);
   },
   onReady: function () {
   
@@ -29,123 +36,169 @@ Page({
   onShow: function () {
 
   },
-  // 手指按下
-  handlerStart(e) {
-    console.log(e)
-    let { title } = e.target.dataset;
-    let currentNodes = this.data.currentNodes;
-
-    currentNodes.title = title
-
-    this.setData({
-      currentNodes
-    })
-
-    this.queryMultipleNodes('the-list-' + title);
+  // 判断类型，决定加载什么数据
+  judgeType(type) {
+    if (type === 'position') {
+      this.GetAllPosition();   // 获取职务数据
+    }
+    else if (type === 'group') {
+      this.GetAllUserGroup();
+    }
   },
-  // 手指滑动
-  handlerMove(e) {
-    let { title } = e.target.dataset;
-    let currentNodes = this.data.currentNodes;
-
-    currentNodes.title = title
-
+  // 获取职务数据
+  GetAllPosition() {
     this.setData({
-      currentNodes
+      map: [],
+      loading: false
+    });
+    GetAllPosition(this.data.params).then(res => {
+      if (res.data.result === 'success') {
+        this.filterMap(res.data.temptable);
+      };
+      this.setData({
+        loading: true,
+      });
     })
-
-    this.queryMultipleNodes('the-list-' + title);
   },
-  // 手指抬起
-  handlerEnd(e) {
+  // 获取用户组数据
+  GetAllUserGroup() {
+    this.setData({
+      map: [],
+      loading: false
+    });
+    GetAllUserGroup(this.data.params).then(res => {
+      if (res.data.result === 'success') {
+        this.filterMap(res.data.temptable);
+      };
+      this.setData({
+        loading: true,
+      });
+    })
+  },
+  // 选中
+  bindClick(e) {
+    console.log(e.target)
+    let { name, id } = e.target.dataset;
+    if (id) {
+      // 把选中的值存储起来，这里用的是同步，避免没有存储进去
+      try {
+        wx.setStorageSync('organSelect', {
+          name,
+          id,
+          type: this.data.currentType
+        });
+      } catch (e) {
+        console.log(e)
+      };
+      wx.navigateBack()
+    }
+  },
+  // 搜索
+  bindQuery(e) {
+    console.log(e.detail.value)
+    // let likestr = e.detail.value;
+    this.data.params.likestr = e.detail.value;
+    let currentType = this.data.currentType;
 
+    this.data.onceTime && (clearTimeout(this.data.onceTime));
+    this.data.onceTime = setTimeout(() => {
+      if (currentType === 'position') {
+        this.GetAllPosition();   // 获取职务数据
+      }
+      else if (currentType === 'group') {
+        this.GetAllUserGroup();   // 获取用户组数据
+      }
+    }, 200)
   },
   // 点击侧边导航
   bindNavTap(e) {
-    let { title } = e.currentTarget.dataset;
+    let { title } = e.target.dataset;
+    let map = this.data.map;
     let currentNodes = this.data.currentNodes;
 
-    currentNodes.title = title
+    for (let i = 0, length = map.length; i < length; i++) {
+      if (map[i].title === title) {
+        currentNodes.scrollTop = map[i].scrollTop;
+        currentNodes.title = title;
+        currentNodes.isNavShowN = true;
+        break;
+      }
+    };
 
     this.setData({
       currentNodes
-    })
+    });
 
-    this.queryMultipleNodes('the-list-' + title);
+    // 一段时间之后隐藏选中的提示
+    this.data.onceTime && (clearTimeout(this.data.onceTime))
+    this.data.onceTime = setTimeout(() => {
+      currentNodes.isNavShowN = false;
+      this.setData({
+        currentNodes
+      })
+    }, 1000);
   },
-  // 获取元素位置
-  queryMultipleNodes: function (id) {
+  // 处理数据
+  filterMap(data) {
+    let map     = this.data.map,
+        obj     = {},
+        element = '',
+        type    = this.data.currentType,
+        title   = '';
+
+    for (let i = 0, length = data.length; i < length; i++) {
+      title = data[i].PY.substring(0, 1).toLocaleUpperCase();      // 截取首字母并转大写
+
+      // 在数据里面多添加这两条字段，当做公用字段
+      if (type === 'position') {
+        data[i].name = data[i].PositionName;
+        data[i].id = data[i].PositionID;
+      }
+      else if (type === 'group') {
+        data[i].name = data[i].GroupName;
+        data[i].id = data[i].UserGroupID;
+      }
+      
+      if (!obj[title]) {
+        obj[title] = {
+          title: title,
+          items: [
+            data[i]
+          ]
+        }
+      } else {
+        obj[title].items.push(data[i])
+      }
+    };
+
+    // 变成有序列表
+    for (let key in obj) {
+      map.push(obj[key])
+    };
+    console.log(map)
+    this.setData({
+      map
+    });
+    
+    // 获取每个元素的滚动位置
+    setTimeout(() => {
+      this.data.map.forEach(item => {
+        element = 'the-list-' + item.title;
+        this.itemScrollTop(element, function (data) {
+          item.scrollTop = data
+        });
+      })
+    }, 300)
+  },
+  // 获取每个元素的滚动位置
+  itemScrollTop(id, callback) {
     let query = wx.createSelectorQuery();
-    let currentNodes = this.data.currentNodes;
-    let _this = this;
 
     query.select('#' + id).boundingClientRect()
     query.selectViewport().scrollOffset()
     query.exec(function (res) {
-      console.log(res[0].top - 50)
-
-      // currentNodes.scrollTop = res[0].top - 50
-
-      // currentNodes.prevScrollTop = currentNodes.scrollTop;
-
-      // _this.setData({
-      //   currentNodes
-      // });
-
-      _this.currentScrollTop(res[0].top);   // 计算滚动
-    })
-  },
-  // 监听滚动
-  bindScrollChange(e) {
-    let currentNodes = this.data.currentNodes;
-    currentNodes.prevScrollTop = e.detail.scrollTop;
-  },
-  // 计算滚动
-  currentScrollTop(top) {
-    let currentNodes = this.data.currentNodes;
-
-    // 判断是往上还是往下
-    if (currentNodes.title >= currentNodes.prevTitle) {
-      currentNodes.scrollTop = top + currentNodes.prevScrollTop
-    } 
-    else {
-      currentNodes.scrollTop = currentNodes.prevScrollTop - Math.abs(top)
-    }
-    
-    console.log(currentNodes)
-
-    // 记录上一个位置
-    currentNodes.prevTitle = currentNodes.title;            
-    currentNodes.prevScrollTop = currentNodes.scrollTop;
-    
-    this.setData({
-      currentNodes
-    });
-  },
-  // 处理数据
-  filterMap() {
-    let map = this.data.map;
-    let sideNav = this.data.sideNav;
-    let obj = {};
-
-    // 模拟数据
-    for (let i = 0; i < sideNav.length; i++) {
-      obj = {
-        title: sideNav[i],
-        items: []
-      }
-      let random = Math.ceil( (Math.random() * 10) + 3 );
-      for (let j = 0; j < random; j ++) {
-        obj.items.push({
-          name: '内容' + sideNav[i]
-        })
-      };
-      map.push(obj)
-    };
-    console.log(map)
-
-    this.setData({
-      map
+      // console.log(res[0].top - 50);
+      typeof callback === 'function' && callback(res[0].top - 50);
     })
   }
 })

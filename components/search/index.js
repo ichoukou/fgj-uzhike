@@ -1,49 +1,40 @@
 
 Component({
   properties: {
-    titleText: {
+    height: {
       type: String,
-      value: '标题'
+      value: '120rpx'
+    },
+    placeholder: {
+      type: String,
+      value: '搜索关键字'
     }
   },
   data: {
-    inputValue: '', // input的值
+    query: '',    // 搜索的内容
   },
   created() {
   },
   methods: {
-    // 显示模态框
-    onShowModal(params = {}) {
+    // 监听input变化
+    bindQuery(e) {
+      console.log(e)
+      let value = e.detail.value
       this.setData({
-        inputValue: params.inputValue || ''
-      })
-    },
-    // 输入名称
-    changeInput(e) {
-      this.setData({
-        inputValue: e.detail.value
-      })
-    },
-    // 确定按钮
-    onSubmit(e) {
-      let { inputValue } = this.data;
-
-      if (!inputValue.trim()) {
-        wx.showToast({
-          title: '请输入名称',
-          icon: 'none',
-          duration: 2000
-        })
-        return;
-      };
-
-      this.triggerEvent('submit', {
-        inputValue: inputValue
+        query: e.detail.value
       });
-      // 发送成功后清空
-      this.setData({
-        inputValue: ''
-      })
+      this.triggerEvent('query', {
+        value
+      });
     },
+    // 清空搜索内容
+    bindClear() {
+      this.setData({
+        query: ''
+      });
+      this.triggerEvent('query', {
+        value: ''
+      });
+    }
   },
 });

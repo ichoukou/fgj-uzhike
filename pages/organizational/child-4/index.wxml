@@ -1,8 +1,10 @@
 <view class="search">
-  <view class="search__content">
-    <input class="search__input" disabled placeholder="搜索关键字" />
-    <text class="iconfont icon-sousuo search__icon"></text>
-  </view>
+  <navigator url="/pages/organizational/search/index" hover-class="navigator-hover">
+    <view class="search__content">
+      <input class="search__input" disabled placeholder="搜索关键字" />
+      <text class="iconfont icon-sousuo search__icon"></text>
+    </view>
+  </navigator> 
 </view>
 <view class="nav">
   <block wx:for="{{ParentNote}}" wx:key="{{index}}">
@@ -16,21 +18,43 @@
 </view>
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
-    <view class="content__item {{item.FlagStatus === '无效' ? 'content__item--void' : ''}}" wx:for="{{listData}}" wx:key="{{index}}">
-      <view 
-        class="content__text" 
-        bindtap="bindOpenChild" 
-        data-dept-no="{{item.DeptNo}}"
-        data-dept-name="{{item.DeptName}}"
-      >{{item.DeptName}}</view> 
-      <view 
-        class="content__operation iconfont icon-gengduo" 
-        data-dept-id="{{item.DeptID}}" 
-        data-flag-status="{{item.FlagStatus}}"
-        bindtap="bindActionSheet"
-      ></view>
+    <!-- 部门 -->
+    <view class="content__space">
+      <view class="content__item {{item.FlagStatus === '无效' ? 'content__item--void' : ''}}" wx:for="{{depData}}" wx:key="{{index}}">
+        <view 
+          class="content__text" 
+          bindtap="bindOpenChild" 
+          data-dept-no="{{item.DeptNo}}"
+          data-dept-name="{{item.DeptName}}"
+          data-dept-id="{{item.DeptID}}" 
+        >{{item.DeptName}}</view> 
+        <view 
+          class="content__operation iconfont icon-gengduo" 
+          data-dept-id="{{item.DeptID}}" 
+          data-flag-status="{{item.FlagStatus}}"
+          bindtap="bindActionSheet"
+        ></view>
+      </view>
     </view>
-    <view class="empty" wx:if="{{!listData.length && loading}}">
+    <!-- 人员 -->
+    <view class="content__space">
+      <view class="content__item content__item-emp" wx:for="{{empData}}" wx:key="{{index}}">
+        <view class="content__text">
+          <image class="content__pic" mode="aspectFill" src="{{item.EmpImg}}"></image>
+          <view class="content__emp-cont">
+            <view class="content__emp-title">
+              <text class="content__emp-name text-ellipsis">{{item.EmpName}}</text>
+              <text class="content__emp-tel">{{item.Tel}}</text>
+            </view>
+            <view class="content__dept-name">{{item.DeptName}}</view>
+          </view>
+        </view>
+        <view class="content__operation" data-emp-id="{{item.EmpID}}" bindtap="bindEmpEdit">
+          <image class="icon-img__edit" mode="scaleToFill" src="../../../images/icon/edit.png"></image>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{!depData.length && !empData.length && loading}}">
       <text class="iconfont icon-kong empty__icon"></text>
       <text class="empty__desc">暂无数据</text>
     </view>

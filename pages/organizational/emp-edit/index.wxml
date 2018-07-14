@@ -16,22 +16,15 @@
       </view>
       <view class="list">
         <text class="list__title">职务</text>
-        <view class="list__content">
-          <picker 
-            mode="selector" 
-            bindchange="bindPickerChange" 
-            value="{{pickerValueTypeIndex}}" 
-            range="{{pickerValueType}}" 
-            range-key="label"
-          >
-          <text class="list__picker">{{params.PositionLevel}}</text>
-          </picker>
+        <view class="list__content" data-type="position" bindtap="bindOpenSelectPage">
+          <text class="list__content-text">{{params.PositionName}}</text>
         </view>
         <text class="iconfont icon-jiantou2 list__arrow"></text>
       </view>
       <view class="list">
         <text class="list__title">用户组</text>
-        <view class="list__content">
+        <view class="list__content" data-type="group" bindtap="bindOpenSelectPage">
+          <text class="list__content-text">{{params.GroupName}}</text>
         </view>
         <text class="iconfont icon-jiantou2 list__arrow"></text>
       </view>
@@ -43,7 +36,7 @@
             type="text" 
             value="{{params.EmpName}}" 
             data-type="EmpName" 
-            bindinput="changeInput" 
+            bindblur="changeInput" 
             placeholder="请填写姓名" />
         </view>
       </view>
@@ -57,7 +50,7 @@
             range="{{pickerValueSex}}" 
             range-key="label"
           >
-          <text class="list__picker">{{params.Sex}}</text>
+            <text class="list__picker">{{params.Sex}}</text>
           </picker>
         </view>
         <text class="iconfont icon-jiantou2 list__arrow"></text>
@@ -65,16 +58,37 @@
       <view class="list">
         <text class="list__title">生日</text>
         <view class="list__content">
+          <picker 
+            mode="date" 
+            value="{{params.Birthday}}" 
+            start="1910-01-01" 
+            end="{{nowDate}}" 
+            data-type="Birthday" 
+            bindchange="bindDateChange"
+          >
+            <text class="list__picker">{{params.Birthday}}</text>
+          </picker>
         </view>
       </view>
       <view class="list">
         <text class="list__title">加入时间</text>
         <view class="list__content">
+          <picker 
+            mode="date" 
+            value="{{params.JoinDate}}" 
+            start="1910-01-01" 
+            end="{{nowDate}}" 
+            data-type="JoinDate" 
+            bindchange="bindDateChange"
+          >
+            <text class="list__picker">{{params.JoinDate}}</text>
+          </picker>
         </view>
       </view>
-      <view class="list">
+      <view class="list list-auto">
         <text class="list__title">备注</text>
         <view class="list__content">
+          <textarea class="list__textarea" value="{{params.Remark}}" bindblur="bindTextAreaBlur" auto-height placeholder="请填写备注" />
         </view>
       </view>
     </view>
@@ -90,38 +104,3 @@
 <i-message id="message" />
 
 <select-dept id="selectDept" bindconfirm="bindSelectConfirm"></select-dept>
-
-<!-- 
-<view class="select">
-  <view class="select-title">
-    <text class="select-title__text">取消</text>
-    <text class="select-title__text select-title__text--full">选择部门</text>
-    <text class="select-title__text">确定</text>
-  </view>
-  <view class="select-nav">
-    <block wx:for="{{departmert.nav}}" wx:key="{{index}}">
-      <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
-      <text class="select-nav__list" data-index="{{index}}" bindtap="bindSelectNav">{{item}}</text>
-    </block>
-    <text class="select-nav__list--gray" wx:if="{{!departmert.nav.length}}">请选择部门</text>
-  </view>
-  <view class="select-content">
-    <view class="select-content__full" style="transform: translate3d({{departmert.offsetLeft}}, 0, 0)">
-      <view class="select-content__scroll" wx:for="{{departmert.data}}" wx:key="{{index}}">
-        <scroll-view scroll-y style="height: 100%;">
-          <text 
-            class="select-content__item {{list.DeptName === departmert.nav[list.Layer] ? 'select__item--active': ''}}" 
-            wx:for="{{item}}" 
-            wx:for-item="list" 
-            wx:key="{{index}}"
-            data-layer="{{list.Layer}}"
-            data-dept-no="{{list.DeptNo}}"
-            data-dept-name="{{list.DeptName}}"
-            data-dept-id="{{list.DeptID}}"
-            bindtap="bindChangeSelect"
-          >{{list.DeptName}}</text>
-        </scroll-view>
-      </view>
-    </view>
-  </view>
-</view> -->

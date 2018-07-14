@@ -1,22 +1,19 @@
-<view class="search">
-  <view class="search__content">
-    <input class="search__input" placeholder="搜索关键字" />
-    <text class="iconfont icon-sousuo search__icon"></text>
-  </view>
-</view>
+<search height="120rpx" bindquery="bindQuery"></search>
+
 <view class="select">
-  <scroll-view scroll-y style="height: 100%;" scroll-top="{{currentNodes.scrollTop}}" scroll-with-animation="true" bindscroll="bindScrollChange">
-    <view class="select-list" wx:for="{{map}}" wx:key="{{index}}" id="the-list-{{item.title}}">
+  <scroll-view scroll-y style="height: 100%;" scroll-top="{{currentNodes.scrollTop}}" scroll-with-animation="true">
+    <view class="select-list" wx:for="{{map}}" wx:key="{{index}}" id="the-list-{{item.title}}" bindtap="bindClick">
       <text class="select-list__title">{{item.title}}</text>
-      <text class="select-list__text" wx:for="{{item.items}}" wx:key="index">{{item.name}}</text>
+      <text class="select-list__text" wx:for="{{item.items}}" wx:key="index" data-name="{{item.name}}" data-id="{{item.id}}">{{item.name}}</text>
+    </view>
+    <view class="empty" wx:if="{{!map.length && loading}}">
+      <text class="iconfont icon-kong empty__icon"></text>
+      <text class="empty__desc">暂无数据</text>
     </view>
   </scroll-view>
 </view>
 <view class="nav">
-  <view class="nav-content" 
-  bindtouchstart="handlerStart" 
-  bindtouchmove="handlerMove" 
-  bindtouchend="handlerEnd">
+  <view class="nav-content" bindtap="bindNavTap">
     <text 
       class="nav-content__list" 
       wx:for="{{map}}" 
@@ -26,4 +23,5 @@
   </view>
 </view>
 
-<view class="nav-show">{{currentNodes.title}}</view>
+<view class="nav-show" hidden="{{!currentNodes.isNavShowN}}">{{currentNodes.title}}</view>
+<i-message id="message" />

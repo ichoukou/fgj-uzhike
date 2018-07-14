@@ -1,8 +1,32 @@
 const _fgj = {
+  // 格式化日期
+  formatTimeDate(date) {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    return [year, month, day].map(this.formatNumber).join('-');
+  },
+  // 格式化时间
+  formatTime(date) {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+
+    return [year, month, day].map(this.formatNumber).join('/') + ' ' + [hour, minute, second].map(this.formatNumber).join(':');
+  },
+  formatNumber(n) {
+    n = n.toString();
+    return n[1] ? n : '0' + n;
+  },
   // 把对象拼接成url参数
   param(data) {
     let url = ''
-    for (var k in data) {
+    for (let k in data) {
       let value = data[k] !== undefined ? data[k] : ''
       url += '&' + k + '=' + value
     };

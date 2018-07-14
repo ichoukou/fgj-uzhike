@@ -19,13 +19,14 @@
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
     <!-- 部门 -->
-    <view class="content__space">
+    <view class="content__space" wx:if="{{depData.length}}">
       <view class="content__item {{item.FlagStatus === '无效' ? 'content__item--void' : ''}}" wx:for="{{depData}}" wx:key="{{index}}">
         <view 
           class="content__text" 
           bindtap="bindOpenChild" 
           data-dept-no="{{item.DeptNo}}"
           data-dept-name="{{item.DeptName}}"
+          data-dept-id="{{item.DeptID}}" 
         >{{item.DeptName}}</view> 
         <view 
           class="content__operation iconfont icon-gengduo" 
@@ -36,7 +37,7 @@
       </view>
     </view>
     <!-- 人员 -->
-    <view class="content__space">
+    <view class="content__space" wx:if="{{empData.length}}">
       <view class="content__item content__item-emp" wx:for="{{empData}}" wx:key="{{index}}">
         <view class="content__text">
           <image class="content__pic" mode="aspectFill" src="{{item.EmpImg}}"></image>

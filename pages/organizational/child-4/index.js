@@ -1,8 +1,9 @@
 
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util';
-import { maximum } from '../../../utils/config';
+import { maximum, urlPath, defaultImg } from '../../../utils/config';
 import { GetDepartmentByDeptNo, UpDepartmentStatus } from '../../../api/organizational/department';
+import { GetEmployeeByDeptID } from '../../../api/organizational/employee';
 
 const path = 4;   // 当前级别，也是页面索引
 
@@ -13,15 +14,17 @@ Page({
       ParentDeptName: '', // 上级部门名称
       ParentDeptNo: '',   // 上级部门编号
     },
+    DeptID: '',         // 部门ID
     ParentNote: [],     // 页面层级导航
-    listData: [],
+    depData: [],        // 部门数据
+    empData: [],        // 人员数据
     UserGroupID: '',    // 记录要编辑的用户组ID
     loading: false,    // 加载中
     isClick: false,   // 只能点一次
   },
   onLoad: function (options) {
     console.log('child-' + path, options)
-    let { DeptName, DeptNo, ParentNote } = options;
+    let { DeptName, DeptNo, ParentNote, DeptID } = options;
     let params = this.data.params;
 
     params.ParentDeptName = DeptName;
@@ -34,7 +37,8 @@ Page({
 
     this.setData({
       params,
-      ParentNote: ParentNote.split(/,/)
+      ParentNote: ParentNote.split(/,/),
+      DeptID: DeptID || ''
     });
   },
   onReady: function () {
@@ -42,6 +46,31 @@ Page({
   onShow: function () {
     wx.showLoading({ title: '加载中' });
     this.GetDepartmentByDeptNo();    // 获取所有部门
+    this.GetEmployeeByDeptID();      // 获取所有人员
+  },
+  // 获取所有人员
+  GetEmployeeByDeptID() {
+    GetEmployeeByDeptID({
+      DeptID: this.data.DeptID
+    }).then(res => {
+      let data = res.data;
+      if (data.result === 'success') {
+        data.temptable.forEach(item => {
+          item.EmpImg = item.EmpImg ? urlPath + item.EmpImg : defaultImg;     // 处理图片
+        });
+        this.setData({
+          empData: data.temptable
+        });
+      }
+    })
+  },
+  // 编辑人员信息
+  bindEmpEdit(e) {
+    let { empId } = e.currentTarget.dataset;
+
+    wx.navigateTo({
+      url: '../emp-edit/index?EmpID=' + empId
+    })
   },
   // 获取所有部门
   GetDepartmentByDeptNo() {
@@ -55,11 +84,9 @@ Page({
       let data = res.data;
       if (data.result === 'success') {
         this.setData({
-          listData: data.temptable
+          depData: data.temptable
         });
-      } else {
-        $Message({ content: data.msg, type: 'warning' })
-      };
+      }
       wx.hideLoading();
       this.setData({ loading: true });
     })
@@ -72,11 +99,7 @@ Page({
   },
   // 打开下一级
   bindOpenChild(e) {
-    if (path >= maximum) {
-      $Message({ content: '最多' + (maximum + 1) + '级', type: 'warning' })
-      return;
-    };
-    let { deptNo, deptName } = e.currentTarget.dataset;
+    let { deptNo, deptName, deptId } = e.currentTarget.dataset;
     let data = this.data;
     let ParentNote = [].concat(data.ParentNote);
 
@@ -86,6 +109,7 @@ Page({
       Layer: data.params.Layer,
       DeptNo: deptNo,
       DeptName: deptName,
+      DeptID: deptId,
       ParentNote: ParentNote.join(',')
     };
     wx.navigateTo({

@@ -1,7 +1,7 @@
 
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util';
-import { maximum } from '../../../utils/config';
+import { maximum, urlPath, defaultImg } from '../../../utils/config';
 import { GetDepartmentByDeptNo, UpDepartmentStatus } from '../../../api/organizational/department';
 import { GetEmployeeByDeptID } from '../../../api/organizational/employee';
 
@@ -55,9 +55,8 @@ Page({
     }).then(res => {
       let data = res.data;
       if (data.result === 'success') {
-        // 手动添加图片，测试用途
         data.temptable.forEach(item => {
-          item.EmpImg = 'https://mp.weixin.qq.com/debug/wxadoc/dev/image/cat/0.jpg?t=201879'
+          item.EmpImg = item.EmpImg ? urlPath + item.EmpImg : defaultImg;     // 处理图片
         });
         this.setData({
           empData: data.temptable
@@ -87,9 +86,7 @@ Page({
         this.setData({
           depData: data.temptable
         });
-      } else {
-        $Message({ content: data.msg, type: 'warning' })
-      };
+      }
       wx.hideLoading();
       this.setData({ loading: true });
     })
@@ -102,7 +99,7 @@ Page({
   },
   // 打开下一级
   bindOpenChild(e) {
-    let { deptNo, deptName } = e.currentTarget.dataset;
+    let { deptNo, deptName, deptId } = e.currentTarget.dataset;
     let data = this.data;
     let ParentNote = [].concat(data.ParentNote);
 
@@ -112,6 +109,7 @@ Page({
       Layer: data.params.Layer,
       DeptNo: deptNo,
       DeptName: deptName,
+      DeptID: deptId,
       ParentNote: ParentNote.join(',')
     };
     wx.navigateTo({

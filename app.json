@@ -1,17 +1,17 @@
 {
   "pages": [
-    "pages/organizational/select/index",
-    "pages/dictionary/index",
+    "pages/index/index",
     "pages/organizational/emp-edit/index",
-    "pages/create-person/index",
     "pages/organizational/index",
+    "pages/organizational/select/index",
+    "pages/create-person/index",
     "pages/organizational/search/index",
     "pages/organizational/child-1/index",
     "pages/organizational/child-2/index",
     "pages/organizational/child-3/index",
     "pages/organizational/child-4/index",
     "pages/organizational/new/index",
-    "pages/index/index",
+    "pages/dictionary/index",
     "pages/dictionary/new/index",
     "pages/purview/index",
     "pages/position/index",
@@ -31,10 +31,10 @@
     "backgroundColor": "#ffffff"
   },
   "networkTimeout": {
-    "request": 10000,
-    "connectSocket": 10000,
-    "uploadFile": 10000,
-    "downloadFile": 10000
+    "request": 60000,
+    "connectSocket": 60000,
+    "uploadFile": 60000,
+    "downloadFile": 60000
   },
   "debug": true
 }

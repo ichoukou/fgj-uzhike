@@ -1,10 +1,9 @@
 
 const { $Message } = require('../../components/base/index');
-import { GetPositionByID } from '../../api/position/position';
+import { GetAllPosition } from '../../api/position/position';
 
 Page({
   data: {
-    params: {},
     listData: [],
     UserGroupID: '',    // 记录要编辑的用户组ID
     loading: false,    // 加载中
@@ -20,7 +19,7 @@ Page({
   },
   // 获取列表数据
   getListData() {
-    GetPositionByID(this.data.params).then(res => {
+    GetAllPosition().then(res => {
       console.log(res)
       let data = res.data;
       if (data.result === 'success') {
