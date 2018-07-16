@@ -47,7 +47,7 @@ Page({
           tableData: data.temptable
         })
       } else {
-        $Message({ content: data.msg, type: 'warning' });
+        // $Message({ content: data.msg, type: 'warning' });
       }
     })
   },
@@ -82,13 +82,18 @@ Page({
   },
   // 打开项
   bindOpenItem(e) {
-    console.log(e.currentTarget)
+    // console.log(e.currentTarget)
     let { purviewId, parentNo, parentNote } = e.currentTarget.dataset;
+    let ParentNote = [].concat(this.data.ParentNote);
+
+    ParentNote.push(parentNote);   // 拼接导航地址
+
     let params = {
-      ParentID: purviewId,
-      ParentNo: parentNo,
-      ParentNote: this.data.ParentNote[0] + ',' + parentNote,
+      ParentID: purviewId,    // 父级ID
+      ParentNo: parentNo,     // 父级编号
+      ParentNote: ParentNote.join(',')  // 父级名称
     };
+
     wx.navigateTo({
       url: '../item/index?' + _fgj.param(params)
     })
@@ -124,6 +129,22 @@ Page({
         }
       }
     })
+  },
+  // 导航屑返回
+  bindBack(e) {
+    let { index } = e.currentTarget.dataset;
+    let ParentNote = this.data.ParentNote;
+
+    ++index;      // 默认是从 0 开始，所以要加 1
+
+    // 最后一个是不能点的
+    if (index === ParentNote.length) {
+      return
+    };
+
+    wx.navigateBack({
+      delta: Math.abs(index - ParentNote.length)
+    });
   },
   // 列表滑动按下
   handlerStart(e) {

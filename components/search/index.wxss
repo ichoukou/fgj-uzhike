@@ -2,6 +2,7 @@
 
 .search {
   padding: 20rpx 30rpx;
+  background-color: #fff;
 }
 .search__content {
   display: flex;

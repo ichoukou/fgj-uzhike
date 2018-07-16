@@ -2,8 +2,22 @@
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util';
 import { GetPurviewListByLayer } from '../../../api/purview/purview';
-import { SetPurview } from '../../../api/purview-set/purview-set';
+import { SetPurview, SetPurviewToUserGroup, SetPurviewToEmployee } from '../../../api/purview-set/purview-set';
 import { GetUserGroupPurview } from '../../../api/userGroup/userGroup';
+import { GetUserEmpPurview } from '../../../api/organizational/employee';
+
+const pickerPurviewEmp = [
+  {
+    label: '选择',
+    value: ''
+  }, {
+    label: '只赋予用户组',
+    value: '0'
+  }, {
+    label: '同时赋予同用户组用户',
+    value: '1'
+  }
+];
 
 Page({
   data: {
@@ -41,6 +55,17 @@ Page({
       }
     ],
     pickerItemValueIndex: 0,
+    pickerPurview: [
+      {
+        label: '请选择',
+        value: ''
+      }, {
+        label: '将用户组权限赋予该组所有人员',
+        value: '0'
+      }
+    ],
+    pickerPurviewIndex: 0,
+    SetGroup: '',       // 设置用户组权限
     itemValue: {
       switchValue: 0,    // 开关值
       pickerValue: '',    // 选项值
@@ -51,8 +76,9 @@ Page({
   onLoad: function (options) {
     console.log('项参数', options)
     let { ObjID, ObjType, ParentID, groupName, tableName, ParentNote } = options;
-    let params = this.data.params;
-    let setPurview = this.data.setPurview;
+    // let params = this.data.params;
+    // let setPurview = this.data.setPurview;
+    let { params, setPurview, pickerPurview } = this.data;
 
     setPurview.ObjID = ObjID;
     setPurview.ObjType = ObjType;
@@ -66,6 +92,13 @@ Page({
       ParentNote: ParentNote.split(/,/)    // 当前层级，传过来的是一个用 , 分割的字符串，要把他变成数组
     });
 
+    // 判断是用户组还是用户
+    if (ObjType === '0') {
+      this.setData({
+        pickerPurview: pickerPurviewEmp     // 用户的选项要改变
+      })
+    };
+
     this.getItemData();    // 获取表数据
   },
   onReady: function () {
@@ -75,7 +108,7 @@ Page({
   },
   // 设置权限
   bindSubmit() {
-    let { itemData, groupName, tableName, setPurview, oldPurview } = this.data;
+    let { itemData, groupName, tableName, setPurview, oldPurview, SetGroup } = this.data;
     let str = '';
 
     // 拼接新数据字符
@@ -112,95 +145,137 @@ Page({
       } else {
         $Message({ content: data.msg, type: 'warning' });
       }
-    })
+    });
+
+    // 还有一条权限设置
+    console.log(SetGroup)
+    if (SetGroup === '') {
+      return
+    };
+    if (setPurview.ObjType === '0') {
+      SetPurviewToUserGroup({
+        EmpID: setPurview.ObjID,
+        SetGroup
+      }).then(res => {
+        if (res.data.result !== 'success') {
+          $Message({ content: res.data.msg, type: 'warning' });
+        }
+      })
+    } else if (setPurview.ObjType === '1') {
+      SetPurviewToEmployee({
+        UserGroupID: setPurview.ObjID
+      }).then(res => {
+        if (res.data.result !== 'success') {
+          $Message({ content: res.data.msg, type: 'warning' });
+        }
+      })
+    }
   },
   // 获取表数据
   getItemData() {
+    let { ObjType } = this.data.setPurview;
     wx.showLoading({ title: '加载中' });
     GetPurviewListByLayer(this.data.params).then(res => {
       // console.log(res)
       let data = res.data;
       if (data.result === 'success') {
-        this.getUserGroupPurview(data.temptable);   // 获取用户组权限
+        console.log(ObjType)
+        if (ObjType === '0') {
+          this.GetUserEmpPurview(data.temptable);     // 获取用户权限
+        } else if (ObjType === '1') {
+          this.getUserGroupPurview(data.temptable);   // 获取用户组权限
+        }
       } else {
         $Message({ content: data.msg, type: 'warning' });
       }
     })
   },
+  // 获取用户权限
+  GetUserEmpPurview(itemData) {
+    GetUserEmpPurview({
+      EmpID: this.data.setPurview.ObjID
+    }).then(res => {
+      if (res.data.result === 'success') {
+        this.filterData(res.data.temptable[0], itemData)
+      } else {
+        $Message({ content: res.data.msg, type: 'warning' });
+      }
+    })
+  },
   // 获取用户组权限
   getUserGroupPurview(itemData) {
-    let data = this.data;
     GetUserGroupPurview({
       UserGroupID: this.data.setPurview.ObjID
+    }).then(res => {
+      if (res.data.result === 'success') {
+        this.filterData(res.data.temptable[0], itemData);
+      } else {
+        $Message({ content: res.data.msg, type: 'warning' })
+      }
     })
-      .then(res => {
-        // console.log(res)
-        if (res.data.result === 'success') {
-          let temptable = res.data.temptable[0];
-          console.log('data', data)
-          let str = temptable[data.groupName];
+  },
+  // 获取到权限之后对数据进行处理
+  filterData(temptable, itemData) {
+    let data = this.data;
+    let str = temptable[data.groupName];
 
-          console.log(str)
+    console.log(str)
 
-          let oneArr = str.split(',');
-          let obj = {};
-          let listArr = null;
-          let tableObj = {};
+    let oneArr = str.split(',');
+    let obj = {};
+    let listArr = null;
+    let tableObj = {};
 
-          oneArr.forEach(item => {
-            if (item) {
-              listArr = item.split('-');
-              if (!obj[listArr[0]]) {
-                obj[listArr[0]] = {
-                  [listArr[1]]: listArr[2]
-                }
-              } else {
-                obj[listArr[0]][listArr[1]] = listArr[2]
-              }
-            }
-          });
-
-          console.log(obj)
-          data.oldPurview = obj;    // 存储起来，设置的时候用
-          tableObj = obj[data.tableName];     // 对应的表权限
-
-          if (tableObj) {
-            // 遍历数据，回填权限
-            itemData.forEach(item => {
-              for (let key in tableObj) {
-                if (item.PurviewName === key) {
-                  item.itemValue = tableObj[key]
-                }
-              }
-            })
-          } else {
-            itemData.forEach(item => {
-              switch (item.ValueType) {
-                case '0':
-                  item.itemValue = 0
-                  break;
-                case '1':
-                  item.itemValue = '本人'
-                  break;
-                case '2':
-                  item.itemValue = 0
-                  break;
-                default:
-                  console.log('ValueType is error');
-                  item.itemValue = '';
-              }
-            });
-          };
-          this.setData({
-            itemData
-          });
+    oneArr.forEach(item => {
+      if (item) {
+        listArr = item.split('-');
+        if (!obj[listArr[0]]) {
+          obj[listArr[0]] = {
+            [listArr[1]]: listArr[2]
+          }
         } else {
-          $Message({ content: res.data.msg, type: 'warning' })
-        };
-        // 上面处理数据渲染要花点时间，加载完毕放在下面可以减少空白间隙
-        wx.hideLoading();
-        this.setData({ loading: true });
+          obj[listArr[0]][listArr[1]] = listArr[2]
+        }
+      }
+    });
+
+    console.log(obj)
+    data.oldPurview = obj;    // 存储起来，设置的时候用
+    tableObj = obj[data.tableName];     // 对应的表权限
+
+    if (tableObj) {
+      // 遍历数据，回填权限
+      itemData.forEach(item => {
+        for (let key in tableObj) {
+          if (item.PurviewName === key) {
+            item.itemValue = tableObj[key]
+          }
+        }
       })
+    } else {
+      itemData.forEach(item => {
+        switch (item.ValueType) {
+          case '0':
+            item.itemValue = 0
+            break;
+          case '1':
+            item.itemValue = '本人'
+            break;
+          case '2':
+            item.itemValue = 0
+            break;
+          default:
+            console.log('ValueType is error');
+            item.itemValue = '';
+        }
+      });
+    };
+    this.setData({
+      itemData
+    });
+    // 上面处理数据渲染要花点时间，加载完毕放在下面可以减少空白间隙
+    wx.hideLoading();
+    this.setData({ loading: true });
   },
   // 控数，减少
   bindNumberJian(e) {
@@ -291,6 +366,32 @@ Page({
     
     this.setData({
       itemData
+    });
+  },
+  // 选择权限赋值
+  bindPickerPurview(e) {
+    let index = e.detail.value;
+    let { pickerPurview, pickerPurviewIndex, SetGroup } = this.data
+
+    this.setData({
+      SetGroup: pickerPurview[index].value,
+      pickerPurviewIndex: index
+    })
+  },
+  // 导航屑返回
+  bindBack(e) {
+    let { index } = e.currentTarget.dataset;
+    let ParentNote = this.data.ParentNote;
+
+    ++index;      // 默认是从 0 开始，所以要加 1
+
+    // 最后一个是不能点的
+    if (index === ParentNote.length) {
+      return
+    };
+
+    wx.navigateBack({
+      delta: Math.abs(index - ParentNote.length)
     });
   },
 })

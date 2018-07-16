@@ -12,6 +12,7 @@ Page({
       ParentID: '',   // 父级id
       LevelType: 0,   // 层级，当前层级是 0
     },
+    ParentNote: ['权限模板'], // 页面层级导航
     modalTitleText: '',
     groupData: [],    // 组数据
     touch: {},      // 保存滑动的操作
@@ -42,7 +43,7 @@ Page({
           groupData: data.temptable
         });
       } else {
-        $Message({ content: data.msg, type: 'warning' });
+        // $Message({ content: data.msg, type: 'warning' });
       }
     })
   },
@@ -67,10 +68,15 @@ Page({
   // 打开表
   bindOpenTable(e) {
     let { purviewId, parentNo, parentNote } = e.currentTarget.dataset;
+
+    let ParentNote = [].concat(this.data.ParentNote);
+
+    ParentNote.push(parentNote);   // 拼接导航地址
+
     let params = {
       ParentID: purviewId,    // 父级ID
       ParentNo: parentNo,     // 父级编号
-      ParentNote: parentNote  // 父级名称
+      ParentNote: ParentNote.join(',')  // 父级名称
     };
     wx.navigateTo({
       url: './table/index?' + _fgj.param(params)

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "个人注册",
+  "usingComponents": {
+    "i-message": "/components/message/index"
+  }
+}

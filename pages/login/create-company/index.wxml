@@ -1,0 +1,67 @@
+
+<view class="container">
+  <scroll-view scroll-y class="content">
+    <view class="title">公司信息</view>
+    <view class="company-list">
+      <view class="input-item">
+        <view class="input-title"><span class="star">*</span>所在城市</view>
+        <input type="text" placeholder="江西-南昌" placeholder-class='phcolor' />
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="input-item">
+        <view class="input-title"><span class="star">*</span>公司类型</view>
+        <input type="text" placeholder="开发商" placeholder-class='phcolor' />
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="input-item">
+        <view class="input-title"><span class="star">*</span>公司名称</view>
+        <input type="text" placeholder="请填写公司名称" placeholder-class='phcolor' />
+      </view>
+      <view class="input-item">
+        <view class="input-title"><span class="star"></span>公司简称</view>
+        <input type="text" placeholder="如链家地产/聚仁国际开发商" placeholder-class='phcolor' />
+      </view>
+      <view class="input-item">
+        <view class="input-title"><span class="star"></span>证件类型</view>
+        <input type="text" placeholder="身份证" placeholder-class='phcolor' />
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="input-item">
+        <view class="input-title"><span class="star"></span>证件信息</view>
+        <input type="text" placeholder="请填写营业执照/身份证" placeholder-class='phcolor' />
+      </view>
+      <view class="upload">
+        <view class="input-title"><span class="star"></span>上传照片</view>
+        <view>
+          <view class="pic-box"></view>
+          <view class="pic-btn">重新上传</view>
+        </view>
+      </view>
+    </view>
+    <view class="title">管理员信息</view>
+    <view class="manager">
+      <view class="input-item">
+        <view class="input-title"><span class="star">*</span>姓名</view>
+        <input type="text" placeholder="请填写您的姓名" placeholder-class='phcolor' />
+      </view>
+      <view class="input-item">
+        <view class="input-title"><span class="star">*</span>电话</view>
+        <input class="tel" type="number" placeholder-class="phcolor" placeholder="请填写电话号码" /><span class="line">|</span>
+        <view class="v-number">获取验证码</view>
+      </view>
+      <view class="input-item">
+        <view class="input-title"><span class="star">*</span>短信验证</view>
+        <input type="text" placeholder="请填写验证码" placeholder-class='phcolor' />
+      </view>
+      <view class="input-item">
+        <view class="input-title"><span class="star">*</span>设置密码</view>
+        <input type="password" placeholder="请设置密码" placeholder-class='phcolor' />
+      </view>
+    </view>
+  </scroll-view>
+  <view class="footer">
+    <text class="footer-text">立即创建</text>
+  </view>
+</view>
+
+<i-message id="message" />

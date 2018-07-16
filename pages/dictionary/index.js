@@ -35,9 +35,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading({
-      title: '加载中',
-    });
     this.getListData();
   },
   // 跳转新建字典页面
@@ -69,6 +66,9 @@ Page({
   },
   // 分页获取所有字典数据
   getListData () {
+    wx.showLoading({
+      title: '加载中',
+    })
     GetAllRef(this.data.params).then(res => {
       console.log('data', res.data)
       let data = res.data
@@ -78,6 +78,9 @@ Page({
         })
       } else {
         $Message({ content: data.msg, type: 'warning'})
+        this.setData({
+          listData: ''
+        })
       }
       wx.hideLoading();
     })

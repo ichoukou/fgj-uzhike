@@ -97,8 +97,8 @@ Page({
       result.msg = '引用名称不能为空';
       return result;
     };
-    if (!_fgj.verify(data.ItemNo, 'number-dot')) {
-      result.msg = '引用项排序编号只能是纯数字';
+    if (!_fgj.verify(data.ItemNo, 'require')) {
+      result.msg = '引用项排序编号不能为空';
       return result;
     };
     if (!_fgj.verify(data.ItemValue, 'require')) {

@@ -1,11 +1,13 @@
 <view class="nav">
-  <text class="nav__item">权限设置</text>
   <block wx:for="{{ParentNote}}" wx:key="{{index}}">
     <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
-    <text class="nav__item">{{item}}</text>
+    <text 
+      class="nav__item {{(index + 1) === ParentNote.length ? 'nav__item--disable': ''}}" 
+      bindtap="bindBack" 
+      data-index="{{index}}"
+    >{{item}}</text>
   </block>
 </view>
-
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
     <view class="content__scroll">
@@ -21,14 +23,7 @@
         <view class="d-flex justify-between" wx:if="{{item.ValueType === '1'}}">
           <view class="content__text">{{item.PurviewNote}}</view>
           <view class="flex-1">
-            <picker 
-              mode="selector" 
-              data-purview-id="{{item.PurviewID}}"
-              bindchange="bindPickerChange" 
-              value="{{pickerItemValueIndex}}" 
-              range="{{pickerItemValue}}" 
-              range-key="label"
-            >
+            <picker mode="selector" data-purview-id="{{item.PurviewID}}" bindchange="bindPickerChange" value="{{pickerItemValueIndex}}" range="{{pickerItemValue}}" range-key="label">
               <text class="list__picker">{{item.itemValue}}</text>
             </picker>
           </view>
@@ -47,15 +42,29 @@
       <view class="empty" wx:if="{{!itemData.length && loading}}">
         <text class="iconfont icon-kong empty__icon"></text>
         <text class="empty__desc">暂无数据</text>
-      </view> 
+      </view>
     </view>
   </scroll-view>
 </view>
 
-<view class="footer">
+<!-- <view class="footer">
   <view class="submit" bindtap="bindSubmit">
-    <button class="btn-primery" loading="{{btnLoading}}" disabled="{{disabled}}"><text hidden="{{btnLoading}}">完成</text></button>
-  </view> 
-</view>
+    <button class="btn-primery" loading="{{btnLoading}}" disabled="{{disabled}}">
+      <text hidden="{{btnLoading}}">完成</text>
+    </button>
+  </view>
+</view> -->
+<view class="footer">
+  <view class="footer__left">
+    <picker mode="selector"  bindchange="bindPickerPurview" value="{{pickerPurviewIndex}}" range="{{pickerPurview}}" range-key="label">
+      <text class="list__picker">{{pickerPurview[pickerPurviewIndex].label}}</text>
+    </picker>
+  </view>
+  <view class="footer__right" bindtap="bindSubmit">
+    <button class="footer__right-btn" loading="{{btnLoading}}" disabled="{{disabled}}">
+      <text hidden="{{btnLoading}}">完成</text>
+    </button>
+  </view>
+</view> 
 
 <i-message id="message" />

@@ -1,18 +1,16 @@
-<view class="search">
-  <view class="search__content">
-    <input class="search__input" bindinput="changeInput" placeholder="搜索关键字" />
-    <text class="iconfont icon-sousuo search__icon"></text>
-  </view>
-</view>
+<search height="110rpx" bindquery="bindQuery"></search>
+
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
-    <view class="content__space">
-      <view class="content__item {{item.FlagStatus === '无效' ? 'content__item--void' : ''}}" wx:for="{{listData}}" wx:key="{{index}}">
+    <!-- 部门 -->
+    <view class="content__space" wx:if="{{depData.length}}">
+      <view class="content__item {{item.FlagStatus === '无效' ? 'content__item--void' : ''}}" wx:for="{{depData}}" wx:key="{{index}}">
         <view 
           class="content__text" 
           bindtap="bindOpenChild" 
           data-dept-no="{{item.DeptNo}}"
           data-dept-name="{{item.DeptName}}"
+          data-dept-id="{{item.DeptID}}" 
         >{{item.DeptName}}</view> 
         <view 
           class="content__operation iconfont icon-gengduo" 
@@ -21,10 +19,30 @@
           bindtap="bindActionSheet"
         ></view>
       </view>
-      <view class="empty" wx:if="{{!listData.length && loading}}">
-        <text class="iconfont icon-kong empty__icon"></text>
-        <text class="empty__desc">没有找到相关数据</text>
+    </view>
+    <!-- 人员 -->
+    <view class="content__space" wx:if="{{empData.length}}">
+      <view class="content__item content__item-emp" wx:for="{{empData}}" wx:key="{{index}}">
+        <view class="content__text">
+          <image class="content__pic" mode="aspectFill" src="{{item.EmpImg}}"></image>
+          <view class="content__emp-cont">
+            <view class="content__emp-title">
+              <text class="content__emp-name text-ellipsis">{{item.EmpName}}</text>
+              <text class="content__emp-tel">{{item.Tel}}</text>
+            </view>
+            <view class="content__dept-name">{{item.DeptName}}</view>
+          </view>
+        </view>
+        <view 
+          class="content__operation iconfont icon-gengduo" 
+          data-emp-id="{{item.EmpID}}" 
+          bindtap="bindActionEmp"
+        ></view>
       </view>
+    </view>
+    <view class="empty" wx:if="{{!depData.length && !empData.length && loading}}">
+      <text class="iconfont icon-kong empty__icon"></text>
+      <text class="empty__desc">暂无数据</text>
     </view>
   </scroll-view>
 </view>

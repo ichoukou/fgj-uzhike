@@ -12,6 +12,7 @@ Page({
       ParentID: '',   // 父级id
       LevelType: 0,   // 层级，当前层级是 0
     },
+    ParentNote: ['权限设置'], // 页面层级导航
     modalTitleText: '',
     groupData: [],    // 组数据
     loading: false,  // 数据加载中
@@ -47,12 +48,16 @@ Page({
   bindOpenTable(e) {
     let { purviewId, groupName, parentNote } = e.currentTarget.dataset;
     let data = this.data;
+    let ParentNote = [].concat(data.ParentNote);
+
+    ParentNote.push(parentNote);   // 拼接导航地址
+
     let params = {
       ObjType: data.ObjType,    // 对象类型   0：人员  1：用户组
       ObjID: data.ObjID,      // 对象id
       ParentID: purviewId,    // 父级ID
       groupName: groupName,   // 组名
-      ParentNote: parentNote  // 父级名称
+      ParentNote: ParentNote.join(',')  // 父级名称
     };
     wx.navigateTo({
       url: './table/index?' + _fgj.param(params)

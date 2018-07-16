@@ -19,7 +19,7 @@
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
     <!-- 部门 -->
-    <view class="content__space">
+    <view class="content__space" wx:if="{{depData.length}}">
       <view class="content__item {{item.FlagStatus === '无效' ? 'content__item--void' : ''}}" wx:for="{{depData}}" wx:key="{{index}}">
         <view 
           class="content__text" 
@@ -37,7 +37,7 @@
       </view>
     </view>
     <!-- 人员 -->
-    <view class="content__space">
+    <view class="content__space" wx:if="{{empData.length}}">
       <view class="content__item content__item-emp" wx:for="{{empData}}" wx:key="{{index}}">
         <view class="content__text">
           <image class="content__pic" mode="aspectFill" src="{{item.EmpImg}}"></image>
@@ -49,9 +49,11 @@
             <view class="content__dept-name">{{item.DeptName}}</view>
           </view>
         </view>
-        <view class="content__operation" data-emp-id="{{item.EmpID}}" bindtap="bindEmpEdit">
-          <image class="icon-img__edit" mode="scaleToFill" src="../../../images/icon/edit.png"></image>
-        </view>
+        <view 
+          class="content__operation iconfont icon-gengduo" 
+          data-emp-id="{{item.EmpID}}" 
+          bindtap="bindActionEmp"
+        ></view>
       </view>
     </view>
     <view class="empty" wx:if="{{!depData.length && !empData.length && loading}}">

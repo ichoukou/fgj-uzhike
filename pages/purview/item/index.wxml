@@ -1,11 +1,13 @@
 <view class="nav">
-  <text class="nav__item">权限模板</text>
   <block wx:for="{{ParentNote}}" wx:key="{{index}}">
     <text class="iconfont icon-jiantou2 nav__iconfont"></text> 
-    <text class="nav__item">{{item}}</text>
+    <text 
+      class="nav__item {{(index + 1) === ParentNote.length ? 'nav__item--disable': ''}}" 
+      bindtap="bindBack" 
+      data-index="{{index}}"
+    >{{item}}</text>
   </block>
 </view>
-
 <view class="content">
   <scroll-view scroll-y style="height: 100%;">
     <view class="content__scroll">

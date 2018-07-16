@@ -64,17 +64,6 @@ Page({
       url: './child-1/index?' + _fgj.param(query)
     })
   },
-  // 返回
-  bindBack(e) {
-    let { index } = e.currentTarget.dataset;
-    let ParentNote = this.data.ParentNote;
-    ++index;      // 默认是从 0 开始，所以要加 1
-    console.log('关闭时候的note', ParentNote)
-    console.log(Math.abs(index - ParentNote.length))
-    wx.navigateBack({
-      delta: Math.abs(index - ParentNote.length)
-    });
-  },
   // 用户组操作
   bindActionSheet(e) {
     let _this = this;

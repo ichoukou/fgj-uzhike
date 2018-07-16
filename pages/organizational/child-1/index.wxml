@@ -49,9 +49,11 @@
             <view class="content__dept-name">{{item.DeptName}}</view>
           </view>
         </view>
-        <view class="content__operation" data-emp-id="{{item.EmpID}}" bindtap="bindEmpEdit">
-          <image class="icon-img__edit" mode="scaleToFill" src="../../../images/icon/edit.png"></image>
-        </view>
+        <view 
+          class="content__operation iconfont icon-gengduo" 
+          data-emp-id="{{item.EmpID}}" 
+          bindtap="bindActionEmp"
+        ></view>
       </view>
     </view>
     <view class="empty" wx:if="{{!depData.length && !empData.length && loading}}">

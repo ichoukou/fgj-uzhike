@@ -2,7 +2,7 @@ const { $Message } = require('../../../components/base/index');
 import { GetEmployeeByID, UpEmployee } from '../../../api/organizational/employee';
 import { FileUpLoad } from '../../../api/public';
 import _fgj from '../../../utils/util';
-import { maximum, urlPath, defaultImg } from '../../../utils/config';
+import { MAXIMUM, URL_PATH, DEFAULT_IMG } from '../../../utils/config';
 
 Page({
   data: {
@@ -100,7 +100,7 @@ Page({
         data.JoinDate || (data.JoinDate = nowDate);   // 默认一个加入时间
 
         // 处理图片路径
-        EmpImg = data.EmpImg ? (urlPath + data.EmpImg) : defaultImg;
+        EmpImg = data.EmpImg ? (URL_PATH + data.EmpImg) : DEFAULT_IMG;
 
         this.setData({
           params: Object.assign({}, params, data),

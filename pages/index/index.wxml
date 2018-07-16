@@ -1,11 +1,137 @@
-<view class="content">
-  <navigator class="content__item" url="/pages/purview/index" hover-class="navigator-hover">权限模板管理
-  </navigator>
-  <navigator class="content__item" url="/pages/userGroup/index" hover-class="navigator-hover">用户组管理
-  </navigator>
-  <navigator class="content__item" url="/pages/position/index" hover-class="navigator-hover">职务管理
-  </navigator>
-  <navigator class="content__item" url="/pages/dictionary/index" hover-class="navigator-hover">字典管理
-  </navigator>
-  <navigator class="content__item" url="/pages/organizational/index" hover-class="navigator-hover">组织架构</navigator>
+
+<scroll-view scroll-y class="container">
+  <view class="top">
+    <view class="top-text">{{ weather }} <span class="city">{{ city }}</span></view>
+  </view>
+  <view class="box">
+    <view class="box-title">管理员控制台<span class="sub-title">（仅管理员可见）</span></view>
+    <view class="box-content">
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/organizational/index">
+          <image src="../../images/icon/b-1.jpg" />
+          <view class="item-title">组织架构</view>
+        </navigator>
+      </view>
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/purview/index">
+          <image src="../../images/icon/b-1-02.jpg" />
+          <view class="item-title">权限管理</view>
+        </navigator>
+      </view>
+      <view class="box-item">
+       <navigator class="item-title" url="/pages/userGroup/index">
+          <image src="../../images/icon/b-1-03.jpg" />
+          <view class="item-title">用户组管理</view>
+        </navigator>
+      </view>
+       <view class="box-item">
+        <navigator class="item-title" url="/pages/position/index">
+          <image src="../../images/icon/b-1-04.jpg" />
+          <view class="item-title">职务管理</view>
+        </navigator>
+      </view> 
+    </view>
+  </view>
+  <view class="box">
+    <view class="box-title">人事管理<span class="more">更多</span></view>
+    <view class="box-content">
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-05.jpg" />
+          <view class="item-title">字典管理</view>
+        </navigator>
+      </view>
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/login/register/index">
+          <image src="../../images/icon/b-1-06.jpg" />
+          <view class="item-title">个人注册</view>
+        </navigator>
+      </view>
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/login/create-company/index">
+          <image src="../../images/icon/b-1-07.jpg" />
+          <view class="item-title">创建公司</view>
+        </navigator>
+      </view>
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-08.jpg" />
+          <view class="item-title">人员管理</view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="box">
+    <view class="box-title">市场营销<span class="more">更多</span></view>
+    <view class="box-content">
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-09.jpg" />
+          <view class="item-title">项目管理</view>
+        </navigator>
+      </view>
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-10.jpg" />
+          <view class="item-title">客户管理</view>
+        </navigator>
+      </view>
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-11.jpg" />
+          <view class="item-title">合同</view>
+        </navigator>
+      </view>
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-12.jpg" />
+          <view class="item-title">工作日志</view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="box">
+    <view class="box-title">财务管理</view>
+    <view class="box-content">
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-13.jpg" />
+          <view class="item-title">报销审批</view>
+        </navigator>
+      </view>
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-14.jpg" />
+          <view class="item-title">业绩统计</view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="box">
+    <view class="box-title">其他</view>
+    <view class="box-content">
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-15.jpg" />
+          <view class="item-title">帮助</view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="split"></view>
+</scroll-view>
+<view class="footer" catchtap="changeStyle">
+  <view class="footer-item {{ num == 1 ? 'cur' : '' }}" data-num="1">
+    <image class="ba" src="../../images/icon/{{ num == 1 ? 'ba-1.jpg' : 'ba-2.jpg' }}" data-num="1" />
+    <!-- <image class="ba" src="../../images/icon/ba-2.jpg" data-num="1" /> -->
+    <view class="footer-title" data-num="1">工作台</view>
+  </view>
+  <view class="footer-item {{ num == 2 ? 'cur' : '' }}" data-num="2" >
+    <image class="ba" src="../../images/icon/{{ num == 2 ? 'ba-2.1.jpg' : 'ba-1-18.jpg' }}" data-num="2" />
+    <view class="footer-title" data-num="2">事项</view>
+  </view>
+  <view class="footer-item {{ num == 3 ? 'cur' : '' }}" data-num="3">
+    <image class="ba" src="../../images/icon/{{ num == 3 ? 'ba-2.2.png' : 'ba-1.png' }}" data-num="2" />
+    <view class="footer-title" data-num="3">我的</view>
+  </view>
 </view>

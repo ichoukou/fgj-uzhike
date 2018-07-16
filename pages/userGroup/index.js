@@ -123,7 +123,7 @@ Page({
       }
     })
   },
-  // 编辑用户组
+  // 编辑用户组弹窗
   actionEdit(GroupName) {
     this.data.modalType = 'edit';
     this.modalInput.onShowModal({

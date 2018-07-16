@@ -1,7 +1,7 @@
 
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util';
-import { maximum, urlPath, defaultImg } from '../../../utils/config';
+import { MAXIMUM, URL_PATH, DEFAULT_IMG } from '../../../utils/config';
 import { GetDepartmentByDeptNo, UpDepartmentStatus } from '../../../api/organizational/department';
 import { GetEmployeeByDeptID } from '../../../api/organizational/employee';
 
@@ -48,28 +48,37 @@ Page({
     this.GetDepartmentByDeptNo();    // 获取所有部门
     this.GetEmployeeByDeptID();      // 获取所有人员
   },
-  // 获取所有人员
-  GetEmployeeByDeptID() {
-    GetEmployeeByDeptID({
-      DeptID: this.data.DeptID
-    }).then(res => {
-      let data = res.data;
-      if (data.result === 'success') {
-        data.temptable.forEach(item => {
-          item.EmpImg = item.EmpImg ? urlPath + item.EmpImg : defaultImg;     // 处理图片
-        });
-        this.setData({
-          empData: data.temptable
-        });
-      }
-    })
-  },
   // 编辑人员信息
   bindEmpEdit(e) {
     let { empId } = e.currentTarget.dataset;
 
     wx.navigateTo({
       url: '../emp-edit/index?EmpID=' + empId
+    })
+  },
+  // 人员更多操作
+  bindActionEmp(e) { 
+    let { empId } = e.currentTarget.dataset;
+    let itemList = ['编辑', '设置权限'];
+
+    wx.showActionSheet({
+      itemList: itemList,
+      success: function (res) {
+        switch (res.tapIndex) {
+          case 0:
+            wx.navigateTo({
+              url: '../emp-edit/index?EmpID=' + empId
+            })
+            break;
+          case 1:
+            wx.navigateTo({
+              url: '../../purview-set/index?ObjType=0&ObjID=' + empId     // ObjType = 0 人员
+            })
+            break;
+          default:
+            console.log('tapIndex异常')
+        }
+      }
     })
   },
   // 获取所有部门
@@ -89,6 +98,22 @@ Page({
       }
       wx.hideLoading();
       this.setData({ loading: true });
+    })
+  },
+  // 获取所有人员
+  GetEmployeeByDeptID() {
+    GetEmployeeByDeptID({
+      DeptID: this.data.DeptID
+    }).then(res => {
+      let data = res.data;
+      if (data.result === 'success') {
+        data.temptable.forEach(item => {
+          item.EmpImg = item.EmpImg ? URL_PATH + item.EmpImg : DEFAULT_IMG;     // 处理图片
+        });
+        this.setData({
+          empData: data.temptable
+        });
+      }
     })
   },
   // 新建职务
@@ -116,7 +141,7 @@ Page({
       url: '../child-' + (path + 1) + '/index?' + _fgj.param(params)
     })
   },
-  // 返回
+  // 导航屑返回
   bindBack(e) {
     let { index } = e.currentTarget.dataset;
     let ParentNote = this.data.ParentNote;

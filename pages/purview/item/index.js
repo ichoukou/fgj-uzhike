@@ -62,7 +62,7 @@ Page({
           itemData: data.temptable
         })
       } else {
-        $Message({ content: data.msg, type: 'warning' });
+        // $Message({ content: data.msg, type: 'warning' });
       }
     })
   },
@@ -107,6 +107,22 @@ Page({
         $Message({ content: res.data.msg, type: 'error' });
       }
     })
+  },
+  // 导航屑返回
+  bindBack(e) {
+    let { index } = e.currentTarget.dataset;
+    let ParentNote = this.data.ParentNote;
+
+    ++index;      // 默认是从 0 开始，所以要加 1
+
+    // 最后一个是不能点的
+    if (index === ParentNote.length) {
+      return
+    };
+
+    wx.navigateBack({
+      delta: Math.abs(index - ParentNote.length)
+    });
   },
   // 列表滑动按下
   handlerStart(e) {
