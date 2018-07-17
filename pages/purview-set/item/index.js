@@ -65,19 +65,17 @@ Page({
       }
     ],
     pickerPurviewIndex: 0,
-    SetGroup: '',       // 设置用户组权限
+    SetGroup: '',        // 设置用户组权限
     itemValue: {
       switchValue: 0,    // 开关值
       pickerValue: '',    // 选项值
-      numberValue: 0,   // 数值
+      numberValue: 0,    // 数值
     },
     onceTime: null,
   },
   onLoad: function (options) {
     console.log('项参数', options)
     let { ObjID, ObjType, ParentID, groupName, tableName, ParentNote } = options;
-    // let params = this.data.params;
-    // let setPurview = this.data.setPurview;
     let { params, setPurview, pickerPurview } = this.data;
 
     setPurview.ObjID = ObjID;
@@ -93,11 +91,11 @@ Page({
     });
 
     // 判断是用户组还是用户
-    if (ObjType === '0') {
-      this.setData({
-        pickerPurview: pickerPurviewEmp     // 用户的选项要改变
-      })
-    };
+    // if (ObjType === '0') {
+    //   this.setData({
+    //     pickerPurview: pickerPurviewEmp     // 用户的选项要改变
+    //   })
+    // };
 
     this.getItemData();    // 获取表数据
   },
@@ -108,6 +106,9 @@ Page({
   },
   // 设置权限
   bindSubmit() {
+    wx.showLoading({
+      title: '设置中',
+    });
     let { itemData, groupName, tableName, setPurview, oldPurview, SetGroup } = this.data;
     let str = '';
 
@@ -116,7 +117,7 @@ Page({
       str += tableName + '-' + itemData[i].PurviewName + '-' + itemData[i].itemValue + ',';
     };
     // 拼接老数据
-    console.log('oldPurview', oldPurview)
+    // console.log('oldPurview', oldPurview)
     if (Object.keys(oldPurview).length) {
       for (let key in oldPurview) {
         // 排除掉当前修改的数据
@@ -128,7 +129,7 @@ Page({
       }
     };
     setPurview.PurviewValue = groupName + ':' + str;
-    console.log(setPurview)
+    // console.log(setPurview)
 
     this.setData({
       btnLoading: true,
@@ -139,6 +140,7 @@ Page({
         btnLoading: false,
         disabled: false
       });
+      wx.hideLoading();
       let data = res.data;
       if (data.result === 'success') {
         $Message({ content: '设置成功', type: 'success' });
@@ -146,30 +148,39 @@ Page({
         $Message({ content: data.msg, type: 'warning' });
       }
     });
-
-    // 还有一条权限设置
-    console.log(SetGroup)
-    if (SetGroup === '') {
-      return
-    };
-    if (setPurview.ObjType === '0') {
-      SetPurviewToUserGroup({
-        EmpID: setPurview.ObjID,
-        SetGroup
-      }).then(res => {
-        if (res.data.result !== 'success') {
-          $Message({ content: res.data.msg, type: 'warning' });
-        }
-      })
-    } else if (setPurview.ObjType === '1') {
-      SetPurviewToEmployee({
-        UserGroupID: setPurview.ObjID
-      }).then(res => {
-        if (res.data.result !== 'success') {
-          $Message({ content: res.data.msg, type: 'warning' });
-        }
-      })
-    }
+  },
+  // 根据用户组id将用户组权限赋予该组所有人员
+  bindSetPurviewToEmployee() {
+    wx.showLoading({
+      title: '设置中',
+    });
+    SetPurviewToEmployee({
+      UserGroupID: this.data.setPurview.ObjID
+    }).then(res => {
+      wx.hideLoading();
+      if (res.data.result === 'success') {
+        $Message({ content: '设置成功', type: 'success' });
+      } else {
+        $Message({ content: res.data.msg, type: 'warning' });
+      };
+    })
+  },
+  // 根据人员id将人员权限赋予用户组
+  bindSetPurviewToUserGroup(e) {
+    wx.showLoading({
+      title: '设置中',
+    });
+    SetPurviewToUserGroup({
+      EmpID: this.data.setPurview.ObjID,
+      SetGroup: e.currentTarget.dataset.set
+    }).then(res => {
+      wx.hideLoading();
+      if (res.data.result === 'success') {
+        $Message({ content: '设置成功', type: 'success' });
+      } else {
+        $Message({ content: res.data.msg, type: 'warning' });
+      };
+    })
   },
   // 获取表数据
   getItemData() {

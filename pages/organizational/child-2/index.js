@@ -95,6 +95,10 @@ Page({
         this.setData({
           depData: data.temptable
         });
+      } else {
+        this.setData({
+          depData: []
+        });
       }
       wx.hideLoading();
       this.setData({ loading: true });
@@ -112,6 +116,10 @@ Page({
         });
         this.setData({
           empData: data.temptable
+        });
+      } else {
+        this.setData({
+          empData: []
         });
       }
     })
@@ -141,7 +149,7 @@ Page({
       url: '../child-' + (path + 1) + '/index?' + _fgj.param(params)
     })
   },
-  // 返回
+  // 导航屑返回
   bindBack(e) {
     let { index } = e.currentTarget.dataset;
     let ParentNote = this.data.ParentNote;

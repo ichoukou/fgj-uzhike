@@ -95,6 +95,10 @@ Page({
         this.setData({
           depData: data.temptable
         });
+      } else {
+        this.setData({
+          depData: []
+        });
       }
       wx.hideLoading();
       this.setData({ loading: true });
@@ -112,6 +116,10 @@ Page({
         });
         this.setData({
           empData: data.temptable
+        });
+      } else {
+        this.setData({
+          empData: []
         });
       }
     })

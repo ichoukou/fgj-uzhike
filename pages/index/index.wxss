@@ -1,5 +1,4 @@
 /* pages/index/index.wxss */
-
 .container {
   position: absolute;
   top: 0;
