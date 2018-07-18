@@ -88,8 +88,8 @@ Page({
   },
   // 打开下一级
   bindOpenChild(e) {
-    if (path >= maximum) {
-      $Message({ content: '最多' + (maximum + 1) + '级', type: 'warning' })
+    if (path >= MAXIMUM) {
+      $Message({ content: '最多' + (MAXIMUM + 1) + '级', type: 'warning' })
       return;
     };
     let { deptNo, deptName } = e.currentTarget.dataset;
@@ -146,15 +146,15 @@ Page({
     wx.showActionSheet({
       itemList: itemList,
       success: function (res) {
-        switch(res.tapIndex) {
+        switch (res.tapIndex) {
           case 0:
             wx.navigateTo({
               url: '../new/index?&DeptID=' + deptId
             });
-          break;
+            break;
           case 1:
             _this.UpDepartmentStatus(deptId, itemList[res.tapIndex])
-          break;
+            break;
           default:
             console.log('tapIndex异常')
         }

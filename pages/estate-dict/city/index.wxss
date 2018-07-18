@@ -1,8 +1,56 @@
 /* pages/organizational/select/index.wxss */
+/*  搜索  */
+.top {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #fff;
+}
+.top__city {
+  padding-left: 20rpx;
+}
+.top__icon-city {
+  font-size: 30rpx;
+  color: #ff6714;
+}
+.top__city-name {
+  padding: 0 8rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+.icon-arrow {
+  display: inline-block;
+  font-size: 24rpx;
+  color: rgb(210,210,210);
+  transform: rotate(-90deg);
+}
+.top__search {
+  flex: 1;
+  margin: 0 -10rpx;
+}
+.location {
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+  border-top: 1rpx solid #ddd;
+  width: 100%;
+  height: 80rpx;
+  background-color: #fff;
+}
+.location__desc {
+  padding: 0 8rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+.location__text {
+  padding-left: 6rpx;
+  font-size: 32rpx;
+  color: #ff6714;
+}
 
 .select {
   position: absolute;
-  top: 110rpx;
+  top: 190rpx;
   bottom: 0;
   z-index: 1;
   width: 100%;

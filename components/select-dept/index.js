@@ -1,7 +1,7 @@
 
 import { GetDepartmentByDeptNo } from '../../api/organizational/department';
 import { $wuxBackdrop } from '../index';
-import { maximum } from '../../utils/config';
+import { MAXIMUM } from '../../utils/config';
 
 Component({
   properties: {
@@ -65,7 +65,7 @@ Component({
       this.selectNav(layer, deptName);
 
       // 最多4级
-      if (nextIndex >= maximum) {
+      if (nextIndex >= MAXIMUM) {
         return;
       }
 
@@ -81,7 +81,7 @@ Component({
     selectNav(layer, deptName) {
       let departmert = this.data.departmert;
 
-      departmert.nav.splice(layer, maximum, deptName);    // 每次切换的时候，把后面的导航都去掉
+      departmert.nav.splice(layer, MAXIMUM, deptName);    // 每次切换的时候，把后面的导航都去掉
 
       this.setData({
         departmert

@@ -1,5 +1,19 @@
-<search height="110rpx" bindquery="bindQuery"></search>
-
+<!-- <search height="110rpx" bindquery="bindQuery"></search> -->
+<view class="top">
+  <view class="top__city">
+    <text class="iconfont icon-dingwei top__icon-city"></text>
+    <text class="top__city-name">南昌</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="top__search">
+    <search height="110rpx" bindquery="bindQuery" placeholder="搜索城市"></search>
+  </view>
+</view>
+<view class="location">
+  <text class="iconfont icon-dingwei top__icon-city"></text>
+  <text class="location__desc">当前定位城市</text>
+  <text class="location__text">南昌</text>
+</view>
 <view class="select">
   <scroll-view class="scroll-box" scroll-y style="height: 100%;" scroll-into-view="{{scrollTitle}}" scroll-with-animation="{{scrollAnim}}">
     <view class="select-list" wx:for="{{map}}" wx:key="{{index}}" id="{{item.title}}" bindtap="bindClick">

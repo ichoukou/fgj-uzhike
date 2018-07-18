@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "楼盘字典",
+  "usingComponents": {
+    "search": "/components/search/index"
+  }
+}

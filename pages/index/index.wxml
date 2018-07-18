@@ -116,6 +116,12 @@
           <view class="item-title">帮助</view>
         </navigator>
       </view>
+      <view class="box-item">
+        <navigator class="item-title" url="/pages/dictionary/index">
+          <image src="../../images/icon/b-1-09.jpg" />
+          <view class="item-title">楼盘</view>
+        </navigator>
+      </view>
     </view>
   </view>
   <view class="split"></view>

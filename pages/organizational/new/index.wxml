@@ -1,6 +1,5 @@
 <view class="content">
   <view class="list-wrap">
-
     <view class="list" wx:if="{{upLevel}}">
       <text class="list__title">上一级</text>
       <view class="list__content">
@@ -58,7 +57,6 @@
           placeholder="请填写地址" />
       </view>
     </view>
-    
   </view>
 </view>
 

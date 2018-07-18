@@ -1,0 +1,73 @@
+<!-- 搜索 -->
+<view class="top">
+  <view class="top__city">
+    <text class="iconfont icon-dingwei top__icon-city"></text>
+    <text class="top__city-name">南昌</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="top__search">
+    <search height="110rpx" bindquery="bindQuery" placeholder="搜索楼盘/地名/开发商"></search>
+  </view>
+</view>
+<!-- 筛选 -->
+<view class="screen">
+  <view class="screen__list">
+    <text class="screen__text">区域</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list">
+    <text class="screen__text">类型</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list">
+    <text class="screen__text">价格</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list">
+    <text class="screen__text">更多</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+</view>
+<!-- 列表 -->
+<view class="list-wrap">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="list-space">
+      <view class="list">
+        <image class="list__img" mode="aspectFit" src="{{src}}"></image>
+        <view class="list__cont">
+          <text class="list__name">楼盘名称</text>
+          <view class="list__info">
+            <text class="list__info-text">地址：高新大道001号</text>
+            <text class="list__info-text">建面：400000㎡</text>
+            <text class="list__info-text">类型：商铺</text>
+          </view>
+          <view class="list__tag-wrap">
+            <text class="list__tag list__tag--1">核心商业圈</text>
+            <text class="list__tag list__tag--2">中心地段</text>
+            <text class="list__tag list__tag--3">交通便利</text>
+          </view>
+          <text class="iconfont icon-gengduo icon-more"></text>
+        </view>
+      </view>
+      <view class="list">
+        <image class="list__img" mode="aspectFit" src="{{src}}"></image>
+        <view class="list__cont">
+          <text class="list__name">楼盘名称</text>
+          <view class="list__info">
+            <text class="list__info-text">地址：高新大道001号</text>
+            <text class="list__info-text">建面：400000㎡</text>
+            <text class="list__info-text">类型：商铺</text>
+          </view>
+          <view class="list__tag-wrap">
+            <text class="list__tag list__tag--1">核心商业圈</text>
+            <text class="list__tag list__tag--2">中心地段</text>
+            <text class="list__tag list__tag--3">交通便利</text>
+          </view>
+          <text class="iconfont icon-gengduo icon-more"></text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<!-- 快速创建 -->
+<view class="footer">快速创建</view>
