@@ -25,7 +25,7 @@ Page({
   // 获取所有部门
   GetDepartmentByDeptNo() {
     GetDepartmentByDeptNo(this.data.params).then(res => {
-      console.log(res)
+      // console.log(res)
       let data = res.data;
       if (data.result === 'success') {
         this.setData({
