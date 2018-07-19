@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/estate-dict/detail/index",
-    "pages/estate-dict/city/index",
     "pages/estate-dict/list/index",
+    "pages/estate-dict/city/index",
     "pages/index/index",
     "pages/organizational/index",
     "pages/organizational/select/index",

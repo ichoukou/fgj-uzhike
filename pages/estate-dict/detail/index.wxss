@@ -1,1 +1,159 @@
-/* pages/estate-dict/detail/index.wxss */
+/* 轮播图 */
+.swiper {
+  height: 560rpx;
+}
+.slide-image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 楼盘信息 */
+.estate-info {
+  padding: 28rpx 24rpx;
+  background-color: #fff;
+}
+.estate-info__name {
+  font-size: 36rpx;
+  color: #222;
+}
+.estate-info__text {
+  display: flex;
+}
+.estate-info__text .text-desc {
+  display: block;
+  padding-top: 10rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+.estate-info__text-left {
+  flex: 1;
+  padding-right: 10rpx;
+}
+.estate-info__text-right {
+  text-align: right;
+}
+.estate-info__text-right .text-price {
+  font-size: 32rpx;
+  color: #ff6714;
+}
+.list__tag {
+  display: inline-block;
+  margin: 10rpx 10rpx 0 0;
+  padding: 8rpx 10rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+.list__tag--1 {
+  color: rgb(14,172,231);
+  background-color: rgba(12,189,255,0.3);
+}
+.list__tag--2 {
+  color: rgb(243,71,105);
+  background-color: rgba(251,101,130,0.3);
+}
+.list__tag--3 {
+  color: rgb(237,192,33);
+  background-color: rgba(252,204,32,0.3);
+}
+.list__tag--4 {
+  color: rgb(36,187,138);
+  background-color: rgba(57,218,166,0.3);
+}
+
+/* tab */
+.tab {
+  display: flex;
+  position: relative;
+  margin-top: 20rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+  background-color: #fff;
+}
+.tab__list {
+  flex: 1;
+  text-align: center;
+  height: 80rpx;
+  font-size: 30rpx;
+  color: #666;
+  line-height: 80rpx;
+}
+.tab__list--active {
+  color: #ff6714;
+}
+.tab__line {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 33.33%;
+}
+.tab__line::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  border-radius: 8rpx;
+  width: 60%;
+  height: 8rpx;
+  background-color: #ff6714;
+  background-image: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+}
+
+/* 基本信息 */
+.basic-info {
+  background-color: #fff;
+  padding: 0 24rpx;
+}
+.basic__box {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+.info__text--full {
+  display: flex;
+  margin: 10rpx 0;
+  width: 100%;
+}
+.info__text {
+  margin: 10rpx 0;
+  width: 50%;
+}
+.info__text-title {
+  font-size: 28rpx;
+  color: #666;
+}
+.info__text-desc {
+  display: inline-block;
+  padding-right: 10rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+.info__text--full .info__text-title {
+  min-width: 120rpx;
+}
+.info__text--row .info__text-desc {
+  padding-top: 8rpx;
+}
+
+/* 地图 */
+.map {
+  margin-top: 20rpx;
+  padding: 0 20rpx;
+  background-color: #fff;
+}
+.map__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28rpx;
+  height: 80rpx;
+}
+.map .icon-arrow {
+  display: inline-block;
+  font-size: 28rpx;
+  color: #999;
+  transform: rotate(180deg);
+}
+.map__top-text {
+  color: #666;
+}

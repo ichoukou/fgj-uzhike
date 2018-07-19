@@ -1,0 +1,117 @@
+<!-- 轮播 -->
+<swiper class="swiper" indicator-dots="{{swiper.indicatorDots}}"
+  autoplay="{{swiper.autoplay}}" interval="{{swiper.interval}}" duration="{{swiper.duration}}">
+  <block wx:for="{{swiper.imgUrls}}" wx:key="{{index}}">
+    <swiper-item>
+      <image src="{{item}}" mode="aspectFill" class="slide-image"/>
+    </swiper-item>
+  </block>
+</swiper>
+<!-- 楼盘信息 -->
+<view class="estate-info">
+  <text class="estate-info__name">聚仁国际</text>
+  <view class="estate-info__text">
+    <view class="estate-info__text-left">
+      <text class="text-desc">地址：青山湖高新大道开发区699号</text>
+      <text class="text-desc">类型：商铺</text>
+    </view>
+    <view class="estate-info__text-right">
+      <text class="text-desc">价格：<text class="text-price">20000元/㎡</text></text>
+      <text class="text-desc">建面：400000㎡</text>
+    </view>
+  </view>
+  <view class="list__tag-wrap">
+    <text class="list__tag list__tag--1">核心商业圈</text>
+    <text class="list__tag list__tag--2">中心地段</text>
+    <text class="list__tag list__tag--3">交通便利</text>
+  </view>
+</view>
+<!-- tab -->
+<view class="tab">
+  <text class="tab__list tab__list--active">基本信息</text>
+  <text class="tab__list">在售房源</text>
+  <text class="tab__list">楼盘相册</text>
+  <text class="tab__line"></text>
+</view>
+<!-- 基本信息 -->
+<view class="basic-info">
+  <view class="basic__box">
+    <view class="info__text--full">
+      <text class="info__text-title">类别：</text>
+      <text class="info__text-desc">甲类</text>
+    </view>
+    <view class="info__text">
+      <text class="info__text-title">楼栋总数：</text>
+      <text class="info__text-desc">6栋</text>
+    </view>
+    <view class="info__text">
+      <text class="info__text-title">总户数：</text>
+      <text class="info__text-desc">300户</text>
+    </view>
+    <view class="info__text">
+      <text class="info__text-title">预售许可证：</text>
+      <text class="info__text-desc">无</text>
+    </view>
+    <view class="info__text">
+      <text class="info__text-title">绿化率：</text>
+      <text class="info__text-desc">60%</text>
+    </view>
+    <view class="info__text--full">
+      <text class="info__text-title">开发商：</text>
+      <text class="info__text-desc">开发商</text>
+    </view>
+    <view class="info__text--full">
+      <text class="info__text-title">物业公司：</text>
+      <text class="info__text-desc">物业公司</text>
+    </view>
+  </view>
+  <view class="basic__box">
+    <view class="info__text--full">
+      <text class="info__text-title">物业费：</text>
+      <text class="info__text-desc">100/元月</text>
+    </view>
+    <view class="info__text--full">
+      <text class="info__text-title">停车位：</text>
+      <text class="info__text-desc">停车位</text>
+    </view>
+    <view class="info__text--full">
+      <text class="info__text-title">楼层状况：</text>
+      <text class="info__text-desc">楼层状况</text>
+    </view>
+  </view>
+  <view class="basic__box">
+    <view class="info__text--row">
+      <text class="info__text-title">项目简介：</text>
+      <text class="info__text-desc">项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介</text>
+    </view>
+  </view>
+  <view class="basic__box">
+    <view class="info__text--row">
+      <text class="info__text-title">配套设施：</text>
+      <text class="info__text-desc">配套设施配套设施配套设施配套设施配套设施配套设施配套设施配套设施</text>
+    </view>
+  </view>
+</view>
+<!-- 位置 -->
+<view class="map">
+  <view class="map__top">
+    <text class="map__top-text">地图位置：</text>
+    <text class="map__top-text">全屏查看<text class="iconfont icon-fanhui icon-arrow"></text></text>
+  </view>
+  <map 
+      id="map" 
+      longitude="113.324520" 
+      latitude="23.099994" 
+      scale="14" 
+      bindmarkertap="markertap" 
+      bindregionchange="regionchange" 
+      bindcontroltap="controltap" 
+      show-location style="width: 100%; height: 300px;"
+    ></map>
+    <view class="basic__box">
+      <view class="info__text--row">
+        <text class="info__text-title">周边交通：</text>
+        <text class="info__text-desc">周边交通周边交通周边交通周边交通周边交通周边交通</text>
+      </view>
+    </view>
+</view>
