@@ -1,0 +1,76 @@
+/* pages/estate-dict/photo/index.wxss */
+page {
+  height: 100%;
+}
+.photo {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #000;
+}
+.photo__center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+.swiper-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.slide-image {
+  width: 100%;
+}
+.photo__text {
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 30rpx 24rpx 80rpx 24rpx;
+  width: 100%;
+  color: #fff;
+  background-color: rgba(0, 0, 0, .4);
+  transition: all .3s;
+  height: 300rpx; 
+}
+.photo__text--open {
+  overflow: auto;
+  height: 50%;
+}
+.photo__text-title{
+  display: block;
+  font-size: 36rpx;
+}
+.photo__text-desc{
+  display: block;
+  padding-top: 10rpx;
+  font-size: 30rpx;
+}
+.icon-arrow {
+  position: absolute;
+  top: 30rpx;
+  right: 20rpx;
+  font-size: 32rpx;
+  transform: rotate(90deg);
+  transition: all .3s;
+}
+.icon-arrow--rotate {
+  transform: rotate(-90deg);
+}
+.icon-arrow:after {
+  content: "";
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+  bottom: -10rpx;
+  left: -10rpx;
+}

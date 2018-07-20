@@ -26,92 +26,192 @@
     <text class="list__tag list__tag--3">交通便利</text>
   </view>
 </view>
-<!-- tab -->
-<view class="tab">
-  <text class="tab__list tab__list--active">基本信息</text>
-  <text class="tab__list">在售房源</text>
-  <text class="tab__list">楼盘相册</text>
-  <text class="tab__line"></text>
-</view>
-<!-- 基本信息 -->
-<view class="basic-info">
-  <view class="basic__box">
-    <view class="info__text--full">
-      <text class="info__text-title">类别：</text>
-      <text class="info__text-desc">甲类</text>
-    </view>
-    <view class="info__text">
-      <text class="info__text-title">楼栋总数：</text>
-      <text class="info__text-desc">6栋</text>
-    </view>
-    <view class="info__text">
-      <text class="info__text-title">总户数：</text>
-      <text class="info__text-desc">300户</text>
-    </view>
-    <view class="info__text">
-      <text class="info__text-title">预售许可证：</text>
-      <text class="info__text-desc">无</text>
-    </view>
-    <view class="info__text">
-      <text class="info__text-title">绿化率：</text>
-      <text class="info__text-desc">60%</text>
-    </view>
-    <view class="info__text--full">
-      <text class="info__text-title">开发商：</text>
-      <text class="info__text-desc">开发商</text>
-    </view>
-    <view class="info__text--full">
-      <text class="info__text-title">物业公司：</text>
-      <text class="info__text-desc">物业公司</text>
-    </view>
+<view class="wrap-body">
+  <!-- tab -->
+  <view class="tab" bindtap="bindTabSwitch">
+    <text class="tab__list tab__list--active" data-index="0">基本信息</text>
+    <text class="tab__list" data-index="1">在售房源</text>
+    <text class="tab__list" data-index="2">楼盘相册</text>
+    <text class="tab__line" style="transform: translate3d({{tabIndex * 100}}%, 0, 0)"></text>
   </view>
-  <view class="basic__box">
-    <view class="info__text--full">
-      <text class="info__text-title">物业费：</text>
-      <text class="info__text-desc">100/元月</text>
-    </view>
-    <view class="info__text--full">
-      <text class="info__text-title">停车位：</text>
-      <text class="info__text-desc">停车位</text>
-    </view>
-    <view class="info__text--full">
-      <text class="info__text-title">楼层状况：</text>
-      <text class="info__text-desc">楼层状况</text>
-    </view>
-  </view>
-  <view class="basic__box">
-    <view class="info__text--row">
-      <text class="info__text-title">项目简介：</text>
-      <text class="info__text-desc">项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介</text>
-    </view>
-  </view>
-  <view class="basic__box">
-    <view class="info__text--row">
-      <text class="info__text-title">配套设施：</text>
-      <text class="info__text-desc">配套设施配套设施配套设施配套设施配套设施配套设施配套设施配套设施</text>
-    </view>
-  </view>
-</view>
-<!-- 位置 -->
-<view class="map">
-  <view class="map__top">
-    <text class="map__top-text">地图位置：</text>
-    <text class="map__top-text">全屏查看<text class="iconfont icon-fanhui icon-arrow"></text></text>
-  </view>
-  <map 
-      id="map" 
-      longitude="113.324520" 
-      latitude="23.099994" 
-      scale="14" 
-      bindmarkertap="markertap" 
-      bindregionchange="regionchange" 
-      bindcontroltap="controltap" 
-      show-location style="width: 100%; height: 300px;"
-    ></map>
-    <view class="basic__box">
-      <view class="info__text--row">
-        <text class="info__text-title">周边交通：</text>
-        <text class="info__text-desc">周边交通周边交通周边交通周边交通周边交通周边交通</text>
+  <!-- 基本信息 -->
+  <view class="basic-info" hidden="{{tabIndex != 0}}">
+    <view class="basic-block">
+      <view class="basic__box">
+        <view class="info__text--full">
+          <text class="info__text-title">类别：</text>
+          <text class="info__text-desc">甲类</text>
+        </view>
+        <view class="info__text">
+          <text class="info__text-title">楼栋总数：</text>
+          <text class="info__text-desc">6栋</text>
+        </view>
+        <view class="info__text">
+          <text class="info__text-title">总户数：</text>
+          <text class="info__text-desc">300户</text>
+        </view>
+        <view class="info__text">
+          <text class="info__text-title">预售许可证：</text>
+          <text class="info__text-desc">无</text>
+        </view>
+        <view class="info__text">
+          <text class="info__text-title">绿化率：</text>
+          <text class="info__text-desc">60%</text>
+        </view>
+        <view class="info__text--full">
+          <text class="info__text-title">开发商：</text>
+          <text class="info__text-desc">开发商</text>
+        </view>
+        <view class="info__text--full">
+          <text class="info__text-title">物业公司：</text>
+          <text class="info__text-desc">物业公司</text>
+        </view>
+      </view>
+      <view class="basic__box">
+        <view class="info__text--full">
+          <text class="info__text-title">物业费：</text>
+          <text class="info__text-desc">100/元月</text>
+        </view>
+        <view class="info__text--full">
+          <text class="info__text-title">停车位：</text>
+          <text class="info__text-desc">停车位</text>
+        </view>
+        <view class="info__text--full">
+          <text class="info__text-title">楼层状况：</text>
+          <text class="info__text-desc">楼层状况</text>
+        </view>
+      </view>
+      <view class="basic__box">
+        <view class="info__text--row">
+          <text class="info__text-title">项目简介：</text>
+          <text class="info__text-desc">项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介项目简介</text>
+        </view>
+      </view>
+      <view class="basic__box">
+        <view class="info__text--row">
+          <text class="info__text-title">配套设施：</text>
+          <text class="info__text-desc">配套设施配套设施配套设施配套设施配套设施配套设施配套设施配套设施</text>
+        </view>
       </view>
     </view>
+    <!-- 位置 -->
+    <view class="map">
+      <view class="map__top">
+        <text class="map__top-text">地图位置：</text>
+        <text class="map__top-text">全屏查看<text class="iconfont icon-fanhui icon-arrow"></text></text>
+      </view>
+      <map 
+          id="map" 
+          longitude="113.324520" 
+          latitude="23.099994" 
+          scale="14" 
+          bindmarkertap="markertap" 
+          bindregionchange="regionchange" 
+          bindcontroltap="controltap" 
+          show-location style="width: 100%; height: 250px;"
+        ></map>
+        <view class="basic__box">
+          <view class="info__text--row">
+            <text class="info__text-title">周边交通：</text>
+            <text class="info__text-desc">周边交通周边交通周边交通周边交通周边交通周边交通</text>
+          </view>
+        </view>
+    </view>
+  </view>
+  <!-- 在售房源 -->
+  <view class="house" hidden="{{tabIndex != 1}}">
+    <!-- 筛选 -->
+    <view class="house__screen">
+      <view class="house__screen-list">
+        <dropdown title="栋" option="{{house.option}}" bindcheckout="bindHouseCheckout"></dropdown>
+      </view>
+      <view class="house__screen-list">
+        <dropdown title="单元" option="{{house.option}}" bindcheckout="bindHouseCheckout"></dropdown>
+      </view>
+      <view class="house__screen-list">
+        <dropdown title="层" option="{{house.option}}" bindcheckout="bindHouseCheckout"></dropdown>
+      </view>
+    </view>
+    <!-- 标题 -->
+    <view class="house__title">
+      <text class="house__title-text">房号</text>
+      <text class="house__title-text">面积</text>
+      <text class="house__title-text">朝向</text>
+      <text class="house__title-text">厅室</text>
+    </view>
+    <!-- 内容 -->
+    <view class="house__content">
+      <view class="house__list" wx:for="{{house.listData}}" wx:key="{{index}}">
+        <text class="house__list-text">0101</text>
+        <text class="house__list-text">100㎡</text>
+        <text class="house__list-text">东南</text>
+        <text class="house__list-text">3室2厅</text>
+      </view>
+    </view>
+  </view>
+  <!-- 楼盘相册 -->
+  <view class="photo" hidden="{{tabIndex != 2}}">
+    <!-- 导航图标 -->
+    <view class="photo__nav">
+      <view class="photo__nav-list">
+        <view class="photo__nav-icon">
+          <text class="iconfont icon-loupantu"></text>
+        </view>
+        <text class="photo__nav-text">楼盘图片</text>
+      </view>
+      <view class="photo__nav-list">
+        <view class="photo__nav-icon">
+          <text class="iconfont icon-huxingtu"></text>
+        </view>
+        <text class="photo__nav-text">户型图</text>
+      </view>
+      <view class="photo__nav-list">
+        <view class="photo__nav-icon">
+          <text class="iconfont icon-niaokantu"></text>
+        </view>
+        <text class="photo__nav-text">鸟瞰图</text>
+      </view>
+      <view class="photo__nav-list">
+        <view class="photo__nav-icon">
+          <text class="iconfont icon-shijingtu"></text>
+        </view>
+        <text class="photo__nav-text">实景图</text>
+      </view>
+      <view class="photo__nav-list">
+        <view class="photo__nav-icon">
+          <text class="iconfont icon-guihuatu"></text>
+        </view>
+        <text class="photo__nav-text">规划图</text>
+      </view>
+      <view class="photo__nav-list">
+        <view class="photo__nav-icon">
+          <text class="iconfont icon-shineitu"></text>
+        </view>
+        <text class="photo__nav-text">室内图</text>
+      </view>
+      <view class="photo__nav-list">
+        <view class="photo__nav-icon">
+          <text class="iconfont icon-huanjingtu"></text>
+        </view>
+        <text class="photo__nav-text">环境图</text>
+      </view>
+    </view>
+    <!-- 图片展示 -->
+    <view class="photo__show">
+      <view 
+        class="photo__show-list" 
+        wx:for="{{photo.imgData}}" 
+        wx:key="{{index}}" 
+        data-current="{{item.path}}" 
+        bindtap="bindPreviewImage"
+      >
+        <view class="photo__show-space">
+          <image class="photo__show-img" mode="aspectFill" src="{{item.path}}"></image>
+          <view class="photo__show-desc">鸟瞰图</view>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>
+
+<i-message id="message" />

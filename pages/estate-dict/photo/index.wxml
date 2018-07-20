@@ -1,0 +1,18 @@
+
+<view class="photo">
+  <view class="photo__center">
+    <swiper class="swiper">
+      <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+        <swiper-item class="swiper-item">
+          <image mode="widthFix" src="{{item}}" class="slide-image"/>
+          <!-- 文字描述 -->
+          <view class="photo__text {{isOpenText ? 'photo__text--open' : ''}}">
+            <text class="photo__text-title">鸟瞰图</text>
+            <text class="photo__text-desc">图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述</text>
+            <text class="iconfont icon-fanhui icon-arrow {{isOpenText ? 'icon-arrow--rotate': ''}}" bindtap="bindOpenText"></text>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</view>

@@ -1,0 +1,19 @@
+<!--选择部门-->
+<view class="dropdown">
+  <view class="dropdown__btn" bindtap="bindTrigger">
+    <text>{{title}}</text>
+    <text class="iconfont icon-fanhui icon-arrow {{isShow ? 'icon-arrow--rotate' : ''}}"></text>
+  </view>
+  <wux-animation-group wux-class="dropdown__box" in="{{isShow}}" class-names="wux-animate--fadeIn">
+    <view class="dropdown__content">
+      <view 
+        class="dropdown__list {{active == index ? 'dropdown__list--active' : ''}}" 
+        wx:for="{{option}}" 
+        wx:key="{{index}}" 
+        data-value="{{item.value}}"
+        data-index="{{index}}"
+        bindtap="bindCheckout"
+      >{{item.label}}</view>
+    </view>
+  </wux-animation-group>
+</view>

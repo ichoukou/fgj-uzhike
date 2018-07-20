@@ -1,4 +1,7 @@
 // pages/estate-dict/detail/index.js
+const { $Message } = require('../../../components/base/index');
+
+
 Page({
 
   /**
@@ -17,6 +20,7 @@ Page({
       interval: 5000,
       duration: 500
     },
+    tabIndex: 2,
     map: {
       controls: [{
         id: 1,
@@ -31,11 +35,44 @@ Page({
       }],
       markers: '',
       polyline: ''
+    },
+    house: {
+      option: [{
+        label: '列表一',
+        value: '1'
+      }, {
+        label: '列表二',
+        value: '2'
+      }, {
+        label: '列表三',
+        value: '3'
+      }],
+      listData: [
+        {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+      ]
+    },
+    photo: {
+      imgData: [
+        { path: 'http://img.vipfgj.com/upfile/20170321/48A8F26E9ACF4432A5DA6AFC6D2546B7.jpg' },
+        { path: 'http://img.vipfgj.com/upfile/20170321/9D830D69FDD64584AE79BC159EC6E0D8.jpg' },
+        { path: 'http://app.vipfgj.com/upfile/20171101/38546B7795BC40F18476788A253B8E8E.jpg' },
+        { path: 'http://app.vipfgj.com/upfile/20180423/8465CEA278D34DC298FA7B87C7D908A9.jpg' },
+        { path: 'http://app.vipfgj.com/upfile/20170321/07BC51F3A8C14696BA1ED3DACB2769D2.jpg' },
+        { path: 'http://app.vipfgj.com/upfile/20170321/F97D1A7B21BF4986B413F1B8DD10E194.jpg' },
+        { path: 'http://app.vipfgj.com/upfile/20170321/F67483FED44946BCA56D73B191FF6215.jpg' },
+      ],
+      urls: [
+        'http://img.vipfgj.com/upfile/20170321/48A8F26E9ACF4432A5DA6AFC6D2546B7.jpg',
+        'http://img.vipfgj.com/upfile/20170321/9D830D69FDD64584AE79BC159EC6E0D8.jpg',
+        'http://app.vipfgj.com/upfile/20171101/38546B7795BC40F18476788A253B8E8E.jpg',
+        'http://app.vipfgj.com/upfile/20180423/8465CEA278D34DC298FA7B87C7D908A9.jpg',
+        'http://app.vipfgj.com/upfile/20170321/07BC51F3A8C14696BA1ED3DACB2769D2.jpg',
+        'http://app.vipfgj.com/upfile/20170321/F97D1A7B21BF4986B413F1B8DD10E194.jpg',
+        'http://app.vipfgj.com/upfile/20170321/F67483FED44946BCA56D73B191FF6215.jpg',
+      ]
     }
   },
-  onLoad: function (options) {
-    
-  },
+  onLoad: function (options) {},
   onReady: function () {
   
   },
@@ -45,42 +82,32 @@ Page({
   controltap(e) {
 
   },
-  controltap(e) {
-
+  // tab切换
+  bindTabSwitch(e) {
+    // console.log(e.target)
+    let { index } = e.target.dataset;
+    this.setData({
+      tabIndex: index
+    })
   },
-
   /**
-   * 生命周期函数--监听页面隐藏
+   * 下面处理在售房源相关逻辑
    */
-  onHide: function () {
-  
+  // 在售房源筛选结果
+  bindHouseCheckout(e) {
+    // console.log(e.detail)
   },
-
   /**
-   * 生命周期函数--监听页面卸载
+   * 下面处理楼盘相册相关逻辑
    */
-  onUnload: function () {
-  
+  // 图片预览
+  bindPreviewImage(e) {
+    let { current } = e.currentTarget.dataset;
+    let { urls } = this.data.photo;
+
+    wx.previewImage({
+      current,
+      urls
+    })
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })

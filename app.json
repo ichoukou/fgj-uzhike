@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/estate-dict/photo/index",
     "pages/estate-dict/detail/index",
     "pages/estate-dict/list/index",
     "pages/estate-dict/city/index",
