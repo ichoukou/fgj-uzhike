@@ -1,10 +1,14 @@
 {
   "pages": [
+    "pages/estate-dict/new/index",
     "pages/estate-dict/photo/index",
+    "pages/index/index",
     "pages/estate-dict/detail/index",
     "pages/estate-dict/list/index",
     "pages/estate-dict/city/index",
-    "pages/index/index",
+    "pages/login/create-depart/index",
+    "pages/login/add-person/index",
+    "pages/login/organization/index",
     "pages/organizational/index",
     "pages/organizational/select/index",
     "pages/login/create-company/index",

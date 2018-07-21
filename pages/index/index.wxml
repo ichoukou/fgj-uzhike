@@ -1,8 +1,10 @@
 
-<scroll-view scroll-y class="container">
+
+<scroll-view scroll-y class="container"> 
   <view class="top">
     <view class="top-text">{{ weather }} <span class="city">{{ city }}</span></view>
   </view>
+  <view class="boxs">
   <view class="box">
     <view class="box-title">管理员控制台<span class="sub-title">（仅管理员可见）</span></view>
     <view class="box-content">
@@ -19,12 +21,12 @@
         </navigator>
       </view>
       <view class="box-item">
-       <navigator class="item-title" url="/pages/userGroup/index">
+      <navigator class="item-title" url="/pages/userGroup/index">
           <image src="../../images/icon/b-1-03.jpg" />
           <view class="item-title">用户组管理</view>
         </navigator>
       </view>
-       <view class="box-item">
+      <view class="box-item">
         <navigator class="item-title" url="/pages/position/index">
           <image src="../../images/icon/b-1-04.jpg" />
           <view class="item-title">职务管理</view>
@@ -125,11 +127,12 @@
     </view>
   </view>
   <view class="split"></view>
+  </view>
 </scroll-view>
+
 <view class="footer" catchtap="changeStyle">
   <view class="footer-item {{ num == 1 ? 'cur' : '' }}" data-num="1">
     <image class="ba" src="../../images/icon/{{ num == 1 ? 'ba-1.jpg' : 'ba-2.jpg' }}" data-num="1" />
-    <!-- <image class="ba" src="../../images/icon/ba-2.jpg" data-num="1" /> -->
     <view class="footer-title" data-num="1">工作台</view>
   </view>
   <view class="footer-item {{ num == 2 ? 'cur' : '' }}" data-num="2" >

@@ -1,0 +1,112 @@
+
+.content {
+  position: absolute;
+  top: 0;
+  bottom: 100rpx;
+  width: 100%;
+}
+.list-wrap {
+  margin: 20rpx 0;
+  padding: 0 30rpx;
+  background-color: #fff;
+}
+.list {
+  position: relative;
+  width: 100%;
+  /* height: 130rpx;  */
+  min-height: 130rpx; 
+}
+.list + .list {
+  border-top: 1rpx solid rgb(230,230,230);
+}
+.list__content {
+  flex: 1;
+  height: 100%;
+}
+.list__desc {
+  font-size: 32rpx;
+  color: #666;
+  line-height: 130rpx;
+}
+.list__arrow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 32rpx;
+  color: #999;
+  transform: rotate(180deg);
+}
+.list__unit {
+  font-size: 32rpx;
+  color: #333;
+}
+.list__switch {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.list__picker {
+  line-height: 130rpx;
+}
+
+/* 图片上传  */
+.upload {
+  padding: 20rpx;
+  background-color: #fff;
+}
+.upload__title {
+  padding: 30rpx 20rpx;
+}
+.upload__cont {
+  display: flex;
+  flex-wrap: wrap;
+}
+.upload__list {
+  position: relative;
+  padding: 20rpx;
+  width: 33.33%;
+  height: 220rpx;
+}
+.upload__space {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4rpx dotted #e6e6e6;
+  border-radius: 8rpx;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+.upload__img {
+  width: 100%;
+}
+.upload__icon {
+  font-size: 46rpx;
+  color: #e6e6e6;
+}
+.upload__close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 50%;
+  width: 46rpx;
+  height: 46rpx;
+  line-height: 46rpx;
+  text-align: center;
+  font-size: 32rpx;
+  color: #fff;
+  background-color: #ff6714;
+}
+
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 10rpx 36rpx;
+  width: 100%;
+  background-color: #fff;
+}

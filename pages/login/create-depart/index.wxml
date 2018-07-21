@@ -1,0 +1,30 @@
+
+<view class="container">
+  <view class="list">
+    <view class="input-item">
+      <view class="item-title">部门层级</view>
+      <input type="text" placeholder-class="phcolor" placeholder="请选择" />
+      <text class="iconfont icon-jiantou2"></text>
+    </view>
+    <view class="input-item">
+      <view class="item-title">部门名称</view>
+      <input type="text" placeholder-class="phcolor" placeholder="请填写" />
+    </view>
+    <view class="input-item">
+      <view class="item-title">部门标头</view>
+      <input type="text" placeholder-class="phcolor" placeholder="请填写" />
+    </view>
+    <view class="input-item">
+      <view class="item-title">部门地址</view>
+      <input type="text" placeholder-class="phcolor" placeholder="请填写" />
+    </view>
+    <view class="input-item">
+      <view class="item-title">部门类型</view>
+      <input type="text" placeholder-class="phcolor" placeholder="请选择" />
+      <text class="iconfont icon-jiantou2"></text>
+    </view>
+  </view>
+  <view class="footer">
+    <text class="footer-text">完成</text>
+  </view>
+</view>

@@ -1,0 +1,105 @@
+.text-field {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+.text-field__input {
+  position: relative;
+  width: 100%;
+  color: #333;
+  padding: 12rpx 0;
+}
+.text-field__label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  color: #333;
+  transform: translateY(-50%);
+  transform-origin: left;
+  transition: all .2s ease;
+  pointer-events: none;
+}
+.text-field__input--focus + .text-field__label {
+  color: #ff6714;
+  transform: translateY(-120%) scale(.8);  
+}
+.text-field__input--active + .text-field__label {
+  color: #999;
+  transform: translateY(-120%) scale(.8);  
+}
+.text-field__input::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  border-radius: 4rpx;
+  width: 100%;
+  height: 4rpx;
+  background-color: #ff6714;
+  transform: scale(0);
+  transform-origin: center;
+  transition: all .3s ease;
+}
+.text-field__input--focus::after {
+  transform: scale(1);
+}
+
+/* 多行输入 */
+.textarea-field {
+  overflow: hidden;
+  position: relative;
+  padding-top: 48rpx;
+}
+.textarea-field__input {
+  padding: 20rpx 0;
+  width: 100%;
+}
+
+.textarea-field__label {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  margin-top: -22rpx;
+  height: 44rpx;
+  line-height: 44rpx;
+  color: #333;
+  transform-origin: left;
+  transition: all .2s ease;
+  pointer-events: none;
+}
+
+.textarea-field__input--focus .textarea-field__label {
+  top: 34rpx;
+  color: #ff6714;
+  transform: scale(.8);   
+}
+.textarea-field__input--active .textarea-field__label {
+  top: 34rpx;
+  color: #999;
+  transform: scale(.8);   
+}
+.textarea-field__input::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  border-radius: 4rpx;
+  width: 100%;
+  height: 4rpx;
+  background-color: #ff6714;
+  transform: scale(0);
+  transform-origin: center;
+  transition: all .3s ease;
+}
+.textarea-field__input--focus .textarea-field__input::after {
+  transform: scale(1);
+}

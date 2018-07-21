@@ -5,80 +5,57 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgUrls: [
-      'http://bpic.588ku.com/back_pic/05/14/68/2559a7c01c90133.jpg!r650/fw/800',
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
-    ],
     photoData: [
       {
         path: 'http://bpic.588ku.com/back_pic/05/14/68/2559a7c01c90133.jpg!r650/fw/800',
-        desc: '图片文字描述'
+        title: '鸟瞰图',
+        desc: '图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述',
+        open: false
+      }, {
+        path: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+        title: '鸟瞰图',
+        desc: '图片文字描述',
+        open: false
+      }, {
+        path: 'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+        title: '鸟瞰图',
+        desc: '图片文字描述',
+        open: false
       }
     ],
     isOpenText: false,    // 是否打开显示更多文字
+    current: 0,
+    summ: 0,
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    this.setData({
+      summ: this.data.photoData.length
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady: function () {
   
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
   
   },
   // 是否打开显示更多文字
-  bindOpenText() {
+  bindOpenText(e) {
+    let { index } = e.currentTarget.dataset;
+    let photoData = this.data.photoData;
+
+    photoData[index].open = !photoData[index].open;
+
     this.setData({
-      isOpenText: !this.data.isOpenText
+      photoData
     })
   },
+  // current 改变时会触发 change 事件
+  bindChangeSwiper(e) {
+    console.log(e)
+    let { current } = e.detail;
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+    this.setData({
+      current
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })

@@ -57,4 +57,3 @@
   <text class="footer__new" bindtap="bindNew">新建组</text>
 </view>
 <i-message id="message" />
-<!-- <wux-backdrop id="wux-backdrop" bind:click="clickBackdrop" /> -->

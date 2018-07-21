@@ -1,0 +1,14 @@
+
+<view class="container">
+  <scroll-view scroll-y class="scroll-list">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <view class="item" wx:for="{{ listData }}" wx:key="{{ index }}">
+        <radio class="radio" value="{{ item.name }}" checked="{{ item.checked }}"/>{{ item.value }}
+      </view>
+    </radio-group>
+  </scroll-view>
+  <view class="footer">
+    <view class="footer-text">自定义部门</view>
+    <view class="footer-text">完成</view>
+  </view>
+</view>

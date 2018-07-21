@@ -30,39 +30,39 @@ Page({
   onShow: function () {
     
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    
+  // 选择图片并上传
+  chooseImage() {
+    const _this = this;
+    wx.chooseImage({
+      count: 1,
+      success: function (res) {
+        console.log(res)
+        let tempFilePaths = res.tempFilePaths
+        wx.showLoading({
+          title: '图片加载中',
+        })
+        wx.uploadFile({
+          url: FileUpLoad,
+          filePath: tempFilePaths[0],
+          name: 'file',
+          success: function (res) {
+            wx.hideLoading();
+            let data = JSON.parse(res.data)
+            if (data.result === 'success') {
+              console.log(res)
+              _this.setData({
+                tempFilePath: tempFilePaths[0]
+              })
+              $Message({ content: '上传成功', type: 'success' });
+            } else {
+              $Message({ content: '上传失败', type: 'error' })
+            }
+          },
+          fail: function (err) {
+            $Message({ content: '网络错误' + err, type: 'error' })
+          }
+        })
+      }
+    })
   }
 })

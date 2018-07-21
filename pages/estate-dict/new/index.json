@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "快速创建",
+  "usingComponents": {
+    "i-message": "/components/message/index",
+    "field-input": "/components/field-input/index"
+  }
+}

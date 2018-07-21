@@ -16,29 +16,29 @@ Page({
    */
   onLoad: function (options) {
     /*
-    wx.showLoading({
-      title: '加载中',
-    })
-    const _this = this;
-    // 新建百度地图对象
-    const BMap = new bmap.BMapWX({
-      ak: 'DPNFFD2tRQYU2QKH6jwTB5OPxuC7Ysra'
-    });
-    // 发起weather请求
-    BMap.weather({
-      success: function (res) {
-        wx.hideLoading();
-        let data = res.currentWeather[0];
-        _this.setData({
-          city: data.currentCity,
-          weather: data.date.split('：')[1].split(')')[0]
-        })
-      },
-      fail: function (res) {
-        wx.hideLoading();
-        console.log(res)
-      }
-    })
+    // wx.showLoading({
+    //   title: '加载中',
+    // })
+    // const _this = this;
+    // // 新建百度地图对象
+    // const BMap = new bmap.BMapWX({
+    //   ak: 'DPNFFD2tRQYU2QKH6jwTB5OPxuC7Ysra'
+    // });
+    // // 发起weather请求
+    // BMap.weather({
+    //   success: function (res) {
+    //     wx.hideLoading();
+    //     let data = res.currentWeather[0];
+    //     _this.setData({
+    //       city: data.currentCity,
+    //       weather: data.date.split('：')[1].split(')')[0]
+    //     })
+    //   },
+    //   fail: function (res) {
+    //     wx.hideLoading();
+    //     console.log(res)
+    //   }
+    // })
     */
   },
 

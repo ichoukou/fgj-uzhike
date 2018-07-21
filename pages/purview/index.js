@@ -19,9 +19,6 @@ Page({
     loading: false,  // 数据加载中
   },
   onLoad() {
-    this.modalInput = this.selectComponent('#modalInput');
-    // this.modalInput.onShowModal();
-    // this.$wuxBackdrop = $wuxBackdrop();
     wx.showLoading({ title: '加载中' });
   },
   onShow() {

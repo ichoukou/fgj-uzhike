@@ -1,0 +1,24 @@
+<!-- label浮动的输入框 -->
+<view class="text-field" wx:if="{{inputType === 'input'}}">
+    <input 
+    class="text-field__input {{isField ? 'text-field__input--active' : ''}} {{focus ? 'text-field__input--focus' : ''}}" 
+    type="text" 
+    value="{{value}}"
+    data-value="{{value}}"
+    bindfocus="bindTextFieldFocus"
+    bindblur="bindTextFieldBlur" /> 
+  <label class="text-field__label">{{label}}</label>
+</view>
+
+<!-- 多行输入 -->
+<view class="textarea-field {{isField ? 'textarea-field__input--active' : ''}} {{focus ? 'textarea-field__input--focus' : ''}}" wx:if="{{inputType === 'textarea'}}">
+  <textarea 
+  class="textarea-field__input"
+  auto-height="true"
+  maxlength="-1"
+  value="{{value}}"
+  data-value="{{value}}"
+  bindfocus="bindTextFieldFocus"
+  bindblur="bindTextFieldBlur" />  
+  <label class="textarea-field__label">{{label}}</label>
+</view>

@@ -1,0 +1,32 @@
+
+.container {
+  background: #fff;
+}
+.header {
+  display: flex;
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.header-title {
+  flex: 1; 
+  margin-left: 26rpx;
+  font-size: 36rpx;
+  font-weight: 700;
+}
+.header-next {
+  margin-right: 26rpx;
+  font-size: 30rpx;
+  color: #ff6714;
+}
+.content {
+  margin-left: 26rpx;
+}
+.content-item {
+  height: 80rpx;
+  line-height: 80rpx;
+}
+.iconfont {
+  color: #ff6714;
+  margin-right: 16rpx;
+
+}

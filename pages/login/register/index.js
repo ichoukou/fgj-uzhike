@@ -1,5 +1,6 @@
 const { $Message } = require('../../../components/base/index');
 import { FileUpLoad } from '../../../api/public';
+import _fgj from '../../../utils/util.js';
 
 Page({
 
@@ -7,7 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tempFilePath: ''
+    tempFilePath: '',
+    params: ''
   },
 
   /**
@@ -30,7 +32,7 @@ Page({
   onShow: function () {
     
   },
-
+  // 选择图片并上传
   chooseImage () {
     const _this = this;
     wx.chooseImage({
@@ -64,5 +66,45 @@ Page({
         })
       }
     })
+  },
+  // 监听input
+  inputChange: function (e) {
+    console.log(e.currentTarget.dataset)
+    let { type } = e.currentTarget.dataset
+    let params = this.data.params;
+    params[type] = e.detail.value;
+    this.setData({
+      params
+    })
+  },
+  // 校验数据
+  verifyData(data) {
+    let result = {
+      status: false,
+      msg: '错误提示'
+    };
+    if (!_fgj.verify(data.RefNameCn, 'require')) {
+      result.msg = '引用名称解释名不能为空';
+      return result;
+    };
+    if (!_fgj.verify(data.RefName, 'require')) {
+      result.msg = '引用名称不能为空';
+      return result;
+    };
+    if (!_fgj.verify(data.ItemNo, 'require')) {
+      result.msg = '引用项排序编号不能为空';
+      return result;
+    };
+    if (!_fgj.verify(data.ItemValue, 'require')) {
+      result.msg = '引用项值不能为空';
+      return result;
+    };
+    if (!_fgj.verify(data.ItemInfo, 'require')) {
+      result.msg = '引用项扩展信息不能为空';
+      return result;
+    };
+    result.status = true;
+    result.msg = '验证通过';
+    return result;
   }
 })

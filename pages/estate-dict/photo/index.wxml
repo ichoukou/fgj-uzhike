@@ -1,18 +1,21 @@
 
 <view class="photo">
   <view class="photo__center">
-    <swiper class="swiper">
-      <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+    <swiper class="swiper" current="{{current}}" bindchange="bindChangeSwiper">
+      <block wx:for="{{photoData}}" wx:key="{{index}}">
         <swiper-item class="swiper-item">
-          <image mode="widthFix" src="{{item}}" class="slide-image"/>
+          <image mode="widthFix" src="{{item.path}}" class="slide-image"/>
           <!-- 文字描述 -->
-          <view class="photo__text {{isOpenText ? 'photo__text--open' : ''}}">
-            <text class="photo__text-title">鸟瞰图</text>
-            <text class="photo__text-desc">图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述图片文字描述</text>
-            <text class="iconfont icon-fanhui icon-arrow {{isOpenText ? 'icon-arrow--rotate': ''}}" bindtap="bindOpenText"></text>
+          <view class="photo__text {{item.open ? 'photo__text--open' : ''}}">
+            <text class="photo__text-title">{{item.title}}</text>
+            <view class="photo__text-box">
+              <text class="photo__text-desc">{{item.desc}}</text>
+            </view>
+            <text class="iconfont icon-fanhui icon-arrow {{item.open ? 'icon-arrow--rotate': ''}}" bindtap="bindOpenText" data-index="{{index}}"></text>
           </view>
         </swiper-item>
       </block>
     </swiper>
+    <view class="photo__num">{{current + 1}}/{{summ}}</view>
   </view>
 </view>

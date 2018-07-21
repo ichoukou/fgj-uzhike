@@ -10,24 +10,50 @@
     </view>
     <view class="input-item">
       <view class="item-title">公司码</view>
-      <input type="text" placeholder-class="phcolor" placeholder="请填写公司名称" />
+      <input
+        type="text"
+        data-type="CompanyNo"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请填写公司名称" />
     </view>
     <view class="input-item">
       <view class="item-title">姓名</view>
-      <input type="text" placeholder-class="phcolor" placeholder="请填写您的姓名" />
+      <input
+        type="text"
+        data-type="name"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请填写您的姓名" />
     </view>
     <view class="input-item">
       <view class="item-title">电话</view>
-      <input class="tel" type="number" placeholder-class="phcolor" placeholder="请填写电话号码" /><span class="line">|</span>
+      <input
+        class="tel"
+        type="number"
+        data-type="tel"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请填写电话号码" /><span class="line">|</span>
       <view class="v-number">获取验证码</view>
     </view>
     <view class="input-item">
       <view class="item-title">短信验证</view>
-      <input type="text" placeholder-class="phcolor" placeholder="请填写验证码" />
+      <input
+        type="text"
+        data-type="verify"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请填写验证码" />
     </view>
     <view class="input-item">
       <view class="item-title">设置密码</view>
-      <input type="password" placeholder-class="phcolor" placeholder="请设置密码" />
+      <input
+        type="password"
+        data-type="password"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请设置密码" />
     </view>
   </view>
   <view class="footer">
