@@ -1,8 +1,8 @@
 <!-- 搜索 -->
 <view class="top">
-  <view class="top__city">
+  <view class="top__city" bindtap="bindOpenCity">
     <text class="iconfont icon-dingwei top__icon-city"></text>
-    <text class="top__city-name">南昌</text>
+    <text class="top__city-name text-ellipsis">{{citySelector.CityName}}</text>
     <text class="iconfont icon-fanhui icon-arrow"></text>
   </view>
   <view class="top__search">

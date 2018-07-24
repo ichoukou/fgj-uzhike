@@ -1,125 +1,13 @@
-/* pages/organizational/select/index.wxss */
-/*  搜索  */
-.top {
-  display: flex;
-  align-items: center;
+/* pages/estate-dict/city/index.wxss */
+page {
   width: 100%;
-  background-color: #fff;
+  height: 100%;
 }
-.top__city {
-  padding-left: 20rpx;
-}
-.top__icon-city {
-  font-size: 30rpx;
-  color: #ff6714;
-}
-.top__city-name {
-  padding: 0 8rpx;
-  font-size: 28rpx;
-  color: #333;
-}
-.icon-arrow {
-  display: inline-block;
-  font-size: 24rpx;
-  color: rgb(210,210,210);
-  transform: rotate(-90deg);
-}
-.top__search {
-  flex: 1;
-  margin: 0 -10rpx;
-}
-.location {
-  display: flex;
-  align-items: center;
-  padding: 0 20rpx;
-  border-top: 1rpx solid #ddd;
-  width: 100%;
-  height: 80rpx;
-  background-color: #fff;
-}
-.location__desc {
-  padding: 0 8rpx;
-  font-size: 28rpx;
-  color: #666;
-}
-.location__text {
-  padding-left: 6rpx;
-  font-size: 32rpx;
-  color: #ff6714;
-}
-
-.select {
+.full-page {
   position: absolute;
-  top: 190rpx;
-  bottom: 0;
-  z-index: 1;
-  width: 100%;
-  background-color: #fff;
-}
-.select-list__title {
-  position:-webkit-sticky;
-  position: sticky;
   top: 0;
-  display: block;
-  padding-left: 30rpx;
-  width: 100%;
-  height: 60rpx;
-  line-height: 60rpx;
-  background-color: #f5f5f5;
-}
-.select-list__text {
-  display: block;
-  padding-left: 30rpx;
-  border-bottom: 1rpx solid #ddd;
-  width: 100%;
-  height: 100rpx;
-  line-height: 100rpx;
-}
-.nav {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  top: 100rpx;
   right: 0;
   bottom: 0;
-  z-index: 30;
-  padding-right: 30rpx;
-}
-.nav-content {
-  display: flex;
-  flex-direction: column;
-  border-radius: 20rpx;
-  background-color: #f2f2f2;
-}
-.nav-content__list {
-  position: relative;
-  display: inline-block;
-  padding: 0 10rpx;
-  height: 24px;
-  line-height: 24px;
-  font-size: 32rpx;
-  color: #666;
-  text-align: center;
-}
-.nav-content__list::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -10rpx;
-  bottom: 0;
-  left: -10rpx;
-}
-.nav-show {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 10;
-  margin-left: -50rpx;
-  padding: 10rpx;
-  border-radius: 10rpx;
-  width: 100rpx;
-  font-size: 40rpx;
-  color: #fff;
-  background-color: rgba(0, 0, 0, .5);
-  text-align: center;
+  left: 0;
+  z-index: 2;
 }

@@ -1,41 +1,21 @@
 <view class="content">
   <view class="list-wrap">
-    <view class="list">
+    <view class="list" bindtap="bindOpenCity">
       <view class="list__content">
-        <text class="list__desc">选择城市</text>
+        <text class="list__desc">{{citySelector.CityName}}</text>
       </view>
       <text class="iconfont icon-jiantou2 list__arrow"></text>
     </view>
     <view class="list">
       <view class="list__content">
-        <text class="list__desc">选择区域</text>
+        <picker bindchange="bindPickerChange" value="{{pickerDistrictIndex}}" range="{{pickerDistrict}}" range-key="label">
+          <view class="list__desc">
+            {{pickerDistrict[pickerDistrictIndex].label}}
+          </view>
+        </picker>
       </view>
       <text class="iconfont icon-jiantou2 list__arrow"></text>
     </view>
-    <!-- <view class="list">
-      <text class="list__title">楼盘名称</text>
-      <view class="list__content">
-        <input 
-          class="list__input" 
-          type="text" 
-          value="{{params.BaseSalary}}" 
-          data-type="BaseSalary" 
-          bindinput="changeInput" 
-          placeholder="请填写楼盘名称" />
-      </view>
-    </view> -->
-    <!-- <view class="list">
-      <text class="list__title">楼盘地址</text>
-      <view class="list__content">
-        <input 
-          class="list__input" 
-          type="text" 
-          value="{{params.BaseSalary}}" 
-          data-type="BaseSalary" 
-          bindinput="changeInput" 
-          placeholder="请填写楼盘地址" />
-      </view>
-    </view> -->
     <view class="list">
       <field-input label="请填写楼盘名称" bind:value="bindFieldChange" />
     </view>
@@ -60,7 +40,6 @@
     </view>
   </view>
 </view>
-
 
 <view class="footer">
   <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="bindSubmit">

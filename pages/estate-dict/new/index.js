@@ -2,33 +2,40 @@
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util.js';
 import { FileUpLoad } from '../../../api/public';
+import { InsertEstate } from '../../../api/estate-dict/new';
 
-import { GetPositionByID, InsertPosition, UpPosition } from '../../../api/position/position';
+const app = getApp();
 
 Page({
   data: {
     params: {
       imgPath: '',      // 图片
     },
-    pickerValueType: [
+    citySelector: {       // citySelector标识符城市选择列表用到，不可修改
+      CityName: '请选择城市'
+    },
+    pickerDistrict: [
       {
-        label: '0',
-        value: '0'
+        label: '请选择区域',
+        value: ''
       }, {
-        label: '1',
-        value: '1'
+        label: '青山湖区',
+        value: '青山湖区'
       }, {
-        label: '2',
-        value: '2'
+        label: '高新区',
+        value: '高新区'
       }, {
-        label: '3',
-        value: '3'
+        label: '东湖区',
+        value: '东湖区'
       }, {
-        label: '4',
-        value: '4'
+        label: '西湖区',
+        value: '西湖区'
+      }, {
+        label: '红谷滩新区',
+        value: '红谷滩新区'
       }
     ],
-    pickerValueTypeIndex: 0,
+    pickerDistrictIndex: 0,
     disabled: false,
     loading: false,
 
@@ -64,12 +71,30 @@ Page({
   onReady: function () {
   },
   onShow: function () {
+    console.log(app.globalData.userInfo)
+  },
+  // 打开选择城市页面
+  bindOpenCity() {
+    wx.navigateTo({
+      url: '../city/index'
+    })
+  },
+  // 选择区域
+  bindPickerChange(e) {
+    let index = e.detail.value;
+    let { params, pickerDistrict, pickerDistrictIndex } = this.data;
+
+    params.DistrictName = pickerDistrict[index].value;
+
+    this.setData({
+      params,
+      pickerDistrictIndex: index
+    })
   },
   // 浮动输入框改变
   bindFieldChange(e) {
     console.log(e)
   },
-
   // 上传图片
   bindUploadImg() {
     let _this = this;
@@ -160,17 +185,6 @@ Page({
     this.setData({
       params
     });
-  },
-  // picker改变事件
-  bindPickerChange: function (e) {
-    let { params, pickerValueType, pickerValueTypeIndex } = this.data;
-    let index = e.detail.value;
-
-    params.PositionLevel = pickerValueType[index].value;
-    this.setData({
-      params,
-      pickerValueTypeIndex: index
-    })
   },
   // 点击完成
   bindSubmit() {

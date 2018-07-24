@@ -1,0 +1,22 @@
+@import "../../style/animate.wxss";
+
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 99;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+.loading {
+  overflow: hidden;
+}
+.loading__img {
+  width: 50rpx;
+  height: 50rpx;
+  animation: rotate 1.5s linear infinite;
+}
+.loading__text {
+  font-size: 24rpx;
+  color: #999;
+}

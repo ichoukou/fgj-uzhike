@@ -10,6 +10,8 @@ page {
   background-color: #fff;
 }
 .top__city {
+  display: flex;
+  align-items: center;
   padding-left: 20rpx;
 }
 .top__icon-city {
@@ -17,7 +19,9 @@ page {
   color: #ff6714;
 }
 .top__city-name {
+  display: inline-block;
   padding: 0 8rpx;
+  max-width: 130rpx;
   font-size: 28rpx;
   color: #333;
 }

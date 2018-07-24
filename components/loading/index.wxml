@@ -1,0 +1,7 @@
+<!-- 加载中 -->
+<view class="loading" hidden="{{hidden}}">
+  <view class="loading__rotate">
+    <image class="loading__img" src="../../images/loading.png" mode="aspectFit"></image>
+  </view>
+  <text class="loading__text">加载中</text>
+</view>
