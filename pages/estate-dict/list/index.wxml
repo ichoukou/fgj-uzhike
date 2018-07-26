@@ -11,23 +11,49 @@
 </view>
 <!-- 筛选 -->
 <view class="screen">
-  <view class="screen__list">
+  <view class="screen__list" data-index="0" bindtap="bindScreenClick">
     <text class="screen__text">区域</text>
     <text class="iconfont icon-fanhui icon-arrow"></text>
   </view>
-  <view class="screen__list">
+  <view class="screen__list" data-index="1" bindtap="bindScreenClick">
     <text class="screen__text">类型</text>
     <text class="iconfont icon-fanhui icon-arrow"></text>
   </view>
-  <view class="screen__list">
+  <view class="screen__list" data-index="2" bindtap="bindScreenClick">
     <text class="screen__text">价格</text>
     <text class="iconfont icon-fanhui icon-arrow"></text>
   </view>
-  <view class="screen__list">
+  <view class="screen__list" data-index="3" bindtap="bindScreenClick">
     <text class="screen__text">更多</text>
     <text class="iconfont icon-fanhui icon-arrow"></text>
   </view>
 </view>
+<!-- 展开的筛选条件 -->
+<wux-animation-group wux-class="screen-detail" in="{{screenOpen}}" class-names="wux-animate--slideInDown">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="screen-detail__item" hidden="{{screenIndex !== 0}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange">
+        <label class="radio screen-detail__list" wx:for="{{DistrictName}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+    <view class="screen-detail__item" hidden="{{screenIndex !== 1}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange">
+        <label class="radio screen-detail__list" wx:for="{{typeData}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+    <view class="screen-detail__item" hidden="{{screenIndex !== 2}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange">
+        <label class="radio screen-detail__list" wx:for="{{price}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+  </scroll-view>
+</wux-animation-group>
 <!-- 列表 -->
 <view class="list-wrap">
   <scroll-view scroll-y style="height: 100%;">
@@ -71,3 +97,5 @@
 </view>
 <!-- 快速创建 -->
 <view class="footer">快速创建</view>
+
+<wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />

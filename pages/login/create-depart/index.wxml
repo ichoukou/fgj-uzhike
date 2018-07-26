@@ -3,28 +3,43 @@
   <view class="list">
     <view class="input-item">
       <view class="item-title">部门层级</view>
-      <input type="text" placeholder-class="phcolor" placeholder="请选择" />
-      <text class="iconfont icon-jiantou2"></text>
+      <input type="text"
+        placeholder-class="phcolor"
+        placeholder="请选择"
+        value='1'
+        disabled />
     </view>
     <view class="input-item">
       <view class="item-title">部门名称</view>
-      <input type="text" placeholder-class="phcolor" placeholder="请填写" />
-    </view>
-    <view class="input-item">
-      <view class="item-title">部门标头</view>
-      <input type="text" placeholder-class="phcolor" placeholder="请填写" />
+      <input
+        type="text"
+        data-type="DeptName"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请填写" />
     </view>
     <view class="input-item">
       <view class="item-title">部门地址</view>
-      <input type="text" placeholder-class="phcolor" placeholder="请填写" />
+      <input
+        type="text"
+        data-type="Address"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请填写" />
     </view>
     <view class="input-item">
       <view class="item-title">部门类型</view>
-      <input type="text" placeholder-class="phcolor" placeholder="请选择" />
+      <picker mode="selector" bindchange="bindTypeChange" value="{{index}}" range="{{deptType}}">
+        <view class="picker">
+          {{deptType[index]}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
   </view>
   <view class="footer">
-    <text class="footer-text">完成</text>
+    <text class="footer-text" bindtap="submit">完成</text>
   </view>
 </view>
+
+<i-message id="message" />

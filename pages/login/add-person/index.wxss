@@ -1,5 +1,4 @@
-
-.container {
+page {
   background: #fff;
 }
 .header {
@@ -19,14 +18,21 @@
   color: #ff6714;
 }
 .content {
-  margin-left: 26rpx;
+  margin: 0 26rpx;
 }
 .content-item {
+  display: flex;
   height: 80rpx;
   line-height: 80rpx;
+  margin-bottom: 20rpx;
 }
 .iconfont {
   color: #ff6714;
   margin-right: 16rpx;
-
+}
+button {
+  flex: 1;
+  text-align: left;
+  height: 100%;
+  font-size: 30rpx;
 }

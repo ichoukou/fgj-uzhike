@@ -40,6 +40,12 @@ Page({
     //   }
     // })
     */
+    wx.getStorage({
+      key: 'workspaceList',
+      success: function(res) {
+        console.log(res)
+      },
+    })
   },
 
   /**

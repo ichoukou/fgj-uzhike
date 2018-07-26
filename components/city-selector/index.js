@@ -1,13 +1,11 @@
 const { $Message } = require('../base/index');
-import { GetAllCityList, GetCityIDByName } from '../../api/public';
-import city from './city';
-import PinYin from './utk';
+import { GetAllCityList, GetCityByStr, GetCityIDByName } from '../../api/public';
 
+const QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
 const app = getApp();
 
 Component({
   properties: {
-
   },
   data: {
     userInfo: {},
@@ -28,29 +26,58 @@ Component({
     loading: false,
   },
   created() {
-    // 判断是否有缓存数据
-    wx.getStorage({
-      key: 'cityData',
-      success: (res) => {
-        this.setData({
-          map: res.data,
-          loading: true
-        })
-      },
-      fail: (err) => {
-        this.GetAllCityList();    // 获取所有城市信息
-      }
-    });
-    this.getSetting();      // 获取用户权限设置
+    this.getLocation();     // 获取地理位置
+    this.GetAllCityList();  // 获取所有城市数据接口
   },
   ready() {
     this.getScrollNavTop(); // 获取侧边导航距离顶部位置
   },
   methods: {
-    // 获取所有城市信息
+    // 获取地理位置
+    getLocation() {
+      wx.getLocation({
+        type: 'gcj02',
+        success: function (res) {
+          // console.log(res)
+          this.locationMap(res.latitude, res.longitude);
+        }.bind(this), 
+        fail(err) {
+          console.log('err', err)
+        }
+      })
+    },
+    // 根据经纬度，定位
+    locationMap(latitude, longitude) {
+      // 实例化API核心类
+      let map = new QQMapWX({
+        key: 'JACBZ-N6EK6-IO4S7-ESP4S-3E3RS-OCFDM' // 必填
+      });
+      // 调用接口
+      map.reverseGeocoder({
+        location: {
+          latitude: latitude,
+          longitude: longitude
+        },
+        success: function (res) {
+          console.log(res);
+          let city = res.result.ad_info.city;
+          let userInfo = this.data.userInfo;
+          userInfo.city = city;
+
+          this.setData({
+            userInfo 
+          });
+          this.GetCityIDByName(city);   // 根据城市名称获取城市ID
+        }.bind(this),
+        fail: function (err) {
+          console.log(err);
+        }
+      });
+    },
+    // 获取所有城市数据接口
     GetAllCityList() {
       GetAllCityList().then(res => {
-        console.log(res)
+        // console.log(res)
         if (res.data.result === 'success') {
           let city = res.data.datalist;
           let data = [];
@@ -66,43 +93,14 @@ Component({
               })
             }
           });
-          this.filterMap(data)
-        }
-      })
-    },
-    // 获取用户权限设置
-    getSetting() {
-      let _this = this;
 
-      wx.getSetting({
-        success(res) {
-          if (!res.authSetting['scope.userInfo']) {
-            wx.authorize({
-              scope: 'scope.userLocation',
-              success() {
-                _this.getUserInfo();
-              },
-              fail(err) {
-                console.log(err)
-              }
+          this.filterMap(data, function (map) {
+            // 缓存城市数据
+            wx.setStorage({
+              key: 'cityData',
+              data: map
             })
-          } else {
-            _this.getUserInfo();
-          }
-        }
-      });
-    },
-    // 获取用户信息
-    getUserInfo() {
-      wx.getUserInfo({
-        lang: 'zh_CN',
-        success: (res) => {
-          // console.log(res.userInfo)
-          app.globalData.userInfo = res.userInfo;
-          this.setData({
-            userInfo: res.userInfo
           });
-          this.GetCityIDByName(res.userInfo.city);
         }
       })
     },
@@ -113,8 +111,7 @@ Component({
       GetCityIDByName({
         CityName: city
       }).then(res => {
-        console.log(res)
-        // userInfo.CityID = res
+        // console.log(res)
         if (res.data.result === 'success') {
           userInfo.CityID = res.data.CityID;
           this.setData({
@@ -140,7 +137,7 @@ Component({
         }
       });
     },
-    // 选中城市
+    // 选中列表城市
     bindClick(e) {
       // console.log(e.target)
       let { name, id } = e.target.dataset;
@@ -152,16 +149,59 @@ Component({
         }
       });
     },
-    // 搜索
+    // 搜索返回值
     bindQuery(e) {
       console.log(e.detail.value)
-      // let likestr = e.detail.value;
-      this.data.params.likestr = e.detail.value;
+      let likestr = e.detail.value;
+      this.data.params.likestr = likestr;
 
       this.data.onceTime && (clearTimeout(this.data.onceTime));
       this.data.onceTime = setTimeout(() => {
-
+        if (likestr) {
+          this.GetCityByStr(likestr);
+        } else {
+          this.isHasCityData();
+        }
       }, 200)
+    },
+    // 模糊搜索城市
+    GetCityByStr(likestr) {
+      this.setData({
+        map: [],
+        loading: false
+      });
+      GetCityByStr({
+        likestr
+      }).then(res => {
+        if (res.data.result === 'success') {
+          let city = res.data.temptable;
+          let data = [];
+
+          if (!city.length) {
+            return
+          };
+
+          city.forEach(item => {
+            data.push({
+              PY: item.PY.substring(0, 1).toLocaleUpperCase(),
+              name: item.CityName,
+              id: item.ID
+            })
+          });
+          this.filterMap(data);     // 处理数据
+          this.getScrollNavTop();   // 重新获取nav位置
+        } else {
+          this.setData({ loading: true });
+        }
+      })
+    },
+    // 获取侧边导航距离顶部位置
+    getScrollNavTop() {
+      let query = wx.createSelectorQuery().in(this)
+      query.select('#navSide').boundingClientRect(function (res) {
+        // console.log(res)
+        this.data.scrollNavTop = res.top;
+      }.bind(this)).exec()
     },
     // 侧边栏触摸
     catchNavStart(e) {
@@ -219,13 +259,13 @@ Component({
       }
     },
     // 处理数据
-    filterMap(data) {
-      let map = this.data.map,
-        obj = {},
-        element = '',
-        type = this.data.currentType,
-        title = '';
-        
+    filterMap(data, callback) {
+      let map = [],
+          obj = {},
+          element = '',
+          type = this.data.currentType,
+          title = '';
+
       for (let i = 0, length = data.length; i < length; i++) {
         title = data[i].PY;
         data[i].name = data[i].name;
@@ -247,7 +287,7 @@ Component({
       for (let key in obj) {
         map.push(obj[key])
       };
-      // console.log(map)
+      console.log(map)
 
       // 排序
       map.sort((a, b) => {
@@ -259,19 +299,7 @@ Component({
         loading: true
       });
 
-      // 缓存城市数据
-      wx.setStorage({
-        key: 'cityData',
-        data: map
-      })
-    },
-    // 获取侧边导航距离顶部位置
-    getScrollNavTop() {
-      let query = wx.createSelectorQuery().in(this)
-      query.select('#navSide').boundingClientRect(function (res) {
-        // console.log(res)
-        this.data.scrollNavTop = res.top;
-      }.bind(this)).exec()
+      typeof callback === 'function' && callback(map);
     },
   }
 });

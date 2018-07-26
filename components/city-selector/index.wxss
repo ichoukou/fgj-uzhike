@@ -131,3 +131,20 @@
   background-color: rgba(0, 0, 0, .5);
   text-align: center;
 }
+
+
+/* 暂无数据 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40rpx;
+}
+.empty__icon {
+  font-size: 160rpx;
+  color: #666;
+}
+.empty__desc {
+  font-size: 28rpx;
+  color: #333;
+}

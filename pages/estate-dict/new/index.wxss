@@ -5,8 +5,10 @@
   bottom: 100rpx;
   width: 100%;
 }
+.scroll__space {
+  padding: 20rpx 0;
+}
 .list-wrap {
-  margin: 20rpx 0;
   padding: 0 30rpx;
   background-color: #fff;
 }
@@ -60,10 +62,10 @@
 .upload__title {
   padding: 30rpx 20rpx;
 }
-.upload__cont {
+/* .upload__cont {
   display: flex;
   flex-wrap: wrap;
-}
+} */
 .upload__list {
   position: relative;
   padding: 20rpx;

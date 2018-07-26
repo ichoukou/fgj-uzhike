@@ -1,0 +1,66 @@
+
+<view class="container">
+  <view class="tab" catchtap="changeStyle">
+    <view class="tab-item {{ tabNum == 1 ? 'cur' : '' }} " data-tabNum="1">
+      账号登录
+      <span class="{{ tabNum == 1 ? 'line' : '' }}"></span>
+    </view>
+    <view class="tab-item {{ tabNum == 2 ? 'cur' : '' }}" data-tabNum="2">
+      验证码登录
+      <span class="{{ tabNum == 2 ? 'line' : '' }}"></span>
+    </view>
+  </view>
+  <view class="input-box">
+    <view class="input-item">
+      <text class="iconfont icon-zhanghao"></text>
+      <input
+        type="text"
+        data-type="Tel"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请输入手机号" />
+    </view>
+    <view class="input-item" hidden="{{ tabNum == 2 }}">
+      <text class="iconfont icon-mima"></text>
+      <input
+        type="password"
+        data-type="Password"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请输入密码" />
+    </view>
+    <view class="input-item" hidden="{{ tabNum == 1 }}">
+      <text class="iconfont icon-yanzhengma"></text>
+      <input
+        type="number"
+        data-type="ValiNum"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请输入验证码" /><span class="line-ver">|</span>
+      <view wx:if="{{ !isSend }}" class="v-number" bindtap="getValiNum">获取验证码</view>
+      <view wx:else class="v-number" bindtap="getValiNum">{{ times }}s后再获取</view>
+    </view>
+  </view>
+   <!-- <view class="input-box" hidden="{{ tabNum == 1 }}"> 
+     <view class="input-item">
+      <text class="iconfont icon-zhanghao"></text>
+      <input
+        type="text"
+        data-type="Tel"
+        bindinput="inputChange"
+        placeholder-class="phcolor"
+        placeholder="请输入手机号" />
+    </view> 
+   </view>  -->
+  <view class="login" bindtap="login">登录</view>
+  <view class="tip">
+    <navigator url="/pages/login/find-password/index">
+      <view class="tip-left">忘记密码</view>
+    </navigator>
+    <navigator url="/pages/login/register/index">
+      <view class="tip-right">没有账号，去注册</view>
+    </navigator>
+  </view>
+</view>
+
+<i-message id="message" />

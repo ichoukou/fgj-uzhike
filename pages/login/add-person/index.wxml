@@ -2,16 +2,20 @@
 <view class="container">
   <view class="header">
     <view class="header-title">添加成员</view>
-    <view class="header-next">下一步</view>
+    <view class="header-next" bindtap="submit">完成</view>
   </view>
   <view class="content">
     <view class="content-item">
-      <text class="iconfont icon-fenxiang1"></text>
-      <text>分享邀请新成员加入公司</text>
+      <button open-type="share" plain>
+        <text class="iconfont icon-fenxiang1"></text>
+        分享邀请新成员加入公司
+      </button>
     </view>
     <view class="content-item">
-      <text class="iconfont icon-tianjia"></text>
-      <text>添加团队成员</text>
+      <button plain>
+        <text class="iconfont icon-tianjia"></text>
+        <text>添加团队成员</text>
+      </button>
     </view>
   </view>
 </view>

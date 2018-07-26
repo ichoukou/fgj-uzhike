@@ -1,0 +1,81 @@
+
+page {
+  background: #fff;
+}
+.tab {
+  display: flex;
+  margin: 130rpx 56rpx 0 56rpx;
+}
+.tab-item {
+  position: relative;
+  width: 50%;
+  height: 80rpx;
+  font-size: 36rpx;
+  text-align: center;
+  color: #d2d2d2;
+}
+.cur {
+  font-weight: 700;
+  color: #303030;
+}
+.line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8rpx;
+  background:  linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  box-shadow: 0 2rpx 6rpx rgba(251, 130, 57, .3);
+  border-radius: 4rpx;
+}
+.input-box {
+  margin: 0 56rpx;
+}
+.input-item {
+  display: flex;
+  align-items: center;
+  margin: 70rpx 0;
+  height: 80rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+input {
+  flex: 2;
+  margin: 0 10rpx;
+  font-size: 30rpx;
+}
+.phcolor {
+  color: #d2d2d2;
+}
+.iconfont {
+  color: #d2d2d2;
+}
+.line-ver {
+  color: #c1c1c1;
+}
+.v-number {
+  flex: 1;
+  margin-left: 20rpx;
+  font-size: 26rpx;
+  color: #ff6714;
+}
+.login {
+  margin: 0 56rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  background:  linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  box-shadow: 0 5rpx 13rpx rgba(251, 130, 57, .5);
+  border-radius: 8rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #fff;
+}
+.tip {
+  margin: 140rpx 56rpx 0 56rpx;
+  display: flex;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #c1c1c1;
+}
+.navigator-hover {
+  background: transparent;
+}

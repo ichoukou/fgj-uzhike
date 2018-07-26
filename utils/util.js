@@ -34,6 +34,9 @@ const _fgj = {
   },
   // 字段验证
   verify (strings, type) {
+    if (!strings) {
+      return false
+    };
     let value = strings.replace(/\s/g, '');   // 去掉空白字符
     // 非空验证
     if (type === 'require') {

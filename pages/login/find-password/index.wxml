@@ -1,0 +1,44 @@
+
+<view class="container">
+  <view class="input-item">
+    <text class="iconfont icon-zhanghao"></text>
+    <input
+      type="text"
+      data-type="Tel"
+      bindinput="inputChange"
+      placeholder-class="phcolor"
+      placeholder="请输入手机号" />
+  </view>
+  <view class="input-item">
+    <text class="iconfont icon-yanzhengma"></text>
+    <input
+      type="text"
+      data-type="ValiNum"
+      bindinput="inputChange"
+      placeholder-class="phcolor"
+      placeholder="请输入验证码" /><span class="line-ver">|</span>
+    <view wx:if="{{ !isSend }}" class="v-number" bindtap="getValiNum">获取验证码</view>
+    <view wx:else class="v-number" bindtap="getValiNum">{{ times }}s后再获取</view>
+  </view>
+  <view class="input-item">
+    <text class="iconfont icon-mima"></text>
+    <input
+      type="password"
+      data-type="Password"
+      bindinput="inputChange"
+      placeholder-class="phcolor"
+      placeholder="请输入新的密码" />
+  </view>
+  <view class="input-item">
+    <text class="iconfont icon-mima"></text>
+    <input
+      type="password"
+      data-type="Password2"
+      bindinput="inputChange"
+      placeholder-class="phcolor"
+      placeholder="再次输入密码" />
+  </view>
+  <view class="submit" bindtap="submit">确认</view>
+</view>
+
+<i-message id="message" />

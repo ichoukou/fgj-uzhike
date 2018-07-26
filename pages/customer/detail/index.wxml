@@ -1,0 +1,36 @@
+
+<view class="container">
+  <view class="header">
+    <view class="name">王女士</view>
+    <view class="info">
+      <text>电话：13303210012</text>
+      <text>类型：A</text>
+    </view>
+    <view class="funcs">
+      <view class="funcs-item">
+        <view class="iconfont icon-genjin"></view>
+        <view class="item-title">跟进</view>
+      </view>
+      <view class="funcs-item">
+        <view class="iconfont icon-bohao"></view>
+        <view class="item-title">拨号</view>
+      </view>
+      <view class="funcs-item">
+        <view class="iconfont icon-daikan"></view>
+        <view class="item-title">带看</view>
+      </view>
+      <view class="funcs-item">
+        <view class="iconfont icon-richeng"></view>
+        <view class="item-title">加入日程</view>
+      </view>
+      <view class="funcs-item">
+        <view class="iconfont icon-gengduo1"></view>
+        <view class="item-title">更多</view>
+      </view>
+    </view>
+    <view class="edit">编辑</view>
+  </view>
+  <view class="content">
+    
+  </view>
+</view>

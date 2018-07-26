@@ -1,0 +1,44 @@
+
+page {
+  background: #fff;
+}
+.container {
+  padding: 0 56rpx;
+}
+.input-item {
+  display: flex;
+  align-items: center;
+  margin: 60rpx 0;
+  height: 80rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+input {
+  flex: 2;
+  margin-left: 10rpx;
+  font-size: 30rpx;
+}
+.phcolor {
+  color: #d2d2d2;  
+}
+.iconfont {
+  color: #d2d2d2;
+}
+.line-ver {
+  color: #c1c1c1;
+}
+.v-number {
+  flex: 1;
+   margin-left: 20rpx; 
+  font-size: 26rpx;
+  color: #ff6714;
+}
+.submit {
+  height: 88rpx;
+  line-height: 88rpx;
+  background:  linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  box-shadow: 0 5rpx 13rpx rgba(251, 130, 57, .5);
+  border-radius: 8rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #fff;
+}

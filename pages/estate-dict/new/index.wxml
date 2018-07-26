@@ -1,46 +1,63 @@
 <view class="content">
-  <view class="list-wrap">
-    <view class="list" bindtap="bindOpenCity">
-      <view class="list__content">
-        <text class="list__desc">{{citySelector.CityName}}</text>
-      </view>
-      <text class="iconfont icon-jiantou2 list__arrow"></text>
-    </view>
-    <view class="list">
-      <view class="list__content">
-        <picker bindchange="bindPickerChange" value="{{pickerDistrictIndex}}" range="{{pickerDistrict}}" range-key="label">
-          <view class="list__desc">
-            {{pickerDistrict[pickerDistrictIndex].label}}
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="scroll__space">
+      <view class="list-wrap">
+        <view class="list" bindtap="bindOpenCity">
+          <view class="list__content">
+            <text class="list__desc">{{citySelector.CityName}}</text>
           </view>
-        </picker>
-      </view>
-      <text class="iconfont icon-jiantou2 list__arrow"></text>
-    </view>
-    <view class="list">
-      <field-input label="请填写楼盘名称" bind:value="bindFieldChange" />
-    </view>
-    <view class="list">
-      <field-input label="请填写楼盘地址" bind:value="bindFieldChange" />
-    </view>
-  </view>
-  <view class="upload">
-    <text class="upload__title">添加图片</text>
-    <view class="upload__cont">
-      <view class="upload__list" wx:for="{{photo.imgView}}" wx:key="{{index}}">
-        <view class="upload__space">
-          <image class="upload__img" mode="widthFix" src="{{item}}"></image>
+          <text class="iconfont icon-jiantou2 list__arrow"></text>
         </view>
-        <text class="iconfont icon-guanbi upload__close"></text>
-      </view>
-      <view class="upload__list">
-        <view class="upload__space upload__list-up" bindtap="bindUploadImg">
-          <text class="iconfont icon-tianjia upload__icon"></text>
+        <view class="list">
+          <view class="list__content">
+            <picker bindchange="bindPickerChange" value="{{pickerDistrictIndex}}" range="{{pickerDistrict}}" range-key="CityName">
+              <view class="list__desc">
+                {{pickerDistrict[pickerDistrictIndex].CityName}}
+              </view>
+            </picker>
+          </view>
+          <text class="iconfont icon-jiantou2 list__arrow"></text>
+        </view>
+        <view class="list">
+          <field-input label="请填写楼盘名称" data-type="name" bind:value="bindFieldChange" />
+        </view>
+        <view class="list">
+          <field-input label="请填写楼盘地址" data-type="address" bind:value="bindFieldChange" />
         </view>
       </view>
+      <view class="upload">
+        <text class="upload__title">添加图片</text>
+        <view class="upload__cont">
+          <!-- <view class="upload__list">
+            <image class="upload__img" mode="widthFix" src="{{item}}"></image>
+          </view> -->
+          <view class="upload__list">
+            <view class="upload__space upload__list-up" bindtap="bindUploadImg">
+              <text class="iconfont icon-tianjia upload__icon" hidden="{{imgView}}"></text>
+              <image class="upload__img" mode="widthFix" src="{{imgView}}" hidden="{{!imgView}}"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- <view class="upload">
+        <text class="upload__title">添加图片</text>
+        <view class="upload__cont">
+          <view class="upload__list" wx:for="{{photo.imgView}}" wx:key="{{index}}">
+            <view class="upload__space">
+              <image class="upload__img" mode="widthFix" src="{{item}}"></image>
+            </view>
+            <text class="iconfont icon-guanbi upload__close"></text>
+          </view>
+          <view class="upload__list">
+            <view class="upload__space upload__list-up" bindtap="bindUploadImg">
+              <text class="iconfont icon-tianjia upload__icon"></text>
+            </view>
+          </view>
+        </view>
+      </view> -->
     </view>
-  </view>
+  </scroll-view>
 </view>
-
 <view class="footer">
   <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="bindSubmit">
     <text hidden="{{loading}}">完成</text>

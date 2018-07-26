@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "楼盘字典",
   "usingComponents": {
-    "search": "/components/search/index"
+    "search": "/components/search/index",
+    "wux-animation-group": "/components/animation-group/index",
+    "wux-backdrop": "/components/backdrop/index"
   }
 }

@@ -1,13 +1,18 @@
 
 export default function fetch(params) {
   let { url, method, data } = params;
+  let token = wx.getStorageSync('token');
+
+  console.log(token)
+
   return new Promise((resolve, reject) => {
     wx.request({
       url: url,
       method: method,
       data: data,
       header: {
-        'content-type': 'application/x-www-form-urlencoded'
+        'content-type': 'application/x-www-form-urlencoded',
+        'token': token
       },
       success: function (res) {
         console.log('success')

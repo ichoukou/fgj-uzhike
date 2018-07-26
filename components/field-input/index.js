@@ -51,7 +51,7 @@ Component({
       });
 
       this.triggerEvent('value', {
-        value: value
+        value: newVal
       });
     }
   },

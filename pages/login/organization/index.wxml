@@ -1,14 +1,16 @@
 
 <view class="container">
   <scroll-view scroll-y class="scroll-list">
-    <radio-group class="radio-group" bindchange="radioChange">
+    <checkbox-group class="checkbox-group" bindchange="checkboxChange">
       <view class="item" wx:for="{{ listData }}" wx:key="{{ index }}">
-        <radio class="radio" value="{{ item.name }}" checked="{{ item.checked }}"/>{{ item.value }}
+        <checkbox class="checkbox" value="{{ item.DeptName }}" checked="{{ item.checked }}"/>{{ item.DeptName }}
       </view>
-    </radio-group>
+    </checkbox-group>
   </scroll-view>
   <view class="footer">
-    <view class="footer-text">自定义部门</view>
-    <view class="footer-text">完成</view>
+    <navigator url="/pages/login/create-depart/index" class="footer-text">自定义部门</navigator>
+    <view class="footer-text" bindtap="complete">完成</view>
   </view>
 </view>
+
+<i-message id="message" />

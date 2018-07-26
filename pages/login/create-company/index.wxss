@@ -11,6 +11,12 @@
   bottom: 170rpx;
   background: #fff;
 }
+picker {
+  flex: 1;
+}
+.picker {
+  font-size: 30rpx;
+}
 .title {
   margin-left: 26rpx;
   height: 80rpx;
@@ -27,7 +33,7 @@
   border-bottom: 1rpx solid #f2f2f2;
 }
 .input-title {
-  width: 270rpx;
+  width: 260rpx;
   margin-left: 20rpx;
   font-size: 30rpx;
 }
@@ -75,11 +81,19 @@ input {
   border-radius: 6rpx;
 }
 
-.tel {
-  width: 230rpx;
+input.tel {
+  flex: 3;
+  width: 210rpx;
+}
+.line {
+  display: inline-block;
+  width: 30rpx;
+  margin-left: 10rpx;
+  color: #c1c1c1;
 }
 .v-number {
-  margin-left: 20rpx;
+  flex: 2;
+  /* margin-left: 20rpx; */
   font-size: 26rpx;
   color: #ff6714;
 }

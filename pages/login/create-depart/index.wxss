@@ -20,6 +20,9 @@ input {
 .icon-jiantou2 {
   transform: rotate(180deg);
 }
+picker {
+  flex: 1
+}
 
 .footer {
   position: absolute;

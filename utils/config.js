@@ -1,4 +1,5 @@
 // 配置信息
+// wx42b6a317b010ed6c APPID
 
 export const MAXIMUM = 4;   // 组织架构最多可以新建多少层
 

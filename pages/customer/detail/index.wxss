@@ -1,0 +1,48 @@
+
+.header {
+  position: relative;
+  height: 276rpx;
+  background: #fff;
+  padding-top: 30rpx; 
+}
+.name {
+  margin-left: 44rpx;
+  font-size: 48rpx;
+  font-weight: 700;
+}
+.info {
+  margin-top: 10rpx; 
+  margin-left: 44rpx; 
+  font-size: 30rpx;
+}
+.info text {
+  margin-right: 20rpx;
+}
+.funcs {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20rpx;
+}
+.funcs-item {
+  /* flex: 1;  */
+  text-align: center;
+}
+.iconfont {
+  width: 54rpx;
+  height: 54rpx;
+  line-height: 54rpx; 
+  background: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  box-shadow: 0 5rpx 13rpx rgba(251,130,57,0.3);
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+}
+.item-title {
+  margin-top: 8rpx;
+  font-size: 18rpx;
+}
+.edit {
+  position: absolute;
+  top: 30rpx;
+  right: 44rpx;
+}

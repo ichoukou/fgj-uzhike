@@ -1,0 +1,45 @@
+
+<scroll-view scroll-y class="scroll-list">
+  <view class="box-item">
+    <view class="title">
+      <text>人事管理</text>
+      <checkbox class="checkbox" checked="{{ hrChecked }}" bindtap="hrSelected"></checkbox>
+    </view>
+    <checkbox-group class="radio-group" bindchange="hrChange">
+      <view class="item" wx:for="{{ hrList }}" wx:key="{{ index }}">
+        <checkbox class="checkbox" value="{{ item.name }}" checked="{{ item.selected }}"/>
+          <image src="{{ item.src }}"></image>
+          <text>{{ item.name }}</text>
+      </view>
+    </checkbox-group>
+  </view>
+  <view class="box-item">
+    <view class="title">
+      <text>市场营销</text>
+      <checkbox class="checkbox" checked="{{ marketChecked }}" bindtap="marketSelected"></checkbox>
+    </view>
+    <checkbox-group class="radio-group" bindchange="marketChange">
+      <view class="item" wx:for="{{ marketList }}" wx:key="{{ index }}">
+        <checkbox class="checkbox" value="{{ item.name }}" checked="{{ item.selected }}"/>
+          <image src="{{ item.src }}"></image>
+          <text>{{ item.name }}</text>
+      </view>
+    </checkbox-group>
+  </view>
+  <view class="box-item">
+    <view class="title">
+      <text>财务管理</text>
+      <checkbox class="checkbox" checked="{{ financialChecked }}" bindtap="financialSelected"></checkbox>
+    </view>
+    <checkbox-group class="radio-group" bindchange="financialChange">
+      <view class="item" wx:for="{{ financialList }}" wx:key="{{ index }}">
+        <checkbox class="checkbox" value="{{ item.name }}" checked="{{ item.selected }}"/>
+          <image src="{{ item.src }}"></image>
+          <text>{{ item.name }}</text>
+      </view>
+    </checkbox-group>
+  </view>
+</scroll-view>
+<view class="footer">
+  <text class="footer-text" bindtap="submit">提交</text>
+</view>

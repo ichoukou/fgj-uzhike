@@ -1,0 +1,47 @@
+
+page {
+  background: #fff;
+}
+.content-item {
+  display: flex;
+  margin: 110rpx 66rpx;
+}
+image {
+  width: 254rpx;
+  height: 340rpx; 
+}
+.item-right {
+  margin-top: 60rpx;
+  margin-left: 40rpx;
+}
+.item-title {
+  font-size: 60rpx;
+  font-weight: 700;
+}
+.p {
+  margin-top: 10rpx;
+  font-size: 36rpx;
+}
+.iconfont {
+  float: right;
+  width: 66rpx;
+  height: 66rpx;
+  line-height: 66rpx;
+  margin-top: 20rpx;
+  border-radius: 50%;
+  background:  linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  box-shadow: 0 5rpx 13rpx rgba(251, 130, 57, .8);
+  text-align: center;
+}
+.icon-xiaji {
+  color: #fff;
+}
+
+.footer {
+  position: absolute;
+  bottom: 50rpx;
+  right: 26rpx;
+  font-size: 30rpx;
+  color: #ff6714;
+}
+

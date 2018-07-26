@@ -10,18 +10,32 @@
   bottom: 98rpx;
   background: #fff;
 }
-.list-item {
-  border-top: 1rpx solid #f2f2f2;
-}
 .item {
   position: relative;
   height: 130rpx;
   line-height: 130rpx;
   margin: 0 24rpx;
   border-bottom: 1rpx solid #f2f2f2;
-
 }
-.radio {
+checkbox .wx-checkbox-input {
+  height: 40rpx;
+  width: 40rpx;
+  border-radius: 50%;
+  border: 2rpx solid #ff6714;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+  background: #ff6714;
+  border: none;
+}
+ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+  width: 40rpx;
+  height: 40rpx;
+  background: #ff6714;
+  color: #fff;
+  border-radius: 50%;
+  border: 10rpx solid #ff6714; 
+} 
+.checkbox {
   position: absolute;
   right: 0;
 }
@@ -39,5 +53,8 @@
   text-align: center;
   font-size: 30rpx;
   color: #ff6714;
+}
+.navigator-hover {
+  background: transparent;
 }
 

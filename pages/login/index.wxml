@@ -1,1 +1,28 @@
 
+<view class="container">
+  <view class="content-item">
+    <view class="img">
+      <image src="../../images/create-team.png"></image>
+    </view>
+    <view class="item-right">
+      <view class="item-title">注册团队</view>
+      <view class="p">创建公司会便于管理你的团队及业务</view>
+      <view class="iconfont icon-xiaji" bindtap="goPage1"></view>
+    </view>
+  </view>
+  <view class="content-item">
+    <view class="img">
+      <image src="../../images/join-team.png"></image>
+    </view>
+    <view class="item-right">
+      <view class="item-title">加入团队</view>
+      <view class="p">通过企业的邀请码进入公司</view>
+      <view class="iconfont icon-xiaji" bindtap="goPage2"></view>
+    </view>
+  </view>
+  <navigator url="/pages/login/entry/index">
+    <view class="footer">已有注册，账号登录</view>
+  </navigator>
+</view>
+
+<i-message id="message" />
