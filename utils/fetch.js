@@ -1,9 +1,7 @@
 
 export default function fetch(params) {
   let { url, method, data } = params;
-  let token = wx.getStorageSync('token');
-
-  console.log(token)
+  let token = wx.getStorageSync('token') || '';
 
   return new Promise((resolve, reject) => {
     wx.request({
@@ -15,8 +13,20 @@ export default function fetch(params) {
         'token': token
       },
       success: function (res) {
-        console.log('success')
-        resolve(res)
+        // if(res.data.result === '权限不足') {
+        //   wx.showToast({
+        //     title: '权限不足，即将跳登陆',
+        //     icon: 'none',
+        //     duration: 1500
+        //   });
+        //   setTimeout(() => {
+        //     wx.navigateTo({
+        //       url: '/pages/login/entry/index'
+        //     })
+        //   }, 1500);
+        //   return;
+        // };
+        resolve(res);
       },
       fail(err) {
         console.log('error')

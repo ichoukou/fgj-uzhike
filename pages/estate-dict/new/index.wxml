@@ -33,8 +33,8 @@
           </view> -->
           <view class="upload__list">
             <view class="upload__space upload__list-up" bindtap="bindUploadImg">
-              <text class="iconfont icon-tianjia upload__icon" hidden="{{imgView}}"></text>
-              <image class="upload__img" mode="widthFix" src="{{imgView}}" hidden="{{!imgView}}"></image>
+              <text class="iconfont icon-tianjia upload__icon" hidden="{{imgCropper}}"></text>
+              <image class="upload__img" mode="widthFix" src="{{imgCropper}}" hidden="{{!imgCropper}}"></image>
             </view>
           </view>
         </view>

@@ -1,8 +1,10 @@
 
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util.js';
-import { FileUpLoad, GetDistrictByCityID, GetCookie } from '../../../api/public';
+import { FileUpLoad, GetDistrictByCityID } from '../../../api/public';
+// import { CheckLoginStatus } from '../../../api/login/login';
 import { InsertEstate } from '../../../api/estate-dict/new';
+import { URL_PATH } from '../../../utils/config';
 
 const app = getApp();
 
@@ -15,7 +17,8 @@ Page({
       Address: '',		    // 地址
       CoverImgUrl: '',		// 封面图
     },
-    imgView: '',        // 存储本地选中的图片地址，只用来显示
+    oldImgCropper: '',    // 当前已裁切并上传的图片，防止onShow重复上传
+    imgCropper: '',       // 裁切后的图片地址
     citySelector: {       // citySelector标识符城市选择列表用到，不可修改
       CityName: '请选择城市'
     },
@@ -55,19 +58,21 @@ Page({
 
   },
   onShow: function () {
-
-    // GetCookie().then(res => {
-    //   console.log(res)
-    // })
-    
-    let { params, citySelector } = this.data;
-    console.log(citySelector)
+    console.log('触发show')
+    let { params, citySelector, imgCropper } = this.data;
+    // 处理城市
     if (citySelector.CityID) {
       params.CityID = citySelector.CityID;
       this.setData({
         params
       });
       this.GetDistrictByCityID(citySelector.CityID);      // 根据城市ID获取区域数据
+    };
+    // 裁切后的图片
+    // console.log('old', this.data.oldImgCropper)
+    // console.log('new', imgCropper)
+    if (imgCropper) {
+      this.uploadFile(imgCropper)
     }
   },
   // 打开选择城市页面
@@ -198,7 +203,7 @@ Page({
         $Message({ content: '权限不足，请先登录', type: 'success' });
         setTimeout(() => {
           wx.navigateTo({
-            url: '/pages/login/entry/index?url=/pages/estate-dict/new/index'
+            url: '/pages/login/entry/index'
           })
         }, 1500);
       } 
@@ -258,7 +263,7 @@ Page({
   // 上传封面图
   bindUploadImg() {
     let _this = this;
-    let { params, imgView } = this.data;
+    let { params } = this.data;
 
     wx.chooseImage({
       count: 1, // 只能一张
@@ -266,91 +271,46 @@ Page({
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success(res) {
         let tempFilePaths = res.tempFilePaths;
-
-        wx.showLoading({
-          title: '图片上传中',
+        // 去裁切
+        wx.navigateTo({
+          url: `/pages/img-cropper/index?src=${tempFilePaths[0]}`
         });
-        uploadFile(tempFilePaths[0]);
+      },
+      fail(e) {
+        console.log(e)
       }
     });
-    function uploadFile(path) {
-      wx.uploadFile({
-        url: FileUpLoad,
-        filePath: path,
-        name: 'file',
-        success(res) {
-          let data = JSON.parse(res.data);
-          if (data.result === 'success') {
-            params.CoverImgUrl = data.path.replace(/\|/, '');
-
-            _this.setData({
-              params,
-              imgView: path
-            });
-
-            $Message({ content: '图片上传成功', type: 'success' });
-          } else {
-            $Message({ content: '图片上传失败', type: 'error' });
-          };
-          wx.hideLoading();
-        },
-        fail(error) {
-          wx.hideLoading();
-          $Message({ content: '网络错误' + error, type: 'error' });
-        }
-      })
-    }
   },
-  /*
   // 上传图片
-  bindUploadImg() {
+  uploadFile(path) {
     let _this = this;
-    let { photo, imgView } = this.data;
+    let { params } = this.data;
 
-    wx.chooseImage({
-      count: 6, // 默认9
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success(res) {
-        let tempFilePaths = res.tempFilePaths;
-
-        wx.showLoading({
-          title: '图片上传中',
-        });
-        
-        for (let i = 0; i < tempFilePaths.length; i++) {
-          uploadFile(tempFilePaths[i]);
-        };
-      }
+    wx.showLoading({
+      title: '图片上传中',
     });
-    function uploadFile(path) {
-      wx.uploadFile({
-        url: FileUpLoad,
-        filePath: path,
-        name: 'file',
-        success(res) {
-          let data = JSON.parse(res.data);
-          if (data.result === 'success') {
 
-            $Message({ content: '图片上传成功', type: 'success' });
-            photo.imgData.push(data.path.replace(/\|/, ''));
-            photo.imgView.push(path)
-
-            _this.setData({
-              photo
-            });
-            console.log(photo)
-          } else {
-            $Message({ content: '图片上传失败', type: 'error' });
-          };
-          wx.hideLoading();
-        },
-        fail(error) {
-          wx.hideLoading();
-          $Message({ content: '网络错误' + error, type: 'error' });
-        }
-      })
-    }
+    wx.uploadFile({
+      url: FileUpLoad,
+      filePath: path,
+      name: 'file',
+      success(res) {
+        let data = JSON.parse(res.data);
+        if (data.result === 'success') {
+          params.CoverImgUrl = data.path.replace(/\|/, '');
+          _this.setData({
+            params,
+            imgCropper: URL_PATH + data.sm_path.replace(/\|/, '')      // URL_PATH 拼接图片地址，用来显示
+          });
+          $Message({ content: '图片上传成功', type: 'success' });
+        } else {
+          $Message({ content: '图片上传失败', type: 'error' });
+        };
+        wx.hideLoading();
+      },
+      fail(error) {
+        wx.hideLoading();
+      }
+    })
   },
-  */
 })

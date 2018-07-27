@@ -11,7 +11,7 @@
 <view class="location" bindtap="bindLocation">
   <text class="iconfont icon-dingwei top__icon-city"></text>
   <text class="location__desc">当前定位城市</text>
-  <text class="location__text">{{userInfo.city}}</text>
+  <text class="location__text" hidden="{{!userInfo.city}}">{{userInfo.city}}</text>
 </view>
 <view class="select">
   <scroll-view class="scroll-box" scroll-y style="height: 100%;" scroll-into-view="{{scrollTitle}}" scroll-with-animation="{{scrollAnim}}">

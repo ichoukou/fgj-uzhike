@@ -1,7 +1,14 @@
 import { $wuxBackdrop } from '../../../components/index';
+import { GetEstatePage } from '../../../api/estate-dict/list';
+
+import { URL_PATH } from '../../../utils/config';
 
 Page({
   data: {
+    params: {     // 筛选参数
+      page: 1
+    },
+    listData: [],
     src: 'http://app.vipfgj.com/upfile/20180423/8465CEA278D34DC298FA7B87C7D908A9.jpg',
     citySelector: {
       CityName: '南昌'
@@ -53,7 +60,26 @@ Page({
     this.$wuxBackdrop = $wuxBackdrop('#wux-backdrop', this)
   },
   onShow: function () {
+    this.GetEstatePage();     // 获取楼盘列表数据
     console.log(this.data.citySelector)
+  },
+  // 获取楼盘列表数据
+  GetEstatePage() {
+    GetEstatePage(this.data.params).then(res => {
+      if (res.data.result === 'success') {
+        let data = res.data.temptable || [];
+
+        data.forEach(item => {
+          item.src = URL_PATH + item.CoverImgUrl;     // 拼接图片地址
+        });
+
+        this.setData({
+          listData: data
+        })
+      } else {
+
+      }
+    })
   },
   // 打开选择城市页面
   bindOpenCity() {
@@ -102,7 +128,12 @@ Page({
       screenOpen: false
     });
   },
-
+  // 快速创建
+  bindOpenNew() {
+    wx.navigateTo({
+      url: '../new/index'
+    })
+  },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */

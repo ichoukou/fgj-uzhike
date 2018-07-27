@@ -1,7 +1,7 @@
 const { $Message } = require('../base/index');
 import { GetAllCityList, GetCityByStr, GetCityIDByName } from '../../api/public';
-
-const QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
+import { MAP_KEY } from '../../utils/config';
+const QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
 const app = getApp();
 
 Component({
@@ -27,12 +27,27 @@ Component({
   },
   created() {
     this.getLocation();     // 获取地理位置
-    this.GetAllCityList();  // 获取所有城市数据接口
+    this.getCityData();     // 看出是否有城市缓存，决定要不要重新获取
   },
   ready() {
     this.getScrollNavTop(); // 获取侧边导航距离顶部位置
   },
   methods: {
+    // 看出是否有城市缓存，决定要不要重新获取
+    getCityData() {
+      wx.getStorage({
+        key: 'cityData',
+        success: function (res) {
+          this.setData({
+            map: res.data,
+            loading: true
+          })
+        }.bind(this),
+        fail: function () {
+          this.GetAllCityList();  // 获取所有城市数据接口
+        }.bind(this)
+      })
+    },
     // 获取地理位置
     getLocation() {
       wx.getLocation({
@@ -50,7 +65,7 @@ Component({
     locationMap(latitude, longitude) {
       // 实例化API核心类
       let map = new QQMapWX({
-        key: 'JACBZ-N6EK6-IO4S7-ESP4S-3E3RS-OCFDM' // 必填
+        key: MAP_KEY // 必填
       });
       // 调用接口
       map.reverseGeocoder({
@@ -151,7 +166,6 @@ Component({
     },
     // 搜索返回值
     bindQuery(e) {
-      console.log(e.detail.value)
       let likestr = e.detail.value;
       this.data.params.likestr = likestr;
 
@@ -160,7 +174,7 @@ Component({
         if (likestr) {
           this.GetCityByStr(likestr);
         } else {
-          this.isHasCityData();
+          this.getCityData();
         }
       }, 200)
     },
@@ -189,7 +203,6 @@ Component({
             })
           });
           this.filterMap(data);     // 处理数据
-          this.getScrollNavTop();   // 重新获取nav位置
         } else {
           this.setData({ loading: true });
         }
@@ -199,7 +212,7 @@ Component({
     getScrollNavTop() {
       let query = wx.createSelectorQuery().in(this)
       query.select('#navSide').boundingClientRect(function (res) {
-        // console.log(res)
+        console.log('top', res)
         this.data.scrollNavTop = res.top;
       }.bind(this)).exec()
     },
@@ -230,7 +243,6 @@ Component({
     },
     // 侧边栏滑动
     catchNavMove(e) {
-      // let { title } = e.target.dataset;
       let clientY = e.touches[0].clientY;
       let {
         scrollNavTop,
@@ -240,7 +252,7 @@ Component({
         map
       } = this.data;
       let index = Math.ceil((clientY - scrollNavTop) / 20) - 1; // 20 是每个字幕的高度
-
+      
       if (index >= 0 && index < map.length) {
         this.setData({
           scrollAnim: false,
@@ -287,7 +299,7 @@ Component({
       for (let key in obj) {
         map.push(obj[key])
       };
-      console.log(map)
+      // console.log(map)
 
       // 排序
       map.sort((a, b) => {
@@ -300,6 +312,8 @@ Component({
       });
 
       typeof callback === 'function' && callback(map);
+
+      this.getScrollNavTop();   // 重新获取nav位置
     },
   }
 });

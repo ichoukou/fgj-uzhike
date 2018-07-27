@@ -1,13 +1,12 @@
 
+import { GetOpenID, WeChatLoginVerification } from './api/login/login';
+
 App({
     onLaunch: function () {
+
+      this.getCode();
+
       console.log('App Launch')
-      // 获取
-      let openid = 'oNJDW5b196dX_rQsm0-S6V-mjEDs';
-      let session_key = '+abLnBaU8Mmpwa94yDwOVA==';
-
-      wx.setStorageSync('token', openid + session_key)
-
       // 获取用户信息
       wx.getSetting({
         success: res => {
@@ -35,11 +34,57 @@ App({
     onHide: function () {
         console.log('App Hide')
     },
-    login(callback) {
-      
+    // 获取code
+    getCode() {
+      const _this = this;
+      wx.login({
+        success(res) {
+          if (res.code) {
+            console.log(res)
+            let data = {
+              Code: res.code,
+              needpurview: false
+            };
+            _this.getOpenID(data)
+          }
+        }
+      })
+    },
+    // 根据code获取openid
+    getOpenID(data) {
+      GetOpenID(data).then(res => {
+        if (res.statusCode === 200) {
+          let openID = res.data.openid
+          this.globalData.openID = openID
+          this.weChatLoginVerification(openID)
+        } else {
+          $Message({ content: '获取code失败', type: 'error' })
+        }
+      })
+    },
+    // 微信openid登录验证
+    weChatLoginVerification(openid) {
+      WeChatLoginVerification({
+        OpenID: openid,
+        needpurview: false
+      }).then(res => {
+        console.log(res)
+        let data = res.data
+        if (data.result === 'success') {
+          // wx.redirectTo({
+          //   url: '/pages/index/index?openID=' + this.globalData.openID
+          // })
+          wx.setStorageSync('token', res.data.Token);
+        } else {
+          // wx.redirectTo({
+          //   url: '/pages/login/index'
+          // })
+        }
+      })
     },
     globalData: {
       hasLogin: false,
       userInfo: null,
+      openID: '',
     }
 });

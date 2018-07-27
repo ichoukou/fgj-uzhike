@@ -1,5 +1,5 @@
 const { $Message } = require('../../components/base/index');
-import { CheckCookie, GetOpenID, WeChatLoginVerification } from '../../api/login/login.js';
+// import { CheckCookie, GetOpenID, WeChatLoginVerification } from '../../api/login/login.js';
 
 Page({
 
@@ -18,10 +18,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.showLoading({
-      title: '加载中',
-    })
-    this.checkCookie()
+    // wx.showLoading({
+    //   title: '加载中',
+    // })
+    // this.checkCookie()
   },
 
   /**

@@ -58,33 +58,16 @@
 <view class="list-wrap">
   <scroll-view scroll-y style="height: 100%;">
     <view class="list-space">
-      <view class="list">
-        <image class="list__img" mode="aspectFit" src="{{src}}"></image>
+      <view class="list" wx:for="{{listData}}" wx:key="{{index}}">
+        <image class="list__img" mode="aspectFit" src="{{item.src}}"></image>
         <view class="list__cont">
-          <text class="list__name">楼盘名称</text>
+          <text class="list__name">{{item.EstateName}}</text>
           <view class="list__info">
-            <text class="list__info-text">地址：高新大道001号</text>
-            <text class="list__info-text">建面：400000㎡</text>
-            <text class="list__info-text">类型：商铺</text>
+            <text class="list__info-text">地址：{{item.Address}}</text>
+            <!-- <text class="list__info-text">建面：400000㎡</text> -->
+            <!-- <text class="list__info-text">类型：商铺</text> -->
           </view>
-          <view class="list__tag-wrap">
-            <text class="list__tag list__tag--1">核心商业圈</text>
-            <text class="list__tag list__tag--2">中心地段</text>
-            <text class="list__tag list__tag--3">交通便利</text>
-          </view>
-          <text class="iconfont icon-gengduo icon-more"></text>
-        </view>
-      </view>
-      <view class="list">
-        <image class="list__img" mode="aspectFit" src="{{src}}"></image>
-        <view class="list__cont">
-          <text class="list__name">楼盘名称</text>
-          <view class="list__info">
-            <text class="list__info-text">地址：高新大道001号</text>
-            <text class="list__info-text">建面：400000㎡</text>
-            <text class="list__info-text">类型：商铺</text>
-          </view>
-          <view class="list__tag-wrap">
+          <view class="list__tag-wrap" hidden="{{!item.Tag}}">
             <text class="list__tag list__tag--1">核心商业圈</text>
             <text class="list__tag list__tag--2">中心地段</text>
             <text class="list__tag list__tag--3">交通便利</text>
@@ -96,6 +79,6 @@
   </scroll-view>
 </view>
 <!-- 快速创建 -->
-<view class="footer">快速创建</view>
+<view class="footer" bindtap="bindOpenNew">快速创建</view>
 
 <wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />

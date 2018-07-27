@@ -82,6 +82,9 @@ Page({
       let data = res.data
       if(data.result === 'success') {
         $Message({ content: '登录成功', type: 'success'})
+        
+        wx.setStorageSync('token', res.data.Token);
+
         setTimeout(() => {
           wx.navigateTo({
             url: '/pages/index/index',
@@ -98,6 +101,8 @@ Page({
     MobileValiVerification(params).then(res => {
       let data = res.data
       if (data.result === 'success') {
+        wx.setStorageSync('token', res.data.Token);
+
         setTimeout(() => {
           wx.navigateTo({
             url: '/pages/index/index',

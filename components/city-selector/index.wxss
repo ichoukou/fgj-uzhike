@@ -51,8 +51,10 @@
   color: #666;
 }
 .location__text {
-  padding: 0 6rpx;
-  font-size: 32rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #ff6714;
+  padding: 8rpx 12rpx;
+  font-size: 28rpx;
   color: #ff6714;
 }
 
