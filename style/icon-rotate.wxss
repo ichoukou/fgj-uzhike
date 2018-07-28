@@ -1,0 +1,6 @@
+@import './animate.wxss';
+
+.icon-jiazaizhong {
+  color: #ccc;
+  animation: rotate 1.8s linear infinite;
+}

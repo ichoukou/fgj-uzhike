@@ -9,18 +9,18 @@
 </swiper>
 <!-- 楼盘信息 -->
 <view class="estate-info">
-  <text class="estate-info__name">聚仁国际</text>
+  <text class="estate-info__name">{{EstateData.EstateName}}</text>
   <view class="estate-info__text">
     <view class="estate-info__text-left">
-      <text class="text-desc">地址：青山湖高新大道开发区699号</text>
+      <text class="text-desc">地址：{{EstateData.Address}}</text>
       <text class="text-desc">类型：商铺</text>
     </view>
-    <view class="estate-info__text-right">
+    <!-- <view class="estate-info__text-right">
       <text class="text-desc">价格：<text class="text-price">20000元/㎡</text></text>
       <text class="text-desc">建面：400000㎡</text>
-    </view>
+    </view> -->
   </view>
-  <view class="list__tag-wrap">
+  <view class="list__tag-wrap" wx:if="{{EstateData.Tag}}">
     <text class="list__tag list__tag--1">核心商业圈</text>
     <text class="list__tag list__tag--2">中心地段</text>
     <text class="list__tag list__tag--3">交通便利</text>
@@ -152,12 +152,12 @@
   <!-- 楼盘相册 -->
   <view class="photo" hidden="{{tabIndex != 2}}">
     <!-- 导航图标 -->
-    <view class="photo__nav">
-      <view class="photo__nav-list">
+    <view class="photo__nav" bindtap="bindGetImgType">
+      <view class="photo__nav-list" data-type="楼盘图">
         <view class="photo__nav-icon">
           <text class="iconfont icon-loupantu"></text>
         </view>
-        <text class="photo__nav-text">楼盘图片</text>
+        <text class="photo__nav-text">楼盘图</text>
       </view>
       <view class="photo__nav-list">
         <view class="photo__nav-icon">
@@ -200,7 +200,8 @@
     <view class="photo__show">
       <view 
         class="photo__show-list" 
-        wx:for="{{photo.imgData}}" 
+        hidden="{{!photoData.length}}" 
+        wx:for="{{photoData}}" 
         wx:key="{{index}}" 
         data-current="{{item.path}}" 
         bindtap="bindPreviewImage"
@@ -209,6 +210,10 @@
           <image class="photo__show-img" mode="aspectFill" src="{{item.path}}"></image>
           <view class="photo__show-desc">鸟瞰图</view>
         </view>
+      </view>
+      <view class="empty" hidden="{{photoData.length}}">
+        <text class="iconfont icon-kong empty__icon"></text>
+        <text class="empty__desc">暂无数据</text>
       </view>
     </view>
   </view>

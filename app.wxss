@@ -4,6 +4,7 @@
 @import 'style/flex.wxss';
 @import 'style/empty.wxss';
 @import 'style/text.wxss';
+@import 'style/icon-rotate.wxss';
 
 view,
 text {

@@ -57,8 +57,8 @@
 <!-- 列表 -->
 <view class="list-wrap">
   <scroll-view scroll-y style="height: 100%;">
-    <view class="list-space">
-      <view class="list" wx:for="{{listData}}" wx:key="{{index}}">
+    <view class="list-space" bindtap="bindClickContain">
+      <view class="list" wx:for="{{listData}}" wx:key="{{index}}" data-estate-id="{{item.EstateID}}" bindtap="bindOpenDetail">
         <image class="list__img" mode="aspectFit" src="{{item.src}}"></image>
         <view class="list__cont">
           <text class="list__name">{{item.EstateName}}</text>
@@ -72,7 +72,7 @@
             <text class="list__tag list__tag--2">中心地段</text>
             <text class="list__tag list__tag--3">交通便利</text>
           </view>
-          <text class="iconfont icon-gengduo icon-more"></text>
+          <text class="iconfont icon-gengduo icon-more" data-estate-id="{{item.EstateID}}" catchtap="bindOpenMore"></text>
         </view>
       </view>
     </view>
@@ -82,3 +82,4 @@
 <view class="footer" bindtap="bindOpenNew">快速创建</view>
 
 <wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />
+<i-message id="message" />

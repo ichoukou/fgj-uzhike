@@ -2,8 +2,7 @@
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util.js';
 import { FileUpLoad, GetDistrictByCityID } from '../../../api/public';
-// import { CheckLoginStatus } from '../../../api/login/login';
-import { InsertEstate } from '../../../api/estate-dict/new';
+import { InsertEstate, UpdateEstate, GetEstateByID } from '../../../api/estate-dict/new';
 import { URL_PATH } from '../../../utils/config';
 
 const app = getApp();
@@ -17,7 +16,6 @@ Page({
       Address: '',		    // 地址
       CoverImgUrl: '',		// 封面图
     },
-    oldImgCropper: '',    // 当前已裁切并上传的图片，防止onShow重复上传
     imgCropper: '',       // 裁切后的图片地址
     citySelector: {       // citySelector标识符城市选择列表用到，不可修改
       CityName: '请选择城市'
@@ -30,35 +28,35 @@ Page({
     pickerDistrictIndex: 0,
     disabled: false,
     loading: false,
+    iconLoading: false,   // 图片加载中
   },
   onLoad(options) {
     console.log('参数', options)
-    let { PositionID } = options;
+    let { EstateID } = options;
     let params = this.data.params;
 
-    // PositionID && (params.PositionID = PositionID);
+    EstateID && (params.EstateID = EstateID);
 
     this.setData({
       params
     });
 
-    // 是新建还是编辑
-    // if (!BooIsNew) {
-    //   wx.setNavigationBarTitle({
-    //     title: '编辑职务'
-    //   });
-    //   this.GetPositionByID(PositionID);    // 获取需要编辑的数据
-    // } else {
-    //   wx.setNavigationBarTitle({
-    //     title: '新建职务'
-    //   });
-    // }
+    // 判断是新建还是编辑
+    if (EstateID) {
+      wx.setNavigationBarTitle({
+        title: '编辑楼盘'
+      });
+      this.GetEstateByID(EstateID);    // 获取需要编辑的数据
+    } else {
+      wx.setNavigationBarTitle({
+        title: '快速创建楼盘'
+      });
+    }
   },
   onReady: function () {
 
   },
   onShow: function () {
-    console.log('触发show')
     let { params, citySelector, imgCropper } = this.data;
     // 处理城市
     if (citySelector.CityID) {
@@ -68,10 +66,8 @@ Page({
       });
       this.GetDistrictByCityID(citySelector.CityID);      // 根据城市ID获取区域数据
     };
-    // 裁切后的图片
-    // console.log('old', this.data.oldImgCropper)
-    // console.log('new', imgCropper)
-    if (imgCropper) {
+    // 上传裁切后的图片
+    if (imgCropper && imgCropper.indexOf(URL_PATH) === -1) {
       this.uploadFile(imgCropper)
     }
   },
@@ -86,15 +82,25 @@ Page({
     GetDistrictByCityID({
       CityID: id
     }).then(res => {
-      console.log(res)
+      // console.log(res)
       if (res.data.result === 'success') {
-        let { params } = this.data;
+        let { params, pickerDistrictIndex } = this.data;
         let data = res.data.temptable;
 
-        params.DistrictName = data[0].CityName;     // 默认选中第一个
+        if (!params.DistrictName) {
+          params.DistrictName = data[0].CityName; // 如果没有，就默认选中第一个
+        } else {
+          for (let i = 0, length = data.length; i < length; i++) {
+            if (params.DistrictName === data[i].CityName) {
+              pickerDistrictIndex = i
+            }
+          };
+        }
+        
         this.setData({
           params,
-          pickerDistrict: data
+          pickerDistrict: data,
+          pickerDistrictIndex
         })
       } else {
         $Message({ content: res.data.msg, type: 'error' });
@@ -130,45 +136,36 @@ Page({
       params
     });
   },
-  /*
   // 获取需要编辑的数据
-  GetPositionByID(PositionID) {
-    let { params, pickerValueType } = this.data;
+  GetEstateByID(EstateID) {
+    let { params, pickerDistrict } = this.data;
 
     wx.showLoading({ title: '加载中' });
-    GetPositionByID({
-      PositionID
+    GetEstateByID({
+      EstateID
     }).then(res => {
       // console.log(res)
       if (res.data.result === 'success') {
         let temptable = res.data.temptable[0];
-        let pickerValueTypeIndex = 0;
         let newObj = Object.assign({}, params, temptable);
 
-        // 处理权限类型
-        for (let i = 0, length = pickerValueType.length; i < length; i++) {
-          if (temptable.PositionLevel === pickerValueType[i].value) {
-            pickerValueTypeIndex = i
-          }
-        };
+        this.GetDistrictByCityID(newObj.CityID);    // 处理区域
 
         this.setData({
-          pickerValueTypeIndex,
-          params: newObj
+          params: newObj,
+          imgCropper: URL_PATH + newObj.CoverImgUrl      // URL_PATH 拼接图片地址，用来显示
         });
         wx.hideLoading();
       } else {
+        wx.hideLoading();
         $Message({ content: res.data.msg, type: 'error' });
       }
     })
   },
-  */
   // 点击完成
   bindSubmit() {
     let params = this.data.params;
     let verify = this.verifyData(params);   // 验证数据
-
-    console.log(params)
 
     if (verify.status) {
       this.setData({
@@ -176,7 +173,11 @@ Page({
         loading: true
       });
 
-      this.InsertEstate();
+      if (!params.EstateID) {
+        this.InsertEstate();      // 新建
+      } else {
+        this.UpdateEstate();      // 编辑
+      }
     } else {
       $Message({ content: verify.msg, type: 'error' });
     }
@@ -213,11 +214,11 @@ Page({
     })
   },
   // 编辑
-  UpPosition() {
+  UpdateEstate() {
     let params = this.data.params;
 
     wx.showLoading({ title: '加载中' });
-    UpPosition(params).then(res => {
+    UpdateEstate(params).then(res => {
       // console.log(res)
       wx.hideLoading();
       this.setData({
@@ -281,7 +282,7 @@ Page({
       }
     });
   },
-  // 上传图片
+  // 调用上传接口
   uploadFile(path) {
     let _this = this;
     let { params } = this.data;
@@ -289,6 +290,9 @@ Page({
     wx.showLoading({
       title: '图片上传中',
     });
+    _this.setData({
+      iconLoading: true
+    })
 
     wx.uploadFile({
       url: FileUpLoad,
@@ -307,9 +311,16 @@ Page({
           $Message({ content: '图片上传失败', type: 'error' });
         };
         wx.hideLoading();
+        _this.setData({
+          iconLoading: false
+        })
       },
       fail(error) {
         wx.hideLoading();
+        _this.setData({
+          iconLoading: false
+        });
+        $Message({ content: '图片上传失败', type: 'error' });
       }
     })
   },

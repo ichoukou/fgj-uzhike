@@ -103,7 +103,7 @@ page {
 }
 .list__img {
   width: 250rpx;
-  height: auto;
+  height: 188rpx;
 }
 .list__cont {
   flex: 1;
@@ -146,6 +146,7 @@ page {
   background-color: rgba(57,218,166,0.3);
 }
 .icon-more {
+  display: block;
   position: absolute;
   top: 0;
   right: 0;
@@ -155,10 +156,10 @@ page {
 .icon-more::after {
   content: "";
   position: absolute;
-  top: -10rpx;
-  right: -10rpx;
-  bottom: -10rpx;
-  left: -10rpx;
+  top: -20rpx;
+  right: -20rpx;
+  bottom: -20rpx;
+  left: -20rpx;
 }
 
 

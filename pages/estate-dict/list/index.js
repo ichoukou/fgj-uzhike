@@ -1,6 +1,7 @@
-import { $wuxBackdrop } from '../../../components/index';
-import { GetEstatePage } from '../../../api/estate-dict/list';
 
+const { $Message } = require('../../../components/base/index');
+import { $wuxBackdrop } from '../../../components/index';
+import { GetEstatePage, DelEstate } from '../../../api/estate-dict/list';
 import { URL_PATH } from '../../../utils/config';
 
 Page({
@@ -102,7 +103,6 @@ Page({
       screenOpen: true,
       screenIndex: Number(index)
     });
-
   },
   // 筛选radio改变事件
   bindRadioChange(e) {
@@ -114,12 +114,10 @@ Page({
   // 保持遮罩
   retainBackdrop() {
     this.$wuxBackdrop.retain()
-    console.log('retainBackdrop')
   },
   // 释放遮罩
   releaseBackdrop() {
     this.$wuxBackdrop.release()
-    console.log('release')
   },
   // 点击遮罩
   bindBackdrop() {
@@ -127,6 +125,70 @@ Page({
     this.setData({
       screenOpen: false
     });
+  },
+  // 打开详细页
+  bindOpenDetail(e) {
+    wx.navigateTo({
+      url: '../detail/index?EstateID=' +  e.currentTarget.dataset.estateId,
+    })
+  },
+  // 更多操作
+  bindOpenMore(e) {
+    this.moreOperation(e.currentTarget.dataset.estateId);
+  },
+  // 列表更多操作
+  moreOperation(EstateID) {
+    let _this = this;
+
+    wx.showActionSheet({
+      itemList: ['编辑', '删除'],
+      success: function (res) {
+        console.log(res.tapIndex)
+        switch (res.tapIndex) {
+          case 0:
+            // 去编辑
+            wx.navigateTo({
+              url: '../new/index?EstateID=' + EstateID,
+            });
+          break;
+          case 1:
+            // 删除
+            wx.showModal({
+              title: '删除提醒',
+              content: '您确定要删除这个楼盘吗？',
+              success: function (res) {
+                if (res.confirm) {
+                  _this.DelEstate(EstateID);
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          break;
+          default:
+            console.log('tapIndex错误')
+        }
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      }
+    })
+  },
+  // 删除楼盘
+  DelEstate(EstateID) {
+    wx.showLoading({
+      title: '正在删除',
+    });
+    DelEstate({
+      EstateID
+    }).then(res => {
+      wx.hideLoading();
+      if (res.data.result === 'success') {
+        $Message({ content: '删除成功', type: 'success' });
+      } else {
+        $Message({ content: '删除失败', type: 'error' });
+      };
+    })
   },
   // 快速创建
   bindOpenNew() {

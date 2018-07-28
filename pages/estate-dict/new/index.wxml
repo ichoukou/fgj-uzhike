@@ -19,42 +19,23 @@
           <text class="iconfont icon-jiantou2 list__arrow"></text>
         </view>
         <view class="list">
-          <field-input label="请填写楼盘名称" data-type="name" bind:value="bindFieldChange" />
+          <field-input label="请填写楼盘名称" value="{{params.EstateName}}" isField="{{params.EstateName}}" data-type="name" bind:value="bindFieldChange" />
         </view>
         <view class="list">
-          <field-input label="请填写楼盘地址" data-type="address" bind:value="bindFieldChange" />
+          <field-input label="请填写楼盘地址" value="{{params.Address}}" isField="{{params.Address}}" data-type="address" bind:value="bindFieldChange" />
         </view>
       </view>
       <view class="upload">
         <text class="upload__title">添加图片</text>
         <view class="upload__cont">
-          <!-- <view class="upload__list">
-            <image class="upload__img" mode="widthFix" src="{{item}}"></image>
-          </view> -->
           <view class="upload__list">
             <view class="upload__space upload__list-up" bindtap="bindUploadImg">
-              <text class="iconfont icon-tianjia upload__icon" hidden="{{imgCropper}}"></text>
+              <text class="iconfont {{iconLoading ? 'icon-jiazaizhong' : 'icon-tianjia'}}" hidden="{{imgCropper}}"></text>
               <image class="upload__img" mode="widthFix" src="{{imgCropper}}" hidden="{{!imgCropper}}"></image>
             </view>
           </view>
         </view>
       </view>
-      <!-- <view class="upload">
-        <text class="upload__title">添加图片</text>
-        <view class="upload__cont">
-          <view class="upload__list" wx:for="{{photo.imgView}}" wx:key="{{index}}">
-            <view class="upload__space">
-              <image class="upload__img" mode="widthFix" src="{{item}}"></image>
-            </view>
-            <text class="iconfont icon-guanbi upload__close"></text>
-          </view>
-          <view class="upload__list">
-            <view class="upload__space upload__list-up" bindtap="bindUploadImg">
-              <text class="iconfont icon-tianjia upload__icon"></text>
-            </view>
-          </view>
-        </view>
-      </view> -->
     </view>
   </scroll-view>
 </view>

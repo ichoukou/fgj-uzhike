@@ -71,7 +71,7 @@
   position: relative;
   padding: 20rpx;
   width: 33.33%;
-  height: 220rpx;
+  height: 180rpx;
 }
 .upload__space {
   overflow: hidden;
@@ -87,9 +87,9 @@
 .upload__img {
   width: 100%;
 }
-.upload__icon {
+.upload__list-up .iconfont {
   font-size: 46rpx;
-  color: #e6e6e6;
+  color: #ccc;
 }
 .upload__close {
   position: absolute;

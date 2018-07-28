@@ -3,6 +3,7 @@
   "usingComponents": {
     "search": "/components/search/index",
     "wux-animation-group": "/components/animation-group/index",
-    "wux-backdrop": "/components/backdrop/index"
+    "wux-backdrop": "/components/backdrop/index",
+    "i-message": "/components/message/index"
   }
 }
