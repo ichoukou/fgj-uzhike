@@ -82,7 +82,6 @@ Page({
   
   },
   onShow: function () {
-  
   },
   controltap(e) {
 

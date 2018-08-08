@@ -2,7 +2,6 @@ const { $Message } = require('../base/index');
 import { GetAllCityList, GetCityByStr, GetCityIDByName } from '../../api/public';
 import { MAP_KEY } from '../../utils/config';
 const QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
-const app = getApp();
 
 Component({
   properties: {
@@ -120,11 +119,11 @@ Component({
       })
     },
     // 根据城市名称匹配城市id
-    GetCityIDByName(city) {
+    GetCityIDByName(CityName) {
       let { userInfo } = this.data;
 
       GetCityIDByName({
-        CityName: city
+        CityName
       }).then(res => {
         // console.log(res)
         if (res.data.result === 'success') {

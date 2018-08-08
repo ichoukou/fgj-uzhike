@@ -1,4 +1,3 @@
-
 const { $Message } = require('../../../components/base/index');
 import _fgj from '../../../utils/util.js';
 import { FileUpLoad, GetDistrictByCityID } from '../../../api/public';
@@ -95,7 +94,9 @@ Page({
               pickerDistrictIndex = i
             }
           };
-        }
+        };
+
+        console.log(data)
         
         this.setData({
           params,
@@ -138,7 +139,7 @@ Page({
   },
   // 获取需要编辑的数据
   GetEstateByID(EstateID) {
-    let { params, pickerDistrict } = this.data;
+    let { params, citySelector, pickerDistrict } = this.data;
 
     wx.showLoading({ title: '加载中' });
     GetEstateByID({
@@ -149,10 +150,12 @@ Page({
         let temptable = res.data.temptable[0];
         let newObj = Object.assign({}, params, temptable);
 
+        citySelector.CityName = newObj.CityName;    // 回填城市
         this.GetDistrictByCityID(newObj.CityID);    // 处理区域
 
         this.setData({
           params: newObj,
+          citySelector,
           imgCropper: URL_PATH + newObj.CoverImgUrl      // URL_PATH 拼接图片地址，用来显示
         });
         wx.hideLoading();

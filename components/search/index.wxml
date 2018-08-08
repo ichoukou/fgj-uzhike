@@ -2,7 +2,7 @@
 <view class="search" style="height: {{height}}">
   <view class="search__content">
     <text class="iconfont icon-sousuo search__icon"></text>
-    <input class="search__input" value="{{query}}" placeholder="{{placeholder}}" bindinput="bindQuery" />
+    <input class="search__input" value="{{query}}" placeholder="{{placeholder}}" bindinput="bindQuery" bindconfirm="bindQuery" />
     <text class="iconfont icon-guanbi search__icon-close" hidden="{{!query}}" bindtap="bindClear"></text>
   </view>
 </view>

@@ -18,7 +18,7 @@ Component({
   methods: {
     // 监听input变化
     bindQuery(e) {
-      console.log(e)
+      // console.log(e)
       let value = e.detail.value
       this.setData({
         query: e.detail.value

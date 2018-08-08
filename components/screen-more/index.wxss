@@ -1,0 +1,82 @@
+@import "../../style/btn.wxss";
+@import "../../font/iconfont.wxss";
+
+.screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1004;
+}
+.screen__content {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 99;
+  width: 70%;
+  height: 100%;
+  background-color: #fff;
+}
+.screen__bg-click {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
+.backdrop {
+  position: fixed;
+  z-index: 1003;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .4);
+}
+.screen__scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 100rpx;
+  width: 100%;
+}
+.screen__list {
+  padding: 30rpx 10rpx;
+  border-bottom: 1rpx solid #e6e6e6;
+}
+.screen__list-title {
+  padding-left: 22rpx;
+  padding-bottom: 12rpx;
+  font-size: 32rpx;
+  color: #333;
+}
+.screen__list .radio-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+.screen__list .radio {
+  margin: 12rpx;
+}
+.screen__footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 100rpx;
+}
+.screen__footer-btn {
+  width: 50%;
+  flex: 0 0 50%;
+  font-size: 32rpx;
+  color: #fff;
+  text-align: center;
+  line-height: 100rpx;
+  background-color: #ff6714;
+}
+.screen__footer-btn:first-child {
+  background-color: #ccc;
+}

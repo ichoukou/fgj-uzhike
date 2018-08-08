@@ -13,19 +13,19 @@ export default function fetch(params) {
         'token': token
       },
       success: function (res) {
-        // if(res.data.result === '权限不足') {
-        //   wx.showToast({
-        //     title: '权限不足，即将跳登陆',
-        //     icon: 'none',
-        //     duration: 1500
-        //   });
-        //   setTimeout(() => {
-        //     wx.navigateTo({
-        //       url: '/pages/login/entry/index'
-        //     })
-        //   }, 1500);
-        //   return;
-        // };
+        if(res.data.result === '权限不足') {
+          wx.showToast({
+            title: '权限不足，即将跳登陆',
+            icon: 'none',
+            duration: 1500
+          });
+          setTimeout(() => {
+            wx.navigateTo({
+              url: '/pages/authorize/index'
+            })
+          }, 1500);
+          return;
+        };
         resolve(res);
       },
       fail(err) {

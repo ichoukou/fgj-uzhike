@@ -1,4 +1,5 @@
 @import "../../style/animate.wxss";
+@import "../../font/iconfont.wxss";
 
 .loading {
   position: fixed;
@@ -19,4 +20,22 @@
 .loading__text {
   font-size: 24rpx;
   color: #999;
+}
+
+.loading-static {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10rpx;
+}
+.loading-static__icon {
+  display: inline-block;
+  font-size: 36rpx;
+  color: #666;
+  animation: rotate 1.5s linear infinite;
+}
+.loading-static__text {
+  font-size: 24rpx;
+  color: #666;
 }

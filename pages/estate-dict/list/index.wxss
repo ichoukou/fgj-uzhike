@@ -37,12 +37,28 @@ page {
   flex: 1;
   margin: 0 -10rpx;
 }
+
+.bind-setting {
+  position: relative;
+  z-index: 3;
+  margin-left: 10rpx;
+  border: 1rpx solid #e6e6e6;
+  border-radius: 8rpx;
+  width: 120rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 24rpx;
+  color: #666;
+  text-align: center;
+}
+
 /* 筛选 */
 .screen {
   display: flex;
   position: relative;
   z-index: 1002;
   border-top: 1rpx solid rgb(230,230,230);
+  border-bottom: 1rpx solid rgb(230,230,230);
   width: 100%;
   height: 80rpx;
   background-color: #fff;
@@ -64,15 +80,17 @@ page {
 /* 筛选详细 */
 .screen-detail {
   position: absolute;
-  top: 190rpx;
+  top: 188rpx;
   left: 0;
   z-index: 1001;
-  padding: 0 30rpx;
   border-top: 1rpx solid #e6e6e6;
   width: 100%;
-  /* height: 50%; */
-  max-height: 600rpx;
+  height: 600rpx;
   background-color: #fff;
+}
+.screen-detail__item {
+  padding: 10rpx 30rpx 0 30rpx;
+  height: 600rpx;
 }
 .screen-detail__list {
   display: block;

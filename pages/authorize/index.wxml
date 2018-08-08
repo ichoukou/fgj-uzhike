@@ -1,0 +1,4 @@
+<!--pages/authorize/index.wxml-->
+<button  class="btn-primery bind-login" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo">登陆</button>
+
+<i-message id="message" />

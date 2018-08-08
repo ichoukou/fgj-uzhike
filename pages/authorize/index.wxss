@@ -1,0 +1,5 @@
+/* pages/authorize/index.wxss */
+
+.bind-login {
+  margin: 100rpx 30rpx;
+}

@@ -1,7 +1,13 @@
-<!-- 加载中 -->
-<view class="loading" hidden="{{hidden}}">
+<!-- 浮动加载中 -->
+<view class="loading" wx:if="{{!type}}" hidden="{{hidden}}">
   <view class="loading__rotate">
     <image class="loading__img" src="../../images/loading.png" mode="aspectFit"></image>
   </view>
   <text class="loading__text">加载中</text>
+</view>
+
+<!-- 静态加载中 -->
+<view class="loading-static" wx:if="{{type === 'static'}}" hidden="{{hidden}}">
+  <text class="iconfont icon-jiazaizhong loading-static__icon"></text>
+  <text class="loading-static__text">加载中...</text>
 </view>

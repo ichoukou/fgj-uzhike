@@ -1,10 +1,11 @@
 <!-- 搜索 -->
 <view class="top">
-  <view class="top__city" bindtap="bindOpenCity">
+  <view class="top__city" bindtap="bindOpenCity" hidden="{{!citySelector.CityName}}">
     <text class="iconfont icon-dingwei top__icon-city"></text>
     <text class="top__city-name text-ellipsis">{{citySelector.CityName}}</text>
     <text class="iconfont icon-fanhui icon-arrow"></text>
   </view>
+  <text class="bind-setting" bindtap="setLocation" hidden="{{!isLocation}}">获取位置</text>
   <view class="top__search">
     <search height="110rpx" bindquery="bindQuery" placeholder="搜索楼盘/地名/开发商"></search>
   </view>
@@ -12,7 +13,7 @@
 <!-- 筛选 -->
 <view class="screen">
   <view class="screen__list" data-index="0" bindtap="bindScreenClick">
-    <text class="screen__text">区域</text>
+    <text class="screen__text">{{params.DistrictName ? params.DistrictName : '区域'}}</text>
     <text class="iconfont icon-fanhui icon-arrow"></text>
   </view>
   <view class="screen__list" data-index="1" bindtap="bindScreenClick">
@@ -32,21 +33,22 @@
 <wux-animation-group wux-class="screen-detail" in="{{screenOpen}}" class-names="wux-animate--slideInDown">
   <scroll-view scroll-y style="height: 100%;">
     <view class="screen-detail__item" hidden="{{screenIndex !== 0}}">
-      <radio-group class="radio-group" bindchange="bindRadioChange">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="DistrictName">
         <label class="radio screen-detail__list" wx:for="{{DistrictName}}" wx:key="{{index}}">
-          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+          <radio color="#ff6714" value="{{item.CityName}}" checked="{{item.checked}}"/>{{item.CityName}}
         </label>
       </radio-group>
+      <loading hidden="{{DistrictName.length}}" />
     </view>
     <view class="screen-detail__item" hidden="{{screenIndex !== 1}}">
-      <radio-group class="radio-group" bindchange="bindRadioChange">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="EstateType">
         <label class="radio screen-detail__list" wx:for="{{typeData}}" wx:key="{{index}}">
           <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
         </label>
       </radio-group>
     </view>
     <view class="screen-detail__item" hidden="{{screenIndex !== 2}}">
-      <radio-group class="radio-group" bindchange="bindRadioChange">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="Price">
         <label class="radio screen-detail__list" wx:for="{{price}}" wx:key="{{index}}">
           <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
         </label>
@@ -56,7 +58,7 @@
 </wux-animation-group>
 <!-- 列表 -->
 <view class="list-wrap">
-  <scroll-view scroll-y style="height: 100%;">
+  <scroll-view scroll-y style="height: 100%;" bindscrolltolower="bindscrolltolower">
     <view class="list-space" bindtap="bindClickContain">
       <view class="list" wx:for="{{listData}}" wx:key="{{index}}" data-estate-id="{{item.EstateID}}" bindtap="bindOpenDetail">
         <image class="list__img" mode="aspectFit" src="{{item.src}}"></image>
@@ -76,10 +78,22 @@
         </view>
       </view>
     </view>
+    <view class="loading" hidden="{{scrollLower}}">
+      <text class="iconfont icon-jiazaizhong loading__icon"></text>
+      <text class="loading__text">加载中...</text>
+    </view>
+    <view class="empty" wx:if="{{!listData.length && loading}}">
+      <text class="iconfont icon-kong empty__icon"></text>
+      <text class="empty__desc">暂无数据</text>
+    </view>
   </scroll-view>
 </view>
 <!-- 快速创建 -->
 <view class="footer" bindtap="bindOpenNew">快速创建</view>
 
+<!-- 更多筛选 -->
+<screen-more id="screenMore" screenData="{{screenData}}" bindreset="bindScreenReset" bindconfirm="bindScreenConfirm" />
+
 <wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />
 <i-message id="message" />
+<loading hidden="{{loading}}" />

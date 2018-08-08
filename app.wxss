@@ -5,6 +5,7 @@
 @import 'style/empty.wxss';
 @import 'style/text.wxss';
 @import 'style/icon-rotate.wxss';
+@import 'style/loading.wxss';
 
 view,
 text {

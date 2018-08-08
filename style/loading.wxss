@@ -1,0 +1,21 @@
+@import './animate.wxss';
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10rpx;
+}
+.loading__icon {
+  display: inline-block;
+  animation: rotate 1.5s linear infinite;
+}
+.loading__icon {
+  font-size: 36rpx;
+  color: #666;
+}
+.loading__text {
+  font-size: 24rpx;
+  color: #666;
+}

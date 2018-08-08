@@ -4,6 +4,10 @@ Component({
     hidden: {
       type: Boolean,
       value: false
+    },
+    type: {
+      type: String,
+      value: ''
     }
   },
   data: {
