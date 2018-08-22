@@ -1,0 +1,36 @@
+
+<view class="container">
+  <view class="input-item">
+    <view class="input-title">考勤组名称</view>
+    <input class="flex-1" type="text" />
+  </view>
+  <view class="content">
+    <view class="depart">
+      <view class="depart-title">参与部门</view>
+      <view class="depart-text flex-1 font-24">(部门新员工将自动加入)</view>
+      <view class="depart-text font-24">0个部门</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="iconfont icon-tianjia"></view>
+    <view class="member">
+      <view class="member-title flex-1">其他参与人员</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="member">
+      <view class="member-title flex-1">无需参与人员</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+  </view>
+  <view class="tips">
+    <text class="text-1 font-24">协助管理员管理本考勤的排班及统计</text>
+    <text class="wenhao">?</text>
+    <text class="text-2 font-24">清空负责人</text>
+  </view>
+  <view class="leader">
+    <view class="member-title flex-1">无需参与人员</view>
+    <view class="iconfont icon-jiantou2"></view>
+  </view>
+  <view class="footer">
+    <text>下一步</text>
+  </view>
+</view>

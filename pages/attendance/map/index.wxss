@@ -1,0 +1,74 @@
+page {
+  background: #fff;
+}
+map {
+  width: 100%;
+  height: 668rpx;
+}
+.content {
+  padding: 0 24rpx;
+  margin-top: 20rpx;
+}
+.title {
+  color: rgb(49,49,49);
+}
+.range {
+  font-size: 24rpx;
+  color: rgb(193,193,193)
+}
+.ask {
+  font-size: 24rpx;
+  color: rgb(255,103,20)
+}
+.des {
+  margin-top: 20rpx;
+}
+.state {
+  display: inline-block;
+  width: 82rpx;
+  height: 34rpx;
+  margin-right: 20rpx;
+  background: #6a94e8;
+  border-radius: 18rpx;
+  font-size: 24rpx;
+  color: #fff;
+  text-align: center;
+}
+.address {
+  font-size: 24rpx;
+  color: #c1c1c1;
+}
+.beizhu {
+  margin-top: 40rpx;
+  display: flex;
+  align-items: center;
+}
+textarea {
+  margin-top: 10rpx;
+  width: 100%;
+  height: 160rpx;
+}
+.icon-xiangji {
+  font-size: 48rpx;
+  color: #d2d2d2;
+}
+.footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  height: 106rpx;
+  text-align: center;
+}
+.footer text{
+  display: inline-block;
+  flex: 1;
+  text-align: center;
+  margin: 12rpx 36rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  border-radius: 6rpx;
+  color: #fff;
+}

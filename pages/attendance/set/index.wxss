@@ -1,0 +1,55 @@
+
+.add {
+  height: 130rpx;
+  display: flex;
+  align-items: center;
+  border-top: 1rpx solid #e6e6e6;
+  padding: 0 24rpx;
+  background: #fff;
+  color: #1a1a1a;
+}
+.icon-tianjia {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40rpx;
+  background: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  color: #fff;
+}
+.font-18 {
+  font-size: 18rpx;
+}
+.font-24 {
+  font-size: 24rpx;
+}
+.group {
+  margin-top: 20rpx;
+  padding: 20rpx 24rpx;
+  background: #fff;
+}
+.group-title {
+  display: flex;
+  align-items: center;
+}
+.icon-shanchu {
+  color: #bababa;
+}
+.text-group {
+  color: #a9a9a9;
+  margin-top: 10rpx;
+}
+.button {
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: flex-end;
+}
+.button-list {
+  margin-left: 20rpx;
+  padding: 20rpx;
+  font-size: 18rpx;
+  color: #ff7c3c;
+  border: 1rpx solid #ff7c3c;
+  border-radius: 6rpx;
+}

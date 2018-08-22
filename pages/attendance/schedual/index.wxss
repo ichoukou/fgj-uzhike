@@ -1,0 +1,65 @@
+
+.tips {
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 24rpx;
+}
+.tips-text {
+  font-size: 24rpx;
+  color: #c1c1c1;
+}
+.tips-des {
+  color: #ff6714;
+}
+
+.item {
+  padding: 0 24rpx;
+  background: #fff;
+}
+.item-list {
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+}
+input {
+  flex: 1;
+  margin-left: 180rpx;
+}
+.phcolor {
+  color: #c1c1c1;
+}
+.item-title {
+  flex: 1;
+  color: #313131;
+}
+.sub-text {
+  color: #313131;
+}
+.icon-jiantou2 {
+  transform: rotate(180deg);
+  color: #d2d2d2;
+}
+.margin-top-20 {
+  margin-top: 20rpx;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 106rpx;
+  padding: 0 35rpx;
+  background: #fff;
+}
+.footer text {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  color: #fff;
+  border-radius: 6rpx;
+}

@@ -1,0 +1,24 @@
+
+<view class="container">
+  <view class="add">
+    <view class="iconfont icon-tianjia"></view>
+    <view class="text-add">
+      <view>添加考勤组</view>
+      <view class="font-18">考勤规则相同的人设置在一个考勤组里，方便统计！</view>
+    </view>
+  </view>
+  <view class="group">
+    <view class="group-title">
+      <view class="flex-1">考勤1组</view>
+      <view class="iconfont icon-shanchu"></view>
+    </view>
+    <view class="text-group font-24">成员：100人</view>
+    <view class="text-group font-24">参与部门：奋斗不、网络部、人事部、行政部</view>
+    <view class="text-group font-24">固定班制：周一、二、三、四、五、六  A  09：00-18：00</view>
+    <view class="text-group font-24">考勤地址：江西省南昌市南昌县昌东镇紫阳大道</view>
+    <view class="button">
+      <view class="button-list">修改规则</view>
+      <view class="button-list">修改成员及负责人</view>
+    </view>
+  </view>
+</view>

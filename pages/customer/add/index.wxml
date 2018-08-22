@@ -1,0 +1,56 @@
+<view class="container">
+  <view class="item">
+    <view class="item-list">
+      <view class="item-title">
+        客户姓名
+        <span class="star">*</span>
+      </view>
+      <input 
+        type="text" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{params.CustName}}" 
+        data-type="CustName" 
+        bindblur="changeInput"
+       />
+    </view>
+    <view class="item-list">
+      <view class="item-title">
+        手机号
+        <span class="star">*</span>
+      </view>
+      <input 
+        type="number" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{params.Tel}}" 
+        data-type="Tel" 
+        bindblur="changeInput"
+       />
+    </view>
+    <view class="item-list">
+      <view class="item-title">
+        选择关系
+        <span class="star">*</span>
+      </view>
+      <picker 
+        bindchange="bindPickerChange" 
+        value="{{pickerLinkTypeIndex}}" 
+        range="{{pickerLinkType}}" 
+        range-key="label"
+      >
+        <view class="picker">
+          {{pickerLinkType[pickerLinkTypeIndex].label}}
+        </view>
+      </picker>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+  </view>
+  <view class="footer" bindtap="bindSubmit">
+    <text>完成</text>
+  </view>
+</view>
+
+<i-message id="message" />

@@ -1,0 +1,107 @@
+
+<view class="container">
+  <view class="tips">
+    <text class="tips-text font-24">每个员工考勤时间都一样，适用于朝九晚五上班族</text>
+    <text class="wenhao">?</text>
+  </view>
+  <view class="item">
+    <view class="item-list">
+      <view class="list-title flex-1">排班方式</view>
+      <view class="list-tab" catchtap="changeTab">
+        <text class="tab-item {{ tabNum == 1 ? 'tab-item-active' : '' }}" data-tabNum = "1">固定</text>
+        <text class="tab-item {{ tabNum == 2 ? 'tab-item-active' : '' }}" data-tabNum = "2">排班</text>
+        <text class="tab-item {{ tabNum == 3 ? 'tab-item-active' : '' }}" data-tabNum = "3">自由</text>
+      </view>
+    </view>
+    <view class="item-list"  hidden="{{ tabNum != 1 }}">
+      <view class="list-title flex-1">考勤时间</view>
+      <view class="list-text">A 09:00-18:00 9小时</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list"  hidden="{{ tabNum != 1 }}">
+      <view class="list-title flex-1">考勤日期</view>
+      <view class="list-text">每周一、二、三、四、五</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list"  hidden="{{ tabNum != 2 }}">
+      <view class="list-title flex-1">
+        考勤时间
+        <view class="list-text">A 09:00-18:00 9小时</view>
+      </view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list" hidden="{{ tabNum != 2 }}">
+      <view class="list-title flex-1">
+        排班周期
+        <view class="list-text">两班轮休 A-A-休息 三天</view>
+      </view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list"  hidden="{{ tabNum != 3 }}">
+      <view class="list-title flex-1">考勤时间</view>
+      <view class="list-text">设置工作日</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list"  hidden="{{ tabNum != 3 }}">
+      <view class="list-title flex-1">每天几点开始新一天考勤</view>
+      <view class="list-text">00:00</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view> 
+  </view>
+  <view class="tips tips-text font-24">设置办公WIFI，精确到5米定位方式</view>
+  <view class="item">
+    <view class="item-list">
+      <view class="iconfont icon-tianjia"></view>
+      <view class="list-title">添加办公Wi-Fi</view>
+    </view>
+    <view class="item-list">
+      <view class="list-title flex-1">
+        <view>FGJ-1</view>
+        <view class="sub-text font-24">A8:6B:7C:24:71:1B</view>
+      </view>
+      <view class="iconfont icon-jianhao"></view>
+    </view>
+  </view>
+  <view class="tips tips-text font-24">通过手机定位，精确到50米-300米定位方式</view>
+   <view class="item">
+    <view class="item-list">
+      <view class="iconfont icon-tianjia"></view>
+      <view class="list-title">添加办公地点</view>
+    </view>
+    <view class="item-list">
+      <view class="list-title flex-1">选择有效范围</view>
+      <view class="sub-text">100米</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+  </view>
+  <view class="tips tips-text font-24">开启快速打卡则满足要求将自动打卡</view>
+  <view class="item">
+    <view class="item-list">
+      <view class="list-title flex-1">快速打卡</view>
+      <switch bindchange="switch2Change"/>
+    </view>
+  </view>
+  <view class="tips tips-text font-24">关闭后，考勤范围外不允许打卡</view>
+  <view class="item">
+    <view class="item-list">
+      <view class="list-title flex-1">外勤打卡</view>
+      <switch bindchange="switch2Change"/>
+    </view>
+  </view>
+  <view class="item margin-top-20">
+    <view class="item-list">
+      <view class="list-title flex-1">拍照打卡</view>
+      <switch bindchange="switch2Change"/>
+    </view>
+  </view>
+  <view class="item margin-top-20">
+    <view class="item-list">
+      <view class="list-title flex-1">加班规则</view>
+      <view class="sub-text">默认规则</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+  </view>
+</view>
+<view class="footer">
+  <text>完成</text>
+</view>

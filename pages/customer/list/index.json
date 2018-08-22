@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "客户管理列表",
+  "usingComponents": {
+    "search": "/components/search/index",
+    "wux-animation-group": "/components/animation-group/index",
+    "wux-backdrop": "/components/backdrop/index",
+    "i-message": "/components/message/index",
+    "screen-more": "/components/screen-more/index",
+    "loading": "/components/loading/index"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "添加关联人",
+  "usingComponents": {
+    "i-message": "/components/message/index"
+  }
+}

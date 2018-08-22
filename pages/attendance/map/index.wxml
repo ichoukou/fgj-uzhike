@@ -1,0 +1,24 @@
+
+<view class="container">
+  <view class="map">
+    <map longitude="{{ lon }}" latitude="{{ lat }}" markers="{{markers}}"></map>
+  </view>
+  <view class="content">
+    <text class="title">我的位置 </text>
+    <text class="range"> (在考勤范围内) </text>
+    <text class="ask"> 我要反馈</text>
+    <view class="des">
+      <text class="state">正常</text>
+      <!-- <text class="state red">外勤</text> -->
+      <text class="address">江西省南昌市高新区紫阳大道233号</text>
+    </view>
+    <view class="beizhu">
+      <view class="flex-1">备注</view>
+      <view class="iconfont icon-xiangji"></view>
+    </view>
+    <textarea placeholder="选填"></textarea>
+  </view>
+  <view class="footer">
+    <text>正常打卡</text>
+  </view>
+</view>

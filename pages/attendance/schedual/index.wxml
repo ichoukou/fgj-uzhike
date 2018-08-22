@@ -1,0 +1,34 @@
+
+<view class="container">
+  <view class="tips">
+    <view class="tips-text">
+      适用于规律性排班，使用快捷模板：<span class="tips-des">做一休一、三班倒、两班轮换</span>
+    </view>
+  </view>
+  <view class="item">
+    <view class="item-list">
+      <view class="list-title">周期名称</view>
+      <input type="text" placeholder="六个字以内" placeholder-class="phcolor" />
+    </view>
+    <view class="item-list">
+      <view class="item-title">每周天数</view>
+      <view class="sub-text">2天</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+  </view>
+  <view class="item margin-top-20">
+    <view class="item-list">
+      <view class="item-title">第一天</view>
+      <view class="sub-text">A</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list">
+      <view class="item-title">第二天</view>
+      <view class="sub-text">休息</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+  </view>
+</view>
+<view class="footer">
+  <text>完成</text>
+</view>

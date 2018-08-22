@@ -101,20 +101,20 @@ Page({
   // 作废
   deleteRef (params) {
     const _this = this
-    UpRef(params).then(res => {
-      if(res.data.result === 'success') {
-        wx.showModal({
-          title: '操作提示',
-          content: '作废之后无法恢复，确定吗？',
-          success: function (res) {
-            if (res.confirm) {
+    wx.showModal({
+      title: '操作提示',
+      content: '作废之后无法恢复，确定吗？',
+      success: function (res) {
+        if (res.confirm) {
+          UpRef(params).then(res => {
+            if (res.data.result === 'success') {
               $Message({ content: '刪除成功', type: 'success' })
               _this.getListData();
-            } else if (res.cancel) {
-              // console.log('用户点击取消')
             }
-          }
-        })
+          })
+        } else if (res.cancel) {
+          // console.log('用户点击取消')
+        }
       }
     })
   }

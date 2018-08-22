@@ -1,0 +1,57 @@
+
+<view class="container">
+  <view class="tips">
+    <view class="fuhao">!</view>
+    <view class="tips-text">该班次正在被一个一个考勤组使用, 修改将会影响到考情组: A</view>
+  </view>
+  <view class="item-list">
+    <view class="list-title">班次名称</view>
+    <view class="list-type">A</view>
+  </view>
+  <view class="tips">
+    <view class="tips-text">最多6个字符(中英文或数字)，首字符会显示在考勤月历中</view>
+  </view>
+  <view class="setup">
+    <view class="setup-title">设置该班次一天内上下班次数</view>
+    <view class="type">
+      <view class="type-list type-list-active">1天1次上下班</view>
+      <view class="type-list">1天2次上下班</view>
+      <view class="type-list">1天3次上下班</view>      
+    </view>
+  </view>
+  <view class="item">
+    <view class="item-list">
+      <view class="item-title">上班</view>
+      <view class="sub-text">09:00</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list">
+      <view class="item-title">下班</view>
+      <view class="sub-text">18:00</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+  </view>
+   <view class="tips">
+    <view class="tips-text">超过上班时间多久打卡分别计算为迟到，严重迟到和旷工。</view>
+  </view>
+  <view class="item">
+    <view class="item-list">
+      <view class="item-title">上班弹性时间</view>
+      <view class="sub-text">关闭</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list">
+      <view class="item-title">严重迟到</view>
+      <view class="sub-text">关闭</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list">
+      <view class="item-title">旷工</view>
+      <view class="sub-text">关闭</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+  </view>
+</view>
+<view class="footer">
+  <text>下一步</text>
+</view>

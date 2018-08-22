@@ -1,165 +1,369 @@
 
-<scroll-view scroll-y class="container">
+<view class="container">
+<scroll-view scroll-y style="height: 100%;">
+  <!-- 基本信息 -->
   <view class="title">基本信息</view>
   <view class="basic">
     <view class="input-item">
-      <view class="input-title">客户信息
+      <view class="input-title">客户名称
         <span class="star">*</span>
       </view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请填写" />
+      <input 
+        type="text" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{paramsCustomer.CustName}}" 
+        data-type="CustName" 
+        bindblur="changeCustomerInput"
+       />
     </view>
     <view class="input-item">
-      <view class="input-title">电话
+      <view class="input-title">手机号
         <span class="star">*</span>
       </view>
-      <input type="number" class="input" placeholder-class="phcolor" placeholder="请填写" />
+      <input 
+        type="number" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{paramsCustomer.Tel}}" 
+        data-type="Tel" 
+        bindblur="changeCustomerInput"
+       />
     </view>
     <view class="input-item">
       <view class="input-title">客户类型
         <span class="star">*</span>
       </view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        value="{{pickerGradeIndex}}" 
+        range="{{pickerGrade}}" 
+        range-key="label"
+        data-type="Grade" 
+      >
+        <view class="picker">
+          {{pickerGrade[pickerGradeIndex].label}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
-    <view class="input-title">备注</view>
-    <textarea placeholder="请填写" placeholder-class="phcolor"></textarea>
+    <view class="textarea__title-border">备注</view>
+    <textarea placeholder="请填写" placeholder-class="phcolor" data-type="Remark" bindblur="changeCustomerInput"></textarea>
   </view>
+  <!-- 需求信息 -->
   <view class="title">需求信息</view>
   <view class="need">
-     <view class="input-item">
+    <view class="input-item">
       <view class="input-title">需求类型
         <span class="star">*</span>
       </view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+        <picker 
+          bindchange="bindPickerCustNeedChange" 
+          value="{{pickerNeedTypeIndex}}" 
+          range="{{pickerNeedType}}" 
+          range-key="label"
+          data-type="NeedType" 
+        >
+          <view class="picker">
+            {{pickerNeedType[pickerNeedTypeIndex].label}}
+          </view>
+        </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
-     <view class="input-item">
+    <view class="input-item">
       <view class="input-title">区域
         <span class="star">*</span>
       </view>
-      <input class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker bindchange="bindAreaChange" mode="region" value="{{Area}}" custom-item="{{customItem}}">
+        <view class="picker">
+          {{Area[0]}}，{{Area[1]}}，{{Area[2]}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">产权性质
         <span class="star">*</span>
       </view>
-      <input class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+          bindchange="bindPickerCustNeedChange" 
+          range="{{pickerPropertyType}}" 
+          value="{{pickerPropertyTypeIndex}}" 
+          range-key="label"
+          data-type="PropertyType" 
+        >
+          <view class="picker">
+            {{pickerPropertyType[pickerPropertyTypeIndex].label}}
+          </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
-    <view class="input-item">
+    <view class="input-item input-range">
       <view class="input-title">意向度
         <span class="star">*</span>
+      </view>
+      <view class="body-view">
+        <slider value="{{Intention}}" bindchange="sliderChange" show-value/>
       </view>
     </view>
     <view class="input-item">
       <view class="input-title">户型 
         <span class="star">*</span>
       </view>
-      <input class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+          bindchange="bindPickerCustNeedChange" 
+          range="{{pickerRoom}}" 
+          value="{{pickerRoomIndex}}" 
+          range-key="label"
+          data-type="Room" 
+        >
+          <view class="picker">
+            {{pickerRoom[pickerRoomIndex].label}}
+          </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
-    <view class="input-item input-range">
+    <view class="input-item">
       <view class="input-title">面积 
         <span class="star">*</span>
       </view>
-      <input type="number" class="range" placeholder-class="phrange" placeholder="最小面积" />
-      <text class="line">—</text>
-      <input type="number" class="range" placeholder-class="phrange" placeholder="最大面积" />
-      <text class="unit">m²</text>
+      <input 
+        type="number" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="最小面积（单位㎡）" 
+        value="{{paramsCustomer.Square}}" 
+        data-type="Square" 
+        bindblur="changeCustNeedInput"
+       />
     </view>
-    <view class="input-item input-range">
+    <view class="input-item">
       <view class="input-title">价位 
         <span class="star">*</span>
       </view>
-      <input type="number" class="range" placeholder-class="phrange" placeholder="最低价位" />
-      <text class="line">—</text>
-      <input type="number" class="range" placeholder-class="phrange" placeholder="最高价位" />
-      <text class="unit">m²</text>
+      <input 
+        type="number" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="价位（单位元）" 
+        value="{{paramsCustomer.Price}}" 
+        data-type="Price" 
+        bindblur="changeCustNeedInput"
+       />
     </view>
-    <view class="input-title">备注</view>
-    <textarea placeholder="请填写" placeholder-class="phcolor"></textarea>
+    <view class="textarea__title-border">备注</view>
+    <textarea placeholder="请填写" placeholder-class="phcolor" data-type="Remark" bindblur="changeCustomerInput"></textarea>
   </view>
-  <view class="input-item add">
+  <view class="input-item add" bindtap="bindOpenLink">
     <view class="input-title">添加关联人 
     </view>
     <text class="iconfont icon-tianjia"></text>
   </view>
+  
+  <!-- 进阶信息 -->
   <view class="title">进阶信息</view>
   <view class="advance">
     <view class="input-item">
       <view class="input-title">年龄</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请填写" />
+      <!-- <input type="text" class="input" placeholder-class="phcolor" placeholder="请填写" /> -->
+      <input 
+        type="text" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{paramsCustomer.Age}}" 
+        data-type="Age" 
+        bindblur="changeCustomerInput"
+       />
     </view>
     <view class="input-item">
       <view class="input-title">婚姻状态</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        value="{{pickerMarriageIndex}}" 
+        range="{{pickerMarriage}}" 
+        range-key="label"
+        data-type="Marriage" 
+      >
+        <view class="picker">
+          {{pickerMarriage[pickerMarriageIndex].label}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">子女</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        range="{{pickerChildren}}" 
+        value="{{pickerChildrenIndex}}" 
+        range-key="label"
+        data-type="Children" 
+      >
+        <view class="picker">
+          {{pickerChildren[pickerChildrenIndex].label}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">收入</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        range="{{pickerIncome}}" 
+        value="{{pickerIncomeIndex}}" 
+        range-key="label"
+        data-type="Income" 
+      >
+        <view class="picker">
+          {{pickerIncome[pickerIncomeIndex].label}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">职业</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        range="{{pickerOccupation}}" 
+        value="{{pickerOccupationIndex}}" 
+        range-key="label"
+        data-type="Occupation" 
+      >
+        <view class="picker">
+          {{pickerOccupation[pickerOccupationIndex].label}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">作息时间</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker bindchange="bindCustomerType" value="{{customerTypeIndex}}" range="{{customerType}}">
+        <view class="picker">
+          {{customerType[customerTypeIndex]}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">资产情况</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        range="{{pickerAssets}}" 
+        value="{{pickerAssetsIndex}}" 
+        range-key="label"
+        data-type="Assets" 
+      >
+        <view class="picker">
+          {{pickerAssets[pickerAssetsIndex].label}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">投资情况</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        range="{{pickerInvestment}}" 
+        value="{{pickerInvestmentIndex}}" 
+        range-key="label"
+        data-type="Investment" 
+      >
+        <view class="picker">
+          {{pickerInvestment[pickerInvestmentIndex].label}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">决策人 </view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        range="{{pickerDecision}}" 
+        value="{{pickerDecisionIndex}}" 
+        range-key="label"
+        data-type="Decision" 
+      >
+        <view class="picker">
+          {{pickerDecision[pickerDecisionIndex].label}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">单位名称</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请填写" />
+      <input 
+        type="text" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{paramsCustomer.CompanyName}}" 
+        data-type="CompanyName" 
+        bindblur="changeCustomerInput"
+       />
     </view>
     <view class="input-item">
       <view class="input-title">看房经历</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        range="{{pickerLookHouse}}" 
+        value="{{pickerLookHouseIndex}}" 
+        range-key="label"
+        data-type="LookHouse" 
+      >
+        <view class="picker">
+          {{pickerLookHouse[pickerLookHouseIndex].label}}
+        </view>
+      </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">所在城市</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
       <view class="input-title">家庭住址</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请填写" />
+      <input 
+        type="text" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{paramsCustomer.Address}}" 
+        data-type="Address" 
+        bindblur="changeCustomerInput"
+       />
     </view>
     <view class="input-item">
       <view class="input-title">邮箱地址</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请填写" />
+      <input 
+        type="text" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{paramsCustomer.Email}}" 
+        data-type="Email" 
+        bindblur="changeCustomerInput"
+       />
     </view>
     <view class="input-item">
       <view class="input-title">客户来源</view>
-      <input type="text" class="input" placeholder-class="phcolor" placeholder="请选择" />
+      <input 
+        type="text" 
+        class="input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{paramsCustomer.Source}}" 
+        data-type="Source" 
+        bindblur="changeCustomerInput"
+       />
       <text class="iconfont icon-jiantou2"></text>
     </view>
   </view>
-</scroll-view>
+  </scroll-view>
+</view>
+
 <view class="footer">
   <text class="footer-text" bindtap="submit">完成</text>
 </view>

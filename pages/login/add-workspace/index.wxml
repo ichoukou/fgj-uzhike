@@ -7,7 +7,7 @@
     </view>
     <checkbox-group class="radio-group" bindchange="hrChange">
       <view class="item" wx:for="{{ hrList }}" wx:key="{{ index }}">
-        <checkbox class="checkbox" value="{{ item.name }}" checked="{{ item.selected }}"/>
+        <checkbox color="#ff6714" class="checkbox" value="{{ item.name }}" checked="{{ item.selected }}"/>
           <image src="{{ item.src }}"></image>
           <text>{{ item.name }}</text>
       </view>

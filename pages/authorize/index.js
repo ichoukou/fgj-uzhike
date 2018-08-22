@@ -9,6 +9,7 @@ Page({
   
   },
   onLoad: function (options) {
+
   },
   // 获取用户信息
   bindGetUserInfo(e) {
@@ -16,7 +17,7 @@ Page({
 
     userInfo ? app.globalData.userInfo = userInfo: '';
     
-    // this.getCode();
+    this.getCode();
   },
   // 获取code
   getCode() {
@@ -27,9 +28,7 @@ Page({
     });
     wx.login({
       success(res) {
-        console.log(res)
         if (res.code) {
-          console.log(res)
           let data = {
             Code: res.code,
             needpurview: false

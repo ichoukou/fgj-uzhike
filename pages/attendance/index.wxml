@@ -1,0 +1,88 @@
+<import src="../../components/calendar/index.wxml"/>
+
+<view class="container">
+  <view class="header">
+    <template is="calendar" data="{{...calendar}}" />
+  </view>
+  <view class="content">
+    <view class="content-1">
+      <view class="line-box">
+        <view class="circle-small"></view>
+        <view class="circle-line"></view>
+        <view class="circle-small"></view>     
+      </view>
+      <view class="content-box">
+        <view class="title gray">
+          上班时间 8:30
+        </view>
+        <!-- 判断是否上班 -->
+        <block wx:if="{{ isOn }}">
+          <view class="title black">
+            打卡时间：08：32
+            <text class="tip-box {{ isLate ? 'warn' : ''}}">{{ stateText }}</text>
+          </view>
+          <view class="address">
+            <text class="iconfont icon-kaoqin"></text>
+            {{ address }}
+          </view>
+        </block>
+        <!-- 判断是否在考勤范围内 -->
+        <view wx:if="{{ !isOff }}" class="circle-big {{ isRange ? '' : 'red' }}">
+          <view class="punch">{{ text }}</view>
+          <view class="time">{{ time }}</view>
+        </view>
+        <view wx:else class="replace"></view>
+        <view class="title gray">
+          下班时间 18:00
+        </view>
+      </view>
+    </view>
+    <!-- 判断是否下班 -->
+    <view wx:if="{{ isOff }}" class="off">
+      <view class="title black">
+        打卡时间：18：32
+        <text class="forget" wx:if="{{ forget }}">申请补卡<text class="iconfont icon-jiantou2"></text></text>
+      </view>
+      <view class="address">
+        <text class="iconfont icon-dingwei"></text>
+        江西省南昌市南昌县紫阳大道
+      </view>
+    </view>
+    <!-- 首先判断是否已打下班卡，若没有，再判断是否在考勤范围内 -->
+    <view class="info">
+      <block wx:if="{{ !isOff }}">
+        <block wx:if="{{ isRange }}">
+          <text class="iconfont icon-queren"></text>
+          <text>已经入考勤范围：江西省南昌市...</text>
+          <text class="reload" bindtap="openMap">重新定位</text>
+        </block>
+        <block wx:else>
+          <text class="error">!</text>
+          <text>当前不在考勤范围内</text>
+          <view class="reload" bindtap="openMap">查看考勤范围</view>
+        </block>
+      </block>
+      <block wx:if="{{ isOff }}">
+        <text>今日已打卡完成，工作辛苦了！</text>
+      </block> 
+    </view>
+  </view>
+  <view class="footer">
+    <view class="list-item">
+      <view class="iconfont icon-qingjiashenpi"></view>
+      <view class="item-title">请假</view>
+    </view>
+    <view class="list-item">
+      <view class="iconfont icon-buqiashenqing"></view>
+      <view class="item-title">补卡申请</view>
+    </view>
+     <view class="list-item">
+      <view class="iconfont icon-tongji"></view>
+      <view class="item-title">考勤统计</view>
+    </view>
+     <view class="list-item">
+      <view class="iconfont icon-shezhigongzuoqu"></view>
+      <view class="item-title">考勤设置</view>
+    </view>
+  </view>
+</view>

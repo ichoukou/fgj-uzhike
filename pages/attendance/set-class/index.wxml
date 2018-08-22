@@ -1,0 +1,33 @@
+
+<view class="container">
+  <view class="search">
+    <view class="search-box">
+      <view class="iconfont icon-sousuo"></view>
+      <input type="text" placeholder="搜索你想找的人" placeholder-class="phcolor" />
+    </view>
+  </view>
+  <view class="create">
+    <view class="iconfont icon-tianjia"></view>
+    <view class="create-text">新建班次</view>
+  </view>
+  <view class="item">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <label class="radio">
+        <radio color="#ff6714" value="{{item.name}}" />
+        <view class="radio-text">白班</view>
+        <view class="item-text">9:00-18:00 9小时</view>
+        <view class="iconfont icon-gengduo1"></view>
+      </label>
+      <label class="radio">
+        <radio color="#ff6714" value="{{item.name}}" />
+        <view class="radio-text">A</view>
+        <view class="item-text">9:00-18:00 9小时</view>
+        <view class="iconfont icon-gengduo1"></view>
+      </label>
+    </radio-group>
+  </view>
+</view>
+<view class="footer">
+  <text class="text">已选择3个班次</text>
+  <text class="btn">确定</text>
+</view>

@@ -41,17 +41,6 @@
       <view wx:else class="v-number" bindtap="getValiNum">{{ times }}s后再获取</view>
     </view>
   </view>
-   <!-- <view class="input-box" hidden="{{ tabNum == 1 }}"> 
-     <view class="input-item">
-      <text class="iconfont icon-zhanghao"></text>
-      <input
-        type="text"
-        data-type="Tel"
-        bindinput="inputChange"
-        placeholder-class="phcolor"
-        placeholder="请输入手机号" />
-    </view> 
-   </view>  -->
   <view class="login" bindtap="login">登录</view>
   <view class="tip">
     <navigator url="/pages/login/find-password/index">

@@ -1,6 +1,6 @@
-
 App({
     onLaunch: function () {
+
       console.log('App Launch')
       // 获取用户信息
       // wx.getSetting({

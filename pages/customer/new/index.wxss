@@ -1,7 +1,10 @@
 .container {
   position: absolute;
   top: 0;
+  right: 0;
   bottom: 100rpx;
+  left: 0;
+  z-index: 1;
 }
 .title {
   width: 100%;
@@ -21,10 +24,19 @@
   height: 130rpx;
   background: #fff;
 }
+.input-item + .input-item {
+  border-top: 1rpx solid rgb(230,230,230);
+}
+.textarea__title-border {
+  border-top: 1rpx solid rgb(230,230,230);
+}
 .input-title {
   width: 300rpx;
 }
 .input {
+  flex: 1;
+}
+picker {
   flex: 1;
 }
 .star {
@@ -40,7 +52,7 @@
 }
 textarea {
   width: 100%;
-  margin-top: 10rpx;
+  /* margin-top: 10rpx; */
   height: 140rpx;
 }
 .input-range .input-title {
@@ -63,6 +75,7 @@ textarea {
   margin-left: 20rpx;
 }
 .add {
+  margin-top: 20rpx;
   padding: 0 24rpx;
 }
 .add .input-title {
@@ -75,21 +88,19 @@ textarea {
 .advance {
   margin-bottom: 40rpx;
 }
-.advance .input-item {
-  border-bottom: 1rpx solid #f2f2f2;
-}
 
 .footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%; 
   height: 98rpx;
   display: flex;
   align-items: center;
   background: #fff;
+  z-index: 999;
 }
 .footer-text {
-  flex: 1; 
+  flex: 1;
   margin: 0 35rpx;
   height: 80rpx;
   line-height: 80rpx;
@@ -97,4 +108,7 @@ textarea {
   background: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
   color: #fff;
   border-radius: 6rpx;
+}
+.body-view {
+  flex: 1;
 }

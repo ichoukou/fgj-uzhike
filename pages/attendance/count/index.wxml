@@ -1,0 +1,397 @@
+
+<view class="container">
+  <view class="tab" bindtap="bindTabSwitch">
+    <text class="tab-list" data-index="0">日考勤</text>
+    <text class="tab-list" data-index="1">月考勤</text>
+    <text class="tab-list" data-index="2">个人考勤</text>
+    <text class="tab-line" style="transform: translate3d({{tabIndex * 100}}%, 0, 0)"></text>
+  </view>
+  <!-- 日考勤 -->
+  <view class="day" hidden="{{ tabIndex != 0 }}">
+    <view class="day-top">
+      <view class="date">
+        <text>2018.6.29</text>
+        <text class="iconfont icon-jiantou2 small"></text>
+      </view>
+      <view class="scroll-dept">
+        <text class="dept">全公司</text>
+        <text class="dept">人事</text>
+        <text class="dept">行政</text>
+        <text class="dept">技术</text>
+        <text class="dept">业务</text>
+        <text class="dept">业务</text>
+      </view>
+    </view>
+    <view class="card">
+      <view class="card-list">
+        <view class="card-text">迟到</view>
+        <view class="card-number"><span class="number-48">5</span>人</view>
+        <view class="pie">
+          <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ecPie }}"></ec-canvas>
+        </view>
+      </view>
+      <view class="card-list red">
+        <view class="card-text">缺卡</view>
+        <view class="card-number"><span class="number-48">5</span>人</view>
+        <view class="pie">
+          <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ecPie }}"></ec-canvas>
+        </view>
+      </view>
+      <view class="card-list yellow">
+        <view class="card-text">请假</view>
+        <view class="card-number"><span class="number-48">5</span>人</view>
+        <view class="pie">
+          <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ecPie }}"></ec-canvas>
+        </view>
+      </view>
+      <view class="card-list green">
+        <view class="card-text">外出</view>
+        <view class="card-number"><span class="number-48">5</span>人</view>
+        <view class="pie">
+          <ec-canvas id="mychart-dom-pie" canvas-id="mychart-pie" ec="{{ ecPie }}"></ec-canvas>
+        </view>
+      </view>
+    </view>
+    <view class="rank">
+      <view>
+        <text class="iconfont icon-zaodao"></text>
+        <text class="rank-title">早到排行榜</text>
+      </view>
+      <view class="item">
+        <view class="item-list">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="name">张明明</view>
+          <view class="rank-number">1</view>
+        </view>
+         <view class="item-list">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="name">张明明</view>
+          <view class="rank-number">2</view>
+        </view>
+        <view class="item-list">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="name">张明明</view>
+          <view class="rank-number">3</view>
+        </view>
+      </view>
+    </view>
+    <view class="rank">
+      <view>
+        <text class="iconfont icon-chidao"></text>
+        <text class="rank-title">迟到排行榜</text>
+      </view>
+      <view class="item">
+        <view class="item-list">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="name">张明明</view>
+          <view class="rank-number">1</view>
+        </view>
+         <view class="item-list">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="name">张明明</view>
+          <view class="rank-number">2</view>
+        </view>
+         <view class="item-list">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="name">张明明</view>
+          <view class="rank-number">3</view>
+        </view>
+      </view>  
+    </view>
+    <view class="bar">
+      <view class="bar-title">部门考勤</view>
+      <view class="bar-text">
+        <view class="flex-1">6月28号部门排行</view>
+        <view class="text-1">出勤人数</view>
+        <view class="text-2">平均工时</view>        
+      </view>
+      <view class="bar-data">
+        <view class="bar-container">
+          <ec-canvas id="mychart-dom-bar" canvas-id="mychart-bar" ec="{{ ecHBar }}"></ec-canvas>
+        </view>
+        <view class="aver-time">
+          <view class="text">10小时</view>
+          <view class="text">10小时</view>
+          <view class="text">10小时</view>
+          <view class="text">10小时</view>        
+        </view> 
+      </view>
+    </view>
+  </view>
+  <!-- 月考勤 -->
+  <view class="month" hidden="{{ tabIndex != 1 }}">
+    <view style="padding: 0 24rpx;background: #fff">
+      <view class="month-item" bindtap="bindMonthSwitch">
+        <text class="month-list" wx:for="{{ 12 }}" wx:key="{{ item }}" data-index="{{ item }}">{{ item + 1 }}月</text>
+        <text class="month-line" style="transform: translate3d({{monthIndex * 100}}%, 0, 0)"></text>
+      </view>
+    </view>
+    <view class="type-item">
+      <view class="type-list type-list-active">迟到</view>
+      <view class="type-list">补卡</view>
+      <view class="type-list">外出</view>
+      <view class="type-list">请假</view>
+      <view class="type-list">出差</view>
+      <view class="type-list">旷工</view>
+    </view>
+    <view class="bar-container">
+      <ec-canvas id="mychart-dom-vbar" canvas-id="mychart-vbar" ec="{{ ecVBar }}"></ec-canvas>
+    </view>
+    <view class="item">
+      <view class="item-list" data-param="1" bindtap="changeShow">
+        <view class="item-title">迟到</view>
+        <view class="item-number warn">5人</view>
+        <view class="iconfont icon-jiantou2" style="transform: rotate({{ detail1 ? 180 : 270 }}deg)"></view>
+      </view>
+      <view class="item-list-detail" hidden="{{ detail1 }}">
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+      </view>
+      <view class="item-list" data-param="2" bindtap="changeShow">
+        <view class="item-title">补卡</view>
+        <view class="item-number warn">5人</view>
+        <view class="iconfont icon-jiantou2" style="transform: rotate({{ detail2 ? 180 : 270 }}deg)"></view>
+      </view>
+      <view class="item-list-detail" hidden="{{ detail2 }}">
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+      </view>
+      <view class="item-list" data-param="3" bindtap="changeShow">
+        <view class="item-title">外出</view>
+        <view class="item-number">5人</view>
+        <view class="iconfont icon-jiantou2" style="transform: rotate({{ detail3 ? 180 : 270 }}deg)"></view>
+      </view>
+      <view class="item-list-detai3" hidden="{{ detail3 }}">
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+      </view>
+      <view class="item-list" data-param="4" bindtap="changeShow">
+        <view class="item-title">请假</view>
+        <view class="item-number">5人</view>
+        <view class="iconfont icon-jiantou2" style="transform: rotate({{ detail4 ? 180 : 270 }}deg)"></view>
+      </view>
+      <view class="item-list-detai4" hidden="{{ detail4 }}">
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+      </view>
+      <view class="item-list" data-param="5" bindtap="changeShow">
+        <view class="item-title">出差</view>
+        <view class="item-number">5人</view>
+        <view class="iconfont icon-jiantou2" style="transform: rotate({{ detail5 ? 180 : 270 }}deg)"></view>
+      </view>
+      <view class="item-list-detai5" hidden="{{ detail5 }}">
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+      </view>
+      <view class="item-list" data-param="6" bindtap="changeShow">
+        <view class="item-title">旷工</view>
+        <view class="item-number">5人</view>
+        <view class="iconfont icon-jiantou2" style="transform: rotate({{ detail6 ? 180 : 270 }}deg)"></view>
+      </view>
+      <view class="item-list-detai6" hidden="{{ detail6 }}">
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+        <view class="detail-item">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+          <view class="message">
+            <view class="name">张晓</view>
+            <view class="dept">营销部-客服部</view>
+          </view>
+          <view class="number">
+            <view class="times">2次</view>
+            <view class="time">36分钟</view>
+          </view>
+          <view class="iconfont icon-jiantou2"></view>
+        </view>
+      </view>
+    </view> 
+  </view>
+  <!-- 个人考勤 -->
+   <view class="person" hidden="{{ tabIndex != 2 }}"> 
+    <view class="calendar">
+      <view class="date">
+        <text>2018.6</text>
+        <text class="iconfont icon-jiantou2 small"></text>
+      </view>
+      <view class="content">
+        <view class="avatar">
+          <image class="avatar" src="../../../images/emp-img.jpg"></image>
+        </view>
+        <view class="flex-1">
+          <view class="name">星矢</view>
+          <view class="group-type">考勤组：A</view>
+        </view>
+        <view>
+          <text class="iconfont icon-richeng"></text>
+          <text class="text">打卡月历</text>
+        </view>
+      </view>
+    </view>
+    <view class="item">
+      <view class="item-list">
+        <view class="item-title">出勤天数</view>
+        <view class="item-number">24天</view>
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="item-list">
+        <view class="item-title">休息天数</view>
+        <view class="item-number">6天</view>
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="item-list">
+        <view class="item-title">迟到</view>
+        <view class="item-number warn">2次，共36分钟</view>
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="item-list">
+        <view class="item-title">补卡</view>
+        <view class="item-number warn">2次</view>
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="item-list">
+        <view class="item-title">外出</view>
+        <view class="item-number">0小时</view>
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="item-list">
+        <view class="item-title">请假</view>
+        <view class="item-number">0小时</view>
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="item-list">
+        <view class="item-title">出差</view>
+        <view class="item-number">0小时</view>
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+      <view class="item-list">
+        <view class="item-title">旷工</view>
+        <view class="item-number">0小时</view>
+        <view class="iconfont icon-jiantou2"></view>
+      </view>
+    </view>
+    <view class="footer">
+      本月平均工时8小时
+    </view>
+  </view>
+  
+</view>

@@ -85,6 +85,45 @@ Page({
       });
       this.GetEstatePage();     // 获取楼盘列表数据
     };
+
+    this.sort();
+  },
+  sort() {
+    function merge_sort(arr) {
+      if (arr.length < 2) {
+        return arr;
+      }
+      var middle = parseInt(arr.length / 2);
+      var left = arr.slice(0, middle);
+      var right = arr.slice(middle);
+
+      return merge(merge_sort(left), merge_sort(right));
+    }
+
+    function merge(left, right) {
+      var result = [];
+      var i = 0, j = 0;
+      while (i < left.length && j < right.length) {
+        if (left[i] > right[j]) {
+          result.push(right[j++]);
+        }
+        else {
+          result.push(left[i++]);
+        }
+      }
+      while (i < left.length) {
+        result.push(left[i++]);
+      }
+      while (j < right.length) {
+        result.push(right[j++]);
+      }
+
+      return result;
+    }
+
+    var arr = [1, 2, 3, 5, 6, 7, 8, 9];
+    var result = merge_sort(arr);
+    console.log(result);  //[1, 2, 3, 5, 6, 7, 8, 9]
   },
   // 获取楼盘列表数据
   GetEstatePage() {

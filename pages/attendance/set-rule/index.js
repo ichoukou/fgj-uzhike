@@ -29,28 +29,10 @@ Page({
     
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-  // 切换 购房/租房
-  buyOrRent (e) {
+  changeTab (e) {
     this.setData({
       tabNum: e.target.dataset.tabnum
     })
-  },
-  // 添加客户
-  addCustomer() {
-    wx.navigateTo({
-      url: 'new/index',
-    })
-  },
-  // 详细页
-  goDetail () {
-    wx.navigateTo({
-      url: 'detail/index',
-    })
   }
+  
 })

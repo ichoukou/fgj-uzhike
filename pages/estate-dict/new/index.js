@@ -262,6 +262,7 @@ Page({
     };
     result.status = true;
     result.msg = '验证通过';
+    
     return result;
   },
   // 上传封面图

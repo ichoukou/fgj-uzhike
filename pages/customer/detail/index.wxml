@@ -1,5 +1,6 @@
 
 <view class="container">
+  <!-- 客户信息 -->
   <view class="header">
     <view class="name">王女士</view>
     <view class="info">
@@ -30,7 +31,167 @@
     </view>
     <view class="edit">编辑</view>
   </view>
+  <!-- 个人需求 -->
   <view class="content">
-    
+    <view class="item item-flex">
+      <view class="title">个人需求</view>
+      <view class="iconfont icon-tianjia"></view>
+    </view>
+    <view class="item">
+      <view class="des">类型</view>
+      <view class="val">住宅</view>
+    </view>
+    <view class="item">
+      <view class="des">区域</view>
+      <view class="val">青山湖区/高新区/新建区</view>
+    </view>
+    <view class="item">
+      <view class="des">产权性质</view>
+      <view class="val">70年</view>
+    </view>
+    <view class="item">
+      <view class="des">意向度</view>
+      <view class="val"><progress percent="50" show-info active /></view>
+    </view>
+    <view class="item">
+      <view class="des">户型</view>
+      <view class="val">三室一厅</view>
+    </view>
+    <view class="item">
+      <view class="des">面积</view>
+      <view class="val">90-120m²</view>
+    </view> 
+    <view class="item">
+      <view class="des">价格</view>
+      <view class="val">100-200万元</view>
+    </view>
+  </view>
+  <!-- 进阶资料 -->
+  <view class="advance" bindtap="showSlide">
+    <view class="item item-flex">
+      <view class="title">进阶资料</view>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="hide {{ detailShow ? 'slideup' : 'slidedown'}}">
+      <view class="item">
+        <view class="des">类型</view>
+        <view class="val">住宅</view>
+      </view>
+      <view class="item">
+        <view class="des">区域</view>
+        <view class="val">青山湖区/高新区/新建区</view>
+      </view>
+      <view class="item">
+        <view class="des">产权性质</view>
+        <view class="val">70年</view>
+      </view>
+      <view class="item">
+        <view class="des">意向度</view>
+        <view class="val">70年</view>
+      </view>
+      <view class="item">
+        <view class="des">户型</view>
+        <view class="val">三室一厅</view>
+      </view>
+      <view class="item">
+        <view class="des">面积</view>
+        <view class="val">90-120m²</view>
+      </view> 
+      <view class="item">
+        <view class="des">价格</view>
+        <view class="val">100-200万元</view>
+      </view>
+    </view>
+  </view>
+  <!-- 客户动态 -->
+  <view class="action">
+    <view class="item item-flex">
+      <view class="title">客户动态</view>
+      <view class="all">查看全部</view>
+    </view>
+    <view class="action-item">
+      <image class="avatar" src="../../../images/emp-img.jpg"></image>
+      <view class="message">
+        <text class="name">王洋</text>
+        <text class="tel">15372778311</text>
+        <text class="time">17:53:17</text>
+        <view class="info">
+          <view class="text">
+            将与现有客户进行的沟通进展进行记录，以确优质绍新客客户提供优质提供将与现有客户进行的沟通进展进行记录，以确优质绍新客客户提供优质提供，以确优质绍新客客户提供优质提供
+            <!-- <span class="more">展开更多</span> -->
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="action-item">
+      <image class="avatar" src="../../../images/emp-img.jpg"></image>
+      <view class="message">
+        <text class="name">王洋</text>
+        <text class="tel">15372778311</text>
+        <text class="time">2018.7.23 17:53:17</text>
+        <view class="info pics">
+          <image class="img" src="../../../images/emp-img.jpg"></image>
+          <image class="img" src="../../../images/emp-img.jpg"></image>
+          <image class="img" src="../../../images/emp-img.jpg"></image>
+        </view>
+      </view>
+    </view>
+     <view class="action-item">
+      <image class="avatar" src="../../../images/emp-img.jpg"></image>
+      <view class="message">
+        <text class="name">王洋</text>
+        <text class="tel">15372778311</text>
+        <text class="time">2018.7.23 17:53:17</text>
+        <view class="info">
+          <text>带看完成。</text>
+          <text class="textcolor">#艾溪湖一号 一号楼0502#</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 关联人员 -->
+  <view class="connect">
+    <view class="item item-flex">
+      <view class="title">关联人员</view>
+      <view class="iconfont icon-tianjia"></view>
+    </view>
+    <view class="connect-item">
+      <view class="avatar">家人</view>
+      <view class="person">
+        <view class="name">王先生</view>
+        <text>电话：18723123498</text>
+        <text>类型：A</text>
+      </view>
+      <view class="iconfont icon-jianhao"></view>
+    </view>
+    <view class="connect-item">
+      <view class="avatar friend">亲友</view>
+      <view class="person">
+        <view class="name">刘晓明</view>
+        <text>电话：18723123498</text>
+        <text>类型：A</text>
+      </view>
+      <view class="iconfont icon-jianhao"></view>
+    </view>
+  </view>
+  <!-- 相关人员 -->
+  <view class="contact">
+    <view class="item item-flex">
+      <view class="title">相关人员</view>
+      <view class="change">变更人员</view>
+    </view>
+    <view class="contact-item">
+      <image class="avatar" src="../../../images/emp-img.jpg"></image>
+      <view class="name">王洋</view>
+      <view class="leader">负责人</view>
+    </view>
+    <view class="contact-item">
+      <image class="avatar" src="../../../images/emp-img.jpg"></image>
+      <view class="name">张美美</view>
+      <view class="leader">负责人</view>
+    </view>
+  </view>
+  <view class="footer">
+    一天前 08:12:32 录入
   </view>
 </view>

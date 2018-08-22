@@ -1,0 +1,84 @@
+
+<view class="container">
+  <view class="item">
+    <view class="item-list">
+      <view class="item-title">
+        楼盘
+        <span class="star">*</span>
+      </view>
+      <picker bindchange="bindCustomerType" value="{{customerTypeIndex}}" range="{{customerType}}">
+        <view class="picker">
+          {{customerType[customerTypeIndex]}}
+        </view>
+      </picker>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list">
+      <view class="item-title">
+        栋座
+        <span class="star">*</span>
+      </view>
+      <picker bindchange="bindCustomerType" value="{{customerTypeIndex}}" range="{{customerType}}">
+        <view class="picker">
+          {{customerType[customerTypeIndex]}}
+        </view>
+      </picker>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list">
+      <view class="item-title">
+        单元
+        <span class="star">*</span>
+      </view>
+      <picker bindchange="bindCustomerType" value="{{customerTypeIndex}}" range="{{customerType}}">
+        <view class="picker">
+          {{customerType[customerTypeIndex]}}
+        </view>
+      </picker>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list">
+      <view class="item-title">
+        房号
+        <span class="star">*</span>
+      </view>
+      <picker bindchange="bindCustomerType" value="{{customerTypeIndex}}" range="{{customerType}}">
+        <view class="picker">
+          {{customerType[customerTypeIndex]}}
+        </view>
+      </picker>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list">
+      <view class="item-title">
+        陪看人员
+        <span class="star">*</span>
+      </view>
+      <picker bindchange="bindCustomerType" value="{{customerTypeIndex}}" range="{{customerType}}">
+        <view class="picker">
+          {{customerType[customerTypeIndex]}}
+        </view>
+      </picker>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+    <view class="item-list">
+      <view class="item-title">
+        带看日期
+        <span class="star">*</span>
+      </view>
+      <picker bindchange="bindCustomerType" value="{{customerTypeIndex}}" range="{{customerType}}">
+        <view class="picker">
+          {{customerType[customerTypeIndex]}}
+        </view>
+      </picker>
+      <view class="iconfont icon-jiantou2"></view>
+    </view>
+  </view>
+  <view class="reason">
+    <textarea placeholder="写点什么吧" placeholder-class="phcolor"></textarea>
+    <view class="iconfont icon-xiangji"></view>
+  </view>
+</view>
+<view class="footer">
+  <text>完成</text>
+</view>

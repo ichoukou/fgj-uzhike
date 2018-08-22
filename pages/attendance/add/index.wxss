@@ -1,0 +1,103 @@
+
+.input-item {
+  height: 100rpx;
+  display: flex;
+  padding: 0 24rpx;
+  align-items: center;
+  background: #fff;
+  border-top: 1rpx solid #f2f2f2;
+}
+.input-title {
+  margin-right: 100rpx;
+}
+.content {
+  margin-top: 20rpx;
+  padding: 24rpx 24rpx 0;
+  background: #fff;
+}
+.depart {
+  display: flex;
+  align-items: center;
+}
+.depart-title {
+  margin-right: 10rpx;
+}
+.font-24 {
+  font-size: 24rpx;
+}
+.depart-text {
+  color: #bababa;
+}
+.icon-jiantou2 {
+  transform: rotate(180deg);
+  color: #d2d2d2;
+}
+.icon-tianjia {
+  width: 60rpx;
+  height: 60rpx;
+  margin: 20rpx 0;
+  border-radius: 50%;
+  border: 2rpx solid #d2d2d2;
+  line-height: 58rpx;
+  text-align: center;
+  color: #bababa;
+}
+.member {
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+  border-top: 1rpx solid #f2f2f2;
+}
+
+.tips {
+  display: flex;
+  align-items: center;
+  height: 75rpx;
+  /* line-height: 75rpx; */
+  padding: 0 22rpx;
+}
+.tips .text-1 {
+  color: #c1c1c1;
+}
+.wenhao {
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: 10rpx;
+  line-height: 28rpx;
+  border-radius: 50%;
+  background: #fb8037;
+  text-align: center;
+  font-size: 28rpx;
+  color: #fff;
+}
+.tips .text-2 {
+  margin-left: 30rpx;
+  color: #fb8037;
+}
+.leader {
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+  padding: 0 24rpx;
+  background: #fff;
+}
+.footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  height: 106rpx;
+  text-align: center;
+}
+.footer text{
+  display: inline-block;
+  flex: 1;
+  text-align: center;
+  margin: 12rpx 36rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  border-radius: 6rpx;
+  color: #fff;
+}

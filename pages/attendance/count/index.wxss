@@ -1,0 +1,405 @@
+
+.tab {
+  position:-webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 80rpx;
+  background: #fff;
+  z-index: 999;
+}
+.tab-list {
+  flex: 1;
+  text-align: center;
+  height: 80rpx;
+  font-size: 30rpx;
+  color: #000;
+  line-height: 80rpx;
+  z-index: 999;
+}
+.tab-list-active {
+  color: #ff6714;
+}
+.tab-line {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 33.33%;
+  transition: all .3s;
+}
+.tab-line::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  border-radius: 8rpx;
+  width: 60%;
+  height: 8rpx;
+  background-color: #ff6714;
+  background-image: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+}
+
+.person .calendar {
+  height: 180rpx;
+  padding: 18rpx 24rpx;
+  background: #fff;
+}
+.person .date {
+  margin-left: 30rpx;
+  color: #c9c9c9;
+}
+.small {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-left: 10rpx;
+  transform: rotate(-90deg);
+  font-size: 24rpx;
+}
+.person .content {
+  display: flex;
+  margin-top: 30rpx;
+  height: 80rpx;
+  align-items: center;
+}
+.person .avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 10rpx;
+}
+.person .group-type {
+  font-size: 18rpx;
+  color: #c9c9c9;
+}
+.person .icon-richeng {
+  color: #ff8631;
+}
+.person .text {
+  margin-left: 10rpx;
+  font-size: 18rpx;
+  color: #ff8631;
+}
+.person .item {
+  margin-top: 20rpx;
+  padding: 0 24rpx;
+  background: #fff;
+}
+.person .item-list {
+  display: flex;
+  height: 100rpx;
+  align-items: center;
+}
+.person .item-title {
+  flex: 1;
+}
+.person .item-number {
+  font-size: 24rpx;
+  color: #c9c9c9;
+}
+.person .item-list .icon-jiantou2 {
+  transform: rotate(180deg);
+  color: #c9c9c9;
+}
+.person .warn {
+  color: #fa4d31;
+}
+.person .footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #c9c9c9;
+}
+
+.day-top {
+  display: flex;
+  padding: 0 0 10rpx 24rpx;
+  background: #fff;
+}
+.day .date {
+  margin-top: 10rpx;
+  color: #c9c9c9;
+}
+.scroll-dept {
+  margin-left: 210rpx;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+.scroll-dept::-webkit-scrollbar {
+  display: none;
+}
+.day .dept {
+  display: inline-block;
+  margin-top: 10rpx;
+  margin-right: 10rpx;
+  padding: 6rpx 10rpx;
+  background: #e6e6e6;
+  font-size: 18rpx;
+  border-radius: 15rpx;
+  color: #fff;
+}
+.day .card {
+  padding: 0 24rpx 40rpx;
+  background: #fff;
+}
+.day .card-list {
+  position: relative;
+  display: inline-block;
+  width: 340rpx;
+  height: 180rpx;
+  margin-left: 20rpx;
+  margin-top: 20rpx;
+  padding: 20rpx;
+  background: #0cbeff;
+  border-radius: 6rpx;
+}
+.card-list.red {
+  background: #fb6581;
+}
+.card-list.yellow {
+  background: #fccd20;
+}
+.card-list.green {
+  background: #39daa6;
+}
+.card-list:nth-child(odd) {
+  margin-left: 0;
+}
+.card-text {
+  color: #fff;
+}
+.card-number {
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #fff;
+}
+.number-48 {
+  font-size: 48rpx;
+}
+.day .pie {
+  position: absolute;
+  right: 20rpx;
+  bottom: 16rpx;
+  width: 128rpx;
+  height: 128rpx;
+}
+.rank {
+  margin-top: 20rpx;
+  padding: 18rpx 24rpx;
+  height: 245rpx;
+  background: #fff;
+}
+.rank .avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+.rank-title {
+  margin-left: 10rpx;
+  color: #313131;
+}
+.rank .item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20rpx;
+  margin-top: 30rpx;
+  text-align: center;
+}
+.rank .item-list {
+  position: relative;
+}
+.rank .rank-number {
+  position: absolute;
+  top: 60rpx;
+  left: 80rpx;
+  width: 38rpx;
+  height: 38rpx;
+  line-height: 38rpx;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  border: 3rpx solid #fff;
+  color: #fff;
+}
+.rank .name {
+  font-size: 24rpx;
+}
+.icon-zaodao, .icon-chidao {
+  color: #fb883d;
+}
+.day .bar {
+  position: relative;
+  margin-top: 20rpx;
+  padding: 20rpx 24rpx;
+  background: #fff;
+}
+.bar-text {
+  display: flex;
+  margin: 10rpx 0;
+  font-size: 24rpx;
+  color: #c9c9c9;
+}
+.bar-text .text-1 {
+  margin-right: 52rpx;
+}
+.bar-text .text-2 {
+  margin-right: 22rpx;
+}
+.bar-data {
+  display: flex;
+}
+.aver-time {
+  margin-left: 50rpx;
+}
+.aver-time .text {
+  font-size: 24rpx;
+  height: 46rpx;
+  line-height: 46rpx;
+  color: #0e0e0e;
+}
+ec-canvas {
+  width: 100%;
+  height: 100%;
+} 
+.day .bar-container {
+  width: 530rpx;
+  height: 220rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.month-item {
+  position: relative;
+  height: 80rpx;
+  line-height: 80rpx;
+  overflow-x: scroll;
+  white-space: nowrap;
+  background: #fff;
+}
+.month-line {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 160rpx;
+  transition: all .3s;
+}
+.month-line::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 33%;
+  border-radius: 8rpx;
+  width: 33%;
+  height: 4rpx;
+  background-color: #fb883d;
+}
+.month-item::-webkit-scrollbar {
+  display: none;
+}
+.month-list {
+  display: inline-block;
+  width: 160rpx;
+  text-align: center;
+}
+.month .type-item {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10rpx 24rpx;
+  background: #fff;
+}
+.month .type-list {
+  width: 68rpx;
+  height: 34rpx;
+  line-height: 34rpx;
+  background: #c1c1c1;
+  color: #fff;
+  font-size: 20rpx;
+  margin-left: 14rpx;
+  text-align: center;
+  border-radius: 10rpx;
+}
+.type-list.type-list-active {
+  background: #fb883d;
+}
+.month .bar-container {
+  height: 500rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box; 
+  background: #fff;
+  z-index: 1;
+}
+.month .item {
+  margin-top: 20rpx;
+  background: #fff;
+}
+.month .item-list {
+  display: flex;
+  padding: 0 24rpx;
+  height: 100rpx;
+  align-items: center;
+}
+.month .item-title {
+  flex: 1;
+}
+.month .item-number {
+  font-size: 24rpx;
+  color: #c9c9c9;
+}
+.month .item-list .icon-jiantou2 {
+  transform: rotate(180deg);
+  color: #c9c9c9;
+  transition: all .3s;
+}
+
+.detail-item {
+  display: flex;
+  background: #f2f2f2;
+  padding: 0 24rpx;
+  height: 144rpx;
+  align-items: center;
+}
+.detail-item .avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+}
+.detail-item .message {
+  flex: 1;
+}
+.detail-item .name {
+  color: #000;
+}
+.detail-item .dept {
+  margin-top: 10rpx;
+  color: #c1c1c1;
+  font-size: 24rpx;
+}
+.detail-item .number {
+  position: relative;
+  height: 144rpx;
+  margin-right: 20rpx;
+  color: #c1c1c1;
+}
+.detail-item .times {
+  position: absolute;
+  right: 0;
+  top: 30rpx;
+}
+.detail-item .time {
+  margin-top: 80rpx;
+  font-size: 24rpx;
+}
+.detail-item .icon-jiantou2 {
+  transform: rotate(180deg);
+  color: #d2d2d2;
+}

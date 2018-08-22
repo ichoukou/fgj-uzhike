@@ -1,0 +1,29 @@
+
+<view class="container">
+  <view class="item-list">
+    <view class="item-title">缺卡时间</view>
+    <view class="sub-text">2018-06-13 18:00</view>
+    <view class="iconfont icon-jiantou2"></view>
+  </view>
+  <view class="reason">
+    <textarea placeholder="请填写缺卡事由(必填)" placeholder-class="phcolor"></textarea>
+    <view class="iconfont icon-xiangji"></view>
+  </view>
+  <view class="item-list margin-top-20">
+    <view class="item-title">所属部门</view>
+    <view class="sub-text">请选择</view>
+    <view class="iconfont icon-jiantou2"></view>
+  </view>
+  <view class="section margin-top-20">
+    <view class="section-title">审批人</view>
+    <view class="iconfont icon-tianjia"></view>
+  </view>
+  <view class="section margin-top-20">
+    <view class="section-title">抄送人</view>
+    <view class="iconfont icon-tianjia"></view>
+  </view>
+  <view class="tip">有疑问，请点击</view>
+</view>
+<view class="footer">
+  <text>提交</text>
+</view>

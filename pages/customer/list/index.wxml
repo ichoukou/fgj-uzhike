@@ -1,0 +1,212 @@
+
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <!-- <text class="iconfont icon-sousuo"></text> -->
+    <!-- <view class="header-center" catchtap="buyOrRent">
+      <text class="buy {{ tabNum == 1 ? 'cur1' : '' }}" data-tabNum = "1">购房</text>
+      <text class="rent {{ tabNum == 2 ? 'cur2' : '' }}" data-tabNum = "2">租房</text>
+    </view> -->
+    <view class="top__search">
+      <search height="110rpx" bindquery="bindQuery" placeholder="搜索"></search>
+    </view>
+    <text class="iconfont icon-tianjia" bindtap="addCustomer"></text>
+  </view>
+  <!-- tab选择类型 -->
+  <view class="tabs">
+    <view class="tab-item">
+      <text>类型</text>
+      <text class="iconfont icon-jiantou2"></text>      
+    </view>
+    <view class="tab-item">
+      <text>状态</text>
+      <text class="iconfont icon-jiantou2"></text>
+    </view>
+    <view class="tab-item">
+      <text>排序</text>
+      <text class="iconfont icon-jiantou2"></text>      
+    </view>
+    <view class="tab-item" bindtap="bindOpenScreen">
+      <text>更多</text>
+      <text class="iconfont icon-jiantou2"></text>      
+    </view>
+  </view>
+  <!-- 客户列表 -->
+  <scroll-view scroll-y class="list">
+    <view class="list-wrap">
+      <view class="list-item {{isOpenFollow ? 'open-follow' : ''}}">
+        <view class="list-baseinfo">
+          <view class="tag tag-c">C</view>
+          <!-- 基本内容 -->
+          <view class="content">
+            <view class="row row-1" bindtap="bindCloseFollow">
+              <text class="name">王女士</text>
+              <text class="tel">13302310012</text>
+              <text class="iconfont icon-gengduo1"></text>
+            </view>
+            <view class="row">
+              <view class="row-item">
+                <view class="title">报价</view>
+                <view class="val">300-500万</view>
+              </view>
+              <view class="row-item">
+                <view class="title">面积</view>
+                <view class="val">120-200m²</view>
+              </view>
+              <view class="row-item">
+                <view class="title">户型</view>
+                <view class="val">三室两厅一卫</view>
+              </view>
+            </view>
+            <view class="row">
+              <view class="row-item">
+                <view class="title">区域</view>
+                <view class="val val-1">青山湖/南昌县</view>
+              </view>
+            </view>
+            <view class="row">
+              <view class="title title-1">带看次数：<span class="times">0</span></view>
+              <view class="title title-1">跟进次数：<span class="times">0</span></view>
+              <view class="title title-1">录入时间：<span class="times">09: 12: 33</span></view>
+            </view>
+            <view class="row">
+              <view class="row-item center item-extend" catchtap="bindShowFollow" >
+                <view class="icon">
+                  <text class="iconfont icon-genjin"></text>
+                </view>
+                <view class="item-title">跟进</view>
+              </view>
+              <view class="row-item center item-extend">
+                <view class="icon">
+                  <text class="iconfont icon-bohao"></text>
+                </view>
+                <view class="item-title">拨号</view>
+              </view>
+              <view class="row-item center item-extend">
+                <view class="icon">
+                  <text class="iconfont icon-daikan"></text>
+                </view>
+                <view class="item-title">带看</view>
+              </view>
+              <view class="row-item center item-extend">
+                <view class="icon">
+                  <text class="iconfont icon-richeng"></text>
+                </view>
+                <view class="item-title">加入日程</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 跟进内容 -->
+        <view class="follow">
+          <text class="follow_close iconfont icon-guanbi" bindtap="bindCloseFollow"></text>
+           <!-- 输入跟进 -->
+          <!-- <view class="follow_top">
+            <text class="follow_icon iconfont icon-yuyin"></text>
+            <view class="follow_top-search">
+              <input type="text" class="follow_top-input" placeholder="请输入跟进内容"></input>
+              <text class="follow_img iconfont icon-zhaopian"></text>
+            </view>
+          </view> -->
+          <!-- 展示三条跟进内容 -->
+          <view class="follow_content">
+            <view class="follow_list">
+              <view class="follow_time">2018/8/20 16:38:00</view>
+              <!-- 文字跟进 -->
+              <view class="follow_text">
+                跟进多指各行业销售，将与现有客户进行的沟通进展进行记录，以确保为客户提供优质服务、转介绍新客跟进多指各行业销售，将与现有客户进行的沟通进展进行记录，以确保为客户提供优质服务、转介绍新客跟进多指各行业销售 
+                <!-- <text class="follow_text-more">展开更多</text> -->
+              </view>
+              <!-- 图片跟进 -->
+              <!-- <view class="follow_pic">
+                <image class="follow_pic-img" mode="widthFix" src="../../../images/emp-img.jpg"></image>
+              </view> -->
+              <!-- 语音跟进 -->
+              <!-- <view class="voice" style="width: 150px" bindtap="bindPlayAudio">
+                <text class="voice_yuyin iconfont icon-yuyin"></text>
+                <view class="voice_play {{isPlayAudio ? 'voice_line--play' : ''}}">
+                  <text class="voice_line"></text>
+                  <text class="voice_line"></text>
+                  <text class="voice_line"></text>
+                </view>
+                <text class="voice_text">15s</text>
+              </view> -->
+            </view>
+          </view>
+          <!-- 更多跟进按钮 -->
+          <view class="follow_more-btn">
+            <button class="btn-primery">更多跟进</button>
+          </view>
+        </view>
+      </view>
+      <view class="list-item">
+        <view class="list-baseinfo">
+          <view class="tag tag-c">C</view>
+          <!-- 基本内容 -->
+          <view class="content">
+            <view class="row row-1">
+              <text class="name">王女士</text>
+              <text class="tel">13302310012</text>
+              <text class="iconfont icon-gengduo1"></text>
+            </view>
+            <view class="row">
+              <view class="row-item">
+                <view class="title">报价</view>
+                <view class="val">300-500万</view>
+              </view>
+              <view class="row-item">
+                <view class="title">面积</view>
+                <view class="val">120-200m²</view>
+              </view>
+              <view class="row-item">
+                <view class="title">户型</view>
+                <view class="val">三室两厅一卫</view>
+              </view>
+            </view>
+            <view class="row">
+              <view class="row-item">
+                <view class="title">区域</view>
+                <view class="val val-1">青山湖/南昌县</view>
+              </view>
+            </view>
+            <view class="row">
+              <view class="title title-1">带看次数：<span class="times">0</span></view>
+              <view class="title title-1">跟进次数：<span class="times">0</span></view>
+              <view class="title title-1">录入时间：<span class="times">09: 12: 33</span></view>
+            </view>
+            <view class="row">
+              <view class="row-item center item-extend" catchtap="bindFollowCar" >
+                <view class="icon">
+                  <text class="iconfont icon-genjin"></text>
+                </view>
+                <view class="item-title">跟进</view>
+              </view>
+              <view class="row-item center item-extend">
+                <view class="icon">
+                  <text class="iconfont icon-bohao"></text>
+                </view>
+                <view class="item-title">拨号</view>
+              </view>
+              <view class="row-item center item-extend">
+                <view class="icon">
+                  <text class="iconfont icon-daikan"></text>
+                </view>
+                <view class="item-title">带看</view>
+              </view>
+              <view class="row-item center item-extend">
+                <view class="icon">
+                  <text class="iconfont icon-richeng"></text>
+                </view>
+                <view class="item-title">加入日程</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<screen-more id="screenMore" screenData="{{screenData}}" bindreset="bindScreenReset" bindconfirm="bindScreenConfirm" />
+<wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />
+

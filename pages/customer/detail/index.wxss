@@ -5,17 +5,17 @@
   background: #fff;
   padding-top: 30rpx; 
 }
-.name {
+.header .name {
   margin-left: 44rpx;
   font-size: 48rpx;
   font-weight: 700;
 }
-.info {
+.header .info {
   margin-top: 10rpx; 
   margin-left: 44rpx; 
   font-size: 30rpx;
 }
-.info text {
+.header .info text {
   margin-right: 20rpx;
 }
 .funcs {
@@ -27,7 +27,7 @@
   /* flex: 1;  */
   text-align: center;
 }
-.iconfont {
+.funcs-item .iconfont {
   width: 54rpx;
   height: 54rpx;
   line-height: 54rpx; 
@@ -45,4 +45,187 @@
   position: absolute;
   top: 30rpx;
   right: 44rpx;
+}
+.content {
+  margin-top: 20rpx;
+  padding: 0 26rpx;
+  background: #fff;
+  z-index: 10;
+}
+.item {
+  height: 100rpx;
+}
+.item-flex {
+  display: flex;
+  align-items: center;
+
+}
+.title {
+  flex: 1;
+}
+.icon-tianjia {
+  font-size: 32rpx;
+  color: #dbdbdb;
+}
+.des {
+  font-size: 24rpx;
+  color: #c9c9c9;
+}
+.val {
+  margin-top: 10rpx;
+  font-size: 30rpx;
+  color: #313131;
+}
+.advance {
+  margin-top: 20rpx;
+  padding: 0 26rpx; 
+  background: #fff;
+  overflow: hidden;
+}
+.title {
+  flex: 1;
+  font-weight: 700;
+  font-size: 36rpx;
+  background: #fff;
+  overflow: hidden;
+}
+.icon-jiantou2 {
+  transform: rotate(-90deg);
+  font-size: 40rpx;
+  color: #d2d2d2;
+}
+
+.action, .connect, .contact {
+  position: relative;
+  padding: 0 26rpx;
+  background: #fff;
+  margin-top: 20rpx;
+}
+.slidedown {
+  height: auto; 
+  opacity: 1;
+  transform: translateY(0);
+  transition: 0.3s;
+  z-index: -10;
+}
+.slideup {
+  height: 0; 
+  opacity: 0;  
+  overflow: hidden;     
+  transform: translateY(-50%);
+  transition: 0.3s;
+}
+
+.action-item {
+  display: flex;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+}
+.avatar {
+  width: 80rpx;
+  height: 80rpx; 
+  border-radius: 50%;
+  margin-top: 22rpx;
+}
+.img {
+  width: 140rpx;
+  height: 108rpx;
+  margin-right: 12rpx;
+}
+.message {
+  flex: 1;
+  margin-top: 16rpx;
+  margin-left: 22rpx;
+}
+.message .name {
+  font-size: 30rpx;
+  font-weight: normal;
+  margin-right: 20rpx;
+}
+.message .tel {
+  margin-right: 20rpx;
+}
+.message .time {
+  font-size: 24rpx;
+  color: #c9c9c9;
+}
+.message .info {
+  margin-top: 10rpx;
+  background: #f5f5f5;
+  padding: 18rpx; 
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  line-height: 36rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden; 
+}
+.message .info .text {
+  /* margin: 18rpx; */
+  overflow: hidden;
+}
+.info.pics {
+  background: #fff;
+  padding: 0;
+}
+.textcolor {
+  color: #FA7831;
+}
+
+.connect-item {
+  display: flex;
+  height: 130rpx;
+  align-items: center;
+}
+.connect-item .avatar {
+  margin-top: 0;
+  text-align: center;
+  line-height: 80rpx;
+  background: #fe495b;
+  color: #fff;
+}
+.person {
+  flex: 1;
+  margin-left: 22rpx;
+  /* margin-top: 18rpx; */
+}
+.person .name {
+  font-size: 30rpx;
+  font-weight: 700;
+  margin-bottom: 10rpx;
+}
+.person text {
+  color: #c9c9c9;
+}
+.icon-jianhao {
+  font-size: 40rpx;
+  color: #dbdbdb;
+}
+.avatar.friend {
+  background: #ff6714;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  height: 120rpx;
+}
+.contact-item .avatar {
+  margin-top: 0;
+}
+.contact-item .name {
+  flex: 1;
+  margin-left: 20rpx;
+  font-weight: 700;
+}
+.leader {
+  font-size: 24rpx;
+  color: #c9c9c9;
+}
+.footer {
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-left: 26rpx;
+  font-size: 24rpx;
+  color: #c9c9c9;
 }

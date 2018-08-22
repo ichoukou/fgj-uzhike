@@ -93,7 +93,6 @@
 
 <!-- 更多筛选 -->
 <screen-more id="screenMore" screenData="{{screenData}}" bindreset="bindScreenReset" bindconfirm="bindScreenConfirm" />
-
 <wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />
 <i-message id="message" />
 <loading hidden="{{loading}}" />

@@ -33,19 +33,19 @@ checkbox .wx-checkbox-input {
   width: 40rpx;
   border-radius: 50%;
   border-color: #ff6714;
-}
+} 
 checkbox .wx-checkbox-input.wx-checkbox-input-checked {
   background: #ff6714;
   border: none;
-}
- checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+} 
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
   width: 40rpx;
   height: 40rpx;
   background: #ff6714;
   color: #fff;
   border-radius: 50%;
-  border: 10rpx solid #ff6714; 
-} 
+  border: 10rpx solid #ff6714;
+}
 .checkbox {
   position: absolute;
   right: 0;
