@@ -6,8 +6,8 @@ Component({
       value: false
     },
     screenData: {
-      type: Object,
-      value: {}
+      type: Array,
+      value: []
     }
   },
   data: {
@@ -41,20 +41,17 @@ Component({
       this.hide();
 
       // 去掉选中状态
-      for (let key of Object.keys(screenData)) {
-        if (screenData[key]) {
-          screenData[key].forEach(item => {
-            item.checked = false
-          })
-        }
-      };
+      screenData.forEach(item => {
+        item.data.forEach(list => {
+          list.checked = false
+        });
+      });
       this.setData({
         screenData
       });
     },
     // 确定
     bindConfirm() {
-      console.log(this.data.screenData)
       this.triggerEvent('confirm', {
         option: this.data.option
       });

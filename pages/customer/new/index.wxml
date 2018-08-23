@@ -54,7 +54,7 @@
   </view>
   <!-- 需求信息 -->
   <view class="title">需求信息</view>
-  <view class="need">
+  <!-- <view class="need">
     <view class="input-item">
       <view class="input-title">需求类型
         <span class="star">*</span>
@@ -155,11 +155,24 @@
     </view>
     <view class="textarea__title-border">备注</view>
     <textarea placeholder="请填写" placeholder-class="phcolor" data-type="Remark" bindblur="changeCustomerInput"></textarea>
-  </view>
+  </view> -->
   <view class="input-item add" bindtap="bindOpenLink">
     <view class="input-title">添加关联人 
     </view>
     <text class="iconfont icon-tianjia"></text>
+  </view>
+  <!-- 关联人 -->
+  <view class="link-wrap">
+    <view class="link__list" wx:for="{{paramsLink}}" wx:key="{{index}}">
+      <view class="link__pic">{{item.LinkType}}</view>
+      <view class="link__content">
+        <view class="link__con-name">{{item.CustName}}</view>
+        <view class="link__con-tel">{{item.Tel}}</view>
+      </view>
+      <view class="link__close" data-index="{{index}}" data-id="{{item.PriCustID}}" bindtap="bindCloseLink">
+        <text class="iconfont icon-jianhao link__icon-close"></text>
+      </view>
+    </view>
   </view>
   
   <!-- 进阶信息 -->
@@ -167,7 +180,6 @@
   <view class="advance">
     <view class="input-item">
       <view class="input-title">年龄</view>
-      <!-- <input type="text" class="input" placeholder-class="phcolor" placeholder="请填写" /> -->
       <input 
         type="text" 
         class="input" 
@@ -239,10 +251,16 @@
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
-      <view class="input-title">作息时间</view>
-      <picker bindchange="bindCustomerType" value="{{customerTypeIndex}}" range="{{customerType}}">
+      <view class="input-title">休息情况</view>
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        range="{{pickerRest}}" 
+        value="{{pickerRestIndex}}" 
+        range-key="label"
+        data-type="Rest" 
+      >
         <view class="picker">
-          {{customerType[customerTypeIndex]}}
+          {{pickerRest[pickerRestIndex].label}}
         </view>
       </picker>
       <text class="iconfont icon-jiantou2"></text>
@@ -321,6 +339,7 @@
     </view>
     <view class="input-item">
       <view class="input-title">所在城市</view>
+      <view class="input__text" bindtap="bindOpenCity">{{paramsCustomer.City ? paramsCustomer.City : '请选择城市'}}</view>
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="input-item">
@@ -349,16 +368,17 @@
     </view>
     <view class="input-item">
       <view class="input-title">客户来源</view>
-      <input 
-        type="text" 
-        class="input" 
-        placeholder-class="phcolor" 
-        placeholder="请填写" 
-        value="{{paramsCustomer.Source}}" 
+      <picker 
+        bindchange="bindPickerCustomerChange" 
+        range="{{pickerSource}}" 
+        value="{{pickerSourceIndex}}" 
+        range-key="label"
         data-type="Source" 
-        bindblur="changeCustomerInput"
-       />
-      <text class="iconfont icon-jiantou2"></text>
+      >
+        <view class="picker">
+          {{pickerSource[pickerSourceIndex].label}}
+        </view>
+      </picker>
     </view>
   </view>
   </scroll-view>
@@ -367,3 +387,5 @@
 <view class="footer">
   <text class="footer-text" bindtap="submit">完成</text>
 </view>
+
+<i-message id="message" />

@@ -1,0 +1,98 @@
+.content {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 100rpx;
+  left: 0;
+}
+.list {
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  width: 100%;
+  height: 130rpx;
+  background-color: #fff;
+}
+.list + .list {
+  border-top: 1rpx solid rgb(230,230,230);
+}
+.list__title {
+  min-width: 320rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.intention .list__title,
+.special .list__title {
+  min-width: 220rpx;
+}
+.title--required {
+  position: relative;
+}
+.title--required::after {
+  content: "*";
+  padding-left: 8rpx;
+  font-size: 40rpx;
+  color: #ff6714;
+}
+.list__text {
+  flex: 1;
+  font-size: 30rpx;
+  color: #999;
+  line-height: 130rpx;
+}
+.list__picker--text {
+  color: #333;
+}
+.list__arrow {
+  font-size: 30rpx;
+  color: rgb(210,210,210);
+  transform: rotate(180deg);
+}
+.special .list__text {
+  display: flex;
+  align-items: center;
+}
+.special__input {
+  border-radius: 8rpx;
+  max-width: 173rpx;
+  min-height: 60rpx;
+  line-height: 60rpx;
+  text-align: center;
+  background-color: rgb(245,245,245);
+}
+.special__line {
+  display: inline-block;
+  margin: 0 18rpx;
+  border-radius: 3rpx;
+  width: 32rpx;
+  height: 3rpx;
+  background-color: #666;
+}
+.special__unit {
+  padding-left: 18rpx;
+  font-size: 30rpx;
+  color: #666;
+}
+.list--remark {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 40rpx;
+  height: auto;
+}
+.list--remark .list__title {
+  margin: 20rpx 0;
+}
+.list__textarea {
+  padding: 20rpx;
+}
+
+/* 完成按钮 */
+.footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 10rpx 36rpx;
+  width: 100%;
+  background-color: #fff;
+}

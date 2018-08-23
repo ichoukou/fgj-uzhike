@@ -3,18 +3,10 @@
   <view class="screen__content">
     <view class="screen__scroll">
       <scroll-view scroll-y style="height: 100%;">
-        <view class="screen__list" wx:if="{{screenData.tab}}">
-          <view class="screen__list-title">选择标签</view>
-          <radio-group class="radio-group" bindchange="bindRadioChange" data-type="tab">
-            <label class="radio" wx:for="{{screenData.tab}}" wx:key="{{index}}">
-              <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
-            </label>
-          </radio-group>
-        </view>
-        <view class="screen__list" wx:if="{{screenData.tab}}">
-          <view class="screen__list-title">选择其他</view>
-          <radio-group class="radio-group" bindchange="bindRadioChange" data-type="else">
-            <label class="radio" wx:for="{{screenData.else}}" wx:key="{{index}}">
+        <view class="screen__list" wx:for="{{screenData}}" wx:key="{{index}}">
+          <view class="screen__list-title">{{item.title}}</view>
+          <radio-group class="radio-group" bindchange="bindRadioChange" data-type="{{item.type}}">
+            <label class="radio" wx:for="{{item.data}}" wx:key="{{index}}">
               <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
             </label>
           </radio-group>

@@ -1,8 +1,10 @@
 {
   "pages": [
+    "pages/customer/add-need/index",
     "pages/customer/new/index",
-    "pages/customer/add/index",    
     "pages/customer/list/index",
+    "pages/customer/city/index",
+    "pages/customer/add-link/index",    
     "pages/customer/detail/index",
     "pages/customer/look/index",
     "pages/customer/follow/index",

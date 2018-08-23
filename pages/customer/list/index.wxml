@@ -2,46 +2,71 @@
 <view class="container">
   <!-- 头部 -->
   <view class="header">
-    <!-- <text class="iconfont icon-sousuo"></text> -->
-    <!-- <view class="header-center" catchtap="buyOrRent">
-      <text class="buy {{ tabNum == 1 ? 'cur1' : '' }}" data-tabNum = "1">购房</text>
-      <text class="rent {{ tabNum == 2 ? 'cur2' : '' }}" data-tabNum = "2">租房</text>
-    </view> -->
     <view class="top__search">
       <search height="110rpx" bindquery="bindQuery" placeholder="搜索"></search>
     </view>
-    <text class="iconfont icon-tianjia" bindtap="addCustomer"></text>
-  </view>
-  <!-- tab选择类型 -->
-  <view class="tabs">
-    <view class="tab-item">
-      <text>类型</text>
-      <text class="iconfont icon-jiantou2"></text>      
-    </view>
-    <view class="tab-item">
-      <text>状态</text>
-      <text class="iconfont icon-jiantou2"></text>
-    </view>
-    <view class="tab-item">
-      <text>排序</text>
-      <text class="iconfont icon-jiantou2"></text>      
-    </view>
-    <view class="tab-item" bindtap="bindOpenScreen">
-      <text>更多</text>
-      <text class="iconfont icon-jiantou2"></text>      
+    <view class="top__add" bindtap="bindOpenAdd">
+      <text class="iconfont icon-tianjia" bindtap="addCustomer"></text>
     </view>
   </view>
+  <!-- 筛选 -->
+  <view class="screen">
+    <view class="screen__list" data-index="0" bindtap="bindScreenClick">
+      <text class="screen__text">{{params.typeData ? params.typeData : '类型'}}</text>
+      <text class="iconfont icon-fanhui icon-arrow"></text>
+    </view>
+    <view class="screen__list" data-index="1" bindtap="bindScreenClick">
+      <text class="screen__text">{{params.FlagStatus ? params.FlagStatus : '状态'}}</text>
+      <text class="iconfont icon-fanhui icon-arrow"></text>
+    </view>
+    <view class="screen__list" data-index="2" bindtap="bindScreenClick">
+      <text class="screen__text">排序</text>
+      <text class="iconfont icon-fanhui icon-arrow"></text>
+    </view>
+    <view class="screen__list" data-index="3" bindtap="bindScreenClick">
+      <text class="screen__text">更多</text>
+      <text class="iconfont icon-fanhui icon-arrow"></text>
+    </view>
+  </view>
+  <!-- 展开的筛选条件 -->
+  <wux-animation-group wux-class="screen-detail" in="{{screenOpen}}" class-names="wux-animate--slideInDown">
+    <scroll-view scroll-y style="height: 100%;">
+      <view class="screen-detail__item" hidden="{{screenIndex !== 0}}">
+        <radio-group class="radio-group" bindchange="bindRadioChange" data-type="typeData">
+          <label class="radio screen-detail__list" wx:for="{{typeData}}" wx:key="{{index}}">
+            <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+          </label>
+        </radio-group>
+        <!-- <loading hidden="{{typeData.length}}" /> -->
+      </view>
+      <view class="screen-detail__item" hidden="{{screenIndex !== 1}}">
+        <radio-group class="radio-group" bindchange="bindRadioChange" data-type="FlagStatus">
+          <label class="radio screen-detail__list" wx:for="{{FlagStatus}}" wx:key="{{index}}">
+            <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+          </label>
+        </radio-group>
+      </view>
+      <view class="screen-detail__item" hidden="{{screenIndex !== 2}}">
+        <radio-group class="radio-group" bindchange="bindRadioChange" data-type="order">
+          <label class="radio screen-detail__list" wx:for="{{order}}" wx:key="{{index}}">
+            <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+          </label>
+        </radio-group>
+      </view>
+    </scroll-view>
+  </wux-animation-group>
+
   <!-- 客户列表 -->
-  <scroll-view scroll-y class="list">
+  <scroll-view scroll-y class="list" bindscrolltolower="bindscrolltolower">
     <view class="list-wrap">
-      <view class="list-item {{isOpenFollow ? 'open-follow' : ''}}">
+      <view class="list-item {{item.isOpenFollow ? 'open-follow' : ''}}" wx:for="{{listData}}" wx:key="{{index}}">
         <view class="list-baseinfo">
           <view class="tag tag-c">C</view>
           <!-- 基本内容 -->
           <view class="content">
-            <view class="row row-1" bindtap="bindCloseFollow">
-              <text class="name">王女士</text>
-              <text class="tel">13302310012</text>
+            <view class="row row-1" data-index="{{index}}" bindtap="bindCloseFollow">
+              <text class="name">{{item.CustName}}</text>
+              <text class="tel">{{item.Tel}}</text>
               <text class="iconfont icon-gengduo1"></text>
             </view>
             <view class="row">
@@ -61,7 +86,7 @@
             <view class="row">
               <view class="row-item">
                 <view class="title">区域</view>
-                <view class="val val-1">青山湖/南昌县</view>
+                <view class="val val-1">{{item.Area}}</view>
               </view>
             </view>
             <view class="row">
@@ -70,7 +95,7 @@
               <view class="title title-1">录入时间：<span class="times">09: 12: 33</span></view>
             </view>
             <view class="row">
-              <view class="row-item center item-extend" catchtap="bindShowFollow" >
+              <view class="row-item center item-extend" data-index="{{index}}" bindtap="bindShowFollow" >
                 <view class="icon">
                   <text class="iconfont icon-genjin"></text>
                 </view>
@@ -99,7 +124,7 @@
         </view>
         <!-- 跟进内容 -->
         <view class="follow">
-          <text class="follow_close iconfont icon-guanbi" bindtap="bindCloseFollow"></text>
+          <text class="follow_close iconfont icon-guanbi" data-index="{{index}}" bindtap="bindCloseFollow"></text>
            <!-- 输入跟进 -->
           <!-- <view class="follow_top">
             <text class="follow_icon iconfont icon-yuyin"></text>
@@ -139,70 +164,14 @@
           </view>
         </view>
       </view>
-      <view class="list-item">
-        <view class="list-baseinfo">
-          <view class="tag tag-c">C</view>
-          <!-- 基本内容 -->
-          <view class="content">
-            <view class="row row-1">
-              <text class="name">王女士</text>
-              <text class="tel">13302310012</text>
-              <text class="iconfont icon-gengduo1"></text>
-            </view>
-            <view class="row">
-              <view class="row-item">
-                <view class="title">报价</view>
-                <view class="val">300-500万</view>
-              </view>
-              <view class="row-item">
-                <view class="title">面积</view>
-                <view class="val">120-200m²</view>
-              </view>
-              <view class="row-item">
-                <view class="title">户型</view>
-                <view class="val">三室两厅一卫</view>
-              </view>
-            </view>
-            <view class="row">
-              <view class="row-item">
-                <view class="title">区域</view>
-                <view class="val val-1">青山湖/南昌县</view>
-              </view>
-            </view>
-            <view class="row">
-              <view class="title title-1">带看次数：<span class="times">0</span></view>
-              <view class="title title-1">跟进次数：<span class="times">0</span></view>
-              <view class="title title-1">录入时间：<span class="times">09: 12: 33</span></view>
-            </view>
-            <view class="row">
-              <view class="row-item center item-extend" catchtap="bindFollowCar" >
-                <view class="icon">
-                  <text class="iconfont icon-genjin"></text>
-                </view>
-                <view class="item-title">跟进</view>
-              </view>
-              <view class="row-item center item-extend">
-                <view class="icon">
-                  <text class="iconfont icon-bohao"></text>
-                </view>
-                <view class="item-title">拨号</view>
-              </view>
-              <view class="row-item center item-extend">
-                <view class="icon">
-                  <text class="iconfont icon-daikan"></text>
-                </view>
-                <view class="item-title">带看</view>
-              </view>
-              <view class="row-item center item-extend">
-                <view class="icon">
-                  <text class="iconfont icon-richeng"></text>
-                </view>
-                <view class="item-title">加入日程</view>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
+    </view>
+    <view class="loading" hidden="{{scrollLower}}">
+      <text class="iconfont icon-jiazaizhong loading__icon"></text>
+      <text class="loading__text">加载中...</text>
+    </view>
+    <view class="empty" wx:if="{{!listData.length && loading}}">
+      <text class="iconfont icon-kong empty__icon"></text>
+      <text class="empty__desc">没有找到相关数据</text>
     </view>
   </scroll-view>
 </view>

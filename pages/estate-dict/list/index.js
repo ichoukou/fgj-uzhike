@@ -42,23 +42,20 @@ Page({
     ],
     screenOpen: false,   // 是否打开筛选项
     screenIndex: -1,     // 显示哪个筛选项
-    screenData: {        // 更多筛选数据
-      tab: [
-        {
-          label: '标签1',
-          value: 0
-        }, {
-          label: '标签2',
-          value: 1
-        }
-      ],
-      else: [
-        {
-          label: '其他项1',
-          value: 'a'
-        }
-      ]
-    },
+    screenData: [        // 更多筛选数据
+      {
+        title: '选择年龄',
+        data:[
+          {
+            label: '标签1',
+            value: 0
+          }, {
+            label: '标签2',
+            value: 1
+          }
+        ]
+      }
+    ],
     onceTime: null,
     loading: false,
     isLocation: false,    // 获取位置
@@ -85,45 +82,6 @@ Page({
       });
       this.GetEstatePage();     // 获取楼盘列表数据
     };
-
-    this.sort();
-  },
-  sort() {
-    function merge_sort(arr) {
-      if (arr.length < 2) {
-        return arr;
-      }
-      var middle = parseInt(arr.length / 2);
-      var left = arr.slice(0, middle);
-      var right = arr.slice(middle);
-
-      return merge(merge_sort(left), merge_sort(right));
-    }
-
-    function merge(left, right) {
-      var result = [];
-      var i = 0, j = 0;
-      while (i < left.length && j < right.length) {
-        if (left[i] > right[j]) {
-          result.push(right[j++]);
-        }
-        else {
-          result.push(left[i++]);
-        }
-      }
-      while (i < left.length) {
-        result.push(left[i++]);
-      }
-      while (j < right.length) {
-        result.push(right[j++]);
-      }
-
-      return result;
-    }
-
-    var arr = [1, 2, 3, 5, 6, 7, 8, 9];
-    var result = merge_sort(arr);
-    console.log(result);  //[1, 2, 3, 5, 6, 7, 8, 9]
   },
   // 获取楼盘列表数据
   GetEstatePage() {

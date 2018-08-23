@@ -50,7 +50,7 @@
 .screen__list-title {
   padding-left: 22rpx;
   padding-bottom: 12rpx;
-  font-size: 32rpx;
+  font-size: 30rpx;
   color: #333;
 }
 .screen__list .radio-group {
@@ -59,6 +59,7 @@
 }
 .screen__list .radio {
   margin: 12rpx;
+  font-size: 28rpx;
 }
 .screen__footer {
   position: absolute;

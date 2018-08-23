@@ -1,5 +1,5 @@
 
-import { InsertCustLink } from '../../../api/customer/add.js';
+import { InsertCustLink } from '../../../api/customer/add-link.js';
 import _fgj from '../../../utils/util.js';
 const { $Message } = require('../../../components/base/index');
 
@@ -46,7 +46,7 @@ Page({
 
     this.setData({
       params
-    })
+    });
   },
   onReady: function () {
     
@@ -79,7 +79,7 @@ Page({
   },
   // 完成
   bindSubmit() {
-    console.log(this.data.params)
+    // console.log(this.data.params)
     let params = this.data.params;
 
     let verify = this.verifyData(params);
@@ -88,8 +88,27 @@ Page({
       $Message({ content: verify.msg, type: 'error' });
     } 
     else {
+      wx.showLoading({ title: '添加中' });
       InsertCustLink(params).then(res => {
-        console.log(res)
+        wx.hideLoading();
+        if (res.data.result === 'success') {
+          $Message({ content: '添加成功', type: 'success' });
+          // 通过上一个页面，添加关联人
+          let pages = getCurrentPages();
+          let prevPage = pages[pages.length - 2]; // 上一个页面
+          let paramsLink = prevPage.data.paramsLink;
+
+          paramsLink.push(params);
+          prevPage.setData({
+            paramsLink
+          });
+          setTimeout(() => {
+            wx.navigateBack();
+          }, 1200);
+        } 
+        else {
+          $Message({ content: res.data.msg, type: 'error' });
+        }
       });
     }
   },
@@ -115,5 +134,5 @@ Page({
     result.msg = '验证通过';
 
     return result;
-  },
+  }
 })

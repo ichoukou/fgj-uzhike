@@ -1,0 +1,115 @@
+<view class="content">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="list">
+      <text class="list__title title--required">需求类型</text>
+      <view class="list__text">
+        <picker 
+          bindchange="bindPickerCustNeedChange" 
+          range="{{pickerNeedType}}" 
+          value="{{pickerNeedTypeIndex}}" 
+          range-key="label"
+          data-type="NeedType" 
+        >
+          <view class="list__picker {{ pickerNeedTypeIndex === 0 ? '' : 'list__picker--text'}}">
+            {{pickerNeedType[pickerNeedTypeIndex].label}}
+          </view>
+        </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list">
+      <text class="list__title title--required">区域</text>
+      <view class="list__text">
+        <picker bindchange="bindAreaChange" mode="region" value="{{Area}}" custom-item="{{customItem}}">
+          <view class="list__picker list__picker--text">
+            {{Area[0]}}，{{Area[1]}}，{{Area[2]}}
+          </view>
+        </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list">
+      <text class="list__title title--required">产权性质</text>
+      <view class="list__text">
+        <view class="list__picker list__picker--text">请选择</view>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list intention">
+      <text class="list__title title--required">意向度</text>
+      <view class="list__text">
+        <slider value="{{Intention}}" bindchange="sliderChange" show-value/>
+      </view>
+    </view>
+    <view class="list">
+      <text class="list__title title--required">户型</text>
+      <view class="list__text">
+        <view class="list__picker list__picker--text">请选择</view>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list special">
+      <text class="list__title title--required">面积</text>
+      <view class="list__text">
+        <input 
+          type="number" 
+          class="special__input" 
+          placeholder-class="phcolor" 
+          placeholder="最小面积" 
+          value="{{paramsCustomer.Tel}}" 
+          data-type="Tel" 
+          bindblur="changeCustomerInput"
+        />
+        <text class="special__line"></text>
+        <input 
+          type="number" 
+          class="special__input" 
+          placeholder-class="phcolor" 
+          placeholder="最大面积" 
+          value="{{paramsCustomer.Tel}}" 
+          data-type="Tel" 
+          bindblur="changeCustomerInput"
+        />
+        <text class="special__unit">㎡</text>
+      </view>
+    </view>
+    <view class="list special">
+      <text class="list__title title--required">价位</text>
+      <view class="list__text">
+        <input 
+          type="number" 
+          class="special__input" 
+          placeholder-class="phcolor" 
+          placeholder="最低价位" 
+          value="{{paramsCustomer.Tel}}" 
+          data-type="Tel" 
+          bindblur="changeCustomerInput"
+        />
+        <text class="special__line"></text>
+        <input 
+          type="number" 
+          class="special__input" 
+          placeholder-class="phcolor" 
+          placeholder="最高价位" 
+          value="{{paramsCustomer.Tel}}" 
+          data-type="Tel" 
+          bindblur="changeCustomerInput"
+        />
+        <text class="special__unit">万</text>
+      </view>
+    </view>
+    <view class="list list--remark">
+      <text class="list__title">备注</text>
+      <view class="list__remark">
+        <textarea class="list__textarea" auto-height placeholder="请填写备注" />
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 完成按钮 -->
+<view class="footer">
+  <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="submit">
+    <text hidden="{{loading}}">完成</text>
+  </button>
+</view>
