@@ -2,9 +2,11 @@
 const { $Message } = require('../../../components/base/index');
 import GUID from '../../../utils/guid';
 import data from './pickerData';       // 保存所有选项数据
+import _fgj from '../../../utils/util';
 
-import { InsertCustomer, InsertCustNeed, GetCustByID, UpCustomer, GetCustNeedByCustID } from '../../../api/customer/new';
+import { InsertCustomer, InsertCustNeed, GetCustByID, GetCustNeedByCustID } from '../../../api/customer/new';
 import { DelCustLink } from '../../../api/customer/add-link';
+import { DelCustNeed } from '../../../api/customer/add-need';
 
 // 随机ID
 const guid = new GUID();
@@ -13,27 +15,15 @@ const guidstr = guid.newGUID().toUpperCase();
 Page({
   data: {
     CustID: '',     // 有ID就是编辑
-    Area: ['江西省', '南昌市', '高新区'],     // 区域
-    Intention: 0,   // 意向度
     paramsCustomer: {   // 主体内容
       CustID: guidstr,
     },
-    paramsCustNeed: {   // 客户需求
-      CustID: guidstr
-    },
+    paramsCustNeed: [], // 保存客户需求
     paramsLink: [],   // 保存关联人
     pickerGrade: data.pickerGrade,
     pickerGradeIndex: 0,
     pickerMarriage: data.pickerMarriage,
     pickerMarriageIndex: 0,
-
-    pickerNeedType: data.pickerNeedType,
-    pickerNeedTypeIndex: 0,
-    pickerPropertyType: data.pickerPropertyType,
-    pickerPropertyTypeIndex: 0,
-    pickerRoom: data.pickerRoom,
-    pickerRoomIndex: 0,
-
     pickerChildren: data.pickerChildren,
     pickerChildrenIndex: 0,
     pickerIncome: data.pickerIncome,
@@ -67,10 +57,9 @@ Page({
     }
   },
   onReady: function () {
-    
   },
   onShow: function () {
-    console.log('paramsLink', this.data.paramsLink)
+    console.log('show', this.data)
   },
   // 监听input改变——客户主体数据
   changeCustomerInput(e) {
@@ -98,96 +87,51 @@ Page({
     });
     console.log(this.data.paramsCustomer)
   },
-  // 监听input改变——客户需求数据
-  changeCustNeedInput(e) {
-    let { type } = e.currentTarget.dataset;
+  // 添加需求
+  bindOpenNeed() {
+    wx.navigateTo({
+      url: '../add-need/index?CustID=' + guidstr,
+    });
+  },
+  // 修改需求
+  bindOpenNeedEdit(e) {
+    console.log(e)
+    let { custid, custneedid } = e.currentTarget.dataset;
+
+    wx.navigateTo({
+      url: `../add-need/index?CustNeedID=${custneedid}&CustID=${custid}`,
+    });
+  },
+  // 删除需求
+  bindCloseNeed(e) {
+    let { index, custneedid } = e.currentTarget.dataset;
     let paramsCustNeed = this.data.paramsCustNeed;
+    let _this = this;
 
-    paramsCustNeed[type] = e.detail.value;
-    this.setData({
-      paramsCustNeed
-    });
-  },
-  // 监听下拉选项——客户需求数据
-  bindPickerCustNeedChange(e) {
-    let types = e.currentTarget.dataset.type,
-        index = e.detail.value,
-        property = 'picker' + types,
-        propertyIndex = 'picker' + types + 'Index',
-        paramsCustNeed = this.data.paramsCustNeed,
-        value = this.data[property][index].value;
-
-    paramsCustNeed[types] = value;
-
-    this.setData({
-      paramsCustNeed,
-      [propertyIndex]: index
-    });
-
-    // 根据需求类型修改属性选项
-    if (types === 'NeedType') {
-      this.selectNeedType(value);
-    }
-  },
-  // 根据需求类型修改属性选项
-  selectNeedType(value) {
-    let picker = [],
-        pickerIndex = 0;
-
-    // 产权属性，当需求不为一手房、一二手房、租房时，默认为其他
-    if (value !== '一手房' && value !== '一二手房' && value !== '租房') {
-      picker = [
-        {
-          label: '其他',
-          value: '其他'
+    wx.showModal({
+      content: '您确定要删除这条需求吗?',
+      cancelColor: '#666',
+      confirmColor: '#ff6714',
+      success: function(res) {
+        if (res.confirm) {
+          DelCustNeed({
+            CustNeedID: custneedid
+          }).then(res => {
+            if (res.data.result === 'success') {
+              $Message({ content: '删除成功', type: 'success' });
+              paramsCustNeed.splice(index, 1);
+              _this.setData({
+                paramsCustNeed
+              });
+            } else {
+              $Message({ content: '删除失败', type: 'error' });
+            }
+          })
         }
-      ];
-      this.setData({
-        pickerPropertyType: picker,
-        pickerPropertyTypeIndex: pickerIndex,
-        pickerRoom: picker,
-        pickerRoomIndex: pickerIndex
-      });
-    } else {
-      this.setData({
-        pickerPropertyType: data.pickerPropertyType,
-        pickerRoom: data.pickerRoom
-      });
-    }
-  },
-  bindCustomerType: function(e) {
-    console.log(e.detail.value)
-    this.setData({
-      customerTypeIndex: e.detail.value
+      },
     })
   },
-  // 区域
-  bindAreaChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    let value = e.detail.value;
-    let paramsCustNeed = this.data.paramsCustNeed;
-
-    paramsCustNeed.Area = value;
-
-    this.setData({
-      Area: value,
-      paramsCustNeed,
-    });
-  },
-  // 意向度
-  sliderChange(e) {
-    let value = e.detail.value;
-    let paramsCustNeed = this.data.paramsCustNeed;
-
-    paramsCustNeed.Intention = value;
-
-    this.setData({
-      Intention: value,
-      paramsCustNeed
-    })
-    console.log('发生change事件，携带值为', e.detail.value)
-  },
-  // 打开关联人
+  // 添加关联人
   bindOpenLink() {
     wx.navigateTo({
       url: '../add-link/index?PriCustID=' + guidstr,
@@ -250,7 +194,7 @@ Page({
         }
 
         this.setData({
-          paramsCustomer: Object.assign({}, paramsCustomer, res.data.temptable[0])
+          paramsCustomer: Object.assign({}, paramsCustomer, temptable)
         })
       }
     })
@@ -279,27 +223,78 @@ Page({
   // 修改客户——主体数据
   UpCustomer() {
     UpCustomer(this.data.paramsCustomer).then(res => {
-      console.log(res)
+      wx.hideLoading();
+      if (res.data.result === 'success') {
+        $Message({ content: '保存成功', type: 'success' });
+      } 
+      else {
+        $Message({ content: res.data.msg, type: 'error' });
+      }
+    })
+  },
+  // 添加客户——主体数据
+  InsertCustomer() {
+    InsertCustomer(this.data.paramsCustomer).then(res => {
+      wx.hideLoading();
+      if (res.data.result === 'success') {
+        $Message({ content: '保存成功', type: 'success' });
+      }
+      else {
+        $Message({ content: res.data.msg, type: 'error' });
+      }
     })
   },
   // 完成
   submit() {
-    let { paramsCustomer, paramsCustNeed } = this.data;
+    let paramsCustomer = this.data.paramsCustomer;
+    let verify = this.verifyData(paramsCustomer);
+
+    if (!verify.status) {
+      $Message({ content: verify.msg, type: 'error' });
+      return false;
+    }
+
+    wx.showLoading({ title: '保存中' });
 
     // 判断是添加还是编辑
     if (!this.data.CustID) {
-      // 添加主体内容
-      InsertCustomer(this.data.paramsCustomer).then(res => {
-        console.log(res)
-      });
-      // 添加需求内容
-      InsertCustNeed(this.data.paramsCustNeed).then(res => {
-        console.log(res)
-      });
+      this.InsertCustomer();    // 添加
     }
-    // 下面是编辑
     else {
-      this.UpCustomer();
+      this.UpCustomer();      // 编辑
     }
+  },
+  // 验证数据
+  verifyData(data) {
+    let result = {
+      status: false,
+      msg: '错误提示'
+    };
+    
+    if (!_fgj.verify(data.CustName, 'require')) {
+      result.msg = '请填写客户名称';
+      return result;
+    }
+    if (!_fgj.verify(data.Tel, 'phone')) {
+      result.msg = '手机号格式有误';
+      return result;
+    }
+    if (!_fgj.verify(data.Grade, 'require')) {
+      result.msg = '请选择客户类型';
+      return result;
+    }
+    if (!_fgj.verify(data.Age, 'require')) {
+      result.msg = '请选择客户类型';
+      return result;
+    }
+    if (data.Age && (data.Age > 130)) {
+      result.msg = '这个客户的年龄都快成精了吧';
+      return result;
+    }
+
+    result.status = true;
+    result.msg = '验证通过';
+
+    return result;
   }
 })

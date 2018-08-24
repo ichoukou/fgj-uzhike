@@ -40,9 +40,13 @@
   font-size: 30rpx;
   color: #999;
   line-height: 130rpx;
+  overflow: hidden;
 }
 .list__picker--text {
   color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .list__arrow {
   font-size: 30rpx;
@@ -57,6 +61,7 @@
   border-radius: 8rpx;
   max-width: 173rpx;
   min-height: 60rpx;
+  color: #333;
   line-height: 60rpx;
   text-align: center;
   background-color: rgb(245,245,245);

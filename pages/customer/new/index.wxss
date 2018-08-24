@@ -118,6 +118,35 @@ textarea {
   line-height: 130rpx;
 }
 
+/* 已添加的需求 */
+.need-wrap {
+  background-color: #fff;
+}
+.need__list {
+  display: flex;
+  align-items: center;
+  padding: 0 24rpx;
+  width: 100%;
+  height: 130rpx;
+  border-top: 1rpx solid rgb(230,230,230);
+}
+.need__content {
+  overflow: hidden;
+  flex: 1;
+}
+.need__index {
+  font-size: 24rpx;
+  color: rgb(193,193,193);
+}
+.need__info {
+  padding-top: 16rpx;
+  font-size: 30rpx;
+  color: rgb(26,26,26);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* 关联人 */
 .link-wrap {
   background-color: #fff;
@@ -152,18 +181,22 @@ textarea {
   font-size: 30rpx;
   color: rgb(201,201,201);
 }
-.link__close {
+/* 需求和关联人的删除是一个样式 */
+.link__close,
+.need__close {
   position: relative;
   height: 130rpx;
   line-height: 130rpx;
 }
-.link__close::before {
+.link__close::before,
+.need__close::before {
   content: "";
   position: absolute;
   left: -20rpx;
   right: -20rpx;
 }
-.link__icon-close {
+.link__icon-close,
+.need__icon-close {
   font-size: 40rpx;
   color: rgb(201,201,201);
 }

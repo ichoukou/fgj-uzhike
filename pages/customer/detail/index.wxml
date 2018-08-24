@@ -1,11 +1,10 @@
-
 <view class="container">
   <!-- 客户信息 -->
   <view class="header">
-    <view class="name">王女士</view>
+    <view class="name">{{custData.CustName}}</view>
     <view class="info">
-      <text>电话：13303210012</text>
-      <text>类型：A</text>
+      <text>电话：{{custData.Tel}}</text>
+      <text>类型：{{CustData.Grade}}</text>
     </view>
     <view class="funcs">
       <view class="funcs-item">
@@ -33,73 +32,110 @@
   </view>
   <!-- 个人需求 -->
   <view class="content">
-    <view class="item item-flex">
+    <view class="item-flex need-title">
       <view class="title">个人需求</view>
       <view class="iconfont icon-tianjia"></view>
     </view>
     <view class="item">
       <view class="des">类型</view>
-      <view class="val">住宅</view>
+      <view class="val">{{needData[0].NeedType}}</view>
     </view>
     <view class="item">
       <view class="des">区域</view>
-      <view class="val">青山湖区/高新区/新建区</view>
+      <view class="val">{{needData[0].Area}}</view>
     </view>
     <view class="item">
       <view class="des">产权性质</view>
-      <view class="val">70年</view>
+      <view class="val">{{needData[0].PropertyType}}</view>
     </view>
     <view class="item">
       <view class="des">意向度</view>
-      <view class="val"><progress percent="50" show-info active /></view>
+      <view class="val"><progress percent="{{needData[0].Intention}}" show-info active /></view>
     </view>
     <view class="item">
       <view class="des">户型</view>
-      <view class="val">三室一厅</view>
+      <view class="val">{{needData[0].Room}}</view>
     </view>
     <view class="item">
       <view class="des">面积</view>
-      <view class="val">90-120m²</view>
+      <view class="val">{{needData[0].MinSquare}}-{{needData[0].MaxSquare}}m²</view>
     </view> 
     <view class="item">
       <view class="des">价格</view>
-      <view class="val">100-200万元</view>
+      <view class="val">{{needData[0].MinPrice}}-{{needData[0].MaxPrice}}{{needData[0].PriceUnit}}</view>
     </view>
+    <view class="item" wx:if="{{needData[0].Remark}}">
+      <view class="des">备注</view>
+      <view class="val">{{needData[0].Remark}}</view>
+    </view>
+    <view class="need-more" wx:if="needData.length > 2">查看更多需求</view>
   </view>
   <!-- 进阶资料 -->
-  <view class="advance" bindtap="showSlide">
+  <view class="advance {{ detailShow ? 'slidedown' : ''}}" bindtap="showSlide">
     <view class="item item-flex">
       <view class="title">进阶资料</view>
-      <view class="iconfont icon-jiantou2"></view>
+      <view class="iconfont icon-jiantou2 icon__arrow"></view>
     </view>
-    <view class="hide {{ detailShow ? 'slideup' : 'slidedown'}}">
-      <view class="item">
-        <view class="des">类型</view>
-        <view class="val">住宅</view>
+    <view class="info-adv">
+      <view class="item" v-if="{{custData.Age}}">
+        <view class="des">年龄</view>
+        <view class="val">{{custData.Age}}</view>
       </view>
-      <view class="item">
-        <view class="des">区域</view>
-        <view class="val">青山湖区/高新区/新建区</view>
+      <view class="item" v-if="{{custData.Marriage}}">
+        <view class="des">婚姻状态</view>
+        <view class="val">{{custData.Marriage}}</view>
       </view>
-      <view class="item">
-        <view class="des">产权性质</view>
-        <view class="val">70年</view>
+      <view class="item" v-if="{{custData.Children}}">
+        <view class="des">子女</view>
+        <view class="val">{{custData.Children}}</view>
       </view>
-      <view class="item">
-        <view class="des">意向度</view>
-        <view class="val">70年</view>
+      <view class="item" v-if="{{custData.Income}}">
+        <view class="des">收入</view>
+        <view class="val">{{custData.Income}}</view>
       </view>
-      <view class="item">
-        <view class="des">户型</view>
-        <view class="val">三室一厅</view>
+      <view class="item" v-if="{{custData.Occupation}}">
+        <view class="des">职业</view>
+        <view class="val">{{custData.Occupation }}</view>
       </view>
-      <view class="item">
-        <view class="des">面积</view>
-        <view class="val">90-120m²</view>
-      </view> 
-      <view class="item">
-        <view class="des">价格</view>
-        <view class="val">100-200万元</view>
+      <view class="item" v-if="{{custData.Rest}}">
+        <view class="des">休息情况</view>
+        <view class="val">{{custData.Rest }}</view>
+      </view>
+      <view class="item" v-if="{{custData.Assets}}">
+        <view class="des">资产情况</view>
+        <view class="val">{{custData.Assets }}</view>
+      </view>
+      <view class="item" v-if="{{custData.Investment}}">
+        <view class="des">投资情况</view>
+        <view class="val">{{custData.Investment }}</view>
+      </view>
+      <view class="item" v-if="{{custData.Decision}}">
+        <view class="des">决策人</view>
+        <view class="val">{{custData.Decision }}</view>
+      </view>
+      <view class="item" v-if="{{custData.CompanyName}}">
+        <view class="des">单位名称</view>
+        <view class="val">{{custData.CompanyName }}</view>
+      </view>
+      <view class="item" v-if="{{custData.LookHouse}}">
+        <view class="des">看房经历</view>
+        <view class="val">{{custData.LookHouse }}</view>
+      </view>
+      <view class="item" v-if="{{custData.City}}">
+        <view class="des">所在城市</view>
+        <view class="val">{{custData.City }}</view>
+      </view>
+      <view class="item" v-if="{{custData.Address}}">
+        <view class="des">家庭住址</view>
+        <view class="val">{{custData.Address }}</view>
+      </view>
+      <view class="item" v-if="{{custData.Email}}">
+        <view class="des">邮箱地址</view>
+        <view class="val">{{custData.Email }}</view>
+      </view>
+      <view class="item" v-if="{{custData.Source}}">
+        <view class="des">客户来源</view>
+        <view class="val">{{custData.Source }}</view>
       </view>
     </view>
   </view>

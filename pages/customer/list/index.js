@@ -277,8 +277,13 @@ Page({
       url: '../new/index',
     })
   },
-  // 详细页
-  goDetail () {
+  // 打开详细页
+  bindOpenDetail(e) {
+    let CustID = e.currentTarget.dataset.custid;
+
+    wx.navigateTo({
+      url: '../detail/index?CustID=' + CustID
+    });
   },
   // 显示跟进详细卡片
   bindShowFollow(e) {

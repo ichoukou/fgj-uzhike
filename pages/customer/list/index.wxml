@@ -60,11 +60,11 @@
   <scroll-view scroll-y class="list" bindscrolltolower="bindscrolltolower">
     <view class="list-wrap">
       <view class="list-item {{item.isOpenFollow ? 'open-follow' : ''}}" wx:for="{{listData}}" wx:key="{{index}}">
-        <view class="list-baseinfo">
+        <view class="list-baseinfo" data-CustID="{{item.CustID}}" bindtap="bindOpenDetail">
           <view class="tag tag-c">C</view>
           <!-- 基本内容 -->
           <view class="content">
-            <view class="row row-1" data-index="{{index}}" bindtap="bindCloseFollow">
+            <view class="row row-1" data-index="{{index}}" catchtap="bindCloseFollow">
               <text class="name">{{item.CustName}}</text>
               <text class="tel">{{item.Tel}}</text>
               <text class="iconfont icon-gengduo1"></text>
@@ -95,7 +95,7 @@
               <view class="title title-1">录入时间：<span class="times">09: 12: 33</span></view>
             </view>
             <view class="row">
-              <view class="row-item center item-extend" data-index="{{index}}" bindtap="bindShowFollow" >
+              <view class="row-item center item-extend" data-index="{{index}}" catchtap="bindShowFollow" >
                 <view class="icon">
                   <text class="iconfont icon-genjin"></text>
                 </view>
@@ -124,7 +124,7 @@
         </view>
         <!-- 跟进内容 -->
         <view class="follow">
-          <text class="follow_close iconfont icon-guanbi" data-index="{{index}}" bindtap="bindCloseFollow"></text>
+          <text class="follow_close iconfont icon-guanbi" data-index="{{index}}" catchtap="bindCloseFollow"></text>
            <!-- 输入跟进 -->
           <!-- <view class="follow_top">
             <text class="follow_icon iconfont icon-yuyin"></text>

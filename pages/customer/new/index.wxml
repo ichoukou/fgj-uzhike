@@ -54,108 +54,35 @@
   </view>
   <!-- 需求信息 -->
   <view class="title">需求信息</view>
-  <!-- <view class="need">
-    <view class="input-item">
-      <view class="input-title">需求类型
-        <span class="star">*</span>
-      </view>
-        <picker 
-          bindchange="bindPickerCustNeedChange" 
-          value="{{pickerNeedTypeIndex}}" 
-          range="{{pickerNeedType}}" 
-          range-key="label"
-          data-type="NeedType" 
-        >
-          <view class="picker">
-            {{pickerNeedType[pickerNeedTypeIndex].label}}
-          </view>
-        </picker>
-      <text class="iconfont icon-jiantou2"></text>
+  <view class="input-item add" bindtap="bindOpenNeed">
+    <view class="input-title">添加需求
     </view>
-    <view class="input-item">
-      <view class="input-title">区域
-        <span class="star">*</span>
-      </view>
-      <picker bindchange="bindAreaChange" mode="region" value="{{Area}}" custom-item="{{customItem}}">
-        <view class="picker">
-          {{Area[0]}}，{{Area[1]}}，{{Area[2]}}
+    <text class="iconfont icon-tianjia"></text>
+  </view>
+  <!-- 已添加的需求 -->
+  <view class="need-wrap">
+    <view 
+      class="need__list" 
+      wx:for="{{paramsCustNeed}}" 
+      wx:key="{{index}}" 
+      data-index="{{index}}" 
+      data-CustID="{{item.CustID}}"
+      data-CustNeedID="{{item.CustNeedID}}" 
+      bindtap="bindOpenNeedEdit"
+    >
+      <view class="need__content">
+        <text class="need__index">需求{{index + 1}}</text>
+        <view class="need__info">
+          {{item.NeedType}}/{{item.PropertyType}}/{{item.Price}}/{{item.Room}}
         </view>
-      </picker>
-      <text class="iconfont icon-jiantou2"></text>
-    </view>
-    <view class="input-item">
-      <view class="input-title">产权性质
-        <span class="star">*</span>
       </view>
-      <picker 
-          bindchange="bindPickerCustNeedChange" 
-          range="{{pickerPropertyType}}" 
-          value="{{pickerPropertyTypeIndex}}" 
-          range-key="label"
-          data-type="PropertyType" 
-        >
-          <view class="picker">
-            {{pickerPropertyType[pickerPropertyTypeIndex].label}}
-          </view>
-      </picker>
-      <text class="iconfont icon-jiantou2"></text>
-    </view>
-    <view class="input-item input-range">
-      <view class="input-title">意向度
-        <span class="star">*</span>
-      </view>
-      <view class="body-view">
-        <slider value="{{Intention}}" bindchange="sliderChange" show-value/>
+      <view class="need__close"></view>
+      <view class="need__close" data-index="{{index}}" data-CustNeedID="{{item.CustNeedID}}" bindtap="bindCloseNeed">
+        <text class="iconfont icon-jianhao need__icon-close"></text>
       </view>
     </view>
-    <view class="input-item">
-      <view class="input-title">户型 
-        <span class="star">*</span>
-      </view>
-      <picker 
-          bindchange="bindPickerCustNeedChange" 
-          range="{{pickerRoom}}" 
-          value="{{pickerRoomIndex}}" 
-          range-key="label"
-          data-type="Room" 
-        >
-          <view class="picker">
-            {{pickerRoom[pickerRoomIndex].label}}
-          </view>
-      </picker>
-      <text class="iconfont icon-jiantou2"></text>
-    </view>
-    <view class="input-item">
-      <view class="input-title">面积 
-        <span class="star">*</span>
-      </view>
-      <input 
-        type="number" 
-        class="input" 
-        placeholder-class="phcolor" 
-        placeholder="最小面积（单位㎡）" 
-        value="{{paramsCustomer.Square}}" 
-        data-type="Square" 
-        bindblur="changeCustNeedInput"
-       />
-    </view>
-    <view class="input-item">
-      <view class="input-title">价位 
-        <span class="star">*</span>
-      </view>
-      <input 
-        type="number" 
-        class="input" 
-        placeholder-class="phcolor" 
-        placeholder="价位（单位元）" 
-        value="{{paramsCustomer.Price}}" 
-        data-type="Price" 
-        bindblur="changeCustNeedInput"
-       />
-    </view>
-    <view class="textarea__title-border">备注</view>
-    <textarea placeholder="请填写" placeholder-class="phcolor" data-type="Remark" bindblur="changeCustomerInput"></textarea>
-  </view> -->
+  </view>
+
   <view class="input-item add" bindtap="bindOpenLink">
     <view class="input-title">添加关联人 
     </view>

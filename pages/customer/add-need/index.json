@@ -1,1 +1,6 @@
-{}
+{
+  "navigationBarTitleText": "添加需求",
+  "usingComponents": {
+    "i-message": "/components/message/index"
+  }
+}

@@ -31,7 +31,17 @@
     <view class="list">
       <text class="list__title title--required">产权性质</text>
       <view class="list__text">
-        <view class="list__picker list__picker--text">请选择</view>
+        <picker 
+          bindchange="bindPickerCustNeedChange" 
+          range="{{pickerPropertyType}}" 
+          value="{{pickerPropertyTypeIndex}}" 
+          range-key="label"
+          data-type="PropertyType" 
+        >
+          <view class="list__picker {{ pickerPropertyTypeIndex === 0 ? '' : 'list__picker--text'}}">
+            {{pickerPropertyType[pickerPropertyTypeIndex].label}}
+          </view>
+        </picker>
       </view>
       <text class="iconfont icon-jiantou2 list__arrow"></text>
     </view>
@@ -44,7 +54,17 @@
     <view class="list">
       <text class="list__title title--required">户型</text>
       <view class="list__text">
-        <view class="list__picker list__picker--text">请选择</view>
+        <picker 
+          bindchange="bindPickerCustNeedChange" 
+          range="{{pickerRoom}}" 
+          value="{{pickerRoomIndex}}" 
+          range-key="label"
+          data-type="Room" 
+        >
+          <view class="list__picker {{ pickerRoomIndex === 0 ? '' : 'list__picker--text'}}">
+            {{pickerRoom[pickerRoomIndex].label}}
+          </view>
+        </picker>
       </view>
       <text class="iconfont icon-jiantou2 list__arrow"></text>
     </view>
@@ -56,9 +76,9 @@
           class="special__input" 
           placeholder-class="phcolor" 
           placeholder="最小面积" 
-          value="{{paramsCustomer.Tel}}" 
-          data-type="Tel" 
-          bindblur="changeCustomerInput"
+          value="{{paramsCustomer.MinSquare}}" 
+          data-type="MinSquare" 
+          bindblur="changeCustNeedInput"
         />
         <text class="special__line"></text>
         <input 
@@ -66,9 +86,9 @@
           class="special__input" 
           placeholder-class="phcolor" 
           placeholder="最大面积" 
-          value="{{paramsCustomer.Tel}}" 
-          data-type="Tel" 
-          bindblur="changeCustomerInput"
+          value="{{paramsCustomer.MaxSquare}}" 
+          data-type="MaxSquare" 
+          bindblur="changeCustNeedInput"
         />
         <text class="special__unit">㎡</text>
       </view>
@@ -81,9 +101,9 @@
           class="special__input" 
           placeholder-class="phcolor" 
           placeholder="最低价位" 
-          value="{{paramsCustomer.Tel}}" 
-          data-type="Tel" 
-          bindblur="changeCustomerInput"
+          value="{{paramsCustomer.MinPrice}}" 
+          data-type="MinPrice" 
+          bindblur="changeCustNeedInput"
         />
         <text class="special__line"></text>
         <input 
@@ -91,9 +111,9 @@
           class="special__input" 
           placeholder-class="phcolor" 
           placeholder="最高价位" 
-          value="{{paramsCustomer.Tel}}" 
-          data-type="Tel" 
-          bindblur="changeCustomerInput"
+          value="{{paramsCustomer.MaxPrice}}" 
+          data-type="MaxPrice" 
+          bindblur="changeCustNeedInput"
         />
         <text class="special__unit">万</text>
       </view>
@@ -101,7 +121,13 @@
     <view class="list list--remark">
       <text class="list__title">备注</text>
       <view class="list__remark">
-        <textarea class="list__textarea" auto-height placeholder="请填写备注" />
+        <textarea 
+          auto-height 
+          placeholder="请填写备注" 
+          class="list__textarea" 
+          data-type="Remark" 
+          bindblur="changeCustNeedInput"
+        ></textarea>
       </view>
     </view>
   </scroll-view>
@@ -113,3 +139,5 @@
     <text hidden="{{loading}}">完成</text>
   </button>
 </view>
+
+<i-message id="message" />
