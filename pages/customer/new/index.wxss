@@ -168,6 +168,21 @@ textarea {
   text-align: center;
   line-height: 80rpx;
 }
+.link__pic.bg--0 {
+  background-color: #ff6714;
+}
+.link__pic.bg--1 {
+  background-color: #1671fd;
+}
+.link__pic.bg--2 {
+  background-color: #86e39c;
+}
+.link__pic.bg--3 {
+  background-color: #fccc20;
+}
+.link__pic.bg--4 {
+  background-color: #fe495b;
+}
 .link__content {
   flex: 1;
   padding: 0 20rpx;

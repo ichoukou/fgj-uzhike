@@ -19,24 +19,24 @@ Page({
         label: '母亲',
         value: '母亲'
       }, {
-        label: '女儿',
-        value: '女儿'
-      }, {
         label: '儿子',
         value: '儿子'
       }, {
-        label: '妻子',
-        value: '妻子'
+        label: '女儿',
+        value: '女儿'
       }, {
         label: '丈夫',
         value: '丈夫'
-      }, 
+      }, {
+        label: '妻子',
+        value: '妻子'
+      },
     ],
     pickerLinkTypeIndex: 0,
   },
   onLoad: function (options) {
     console.log(options)
-    let PriCustID = options.PriCustID || '';
+    let PriCustID = options.CustID || '';
     if (!PriCustID) {
       wx.navigateBack()
     };
@@ -96,15 +96,15 @@ Page({
           // 通过上一个页面，添加关联人
           let pages = getCurrentPages();
           let prevPage = pages[pages.length - 2]; // 上一个页面
-          let paramsLink = prevPage.data.paramsLink;
+          let linkData = prevPage.data.linkData;
 
-          paramsLink.push(params);
+          linkData.push(params);
           prevPage.setData({
-            paramsLink
+            linkData
           });
           setTimeout(() => {
             wx.navigateBack();
-          }, 1200);
+          }, 1000);
         } 
         else {
           $Message({ content: res.data.msg, type: 'error' });

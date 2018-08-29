@@ -50,7 +50,13 @@
       <text class="iconfont icon-jiantou2"></text>
     </view>
     <view class="textarea__title-border">备注</view>
-    <textarea placeholder="请填写" placeholder-class="phcolor" data-type="Remark" bindblur="changeCustomerInput"></textarea>
+    <textarea 
+      placeholder="请填写" 
+      placeholder-class="phcolor" 
+      value="{{paramsCustomer.Remark}}" 
+      data-type="Remark" 
+      bindblur="changeCustomerInput"
+    ></textarea>
   </view>
   <!-- 需求信息 -->
   <view class="title">需求信息</view>
@@ -73,11 +79,11 @@
       <view class="need__content">
         <text class="need__index">需求{{index + 1}}</text>
         <view class="need__info">
-          {{item.NeedType}}/{{item.PropertyType}}/{{item.Price}}/{{item.Room}}
+          {{item.NeedType}}/{{item.PropertyType}}/{{item.MinPrice}}-{{item.MaxPrice}}/{{item.Room}}
         </view>
       </view>
       <view class="need__close"></view>
-      <view class="need__close" data-index="{{index}}" data-CustNeedID="{{item.CustNeedID}}" bindtap="bindCloseNeed">
+      <view class="need__close" data-index="{{index}}" data-CustNeedID="{{item.CustNeedID}}" catchtap="bindCloseNeed">
         <text class="iconfont icon-jianhao need__icon-close"></text>
       </view>
     </view>
@@ -90,13 +96,13 @@
   </view>
   <!-- 关联人 -->
   <view class="link-wrap">
-    <view class="link__list" wx:for="{{paramsLink}}" wx:key="{{index}}">
-      <view class="link__pic">{{item.LinkType}}</view>
+    <view class="link__list" wx:for="{{linkData}}" wx:key="{{index}}">
+      <view class="link__pic bg--{{index}}">{{item.LinkType}}</view>
       <view class="link__content">
         <view class="link__con-name">{{item.CustName}}</view>
         <view class="link__con-tel">{{item.Tel}}</view>
       </view>
-      <view class="link__close" data-index="{{index}}" data-id="{{item.PriCustID}}" bindtap="bindCloseLink">
+      <view class="link__close" data-index="{{index}}" data-id="{{item.CustLinkID}}" bindtap="bindCloseLink">
         <text class="iconfont icon-jianhao link__icon-close"></text>
       </view>
     </view>

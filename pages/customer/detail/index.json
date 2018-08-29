@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": ""
+  "navigationBarTitleText": "客户详细",
+  "usingComponents": {
+    "i-message": "/components/message/index"
+  }
 }

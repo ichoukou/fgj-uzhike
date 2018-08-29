@@ -2,8 +2,7 @@
 const { $Message } = require('../../../components/base/index');
 import data from '../new//pickerData';       // 保存所有选项数据
 import _fgj from '../../../utils/util.js';
-import { InsertCustNeed, UpdateCustNeed } from '../../../api/customer/new';
-import { GetCustNeedByID } from '../../../api/customer/add-need';
+import { GetCustNeedByID, InsertCustNeed, UpdateCustNeed } from '../../../api/customer/add-need';
 
 Page({
   data: {
@@ -11,12 +10,30 @@ Page({
       CustID: '',
       CustNeedID: '',     // 有这个ID就是编辑
     },
-    Intention: 0,         // 意向度
     Area: ['江西省', '南昌市', '高新区'],     // 区域
     pickerNeedType: data.pickerNeedType,
     pickerNeedTypeIndex: 0,
-    pickerPropertyType: data.pickerPropertyType,
-    pickerPropertyTypeIndex: 0,
+    propertyType: [
+      {
+        label: '住宅',
+        value: '住宅'
+      }, {
+        label: '公寓',
+        value: '公寓'
+      }, {
+        label: '写字楼',
+        value: '写字楼'
+      }, {
+        label: '商铺',
+        value: '商铺'
+      }, {
+        label: '厂房',
+        value: '厂房'
+      }, {
+        label: '其他',
+        value: '其他'
+      },
+    ],
     pickerRoom: data.pickerRoom,
     pickerRoomIndex: 0,
   },
@@ -40,9 +57,13 @@ Page({
   },
   // 根据CustNeedID获取客户需求
   GetCustNeedByID(CustNeedID) {
+    wx.showLoading({
+      title: '加载中'
+    });
     GetCustNeedByID({
       CustNeedID
     }).then(res => {
+      wx.hideLoading();
       if (res.data.result === 'success') {
         let paramsCustNeed = this.data.paramsCustNeed,
           temptable = res.data.temptable[0] || {},
@@ -50,25 +71,30 @@ Page({
           propertyIndex = 0,
           index = 0;
 
-        let map = ['NeedType', 'PropertyType', 'Room'];
+        let map = ['NeedType', 'Room'];
+
+        // 根据需求类型修改属性选项
+        this.selectNeedType(temptable.NeedType);
 
         // picker控件数据回填
         for (let key of map) {
-          console.log(temptable[key])
           if (temptable[key]) {
             property = 'picker' + key;
             propertyIndex = 'picker' + key + 'Index';
             index = this.backfillPicker(this.data[property], temptable[key]);
-            console.log(index)
             this.setData({
               [propertyIndex]: index
             });
           }
         }
+        // 回填区域
+        this.setData({
+          Area: temptable.Area.split('-')
+        });
 
         this.setData({
           paramsCustNeed: Object.assign({}, paramsCustNeed, temptable)
-        })
+        });
 
       } else {
         $Message({ content: res.data.msg, type: 'error' });
@@ -95,15 +121,26 @@ Page({
       paramsCustNeed,
     });
   },
+  // 多选
+  changeCheckbox(e) {
+    let value = e.detail.value;
+    let paramsCustNeed = this.data.paramsCustNeed;
+    paramsCustNeed.PropertyType = value.join('/');
+
+    this.setData({
+      paramsCustNeed
+    });
+  },
   // 监听下拉选项
   bindPickerCustNeedChange(e) {
     let types = e.currentTarget.dataset.type,
       index = e.detail.value,
       property = 'picker' + types,
       propertyIndex = 'picker' + types + 'Index',
-      paramsCustNeed = this.data.paramsCustNeed;
+      paramsCustNeed = this.data.paramsCustNeed,
+      value = this.data[property][index].value;
 
-    paramsCustNeed[types] = this.data[property][index].value;
+    paramsCustNeed[types] = value;
 
     this.setData({
       paramsCustNeed,
@@ -118,10 +155,13 @@ Page({
   // 根据需求类型修改属性选项
   selectNeedType(value) {
     let picker = [],
-      pickerIndex = 0;
+      pickerIndex = 0,
+      paramsCustNeed = this.data.paramsCustNeed;
 
     // 产权属性，当需求不为一手房、一二手房、租房时，默认为其他
     if (value !== '一手房' && value !== '一二手房' && value !== '租房') {
+      // 重置已选的数据
+      paramsCustNeed.Room = '';
       picker = [
         {
           label: '其他',
@@ -129,14 +169,11 @@ Page({
         }
       ];
       this.setData({
-        pickerPropertyType: picker,
-        pickerPropertyTypeIndex: pickerIndex,
         pickerRoom: picker,
         pickerRoomIndex: pickerIndex
       });
     } else {
       this.setData({
-        pickerPropertyType: data.pickerPropertyType,
         pickerRoom: data.pickerRoom
       });
     }
@@ -148,26 +185,15 @@ Page({
 
     paramsCustNeed[type] = e.detail.value;
 
-    this.setData({
-      paramsCustNeed
-    });
-  },
-  // 意向度
-  sliderChange(e) {
-    let value = e.detail.value;
-    let paramsCustNeed = this.data.paramsCustNeed;
-
-    paramsCustNeed.Intention = value;
+    console.log(paramsCustNeed)
 
     this.setData({
-      Intention: value,
       paramsCustNeed
     });
   },
   // 完成
   submit() {
     let params = this.data.paramsCustNeed;
-
     let verify = this.verifyData(params);
 
     if (!verify.status) {
@@ -175,8 +201,15 @@ Page({
       return false;
     }
 
+    if (params.CustNeedID) {
+      this.UpdateCustNeed(params);          // 编辑
+    } else {
+      this.InsertCustNeed(params);    // 新建
+    }
+  },
+  // 新建需求
+  InsertCustNeed(params) {
     wx.showLoading({ title: '添加中' });
-
     InsertCustNeed(params).then(res => {
       wx.hideLoading();
       if (res.data.result === 'success') {
@@ -192,6 +225,22 @@ Page({
         prevPage.setData({
           paramsCustNeed
         });
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 1000);
+      }
+      else {
+        $Message({ content: res.data.msg, type: 'error' });
+      }
+    });
+  },
+  // 编辑需求
+  UpdateCustNeed(params) {
+    wx.showLoading({ title: '修改中' });
+    UpdateCustNeed(params).then(res => {
+      wx.hideLoading();
+      if (res.data.result === 'success') {
+        $Message({ content: '修改中成功', type: 'success' });
         setTimeout(() => {
           wx.navigateBack();
         }, 1200);
@@ -227,5 +276,8 @@ Page({
     result.msg = '验证通过';
 
     return result;
+  },
+  onUnload() {
+    
   }
 })

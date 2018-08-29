@@ -3,10 +3,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.extend-click {
+.extend-click,
+.g-extend-after {
   position: relative;
 }
 .extend-click::before {
+  content: '';
+  position: absolute;
+  top: -20rpx;
+  left: -20rpx;
+  right: -20rpx;
+  bottom: -20rpx;
+}
+.g-extend-after::after {
   content: '';
   position: absolute;
   top: -20rpx;

@@ -4,7 +4,7 @@ import GUID from '../../../utils/guid';
 import data from './pickerData';       // 保存所有选项数据
 import _fgj from '../../../utils/util';
 
-import { InsertCustomer, InsertCustNeed, GetCustByID, GetCustNeedByCustID } from '../../../api/customer/new';
+import { InsertCustomer, GetCustByID, GetCustNeedByCustID, GetCustomerLinkByCustID, UpCustomer } from '../../../api/customer/new';
 import { DelCustLink } from '../../../api/customer/add-link';
 import { DelCustNeed } from '../../../api/customer/add-need';
 
@@ -16,10 +16,10 @@ Page({
   data: {
     CustID: '',     // 有ID就是编辑
     paramsCustomer: {   // 主体内容
-      CustID: guidstr,
+      CustID: '',
     },
     paramsCustNeed: [], // 保存客户需求
-    paramsLink: [],   // 保存关联人
+    linkData: [],   // 保存关联人
     pickerGrade: data.pickerGrade,
     pickerGradeIndex: 0,
     pickerMarriage: data.pickerMarriage,
@@ -47,19 +47,26 @@ Page({
     let { CustID } = options;
 
     // let CustID = 'AD5FE90B8133EF43112BB9D0AFBE8E9B';
+    let paramsCustomer = this.data.paramsCustomer;
 
-    this.data.CustID = CustID;
-
-    // 有CustID就是编辑
     if (CustID) {
-      this.GetCustByID(CustID);
-      this.GetCustNeedByCustID(CustID);
+      paramsCustomer.CustID = CustID;
+    } else {
+      paramsCustomer.CustID = guidstr;    // 临时ID
     }
+    this.data.CustID = CustID || '';      // 全局保存
   },
   onReady: function () {
   },
   onShow: function () {
     console.log('show', this.data)
+    // 有CustID就是编辑
+    let CustID = this.data.CustID;
+    if (CustID) {
+      this.GetCustByID(CustID);
+      this.GetCustNeedByCustID(CustID);
+      this.GetCustomerLinkByCustID(CustID);
+    }
   },
   // 监听input改变——客户主体数据
   changeCustomerInput(e) {
@@ -90,16 +97,14 @@ Page({
   // 添加需求
   bindOpenNeed() {
     wx.navigateTo({
-      url: '../add-need/index?CustID=' + guidstr,
+      url: '../add-need/index?CustID=' + this.data.paramsCustomer.CustID
     });
   },
   // 修改需求
   bindOpenNeedEdit(e) {
-    console.log(e)
     let { custid, custneedid } = e.currentTarget.dataset;
-
     wx.navigateTo({
-      url: `../add-need/index?CustNeedID=${custneedid}&CustID=${custid}`,
+      url: `../add-need/index?CustNeedID=${custneedid}&CustID=${custid}`
     });
   },
   // 删除需求
@@ -134,30 +139,39 @@ Page({
   // 添加关联人
   bindOpenLink() {
     wx.navigateTo({
-      url: '../add-link/index?PriCustID=' + guidstr,
+      url: '../add-link/index?CustID=' + this.data.paramsCustomer.CustID,
     });
   },
-  // 删除联系人
+  // 删除关联人
   bindCloseLink(e) {
-    console.log(e.currentTarget)
     const { index, id } = e.currentTarget.dataset;
-    let paramsLink = this.data.paramsLink;
+    let linkData = this.data.linkData;
+    let _this = this;
 
-    wx.showLoading({ title: '删除中' });
-    DelCustLink({
-      CustLinkID: id
-    }).then(res => {
-      wx.hideLoading();
-      if (res.data.result === 'success') {
-        $Message({ content: '删除成功', type: 'success' });
-        paramsLink.splice(index, 1);
-        this.setData({
-          paramsLink
-        });
-      } else {
-        $Message({ content: '删除失败', type: 'error' });
-      }
-    });
+    wx.showModal({
+      content: '您确定要删除这个联系人吗?',
+      cancelColor: '#666',
+      confirmColor: '#ff6714',
+      success: function (res) {
+        if (res.confirm) {
+          wx.showLoading({ title: '删除中' });
+          DelCustLink({
+            CustLinkID: id
+          }).then(res => {
+            wx.hideLoading();
+            if (res.data.result === 'success') {
+              $Message({ content: '删除成功', type: 'success' });
+              linkData.splice(index, 1);
+              _this.setData({
+                linkData
+              });
+            } else {
+              $Message({ content: '删除失败', type: 'error' });
+            }
+          });
+        }
+      },
+    })
   },
   // 打开城市选择器
   bindOpenCity() {
@@ -167,9 +181,13 @@ Page({
   },
   // 编辑——根据ID获取客户——主体数据
   GetCustByID(CustID) {
+    wx.showLoading({
+      title: '加载中'
+    });
     GetCustByID({
       CustID
     }).then(res => {
+      wx.hideLoading();
       if (res.data.result === 'success') {
         let paramsCustomer = this.data.paramsCustomer,
             temptable = res.data.temptable[0] || {},
@@ -177,16 +195,15 @@ Page({
             propertyIndex = 0,
             index = 0;
 
-        let map = ['Grade', 'Marriage', 'Children', 'Income', 'Occupation', 'Assets', 'Investment', 'Decision', 'LookHouse'];
+        // 需要回填的picker选项
+        let map = ['Grade', 'Marriage', 'Children', 'Income', 'Occupation', 'Assets', 'Investment', 'Decision', 'LookHouse', 'Source'];
 
         // picker控件数据回填
         for (let key of map) {
-          console.log(temptable[key])
           if (temptable[key]) {
             property = 'picker' + key;
             propertyIndex = 'picker' + key + 'Index';
             index = this.backfillPicker(this.data[property], temptable[key]);
-            console.log(index)
             this.setData({
               [propertyIndex]: index
             });
@@ -209,13 +226,26 @@ Page({
   },
   // 编辑——根据ID获取客户——需求数据
   GetCustNeedByCustID(CustID) {
-    GetCustByID({
+    GetCustNeedByCustID({
       CustID
     }).then(res => {
       if (res.data.result === 'success') {
         let paramsCustNeed = this.data.paramsCustNeed;
         this.setData({
-          paramsCustNeed: Object.assign({}, paramsCustNeed, res.data.temptable[0])
+          paramsCustNeed: res.data.temptable
+        })
+      }
+    })
+  },
+  // 根据客户id获取客户关系数据
+  GetCustomerLinkByCustID(CustID) {
+    GetCustomerLinkByCustID({
+      CustID
+    }).then(res => {
+      if (res.data.result === 'success') {
+        let linkData = this.data.linkData;
+        this.setData({
+          linkData: res.data.temptable
         })
       }
     })

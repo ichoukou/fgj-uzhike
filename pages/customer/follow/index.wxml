@@ -1,25 +1,19 @@
-
-<view class="container">
-  <textarea placeholder="说点什么吧" placeholder-class="phcolor"></textarea>
-  <view class="tip">最多上传3条语音，9张图片</view>
-  <view class="item">
-    <view class="item-list">
-      <view class="iconfont icon-yuyin"></view>
-      <view class="list-text">添加语音</view>
-      <view class="iconfont icon-jiantou2"></view>
+<view class="follow">
+  <scroll-view scroll-x style="height: 90rpx;">
+    <view class="foolow__type">
+      <text class="type__item" wx:for="{{[1, 2, 3, 4, 5, 6, 7]}}" wx:index="{{index}}" data-index="{{index}}" bindtap="bindTypeItem">类型一</text>
+      <text class="type__line" style="transform: translate3d({{typeLine}}rpx, 0, 0);"></text>
     </view>
-    <view class="item-list">
-      <view class="iconfont icon-xiangji"></view>
-      <view class="list-text">添加图片</view>
-      <view class="iconfont icon-jiantou2"></view>
-    </view>
-    <view class="item-list">
-      <view class="iconfont icon-dingwei"></view>
-      <view class="list-text">所在位置</view>
-      <view class="iconfont icon-jiantou2"></view>
-    </view>
+  </scroll-view>
+  <view class="follow__text">
+    <textarea class="textarea" focus adjust-position="{{false}}" bindfocus="bindfocusText" bindblur="bindblurText" auto-height placeholder="文字" />
   </view>
 </view>
-<view class="footer">
-  <text>完成</text>
+<view style="height: 1000px;"></view>
+<view class="footer" style="bottom: {{keyboardHeight}}px">
+  <view class="footer__btn">
+    <text class="footer__icon iconfont icon-yuyin"></text>
+    <text class="footer__icon iconfont icon-zhaopian"></text>
+    <text class="footer__send">发送</text>
+  </view>
 </view>

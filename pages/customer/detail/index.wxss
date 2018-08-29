@@ -56,6 +56,14 @@
   top: 30rpx;
   right: 44rpx;
 }
+.edit::before {
+  content: "";
+  position: absolute;
+  top: -10rpx;
+  right: -20rpx;
+  bottom: -10rpx;
+  left: -20rpx;
+}
 .content {
   margin-top: 20rpx;
   padding: 0 26rpx;
@@ -190,12 +198,30 @@
   height: 130rpx;
   align-items: center;
 }
+.connect-item + .connect-item {
+  border-top: 1rpx solid #e6e6e6;
+}
 .connect-item .avatar {
   margin-top: 0;
   text-align: center;
   line-height: 80rpx;
   background: #fe495b;
   color: #fff;
+}
+.avatar.bg--0 {
+  background-color: #ff6714;
+}
+.avatar.bg--1 {
+  background-color: #1671fd;
+}
+.avatar.bg--2 {
+  background-color: #86e39c;
+}
+.avatar.bg--3 {
+  background-color: #fccc20;
+}
+.avatar.bg--4 {
+  background-color: #fe495b;
 }
 .person {
   flex: 1;
@@ -240,4 +266,16 @@
   margin-left: 26rpx;
   font-size: 24rpx;
   color: #c9c9c9;
+}
+
+.icon__add-need {
+  position: relative;
+}
+.icon__add-need::after {
+  content: "";
+  position: absolute;
+  top: -20rpx;
+  right: -20rpx;
+  bottom: -20rpx;
+  left: -20rpx;
 }

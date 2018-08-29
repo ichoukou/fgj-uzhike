@@ -28,13 +28,13 @@
         <view class="item-title">更多</view>
       </view>
     </view>
-    <view class="edit">编辑</view>
+    <view class="edit" bindtap="bindEdit">编辑</view>
   </view>
   <!-- 个人需求 -->
   <view class="content">
     <view class="item-flex need-title">
       <view class="title">个人需求</view>
-      <view class="iconfont icon-tianjia"></view>
+      <view class="iconfont icon-tianjia icon__add-need" bindtap="bindOpenAddneed"></view>
     </view>
     <view class="item">
       <view class="des">类型</view>
@@ -47,10 +47,6 @@
     <view class="item">
       <view class="des">产权性质</view>
       <view class="val">{{needData[0].PropertyType}}</view>
-    </view>
-    <view class="item">
-      <view class="des">意向度</view>
-      <view class="val"><progress percent="{{needData[0].Intention}}" show-info active /></view>
     </view>
     <view class="item">
       <view class="des">户型</view>
@@ -68,7 +64,7 @@
       <view class="des">备注</view>
       <view class="val">{{needData[0].Remark}}</view>
     </view>
-    <view class="need-more" wx:if="needData.length > 2">查看更多需求</view>
+    <view class="need-more" wx:if="{{needData.length > 2}}">查看更多需求</view>
   </view>
   <!-- 进阶资料 -->
   <view class="advance {{ detailShow ? 'slidedown' : ''}}" bindtap="showSlide">
@@ -189,25 +185,15 @@
   <view class="connect">
     <view class="item item-flex">
       <view class="title">关联人员</view>
-      <view class="iconfont icon-tianjia"></view>
+      <view class="iconfont icon-tianjia g-extend-after" bindtap="bindOpenAddLink"></view>
     </view>
-    <view class="connect-item">
-      <view class="avatar">家人</view>
+    <view class="connect-item" wx:for="{{linkData}}" wx:key="{{index}}">
+      <view class="avatar bg--{{index}}">{{item.LinkType}}</view>
       <view class="person">
-        <view class="name">王先生</view>
-        <text>电话：18723123498</text>
-        <text>类型：A</text>
+        <view class="name">{{item.CustName}}</view>
+        <text>电话：{{item.Tel}}</text>
       </view>
-      <view class="iconfont icon-jianhao"></view>
-    </view>
-    <view class="connect-item">
-      <view class="avatar friend">亲友</view>
-      <view class="person">
-        <view class="name">刘晓明</view>
-        <text>电话：18723123498</text>
-        <text>类型：A</text>
-      </view>
-      <view class="iconfont icon-jianhao"></view>
+      <view class="iconfont icon-jianhao g-extend-after" data-index="{{index}}" data-id="{{item.CustLinkID}}" bindtap="bindCloseLink"></view>
     </view>
   </view>
   <!-- 相关人员 -->
@@ -231,3 +217,5 @@
     一天前 08:12:32 录入
   </view>
 </view>
+
+<i-message id="message" />

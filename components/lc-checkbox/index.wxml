@@ -1,0 +1,11 @@
+<!-- 多选 -->
+<checkbox-group class="checkbox-group" bindchange="checkboxChange">
+  <label 
+    class="checkbox__label {{item.checked ? 'active' : ''}}" 
+    data-index="{{index}}" 
+    wx:for="{{items}}" 
+    wx:key="{{index}}"
+  >
+    <checkbox class="checkbox__checked" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+  </label>
+</checkbox-group>

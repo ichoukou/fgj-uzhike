@@ -22,34 +22,15 @@
       <view class="list__text">
         <picker bindchange="bindAreaChange" mode="region" value="{{Area}}" custom-item="{{customItem}}">
           <view class="list__picker list__picker--text">
-            {{Area[0]}}，{{Area[1]}}，{{Area[2]}}
+            {{Area[2]}}
           </view>
         </picker>
       </view>
       <text class="iconfont icon-jiantou2 list__arrow"></text>
     </view>
-    <view class="list">
+    <view class="list list__checkbox">
       <text class="list__title title--required">产权性质</text>
-      <view class="list__text">
-        <picker 
-          bindchange="bindPickerCustNeedChange" 
-          range="{{pickerPropertyType}}" 
-          value="{{pickerPropertyTypeIndex}}" 
-          range-key="label"
-          data-type="PropertyType" 
-        >
-          <view class="list__picker {{ pickerPropertyTypeIndex === 0 ? '' : 'list__picker--text'}}">
-            {{pickerPropertyType[pickerPropertyTypeIndex].label}}
-          </view>
-        </picker>
-      </view>
-      <text class="iconfont icon-jiantou2 list__arrow"></text>
-    </view>
-    <view class="list intention">
-      <text class="list__title title--required">意向度</text>
-      <view class="list__text">
-        <slider value="{{Intention}}" bindchange="sliderChange" show-value/>
-      </view>
+      <lc-checkbox items="{{propertyType}}" value="{{paramsCustNeed.PropertyType}}" bindchange="changeCheckbox"></lc-checkbox>
     </view>
     <view class="list">
       <text class="list__title title--required">户型</text>
@@ -69,14 +50,14 @@
       <text class="iconfont icon-jiantou2 list__arrow"></text>
     </view>
     <view class="list special">
-      <text class="list__title title--required">面积</text>
+      <text class="list__title">面积</text>
       <view class="list__text">
         <input 
           type="number" 
           class="special__input" 
           placeholder-class="phcolor" 
           placeholder="最小面积" 
-          value="{{paramsCustomer.MinSquare}}" 
+          value="{{paramsCustNeed.MinSquare}}" 
           data-type="MinSquare" 
           bindblur="changeCustNeedInput"
         />
@@ -86,7 +67,7 @@
           class="special__input" 
           placeholder-class="phcolor" 
           placeholder="最大面积" 
-          value="{{paramsCustomer.MaxSquare}}" 
+          value="{{paramsCustNeed.MaxSquare}}" 
           data-type="MaxSquare" 
           bindblur="changeCustNeedInput"
         />
@@ -94,14 +75,14 @@
       </view>
     </view>
     <view class="list special">
-      <text class="list__title title--required">价位</text>
+      <text class="list__title">价位</text>
       <view class="list__text">
         <input 
           type="number" 
           class="special__input" 
           placeholder-class="phcolor" 
           placeholder="最低价位" 
-          value="{{paramsCustomer.MinPrice}}" 
+          value="{{paramsCustNeed.MinPrice}}" 
           data-type="MinPrice" 
           bindblur="changeCustNeedInput"
         />
@@ -111,7 +92,7 @@
           class="special__input" 
           placeholder-class="phcolor" 
           placeholder="最高价位" 
-          value="{{paramsCustomer.MaxPrice}}" 
+          value="{{paramsCustNeed.MaxPrice}}" 
           data-type="MaxPrice" 
           bindblur="changeCustNeedInput"
         />
@@ -125,6 +106,7 @@
           auto-height 
           placeholder="请填写备注" 
           class="list__textarea" 
+          value="{{paramsCustNeed.Remark}}"
           data-type="Remark" 
           bindblur="changeCustNeedInput"
         ></textarea>

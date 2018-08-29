@@ -1,0 +1,22 @@
+.checkbox-group {
+  margin-right: -20rpx;
+}
+.checkbox__label {
+  display: inline-block;
+  position: relative;
+  margin: 20rpx 20rpx 0 0;
+  padding: 10rpx 30rpx;
+  border-radius: 8rpx;
+  font-size: 30rpx;
+  color: rgb(193,193,193);
+  background-color: rgb(245,245,245);
+  transition: color .3s, background-color .3s;
+}
+.checkbox__label.active {
+  color: #fff;
+  background-color: rgb(251,128,55);
+}
+.checkbox__checked {
+  position: absolute;
+  z-index: -1;
+}
