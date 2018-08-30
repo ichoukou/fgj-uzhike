@@ -17,13 +17,13 @@ export default function fetch(params) {
           wx.showToast({
             title: '权限不足，即将跳登陆',
             icon: 'none',
-            duration: 1500
+            duration: 1200
           });
           setTimeout(() => {
             wx.navigateTo({
               url: '/pages/authorize/index'
             })
-          }, 1500);
+          }, 1200);
           return;
         };
         resolve(res);

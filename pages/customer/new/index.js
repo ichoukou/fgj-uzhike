@@ -8,7 +8,7 @@ import { InsertCustomer, GetCustByID, GetCustNeedByCustID, GetCustomerLinkByCust
 import { DelCustLink } from '../../../api/customer/add-link';
 import { DelCustNeed } from '../../../api/customer/add-need';
 
-// 随机ID
+// 临时ID
 const guid = new GUID();
 const guidstr = guid.newGUID().toUpperCase();
 

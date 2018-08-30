@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/customer/follow/index",
+    "pages/customer/list/index",
+    "pages/estate-dict/list/index",
     "pages/customer/new/index",
     "pages/customer/all-action/index",
     "pages/customer/look/index",
     "pages/customer/detail/index",
     "pages/customer/add-need/index",
-    "pages/estate-dict/list/index",
-    "pages/customer/list/index",
     "pages/customer/city/index",
     "pages/customer/add-link/index",   
     "pages/attendance/index",
