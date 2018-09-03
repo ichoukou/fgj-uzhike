@@ -33,9 +33,10 @@ Page({
       },
     ],
     pickerLinkTypeIndex: 0,
+    loading: false,
+    disabled: false,
   },
   onLoad: function (options) {
-    console.log(options)
     let PriCustID = options.CustID || '';
     if (!PriCustID) {
       wx.navigateBack()
@@ -86,31 +87,40 @@ Page({
 
     if (!verify.status) {
       $Message({ content: verify.msg, type: 'error' });
-    } 
-    else {
-      wx.showLoading({ title: '添加中' });
-      InsertCustLink(params).then(res => {
-        wx.hideLoading();
-        if (res.data.result === 'success') {
-          $Message({ content: '添加成功', type: 'success' });
-          // 通过上一个页面，添加关联人
-          let pages = getCurrentPages();
-          let prevPage = pages[pages.length - 2]; // 上一个页面
-          let linkData = prevPage.data.linkData;
-
-          linkData.push(params);
-          prevPage.setData({
-            linkData
-          });
-          setTimeout(() => {
-            wx.navigateBack();
-          }, 1000);
-        } 
-        else {
-          $Message({ content: res.data.msg, type: 'error' });
-        }
-      });
+      return false;
     }
+
+    wx.showLoading({ title: '添加中' });
+    this.setData({
+      loading: true,
+      disabled: true,
+    });
+
+    InsertCustLink(params).then(res => {
+      wx.hideLoading();
+      this.setData({
+        loading: false,
+        disabled: false,
+      });
+      if (res.data.result === 'success') {
+        $Message({ content: '添加成功', type: 'success' });
+        // 通过上一个页面，添加关联人
+        let pages = getCurrentPages();
+        let prevPage = pages[pages.length - 2]; // 上一个页面
+        let linkData = prevPage.data.linkData;
+
+        linkData.push(params);
+        prevPage.setData({
+          linkData
+        });
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 1000);
+      } 
+      else {
+        $Message({ content: res.data.msg, type: 'error' });
+      }
+    });
   },
   // 验证数据
   verifyData(data) {
@@ -130,6 +140,7 @@ Page({
       result.msg = '请选择关系';
       return result;
     };
+
     result.status = true;
     result.msg = '验证通过';
 

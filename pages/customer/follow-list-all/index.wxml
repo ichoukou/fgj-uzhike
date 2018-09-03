@@ -1,0 +1,133 @@
+<!-- 所有跟进列表 -->
+<!-- 搜索 -->
+<view class="search">
+  <search height="120rpx" bindquery="bindQuery" placeholder="搜索关键词"></search>
+</view>
+<!-- 筛选 -->
+<view class="screen">
+  <view class="screen__list" data-index="0" bindtap="bindScreenClick">
+    <text class="screen__text">{{params.typeData ? params.typeData : '人员'}}</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list" data-index="1" bindtap="bindScreenClick">
+    <text class="screen__text">{{params.FlagStatus ? params.FlagStatus : '时间'}}</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list" data-index="2" bindtap="bindScreenClick">
+    <text class="screen__text">排序</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list" data-index="3" bindtap="bindScreenClick">
+    <text class="screen__text">更多</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+</view>
+<!-- 展开的筛选条件 -->
+<wux-animation-group wux-class="screen-detail" in="{{screenOpen}}" class-names="wux-animate--slideInDown">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="screen-detail__item" hidden="{{screenIndex !== 0}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="typeData">
+        <label class="radio screen-detail__list" wx:for="{{typeData}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+        </label>
+      </radio-group>
+      <!-- <loading hidden="{{typeData.length}}" /> -->
+    </view>
+    <view class="screen-detail__item" hidden="{{screenIndex !== 1}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="FlagStatus">
+        <label class="radio screen-detail__list" wx:for="{{FlagStatus}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+    <view class="screen-detail__item" hidden="{{screenIndex !== 2}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="order">
+        <label class="radio screen-detail__list" wx:for="{{order}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+  </scroll-view>
+</wux-animation-group>
+<!-- 列表内容 -->
+<view class="content">
+  <scroll-view scroll-y style="height: 100%;" bindscrolltolower="bindscrolltolower">
+    <view class="list" wx:for="{{listData}}" wx:key="{{index}}" data-id="{{item.CustFollowID}}" bindtap="bindShowFollow">
+      <view class="list__left">
+        <image class="list__img" mode="aspectFill" src="../../../images/emp-img.jpg"></image>
+      </view>
+      <view class="list__right">
+        <view class="list__top">
+          <text class="list__name">{{item.EmpName}}</text>
+          <text class="list__time">{{item.FollowDate}}</text>
+        </view>
+        <view class="list__center">
+          <text class="list__text">{{item.FollowContent}}</text>
+          <text class="list__media" wx:if="{{item.PicCount > 0}}">[图片]</text>
+          <text class="list__media" wx:if="{{item.AudioCount > 0}}">[语音]</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<!-- 获取更多数据 -->
+<view class="more-load {{scrollLower ? 'show' : ''}}">
+  <text class="iconfont icon-jiazaizhong loading__icon"></text>
+  <text class="loading__text">加载中</text>
+</view>
+<!-- 点击显示完整跟进数据 -->
+<view class="full-follow {{isShowFollow ? 'show' : ''}}">
+  <view class="follow__top">
+    <text class="follow__name">{{fullFollowData.EmpName}}</text>
+    <text class="follow_time">{{fullFollowData.FollowDate}}</text>
+    <text class="follow__close iconfont icon-guanbi g-extend-after" bindtap="bindColseFollow"></text>
+  </view>
+  <view class="follow__center" hidden="{{!fullFollowData.CustID}}">
+    <!-- 文字跟进 -->
+    <view class="follow_text">{{fullFollowData.FollowContent}}</view>
+    <!-- 图片跟进 -->
+    <view class="follow_pic">
+      <image 
+        wx:for="{{fullFollowData.imageData}}" 
+        wx:key="{{index}}"
+        wx:for-item="img"
+        class="follow_pic-img" 
+        mode="widthFix" 
+        src="{{img}}" 
+        data-current="{{img}}"
+        data-item="{{fullFollowData}}"
+        bindtap="bindPreviewImage"
+      ></image>
+    </view>
+    <!-- 语音跟进 -->
+    <view class="voice" style="width: 150px" bindtap="bindPlayAudio">
+      <text class="voice_yuyin iconfont icon-yuyin"></text>
+      <view class="voice_play {{isPlayAudio ? 'voice_line--play' : ''}}">
+        <text class="voice_line"></text>
+        <text class="voice_line"></text>
+        <text class="voice_line"></text>
+      </view>
+      <text class="voice_text">15s</text>
+    </view>
+  </view>
+  <!-- 加载中 -->
+  <view class="full-loading" hidden="{{fullFollowData.CustID}}">
+    <loading type="static"></loading>
+  </view>
+  <!-- 操作按钮 -->
+  <view class="full-follow__footer">
+    <text class="full-follow__btn" data-id="{{fullFollowData.CustID}}" catchtap="bindOpenDetail">查看客户信息</text>
+    <text class="full-follow__btn" data-id="{{fullFollowData.CustID}}" catchtap="bindOpenFollow">查看更多跟进</text>
+  </view>
+</view>
+<!-- 遮罩 -->
+<view class="make {{isShowFollow ? 'show' : ''}}" bindtap="bindColseFollow"></view>
+
+<!-- 加载中 -->
+<loading type="static" hidden="{{loading}}"></loading>
+<!-- 什么都没有 -->
+<empty wx:if="{{loading && !listData.length}}" desc="没有跟进内容"></empty>
+<!-- 跟多筛选 -->
+<screen-more id="screenMore" screenData="{{screenData}}" bindreset="bindScreenReset" bindconfirm="bindScreenConfirm" />
+<!-- 遮罩 -->
+<wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />

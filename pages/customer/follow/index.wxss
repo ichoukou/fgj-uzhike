@@ -138,6 +138,23 @@
   left: -10rpx;
 }
 
+/* 地理位置 */
+.position {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  background-color: #fff;
+}
+.position__icon {
+  font-size: 32rpx;
+  color: #fa4d31;
+}
+.position__text {
+  padding-left: 10rpx;
+  font-size: 30rpx;
+  color: #666;
+}
+
 /* 底部按钮 */
 .footer {
   position: fixed;

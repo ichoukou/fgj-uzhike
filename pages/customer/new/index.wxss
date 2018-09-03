@@ -27,9 +27,6 @@
 .input-item + .input-item {
   border-top: 1rpx solid rgb(230,230,230);
 }
-.textarea__title-border {
-  border-top: 1rpx solid rgb(230,230,230);
-}
 .input-title {
   width: 300rpx;
 }
@@ -89,26 +86,6 @@ textarea {
   margin-bottom: 40rpx;
 }
 
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%; 
-  height: 98rpx;
-  display: flex;
-  align-items: center;
-  background: #fff;
-  z-index: 999;
-}
-.footer-text {
-  flex: 1;
-  margin: 0 35rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  text-align: center;
-  background: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
-  color: #fff;
-  border-radius: 6rpx;
-}
 .body-view {
   flex: 1;
 }
@@ -118,6 +95,15 @@ textarea {
   line-height: 130rpx;
 }
 
+/* 下面是黎聪写的样式 */
+
+.remark {
+  padding: 20rpx 0;
+  border-top: 1rpx solid rgb(230,230,230);
+}
+.remark__input {
+  margin-top: 20rpx;
+}
 /* 已添加的需求 */
 .need-wrap {
   background-color: #fff;
@@ -214,4 +200,13 @@ textarea {
 .need__icon-close {
   font-size: 40rpx;
   color: rgb(201,201,201);
+}
+/* 完成按钮 */
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  padding: 10rpx 36rpx;
+  width: 100%;
+  background-color: #fff;
 }

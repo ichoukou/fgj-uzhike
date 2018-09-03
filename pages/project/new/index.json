@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "新建项目",
+  "usingComponents": {
+    "lc-checkbox": "/components/lc-checkbox/index",
+    "i-message": "/components/message/index"
+  }
+}

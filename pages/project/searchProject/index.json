@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "项目集市",
+  "usingComponents": {
+    "search": "/components/search/index",
+    "wux-animation-group": "/components/animation-group/index",
+    "loading": "/components/loading/index",
+    "screen-more": "/components/screen-more/index"
+  }
+}

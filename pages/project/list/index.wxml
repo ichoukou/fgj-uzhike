@@ -1,0 +1,50 @@
+<view class='search'>
+  <search height="100rpx" bindquery="bindQuery" placeholder="搜索你想要项目"></search>
+  <text class="iconfont icon-tianjia search__icon" style="color: rgb(219,219,219);"></text>
+</view>
+<view class='list-wrap'>
+  <scroll-view scroll-y style="height: 100%;" bindscrolltolower="bindscrolltolower">
+    <view class='list-space'>
+      <view class='list' bindtap='bindOpenDetail' wx:for="{{listData}}" wx:key="{{index}}">
+        <view class='list__img'>
+          <view wx:if="{{item.UnionStatus=='待审核'}}">
+            <text class="iconfont icon-daishenhe1 icon icon_review"></text>
+            <text class='white-board'></text>
+          </view>
+          <view wx:if="{{item.UnionStatus=='已拒绝'}}">
+            <text class="iconfont icon-yijujue icon icon_refuse"></text>
+            <text class='white-board'></text>
+          </view>
+          <view wx:if="{{item.OfferFlag!=''}}">
+            <text class="label__bg">{{item.OfferFlag}}</text>
+            <text class='label_shadow'></text>
+          </view>
+          <image class='list__img' mode="aspectFit" src="https://little.vipfgj.com/upfile/20180728/DFC838DEC59A49F59412B5DF4EEC9CCB.jpg"></image>
+        </view>
+        <view class='list__cout'>
+          <text class='list__name'>{{item.ProjectName}}</text>
+          <view class='list__message'>地址：青山湖高新大道开发区1999号</view>
+          <view class='list__message'>类型：{{item.ProjectType}}</view>
+          <view class='list__message'>
+            <text class='list__msg'>报备类型：{{item.DeclareType==0?'全号':'全号隐号混合'}}</text>
+            <text>报备过期：{{item.DeclareProtectDays}}天</text>
+          </view>
+          <view class='list__message'>
+            <text class='list__msg'>是否带访：{{item.NeedBringCust==0?'不需要':'需要'}}</text>
+            <text>到访日期：{{item.VisitProtectDays}}天</text>
+          </view>
+          <text class="iconfont icon-gengduo icon-more" data-project-id="{{item.ProjectID}}" catchtap="bindOpenMore"></text>
+        </view>
+      </view>
+    </view>
+    <view class="loading" hidden="{{scrollLower}}">
+      <text class="iconfont icon-jiazaizhong loading__icon"></text>
+      <text class="loading__text">加载中...</text>
+    </view>
+    <view class="empty" wx:if="{{!listData.length && loading}}">
+      <text class="iconfont icon-kong empty__icon"></text>
+      <text class="empty__desc">暂无数据</text>
+    </view>
+  </scroll-view>
+</view>
+<i-message id="message" />

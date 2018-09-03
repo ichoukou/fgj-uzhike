@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "搜索楼盘",
+  "usingComponents": {
+    "search": "/components/search/index",
+    "loading": "/components/loading/index"
+  }
+}

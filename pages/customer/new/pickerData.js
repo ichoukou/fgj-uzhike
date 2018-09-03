@@ -43,20 +43,14 @@ export default {
       value: ''
     },
     {
-      label: '一手房',
-      value: '一手房'
+      label: '求购',
+      value: '求购'
     }, {
-      label: '一二手房',
-      value: '一二手房'
-    }, {
-      label: '租房',
-      value: '租房'
+      label: '求租',
+      value: '求租'
     }, {
       label: '装修',
       value: '装修'
-    }, {
-      label: '其他',
-      value: '其他'
     },
   ],
   pickerPropertyType: [{
@@ -260,15 +254,7 @@ export default {
     value: '派单'
   }, ],
 
-  // 列表页面用到
-  typeData: [{
-    label: '购房',
-    value: '购房',
-    checked: true
-  }, {
-    label: '租房',
-    value: '租房'
-  }, ],
+  // 列表页面用到的数据
   FlagStatus: [{
     label: '不限',
     value: ''

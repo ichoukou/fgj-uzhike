@@ -52,12 +52,6 @@ textarea {
   padding: 0 35rpx;
   background: #fff;
 }
-.footer text {
-  flex: 1;
-  height: 80rpx;
-  line-height: 80rpx;
-  text-align: center;
-  background: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
-  color: #fff;
-  border-radius: 6rpx;
+.btn-primery {
+  width: 100%;
 }

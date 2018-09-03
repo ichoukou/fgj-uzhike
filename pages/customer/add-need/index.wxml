@@ -50,7 +50,7 @@
       <text class="iconfont icon-jiantou2 list__arrow"></text>
     </view>
     <view class="list special">
-      <text class="list__title">面积</text>
+      <text class="list__title title--required">面积</text>
       <view class="list__text">
         <input 
           type="number" 
@@ -75,7 +75,7 @@
       </view>
     </view>
     <view class="list special">
-      <text class="list__title">价位</text>
+      <text class="list__title title--required">价位</text>
       <view class="list__text">
         <input 
           type="number" 
@@ -96,7 +96,7 @@
           data-type="MaxPrice" 
           bindblur="changeCustNeedInput"
         />
-        <text class="special__unit">万</text>
+        <text class="special__unit">{{unit}}</text>
       </view>
     </view>
     <view class="list list--remark">
@@ -118,7 +118,7 @@
 <!-- 完成按钮 -->
 <view class="footer">
   <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="submit">
-    <text hidden="{{loading}}">完成</text>
+    <text>{{loading ? '上传中' : '完成'}}</text>
   </button>
 </view>
 

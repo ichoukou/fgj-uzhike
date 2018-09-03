@@ -1,15 +1,20 @@
 
 import { GetCustByID, GetCustNeedByCustID, GetCustomerLinkByCustID } from '../../../api/customer/detail'; 
 import { DelCustLink } from '../../../api/customer/add-link';
+import { GetFollowByCustID } from '../../../api/customer/follow-list';
 const { $Message } = require('../../../components/base/index');
+import { URL_PATH } from '../../../utils/config';
 
 Page({
   data: {
     CustID: '',
     custData: {},     // 客户主体数据
     needData: [],     // 客户需求数据
+    followData: [],   // 跟进数据
     linkData: [],     // 关联人数据
-    detailShow: false
+    detailShow: false,
+    followLoading: false,
+    isPlayAudio: -1,    // 当前播放的语音位置
   },
   onLoad: function (options) {
     console.log('参数', options)
@@ -18,6 +23,7 @@ Page({
     this.data.CustID = CustID;
   },
   onReady: function () {
+    this.innerAudioContext = wx.createInnerAudioContext();
   },
   onShow: function () {
     let CustID = this.data.CustID;
@@ -27,7 +33,8 @@ Page({
     }
     this.GetCustByID(CustID);
     this.GetCustNeedByCustID(CustID);
-    this.GetCustomerLinkByCustID(CustID)
+    this.GetFollowByCustID(CustID);
+    this.GetCustomerLinkByCustID(CustID);
   },
   // 根据客户ID获取客户数据
   GetCustByID(CustID) {
@@ -60,6 +67,57 @@ Page({
       }
     })
   },
+  // 根据客户ID获取跟进
+  GetFollowByCustID(CustID) {
+    GetFollowByCustID({
+      CustID: CustID
+    }).then(res => {
+      this.setData({ followLoading: true });
+      if (res.data.result === 'success') {
+        let temptable = res.data.temptable;
+        let newData = [];
+        let obj = {};
+
+        // 处理数据，数据是单个的，这里根据CustFollowID，把数据处理成理想格式
+        temptable.forEach(item => {
+          if (item.FileUrl) item.fullPathImg = URL_PATH + item.FileUrl;    // 拼接完整路径，用来显示
+
+          if (!obj[item.CustFollowID]) {
+            obj[item.CustFollowID] = item;
+            if (item.FileUrl && item.FileType === '图片') {
+              obj[item.CustFollowID].imageData = [item.fullPathImg];
+            }
+            if (item.FileUrl && item.FileType === '语音') {
+              obj[item.CustFollowID].audioData = [{
+                path: item.fullPathImg,
+                time: item.Remark
+              }];
+            }
+          } else {
+            if (item.FileUrl && item.FileType === '图片') {
+              obj[item.CustFollowID].imageData ? '' : obj[item.CustFollowID].imageData = [];
+              obj[item.CustFollowID].imageData.push(item.fullPathImg)
+            }
+            if (item.FileUrl && item.FileType === '语音') {
+              obj[item.CustFollowID].audioData ? '' : obj[item.CustFollowID].audioData = [];
+              obj[item.CustFollowID].audioData.push({
+                path: item.fullPathImg,
+                time: item.Remark
+              })
+            }
+          }
+        });
+
+        for (let key of Object.keys(obj)) {
+          newData.push(obj[key])
+        }
+        console.log(newData)
+        this.setData({
+          followData: newData
+        });
+      }
+    })
+  },
   // 根据客户ID获取关联人
   GetCustomerLinkByCustID(CustID) {
     GetCustomerLinkByCustID({
@@ -84,6 +142,18 @@ Page({
   bindEdit() {
     wx.navigateTo({
       url: '../new/index?CustID=' + this.data.CustID
+    })
+  },
+  // 打开跟进
+  bindOpenFollow() {
+    wx.navigateTo({
+      url: '../follow/index?CustID=' + this.data.CustID
+    })
+  },
+  // 拨打电话
+  bindPhoneCall() {
+    wx.makePhoneCall({
+      phoneNumber: this.data.custData.Tel
     })
   },
   // 添加需求
@@ -128,5 +198,44 @@ Page({
         }
       },
     })
+  },
+  // 查看全部跟进
+  bindOpenAllFollow() {
+    wx.navigateTo({
+      url: '../follow-list/index?CustID=' + this.data.custData.CustID
+    })
+  },
+  // 预览跟进图片
+  bindPreviewImage(e) {
+    let { current, item } = e.currentTarget.dataset;
+
+    wx.previewImage({
+      current: current,
+      urls: item.imageData || []
+    });
+  },
+  // 播放语音
+  bindPlayAudio(e) {
+    let { audio, index, audioIndex } = e.currentTarget.dataset;
+    let currentIndex = index + '' + audioIndex;
+
+    this.setData({
+      isPlayAudio: currentIndex
+    });
+
+    // 播放录音
+    this.innerAudioContext.stop();
+    this.innerAudioContext.src = audio.path;
+    this.innerAudioContext.play();
+    this.innerAudioContext.onEnded(() => {
+      this.setData({
+        isPlayAudio: -1
+      });
+    });
+    this.innerAudioContext.onError((res) => {
+      this.setData({
+        isPlayAudio: -1
+      });
+    });
   },
 })

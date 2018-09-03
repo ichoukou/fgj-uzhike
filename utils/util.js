@@ -37,7 +37,10 @@ const _fgj = {
     if (!strings) {
       return false
     };
-    let value = strings.replace(/\s/g, '');   // 去掉空白字符
+    let value = strings;
+    if(typeof strings === 'string'){
+      value.replace(/\s/g, '');   // 去掉空白字符
+    }
     // 非空验证
     if (type === 'require') {
       return !!value
@@ -52,7 +55,7 @@ const _fgj = {
     }
     // 数字或有小数位
     if (type === 'number-dot') {
-      return /^\d+[\.]?\d+$/.test(value)
+      return /^\d+[\.]?[\d]*$/.test(value)
     }
     // 手机号验证
     if (type === 'phone') {

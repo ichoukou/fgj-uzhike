@@ -82,6 +82,7 @@
   padding-left: 18rpx;
   font-size: 30rpx;
   color: #666;
+  white-space: nowrap;
 }
 .list--remark {
   flex-direction: column;

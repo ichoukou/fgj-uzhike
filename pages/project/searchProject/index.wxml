@@ -1,0 +1,115 @@
+<view class='search'>
+  <search height="100rpx" bindquery="bindQuery" placeholder="搜索你想要项目"></search>
+</view>
+
+<!-- 筛选 -->
+<view class="screen">
+  <view class="screen__list" data-index="0" bindtap="bindScreenClick">
+    <text class="screen__text">{{params.DistrictName ? params.DistrictName : '区域'}}</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list" data-index="1" bindtap="bindScreenClick">
+    <text class="screen__text">类型</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list" data-index="2" bindtap="bindScreenClick">
+    <text class="screen__text">价格</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list" data-index="3" bindtap="bindScreenClick">
+    <text class="screen__text">更多</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+</view>
+
+<!-- 展开的筛选条件 -->
+<wux-animation-group wux-class="screen-detail" in="{{screenOpen}}" class-names="wux-animate--slideInDown">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="screen-detail__item" hidden="{{screenIndex !== 0}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="DistrictName">
+        <label class="radio screen-detail__list" wx:for="{{DistrictName}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.CityName}}" checked="{{item.checked}}" />{{item.CityName}}
+        </label>
+      </radio-group>
+      <loading hidden="{{DistrictName.length}}" />
+    </view>
+    <view class="screen-detail__item" hidden="{{screenIndex !== 1}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="EstateType">
+        <label class="radio screen-detail__list" wx:for="{{typeData}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}" />{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+    <view class="screen-detail__item" hidden="{{screenIndex !== 2}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="Price">
+        <label class="radio screen-detail__list" wx:for="{{price}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}" />{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+  </scroll-view>
+</wux-animation-group>
+
+<view class='list-wrap'>
+  <scroll-view scroll-y style="height: 100%;" bindscrolltolower="bindscrolltolower">
+    <view class='list-space'>
+      <view class='list__developer'>
+        <view wx:if="{{listData.imgSrc!=null}}">
+          <image class='developer-img' src='{{listData}}'></image>
+        </view>
+        <view ex:else class='list__logo bg{{index}}'>聚</view>
+        <view class='developer-msg'>
+          <view class='developer-name'>聚仁国际开发商</view>
+          <view class='developer-time'>2018.08.23 09:30</view>
+        </view>
+      </view>
+      <view class='list' bindtap='bindOpenDetail'>
+        <view class='list__img'>
+          <text class="label__bg">1万抵3万 / 1万抵3万</text>
+          <text class='label_shadow'></text>
+          <image class='list__img' mode="aspectFit" src="https://little.vipfgj.com/upfile/20180728/DFC838DEC59A49F59412B5DF4EEC9CCB.jpg"></image>
+        </view>
+        <view class='list__cout'>
+          <text class='list__name'>聚仁国际</text>
+          <view class='list__message'>地址：青山湖高新大道开发区1999号</view>
+          <view class='list__message'>类型：商铺/写字楼/住宅</view>
+          <view class='list__message'>佣金模式：体内结佣</view>
+          <view class='list__message'>佣金描述：巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</view>
+          <text class="iconfont icon-gengduo icon-more" data-estate-id="{{}}" catchtap="bindOpenMore"></text>
+        </view>
+      </view>
+    </view>
+
+    <view class='list-space'>
+      <view class='list__developer'>
+        <view wx:if="{{listData.imgSrc!=null}}">
+          <image class='developer-img' src='{{listData}}'></image>
+        </view>
+        <view ex:else class='list__logo'>聚</view>
+        <view class='developer-msg'>
+          <view class='developer-name'>聚仁国际开发商</view>
+          <view class='developer-time'>2018.08.23 09:30</view>
+        </view>
+      </view>
+      <view class='list' bindtap='bindOpenDetail'>
+        <view class='list__img'>
+          <text class="label__bg">1万抵3万 / 1万抵3万</text>
+          <text class='label_shadow'></text>
+          <image class='list__img' mode="aspectFit" src="https://little.vipfgj.com/upfile/20180728/DFC838DEC59A49F59412B5DF4EEC9CCB.jpg"></image>
+        </view>
+        <view class='list__cout'>
+          <text class='list__name'>聚仁国际</text>
+          <view class='list__message'>地址：青山湖高新大道开发区1999号</view>
+          <view class='list__message'>类型：商铺/写字楼/住宅</view>
+          <view class='list__message'>佣金模式：体内结佣</view>
+          <view class='list__message'>佣金描述：巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</view>
+          <text class="iconfont icon-gengduo icon-more" data-estate-id="{{}}" catchtap="bindOpenMore"></text>
+        </view>
+      </view>
+    </view>
+    <view class="loading" hidden="{{scrollLower}}">
+      <text class="iconfont icon-jiazaizhong loading__icon"></text>
+      <text class="loading__text">加载中...</text>
+    </view>
+  </scroll-view>
+</view>

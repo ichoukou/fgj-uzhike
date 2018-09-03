@@ -1,0 +1,4 @@
+<view class="empty">
+  <text class="iconfont icon-kong empty__icon"></text>
+  <text class="empty__desc">{{desc}}</text>
+</view>

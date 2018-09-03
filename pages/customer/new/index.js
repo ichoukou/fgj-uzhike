@@ -42,11 +42,11 @@ Page({
     pickerLookHouseIndex: 0,
     pickerSource: data.pickerSource,
     pickerSourceIndex: 0,
+    loading: false,
+    disabled: false,
   },
   onLoad: function (options) {
     let { CustID } = options;
-
-    // let CustID = 'AD5FE90B8133EF43112BB9D0AFBE8E9B';
     let paramsCustomer = this.data.paramsCustomer;
 
     if (CustID) {
@@ -59,7 +59,6 @@ Page({
   onReady: function () {
   },
   onShow: function () {
-    console.log('show', this.data)
     // 有CustID就是编辑
     let CustID = this.data.CustID;
     if (CustID) {
@@ -92,7 +91,6 @@ Page({
       paramsCustomer,
       [propertyIndex]: index
     });
-    console.log(this.data.paramsCustomer)
   },
   // 添加需求
   bindOpenNeed() {
@@ -231,11 +229,24 @@ Page({
     }).then(res => {
       if (res.data.result === 'success') {
         let paramsCustNeed = this.data.paramsCustNeed;
+        let temptable = res.data.temptable;
+
+        this.disposePice(temptable);
+        
         this.setData({
           paramsCustNeed: res.data.temptable
-        })
+        });
       }
     })
+  },
+  // 处理价位单价
+  disposePice(arr = []) {
+    for (let item of arr) {
+      if (item.NeedType === '求购') {
+        item.MinPrice = item.MinPrice / 10000;
+        item.MaxPrice = item.MaxPrice / 10000;
+      }
+    }
   },
   // 根据客户id获取客户关系数据
   GetCustomerLinkByCustID(CustID) {
@@ -254,8 +265,15 @@ Page({
   UpCustomer() {
     UpCustomer(this.data.paramsCustomer).then(res => {
       wx.hideLoading();
+      this.setData({
+        loading: false,
+        disabled: false,
+      });
       if (res.data.result === 'success') {
         $Message({ content: '保存成功', type: 'success' });
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 1000);
       } 
       else {
         $Message({ content: res.data.msg, type: 'error' });
@@ -266,8 +284,15 @@ Page({
   InsertCustomer() {
     InsertCustomer(this.data.paramsCustomer).then(res => {
       wx.hideLoading();
+      this.setData({
+        loading: false,
+        disabled: false,
+      });
       if (res.data.result === 'success') {
-        $Message({ content: '保存成功', type: 'success' });
+        $Message({ content: '添加成功', type: 'success' });
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 1000);
       }
       else {
         $Message({ content: res.data.msg, type: 'error' });
@@ -284,7 +309,17 @@ Page({
       return false;
     }
 
+    // 必须要有一个客户需求
+    if (!this.data.paramsCustNeed.length) {
+      $Message({ content: '请添加客户需求', type: 'error' });
+      return false;
+    }
+
     wx.showLoading({ title: '保存中' });
+    this.setData({
+      loading: true,
+      disabled: true,
+    });
 
     // 判断是添加还是编辑
     if (!this.data.CustID) {
@@ -313,12 +348,12 @@ Page({
       result.msg = '请选择客户类型';
       return result;
     }
-    if (!_fgj.verify(data.Age, 'require')) {
-      result.msg = '请选择客户类型';
+    if (data.Age && (data.Age > 120)) {
+      result.msg = '您这个客户的年龄都快成精了吧';
       return result;
     }
-    if (data.Age && (data.Age > 130)) {
-      result.msg = '这个客户的年龄都快成精了吧';
+    if (data.Email && !_fgj.verify(data.Email, 'email')) {
+      result.msg = '邮箱格式有误';
       return result;
     }
 

@@ -6,7 +6,7 @@
   <view class="basic">
     <view class="input-item">
       <view class="input-title">客户名称
-        <span class="star">*</span>
+        <text class="star">*</text>
       </view>
       <input 
         type="text" 
@@ -20,7 +20,7 @@
     </view>
     <view class="input-item">
       <view class="input-title">手机号
-        <span class="star">*</span>
+        <text class="star">*</text>
       </view>
       <input 
         type="number" 
@@ -34,7 +34,7 @@
     </view>
     <view class="input-item">
       <view class="input-title">客户类型
-        <span class="star">*</span>
+        <text class="star">*</text>
       </view>
       <picker 
         bindchange="bindPickerCustomerChange" 
@@ -49,20 +49,25 @@
       </picker>
       <text class="iconfont icon-jiantou2"></text>
     </view>
-    <view class="textarea__title-border">备注</view>
-    <textarea 
-      placeholder="请填写" 
-      placeholder-class="phcolor" 
-      value="{{paramsCustomer.Remark}}" 
-      data-type="Remark" 
-      bindblur="changeCustomerInput"
-    ></textarea>
+    <view class="remark">
+      <view class="remark__title">备注</view>
+      <input 
+        type="text" 
+        class="remark__input" 
+        placeholder-class="phcolor" 
+        placeholder="请填写" 
+        value="{{paramsCustomer.Remark}}" 
+        data-type="Remark" 
+        bindblur="changeCustomerInput"
+        />
+    </view>
   </view>
   <!-- 需求信息 -->
   <view class="title">需求信息</view>
   <view class="input-item add" bindtap="bindOpenNeed">
     <view class="input-title">添加需求
-    </view>
+    <text class="star">*</text></view>
+    
     <text class="iconfont icon-tianjia"></text>
   </view>
   <!-- 已添加的需求 -->
@@ -79,7 +84,10 @@
       <view class="need__content">
         <text class="need__index">需求{{index + 1}}</text>
         <view class="need__info">
-          {{item.NeedType}}/{{item.PropertyType}}/{{item.MinPrice}}-{{item.MaxPrice}}/{{item.Room}}
+          {{item.NeedType}} / 
+          {{item.PropertyType}} /
+          {{item.MinPrice}}-{{item.MaxPrice}}{{item.NeedType === '求购' ? '万元' : '元'}} /
+          {{item.Room}}
         </view>
       </view>
       <view class="need__close"></view>
@@ -317,8 +325,11 @@
   </scroll-view>
 </view>
 
+<!-- 完成按钮 -->
 <view class="footer">
-  <text class="footer-text" bindtap="submit">完成</text>
+  <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="submit">
+    <text>{{loading ? '上传中' : '完成'}}</text>
+  </button>
 </view>
 
 <i-message id="message" />

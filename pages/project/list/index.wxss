@@ -1,0 +1,114 @@
+.search {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+}
+
+search {
+  width: 692rpx;
+}
+
+.list {
+  display: flex;
+  padding: 20rpx;
+  background-color: #fff;
+}
+.list + .list {
+  border-top: 1rpx solid #e6e6e6;
+}
+.list__img {
+  width: 250rpx;
+  height: 198rpx;
+  position: relative;
+}
+
+.list__cout {
+  flex: 1;
+  position: relative;
+  padding-left: 20rpx;
+}
+
+.list__name {
+  font-size: 36rpx;
+  color: rgb(0, 0, 0);
+}
+
+.list__message {
+  font-size: 24rpx;
+  color: rgb(193, 193, 193);
+  padding: 9rpx 0;
+  line-height: 1;
+}
+
+.list__msg {
+  display: inline-block;
+  width: 270rpx;
+}
+
+.icon {
+  display: block;
+  width: 61rpx;
+  height: 53rpx;
+  position: absolute;
+  top: -11rpx;
+  left: -10rpx;
+  z-index: 100;
+  font-size: 90rpx;
+}
+.icon-more {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 38rpx;
+  color: rgb(210, 210, 210);
+}
+.icon_review{
+  color: #ffa022;
+}
+.icon_refuse{
+  color:rgb(250,77,49)
+}
+.white-board {
+  display: inline-block;
+  width: 72rpx;
+  height: 26rpx;
+  background-color: #fff;
+  transform: translate(-5px, 5px) rotate(140deg);
+  position: absolute;
+  z-index: 50;
+}
+
+.label__bg {
+  position: absolute;
+  left: -8rpx;
+  top: 6rpx;
+  display: block;
+  height: 37rpx;
+  max-width: 258rpx;
+  line-height: 37rpx;
+  font-size: 22rpx;
+  padding: 0 6rpx;
+  background: rgb(251, 128, 55);
+  color: #fff;
+  z-index: 55;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.label_shadow {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  font-size: 0;
+  line-height: 0;
+  border-color:  rgb(223,98,24) transparent transparent transparent;
+  border-style: solid dashed dashed dashed;
+  border-width: 8rpx;
+  transform: rotate(225deg);
+  position: absolute;
+  top: 32rpx;
+  left: -6rpx;  
+  z-index: 55;
+}

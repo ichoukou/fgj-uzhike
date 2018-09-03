@@ -1,0 +1,21 @@
+.content{
+  display: flex;
+  align-items: center;
+  background-color: #fff
+}
+.search{
+  width: 630rpx
+}
+.cancel text{
+  font-size: 30rpx;
+  color: rgb(255,103,20)
+}
+.data-list{
+  padding: 0 25rpx;
+  background-color: #fff;
+  margin-top: 20rpx
+}
+.list{
+  font-size: 32rpx;
+  line-height: 80rpx
+}

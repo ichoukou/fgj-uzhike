@@ -1,8 +1,10 @@
 const { $Message } = require('../../../components/base/index');
 import { FileUpLoad } from '../../../api/public';
 import { URL_PATH } from '../../../utils/config';
-import { InserCustomerFollow, InserCustomerFollowFile } from '../../../api/customer/follow';
+import { InserCustomerFollow, InserCustomerFollowFile, DelCustomerFollowFile } from '../../../api/customer/follow';
 import GUID from '../../../utils/guid';
+import { MAP_KEY } from '../../../utils/config';
+const QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
 
 // 临时ID
 const guid = new GUID();
@@ -28,19 +30,22 @@ Page({
     recordPath: {},           // 当前录音数据
     recordData: [],           // 保存的录音
     imageData: [],            // 保存图片数据
-    imageFullData: [],        // 保存图片完整地址数据
     Position: '',             // 地理位置
     IsShowShade: false,       // 是否显示遮罩
-    currentRecordPlay: -1, // 当前需要播放的单条语音
+    currentRecordPlay: -1,    // 当前需要播放的单条语音
   },
   onLoad: function (options) {
-    this.data.CustID = 'AD5FE90B8133EF43112BB9D0AFBE8E9B'
+    console.log(options)
+    this.data.CustID = options.CustID;
   },
   onReady: function () {
     this.recorderManager = wx.getRecorderManager();
     this.innerAudioContext = wx.createInnerAudioContext();
   },
   onShow: function () {
+    // 更新临时ID
+    let guidstr = guid.newGUID().toUpperCase();
+    this.data.CustFollowID = guidstr;
   },
   // 发送
   bindSend() {
@@ -53,34 +58,53 @@ Page({
     params.FollowContent = data.FollowContent;
     params.Position = data.Position;
 
-    console.log(params);
-
-    // 上传主体内容
-    if (params.FollowContent) {
+    // 上传主体内容，必须有一样
+    if (params.FollowContent || data.imageData.length || data.recordData.length) {
       this.InserCustomerFollow(params);
+    } else {
+      $Message({ content: '请上传跟进内容', type: 'error' });
     }
-    // 上传图片
-    let imgStr = data.imageData.join('|');
-    if (imgStr) {
-      this.InserCustomerFollowFile('图片', imgStr);
-    }
-    // 上传语音
-    let recordArr = data.recordData.map(item => item.tempFilePath);
-    let recordStr = recordArr.join('|');
-    if (recordStr) {
-      this.InserCustomerFollowFile('语音', recordStr);
-    }
+    
   },
-  // 添加客户跟进文件
-  InserCustomerFollowFile(FileType, FileUrl) {
+  // 添加客户跟进文件，time是语音秒数
+  InserCustomerFollowFile(FileType, FileUrl, time = '') {
     InserCustomerFollowFile({
       CustFollowID: this.data.CustFollowID,
       FileType,
       FileUrl,
+      Remark: time
     }).then(res => {
+      wx.hideLoading();
       if (res.data.result === 'success') {
         $Message({ content: FileType + '上传成功', type: 'success' });
+        let data = res.data;
+
+        if (FileType === '图片') {
+          let imageData = this.data.imageData;
+
+          imageData.push({
+            path: URL_PATH + FileUrl,     // 拼接地址，用作显示
+            CustFollowFileID: data.CustFollowFileID
+          });
+          this.setData({
+            imageData
+          });
+        }
+
+        if (FileType === '语音') {
+          let recordData = this.data.recordData;
+
+          recordData.push({
+            tempFilePath: URL_PATH + FileUrl,     // 拼接地址，用作显示
+            CustFollowFileID: data.CustFollowFileID,
+            time
+          });
+          this.setData({
+            recordData
+          });
+        }
       } else {
+        wx.hideLoading();
         $Message({ content: FileType + '上传失败', type: 'error' });
       };
     });
@@ -88,13 +112,25 @@ Page({
   // 添加客户跟进主体
   InserCustomerFollow(params) {
     InserCustomerFollow(params).then(res => {
-      console.log(res)
       if (res.data.result === 'success') {
         $Message({ content: '添加成功', type: 'success' });
+        this.emptyData();  // 成功后清空数据
       } else {
         $Message({ content: '添加失败', type: 'error' });
-      };
+      }
     })
+  },
+  // 成功后清空数据
+  emptyData() {
+    // 更新临时ID
+    let guidstr = guid.newGUID().toUpperCase();
+    this.data.CustFollowID = guidstr;
+
+    this.setData({
+      FollowContent: '',
+      recordData: [],
+      imageData: [],
+    });
   },
   // 切换类型
   bindTypeItem(e) {
@@ -129,32 +165,34 @@ Page({
   },
   // 输入框失去焦点时触发
   bindblurText(e) {
-
-    this.data.FollowContent = e.detail.value;
-
     this.setData({
       keyboardHeight: 0,
     });
   },
+  // 监听跟进内容输入
+  bindInputText(e) {
+    this.data.FollowContent = e.detail.value;
+  },
 
   // 上传图片
-  updateImage() {
+  updateImage(e) {
+    let types = e.currentTarget.dataset.type;
     let _this = this;
 
     wx.chooseImage({
-      count: 9, // 默认9
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      count: 9,
+      sizeType: ['original', 'compressed'],
+      sourceType: [types],
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePaths = res.tempFilePaths || [];
+        let tempFilePaths = res.tempFilePaths || [];
 
         wx.showLoading({
           title: '图片上传中',
         });
 
         tempFilePaths.forEach(item => {
-          _this.uploadFile(item);
+          _this.uploadFile('图片', item);
         });
       },
       fail(e) {
@@ -162,10 +200,9 @@ Page({
       }
     })
   },
-  // 调用上传接口
-  uploadFile(path) {
+  // 调用图片上传接——有图片和语音两种，time是语音多有的秒数
+  uploadFile(types, path, time = '') {
     let _this = this;
-    let { imageData, imageFullData } = this.data;
 
     wx.uploadFile({
       url: FileUpLoad,
@@ -174,46 +211,55 @@ Page({
       success(res) {
         let data = JSON.parse(res.data);
         if (data.result === 'success') {
-          let path = data.sm_path.replace(/\|/, '');      
+          let path = data.path.replace(/\|/, '');
 
-          imageData.push(path);
-          imageFullData.push(URL_PATH + path);    // URL_PATH 拼接图片地址，用来显示
-          
-          _this.data.imageData = imageData;
-          _this.setData({
-            imageFullData
-          });
-          $Message({ content: '图片上传成功', type: 'success' });
+          if (types === '图片') {
+            // 上传成功之后，调用文件上传接口，拿到图片返回地址
+            _this.InserCustomerFollowFile('图片', path);
+          }
+          if (types === '语音') {
+            console.log('path', path)
+            _this.InserCustomerFollowFile('语音', path, time);
+          }
         } else {
-          $Message({ content: '图片上传失败', type: 'error' });
+          $Message({ content: types + '上传失败', type: 'error' });
         };
-        wx.hideLoading();
       },
       fail(error) {
         console.log(error)
         wx.hideLoading();
-        $Message({ content: '图片上传失败', type: 'error' });
+        $Message({ content: types + '上传失败', type: 'error' });
       }
     })
   },
   // 删除图片
   bindRemoveImg(e) {
-    let index = e.currentTarget.dataset;
-    let { imageData, imageFullData } = this.data;
+    let { id, index } = e.currentTarget.dataset;
+    let imageData = this.data.imageData;
 
-    imageData.splice(index, 1);
-    imageFullData.splice(index, 1);
+    wx.showLoading({ title: '正在删除'});
 
-    this.setData({
-      imageData,
-      imageFullData
+    DelCustomerFollowFile({
+      CustFollowFileID: id
+    }).then(res => {
+      wx.hideLoading();
+      if (res.data.result === 'success') {
+        $Message({ content: '删除成功', type: 'success' });
+        imageData.splice(index, 1);
+        this.setData({
+          imageData
+        });
+      } else {
+        $Message({ content: '删除失败', type: 'error' });
+      };
     });
   },
 
-  // 录音功能
-  // 打开录音
+  /**
+   * 录音功能
+   */
+  // 打开录音容器
   bindOpenRecord() {
-    console.log('open')
     this.setData({
       IsShowRecord: true,
       IsShowShade: true
@@ -249,6 +295,7 @@ Page({
   recordStart() {
     this.recorderManager.start({
       duration: this.data.recordDuration,
+      format: 'mp3'
     });
     this.recorderManager.onStart(() => {
       this.setData({
@@ -256,7 +303,6 @@ Page({
       });
       // 计时
       let num = 1;
-      this.setData({ recordDurationTime: 1 });
       this.data.time = setInterval(() => {
         if (this.data.recordDurationTime >= (this.data.recordDuration / 1000)) {
           clearInterval(this.data.time);
@@ -271,9 +317,9 @@ Page({
   },
   // 监听结束录音
   recordStop() {
-    this.recorderManager.onStop((data) => {
-      this.data.recordPath = data;     // 保存当前录音数据
-      console.log(data)
+    this.recorderManager.onStop((res) => {
+      this.data.recordPath = res;     // 保存当前录音数据
+      
       this.setData({
         recordDesc: '完成录音',
         recordStatus: 2
@@ -324,30 +370,32 @@ Page({
   },
   // 保存录音
   bindSaveRecord() {
-    let recordData = this.data.recordData;
     let recordPath = this.data.recordPath;
     
     recordPath.time = parseInt(recordPath.duration / 1000);   // 取秒数
 
-    recordData.push(recordPath);
-    this.data.recordPath = {};
+    wx.showLoading({
+      title: '语音上传中',
+    });
+    // 上传语音文件
+    this.uploadFile('语音', recordPath.tempFilePath, recordPath.time);
     this.innerAudioContext.stop();
+    this.data.recordPath = {};      // 清空临时文件
 
     this.setData({
       recordStatus: 0,
       recordPlay: false,
       recordDurationTime: 0,
       recordDesc: '点击开始录音',
-      recordData
     });
   },
-  // 删除语音
+  // 删除单个以保存的语音
   bindRemoveVoice(e) {
     let index = e.currentTarget.dataset.index;
     let recordData = this.data.recordData;
 
     recordData.splice(index, 1);
-
+    this.recorderManager.stop();
     this.setData({
       recordData
     });
@@ -363,11 +411,78 @@ Page({
     });
   },  
 
+  // 发送地理位置
+  bindOpenLocation() {
+    this.getSetting();
+  },
+  getSetting() {
+    let _this = this;
+
+    wx.getSetting({
+      success(res) {
+        console.log(res)
+        if (!res.authSetting['scope.userLocation']) {
+          wx.authorize({
+            scope: 'scope.userLocation',
+            success() {
+              // console.log('授权成功')
+              _this.getLocation();
+            },
+            fail() {
+              console.log('取消授权')
+              // _this.setData({
+              //   isLocation: true      // 显示再次授权按钮
+              // })
+            }
+          })
+        } else {
+          _this.getLocation();
+        }
+      }
+    })
+  },
+  // 获取经纬度
+  getLocation() {
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        // console.log(res)
+        this.locationMap(res.latitude, res.longitude);
+      }.bind(this),
+      fail(err) {
+        $Message({ content: err.errMsg, type: 'error' })
+      }
+    })
+  },
+  // 根据经纬度，定位
+  locationMap(latitude, longitude) {
+    // 实例化API核心类
+    let map = new QQMapWX({
+      key: MAP_KEY // 必填
+    });
+    // 调用接口
+    map.reverseGeocoder({
+      location: {
+        latitude: latitude,
+        longitude: longitude
+      },
+      success: function (res) {
+        console.log(res);
+        this.setData({
+          Position: res.result.address || ''
+        });
+      }.bind(this),
+      fail: function (err) {
+        console.log(err);
+      }
+    });
+  },
+
   // 点击遮罩
   bindShade() {
     this.setData({
       IsShowRecord: false,
       IsShowShade: false
     })
-  }
+  },
 })

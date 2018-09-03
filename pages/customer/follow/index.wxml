@@ -14,7 +14,17 @@
   </scroll-view>
   <!-- 文字跟进 -->
   <view class="follow__text">
-    <textarea class="textarea" value="{{FollowContent}}" focus adjust-position="{{false}}" bindfocus="bindfocusText" bindblur="bindblurText" auto-height placeholder="请输入跟进文字" />
+    <textarea 
+      class="textarea" 
+      value="{{FollowContent}}" 
+      focus 
+      auto-height 
+      adjust-position="{{false}}" 
+      bindfocus="bindfocusText" 
+      bindblur="bindblurText" 
+      bindinput="bindInputText" 
+      placeholder="请输入跟进文字" 
+    />
   </view>
   <!-- 语音跟进 -->
   <view class="voice">
@@ -33,20 +43,25 @@
   </view>
   <!-- 图片跟进 -->
   <view class="picture">
-    <view class="picture__item" wx:for="{{imageFullData}}" wx:key="{{index}}">
-      <text class="picture__close iconfont icon-guanbi" data-index="{{index}}" bindtap="bindRemoveImg"></text>
-      <image mode="aspectFill" class="picture__img" src="{{item}}"></image>
+    <view class="picture__item" wx:for="{{imageData}}" wx:key="{{index}}">
+      <text class="picture__close iconfont icon-guanbi" data-id="{{item.CustFollowFileID}}" data-index="{{index}}" bindtap="bindRemoveImg"></text>
+      <image mode="aspectFill" class="picture__img" src="{{item.path}}"></image>
     </view>
+  </view>
+  <!-- 地理位置 -->
+  <view class="position" hidden="{{!Position}}">
+    <text class="position__icon iconfont icon-dingwei"></text>
+    <text class="position__text">{{Position}}</text>
   </view>
 </view>
 
 <view class="footer" style="bottom: {{keyboardHeight}}px">
   <!-- 操作图标 -->
   <view class="footer__btn">
-    <text class="footer__icon iconfont icon-xiangji"></text>
-    <text class="footer__icon iconfont icon-zhaopian" bindtap="updateImage"></text>
-    <text class="footer__icon iconfont icon-yuyin" bindtouchstart="bindOpenRecord"></text>
-    <text class="footer__icon iconfont icon-dingwei"></text>
+    <text class="footer__icon iconfont icon-xiangji" data-type="camera" bindtap="updateImage"></text>
+    <text class="footer__icon iconfont icon-zhaopian" data-type="album" bindtap="updateImage"></text>
+    <text class="footer__icon iconfont icon-yuyin" bindtap="bindOpenRecord"></text>
+    <text class="footer__icon iconfont icon-dingwei" bindtap="bindOpenLocation"></text>
     <text class="footer__send" bindtap="bindSend">发送</text>
   </view>
   <!-- 录音 -->

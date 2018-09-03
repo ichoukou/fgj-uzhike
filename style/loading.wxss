@@ -8,7 +8,7 @@
   padding: 10rpx;
 }
 .loading__icon {
-  display: inline-block;
+  /* display: inline-block; */
   animation: rotate 1.5s linear infinite;
 }
 .loading__icon {

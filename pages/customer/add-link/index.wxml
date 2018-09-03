@@ -48,8 +48,10 @@
       <view class="iconfont icon-jiantou2"></view>
     </view>
   </view>
-  <view class="footer" bindtap="bindSubmit">
-    <text>完成</text>
+  <view class="footer">
+    <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="submit">
+      {{loading ? '上传中' : '完成'}}
+    </button>
   </view>
 </view>
 

@@ -1,0 +1,174 @@
+<view class='content'>
+  <scroll-view scroll-y style="height: 100%;">
+    <view class='scroll__space'>
+      <view class='list'>
+        <view class='list__content'>
+          <text class='list__text'>楼盘</text>
+          <view class='list__estate' catchtap='selectEstate' wx:if='{{!Estate.EstateName}}'>请选择</view>
+          <view style="padding-left:70rpx" wx:else>{{Estate.EstateName}}</view>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list__content list__right'>
+          <text class='list__text'>销售类型</text>
+          <view class='list__button'>
+            <radio-group class="radio-group" bindchange="radioChange">
+              <label class="radio {{index==checked?'active':''}}" wx:for="{{sales}}" wx:key="label" >
+                <radio value="{{item.value}}" checked="{{item.checked}}" class="list__radio" />{{item.label}}
+              </label>
+            </radio-group>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='scroll__space' hidden="{{checked==0}}">
+      <view class='list list__t20 list__textarea'>
+        <view class='list__m20'>具体信息</view>
+        <view>
+          <textarea placeholder='请填写' placeholder-class='list__placeholder'> </textarea>
+        </view>
+      </view>
+    </view>
+    <view class='scroll__space'>
+      <view class='list list__t20'>
+        <view class='list__content'>
+          <text class='list__text'>项目名称</text>
+          <view class=''>
+            <input placeholder='请输入' bindblur="bindNameChange" placeholder-style='color:rgb(201,201,201)' value="{{Estate.EstateName}}"></input>
+          </view>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list__content-sort'>
+          <view style='margin-top:20rpx'>项目种类</view>
+          <lc-checkbox items="{{items}}" bindchange="changeCheckbox"></lc-checkbox>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list__content'>
+          <text class='list__text'>报备类型</text>
+          <picker bindchange='bindDeclareTypeChange' range='{{DeclareTypeArray}}' value="">
+            <view class='list__desc' wx:if="{{params.DeclareType==''}}">请选择</view>
+            <view class='list__desc' wx:else>{{DeclareTypeArray[params.DeclareType]}}</view>
+          </picker>
+          <text class="iconfont icon-jiantou2 list__arrow"></text>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list__content'>
+          <text class='list__text'>报备有效期</text>
+          <picker bindchange='bindDeclareProtectChange' range='{{DeclareProtectDaysArray}}' value="">
+            <view class='list__desc' wx:if="{{params.DeclareProtectDays==''}}">请选择</view>
+            <view class='list__desc' wx:else>{{DeclareProtectDaysArray[params.DeclareProtectDays-1]}}天</view>
+          </picker>
+          <text class="iconfont icon-jiantou2 list__arrow"></text>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list__content'>
+          <text class='list__text'>是否带访</text>
+          <picker bindchange='bindNeedBringCustChange' range='{{NeedBringCustArray}}' value="">
+            <view class='list__desc' wx:if="{{params.NeedBringCust==''}}">请选择</view>
+            <view class='list__desc' wx:else>{{NeedBringCustArray[params.NeedBringCust]}}</view>
+          </picker>
+          <text class="iconfont icon-jiantou2 list__arrow"></text>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list__content'>
+          <text class='list__text'>到访有效期</text>
+          <picker bindchange='bindVisitProtectDaysChange' range='{{VisitProtectDaysArray}}' value="">
+            <view class='list__desc' wx:if="{{params.VisitProtectDays==''}}">请选择</view>
+            <view class='list__desc' wx:else>{{VisitProtectDaysArray[params.VisitProtectDays-1]}}天</view>
+          </picker>
+          <text class="iconfont icon-jiantou2 list__arrow"></text>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list_content-sort' style="margin-bottom:20rpx">
+          <view style='margin-top:20rpx'>折扣优惠标签</view>
+          <view class='sort__content'>
+            <lc-checkbox items="{{label}}" bindchange="OfferFlagchangeCheckbox"></lc-checkbox>
+          </view>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list__content'>
+          <text class='list__text'>佣金模式</text>
+          <picker bindchange='bindCommissionModeChange' range='{{CommissionModeArray}}' value="{{CommissionModeIndex}}" range-key="name">
+            <view class='list__desc' wx:if="{{params.CommissionMode==''}}">请选择</view>
+            <view class='list__desc' wx:if="{{CommissionModeIndex==0}}">{{params.CommissionMode}}</view>
+            <view class='list__desc' wx:else>{{CommissionModeArray[CommissionModeIndex].name}}</view>
+          </picker>
+          <text class="iconfont icon-jiantou2 list__arrow"></text>
+        </view>
+      </view>
+      <view class='list' style='height:220rpx'>
+        <view>
+          <view class='list__m20'>佣金描述</view>
+          <view class='list__input'>
+            <!-- <input class='input' placeholder='请填写' placeholder-class='input__placeholder' bindinput='bindCommissionChange'></input>
+            <view class='view-input'>{{Commission}}</view> -->
+            <textarea placeholder='请填写' placeholder-class='list__placeholder' bindblur="bindCommissionChange" value="{{params.Commission}}"> </textarea>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='scroll__space'>
+      <view class='list list__t20 list__textarea'>
+        <view>
+          <view class='list__m20'>结算模式描述</view>
+          <view>
+            <textarea placeholder='请填写' placeholder-class='list__placeholder' bindblur='SettlementDescChange' value="{{params.SettlementDesc}}"> </textarea>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class='scroll__space'>
+      <view class='list list__t20 list__textarea'>
+        <view>
+          <view class='list__m20'>项目说明/备注</view>
+          <view>
+            <textarea placeholder='请填写' placeholder-class='list__placeholder' bindblur='RemarkChange' value="{{params.Remark}}"></textarea>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='scroll__space'>
+      <view class='list list__t20 '>
+        <view class='list__content list__right'>
+          <text class='list__text'>是否公开</text>
+          <switch checked="{{IsOpen}}" bindchange="switchChange" />
+        </view>
+      </view>
+    </view>
+    <view class='scroll__space list__t20' wx:for="{{ManagerContactArray}}"  wx:key="">
+      <view class='list'>
+        <view class='list__content'>
+          <text class='list__text'>项目联系人</text>
+          <input placeholder='请填写' placeholder-class='list__placeholder' data-name="{{index}}" bindblur='ProjectName'></input>
+        </view>
+      </view>
+      <view class='list'>
+        <view class='list__content'>
+          <text class='list__text'>电话</text>
+          <input placeholder='请填写' placeholder-class='list__placeholder' data-phone="{{index}}" bindblur='ProjectPhone'></input>
+        </view>
+      </view>
+    </view>
+
+    <view class='list__add'>
+      <text class="iconfont icon-tianjia add"></text>
+      <text class='add__member' catchtap='addMember'>添加联系人</text>
+    </view>
+
+  </scroll-view>
+</view>
+
+<view class="footer">
+  <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="bindSubmit">
+    <text hidden="{{loading}}">完成</text>
+  </button>
+</view>
+<i-message id="message" />

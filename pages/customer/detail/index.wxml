@@ -7,11 +7,11 @@
       <text>类型：{{CustData.Grade}}</text>
     </view>
     <view class="funcs">
-      <view class="funcs-item">
+      <view class="funcs-item" bindtap="bindOpenFollow">
         <view class="iconfont icon-genjin"></view>
         <view class="item-title">跟进</view>
       </view>
-      <view class="funcs-item">
+      <view class="funcs-item" bindtap="bindPhoneCall">
         <view class="iconfont icon-bohao"></view>
         <view class="item-title">拨号</view>
       </view>
@@ -135,50 +135,66 @@
       </view>
     </view>
   </view>
-  <!-- 客户动态 -->
+  <!-- 客户跟进 -->
   <view class="action">
     <view class="item item-flex">
-      <view class="title">客户动态</view>
-      <view class="all">查看全部</view>
+      <view class="title">客户跟进</view>
+      <view class="all" bindtap="bindOpenAllFollow">查看全部</view>
     </view>
-    <view class="action-item">
-      <image class="avatar" src="../../../images/emp-img.jpg"></image>
-      <view class="message">
-        <text class="name">王洋</text>
-        <text class="tel">15372778311</text>
-        <text class="time">17:53:17</text>
-        <view class="info">
-          <view class="text">
-            将与现有客户进行的沟通进展进行记录，以确优质绍新客客户提供优质提供将与现有客户进行的沟通进展进行记录，以确优质绍新客客户提供优质提供，以确优质绍新客客户提供优质提供
-            <!-- <span class="more">展开更多</span> -->
+    <view class="follow_content">
+      <view class="follow__list" wx:for="{{followData}}" wx:key="{{index}}">
+        <!-- 头像 -->
+        <view class="follow__head">
+          <image class="follow_head-img" mode="aspectFill" src="../../../images/emp-img.jpg"></image>
+        </view>
+        <!-- 右侧内容 -->
+        <view class="follow__right">
+          <view class="follow__top">
+            <text class="follow__name">{{item.EmpName}}</text>
+            <text class="follow_time">{{item.FollowDate}}</text>
+          </view>
+          <!-- 文字跟进 -->
+          <view class="follow_text" wx:if="{{item.FollowContent}}">{{item.FollowContent}}</view>
+          <!-- 图片跟进 -->
+          <view class="follow_pic" wx:if="{{item.imageData.length}}">
+            <image 
+              wx:for="{{item.imageData}}" 
+              wx:key="{{index}}"
+              wx:for-item="img"
+              class="follow_pic-img" 
+              mode="widthFix" 
+              src="{{img}}" 
+              data-current="{{img}}"
+              data-item="{{item}}"
+              bindtap="bindPreviewImage"
+            ></image>
+          </view>
+          <!-- 语音跟进 -->
+          <view 
+            class="voice"
+            style="width: 150px"
+            wx:if="{{item.audioData.length}}"
+            wx:for="{{item.audioData}}" 
+            wx:for-item="audio"
+            wx:for-index="audioIndex"
+            wx:key="{{audioIndex}}"
+            data-audio="{{audio}}"
+            data-index="{{index}}"
+            data-audio-index="{{audioIndex}}"
+            bindtap="bindPlayAudio"
+          >
+            <text class="voice_yuyin iconfont icon-yuyin"></text>
+            <view class="voice_play {{isPlayAudio === (index + '' + audioIndex) ? 'voice_line--play' : ''}}">
+              <text class="voice_line"></text>
+              <text class="voice_line"></text>
+              <text class="voice_line"></text>
+            </view>
+            <text class="voice_text">{{audio.time}}s</text>
           </view>
         </view>
       </view>
-    </view>
-    <view class="action-item">
-      <image class="avatar" src="../../../images/emp-img.jpg"></image>
-      <view class="message">
-        <text class="name">王洋</text>
-        <text class="tel">15372778311</text>
-        <text class="time">2018.7.23 17:53:17</text>
-        <view class="info pics">
-          <image class="img" src="../../../images/emp-img.jpg"></image>
-          <image class="img" src="../../../images/emp-img.jpg"></image>
-          <image class="img" src="../../../images/emp-img.jpg"></image>
-        </view>
-      </view>
-    </view>
-     <view class="action-item">
-      <image class="avatar" src="../../../images/emp-img.jpg"></image>
-      <view class="message">
-        <text class="name">王洋</text>
-        <text class="tel">15372778311</text>
-        <text class="time">2018.7.23 17:53:17</text>
-        <view class="info">
-          <text>带看完成。</text>
-          <text class="textcolor">#艾溪湖一号 一号楼0502#</text>
-        </view>
-      </view>
+      <!-- 什么都没有 -->
+      <empty wx:if="{{followLoading && !followData.length}}" desc="没有跟进内容"></empty>
     </view>
   </view>
   <!-- 关联人员 -->
@@ -196,26 +212,7 @@
       <view class="iconfont icon-jianhao g-extend-after" data-index="{{index}}" data-id="{{item.CustLinkID}}" bindtap="bindCloseLink"></view>
     </view>
   </view>
-  <!-- 相关人员 -->
-  <view class="contact">
-    <view class="item item-flex">
-      <view class="title">相关人员</view>
-      <view class="change">变更人员</view>
-    </view>
-    <view class="contact-item">
-      <image class="avatar" src="../../../images/emp-img.jpg"></image>
-      <view class="name">王洋</view>
-      <view class="leader">负责人</view>
-    </view>
-    <view class="contact-item">
-      <image class="avatar" src="../../../images/emp-img.jpg"></image>
-      <view class="name">张美美</view>
-      <view class="leader">负责人</view>
-    </view>
-  </view>
-  <view class="footer">
-    一天前 08:12:32 录入
-  </view>
+  <view class="footer">录入时间：{{custData.TrustDate}}</view>
 </view>
 
 <i-message id="message" />

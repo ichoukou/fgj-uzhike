@@ -1,0 +1,63 @@
+<view class="follow_content">
+  <view class="follow__list" wx:for="{{listData}}" wx:key="{{index}}">
+    <!-- 头像 -->
+    <view class="follow__head">
+      <image class="follow_head-img" mode="aspectFill" src="../../../images/emp-img.jpg"></image>
+    </view>
+    <!-- 右侧内容 -->
+    <view class="follow__right">
+      <view class="follow__top">
+        <text class="follow__name">{{item.EmpName}}</text>
+        <text class="follow_time">{{item.FollowDate}}</text>
+      </view>
+      <!-- 文字跟进 -->
+      <view class="follow_text" wx:if="{{item.FollowContent}}">{{item.FollowContent}}</view>
+      <!-- 图片跟进 -->
+      <view class="follow_pic" wx:if="{{item.imageData.length}}">
+        <image 
+          wx:for="{{item.imageData}}" 
+          wx:key="{{index}}"
+          wx:for-item="img"
+          class="follow_pic-img" 
+          mode="widthFix" 
+          src="{{img}}" 
+          data-current="{{img}}"
+          data-item="{{item}}"
+          bindtap="bindPreviewImage"
+        ></image>
+      </view>
+      <!-- 语音跟进 -->
+      <view 
+        class="voice"
+        style="width: 150px"
+        wx:if="{{item.audioData.length}}"
+        wx:for="{{item.audioData}}" 
+        wx:for-item="audio"
+        wx:for-index="audioIndex"
+        wx:key="{{audioIndex}}"
+        data-audio="{{audio}}"
+        data-index="{{index}}"
+        data-audio-index="{{audioIndex}}"
+        bindtap="bindPlayAudio"
+      >
+        <text class="voice_yuyin iconfont icon-yuyin"></text>
+        <view class="voice_play {{isPlayAudio === (index + '' + audioIndex) ? 'voice_line--play' : ''}}">
+          <text class="voice_line"></text>
+          <text class="voice_line"></text>
+          <text class="voice_line"></text>
+        </view>
+        <text class="voice_text">{{audio.time}}s</text>
+      </view>
+    </view>
+  </view>
+  <!-- 什么都没有 -->
+  <empty wx:if="{{loading && !listData.length}}" desc="没有跟进内容"></empty>
+</view>
+
+<!-- 添加跟进 -->
+<view class="open-follow" bindtap="bindOpenFollow">跟进</view>
+
+<!-- 加载中 -->
+<loading type="static" hidden="{{loading}}"></loading>
+
+<i-message id="message" />

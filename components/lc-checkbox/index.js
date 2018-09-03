@@ -5,7 +5,7 @@ Component({
       type: Array,
       value: []
     },
-    value: {
+    value: {        // 一个拼接起来的字符串，用什么分割都无所谓
       type: String,
       value: '',
       observer: function (newVal, oldVal) {

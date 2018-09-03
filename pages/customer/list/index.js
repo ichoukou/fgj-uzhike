@@ -3,6 +3,7 @@ const { $Message } = require('../../../components/base/index');
 import data from '../new/pickerData';
 import { $wuxBackdrop } from '../../../components/index';
 import { GetCustPage } from '../../../api/customer/list.js';
+import { GetFollowByCustID } from '../../../api/customer/follow-list.js';
 
 let screenData = JSON.parse(JSON.stringify(data));
 // 处理更多筛选项数据，把 ‘请选择’ 改成 ‘不限’
@@ -14,18 +15,15 @@ for (let key of Object.keys(screenData)) {
 
 Page({
   data: {
-    tabNum: 1,        // 切换购房和买房
-    animationData1: '',
-    animationData2: '',
-    followShow: true,
     listData: [],   // 列表数据
     params: {       // 筛选项
       page: 1,
-      typeData: '购房'
+      // NeedType: '求购'
     },
+    followOneData: {},    // 显示最新一条跟进数据
     isPlayAudio: false,   // 是否播放语音
     isOpenFollow: false,
-    typeData: screenData.typeData,
+    typeData: screenData.pickerNeedType,
     FlagStatus: screenData.FlagStatus,
     order: screenData.order,
     screenOpen: false,   // 是否打开筛选项
@@ -127,7 +125,6 @@ Page({
   },
   // 列表滚动到底部，加载下一页
   bindscrolltolower(e) {
-    console.log(e)
     let { params, listData } = this.data;
     this.setData({
       scrollLower: false
@@ -208,7 +205,7 @@ Page({
     // 清空筛选
     let params = {
       page: 1,
-      typeData: '购房'
+      typeData: '求购'
     };
     let { typeData, FlagStatus, order } = this.data;
 
@@ -256,6 +253,7 @@ Page({
       screenOpen: false
     });
   },
+
   /**
    * 客户跟进操作
    */
@@ -265,12 +263,7 @@ Page({
       isPlayAudio: !this.data.isPlayAudio
     });
   },
-  // 切换 购房/租房
-  buyOrRent(e) {
-    this.setData({
-      tabNum: e.target.dataset.tabnum
-    })
-  },
+
   // 添加客户
   addCustomer() {
     wx.navigateTo({
@@ -287,14 +280,15 @@ Page({
   },
   // 显示跟进详细卡片
   bindShowFollow(e) {
-    let index = e.currentTarget.dataset.index;
+    let { index, item } = e.currentTarget.dataset;
     let listData = this.data.listData;
 
     listData[index].isOpenFollow = true;
     
     this.setData({
       listData
-    })
+    });
+    this.GetFollowByCustID(item.CustID);
   },
   // 关闭跟进详细卡片
   bindCloseFollow(e) {
@@ -305,6 +299,52 @@ Page({
 
     this.setData({
       listData
+    })
+  },
+  // 根据客户ID获取跟进
+  GetFollowByCustID(CustID) {
+    GetFollowByCustID({
+      CustID,
+      top: 1
+    }).then(res => {
+      // followOneData
+      if (res.data.result === 'success') {
+        let data = res.data.temptable[0] || {};
+
+        this.setData({
+          followOneData: data
+        });
+      } else {
+        this.setData({
+          followOneData: {}
+        });
+      };
+    });
+  },
+  // 查看更多跟进
+  bindOpenFollowList(e) {
+    let item = e.currentTarget.dataset.item;
+    wx.navigateTo({
+      url: '../follow-list/index?CustID=' + item.CustID
+    });
+  },
+  // 打开更多操作
+  bindshowActionSheet(e) {
+    let item = e.currentTarget.dataset.item;
+
+    wx.showActionSheet({
+      itemList: ['报备'],
+      success: function (res) {
+        switch (res.tapIndex) {
+          case 0:
+          break;
+          default: 
+            console.log('这是不可能的');
+        }
+      },
+      fail: function (res) {
+        console.log(res.errMsg)
+      }
     })
   }
 })

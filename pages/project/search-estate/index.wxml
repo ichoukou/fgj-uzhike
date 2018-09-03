@@ -1,0 +1,18 @@
+<view class='content'>
+  <view class='search'>
+    <search height="100rpx" bindquery="bindQuery" placeholder="搜索你想要楼盘"></search>
+  </view>
+  <view class='cancel'>
+    <text>取消</text>
+  </view>
+</view>
+<view wx:for="{{listData}}" class='data-list'>
+  <view class='list' data-id="{{item.EstateID}}" data-name="{{item.EstateName}}" catchtap="bindEstateSelector" >{{item.EstateName}}</view>
+</view>
+
+<loading wx:if="{{loading}}" />
+
+<view class="empty" wx:if="{{!listData.length && loading}}">
+  <text class="iconfont icon-kong empty__icon"></text>
+  <text class="empty__desc">暂无数据</text>
+</view>

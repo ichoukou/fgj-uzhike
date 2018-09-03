@@ -23,6 +23,7 @@
   flex: 1;
   min-height: 100%;
   color: #333;
+  font-size: 24rpx;
 }
 .search__icon-close {
   margin-right: 20rpx;
