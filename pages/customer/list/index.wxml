@@ -67,8 +67,10 @@
             <view class="row row-1" data-index="{{index}}" catchtap="bindCloseFollow">
               <text class="name">{{item.CustName}}</text>
               <text class="tel">{{item.Tel}}</text>
+              <text class="iconfont icon-xingbiao icon-star"></text>
               <text class="iconfont icon-gengduo1 g-extend-after" data-item="{{item}}" bindtap="bindshowActionSheet"></text>
             </view>
+            <view class="list__remark text-ellipsis">{{item.Remark}}</view>
             <view class="row">
               <view class="row-item">
                 <view class="title">报价</view>
@@ -119,6 +121,16 @@
                 </view>
                 <view class="item-title">加入日程</view>
               </view>
+              <view class="row-item center item-extend">
+                <view class="icon">
+                  <text class="iconfont icon-piliangcaozuo"></text>
+                </view>
+                <view class="item-title">批量操作</view>
+              </view>
+            </view>
+            <!-- 添加批量操作选中角标 -->
+            <view class="list__check">
+              <text class="iconfont icon-queren icon-check"></text>
             </view>
           </view>
         </view>
@@ -152,6 +164,9 @@
     </view>
   </scroll-view>
 </view>
+
+<!-- 批量操作已选浮动按钮 -->
+<view class="fixed-btn">+1</view>
 
 <screen-more id="screenMore" screenData="{{screenData}}" bindreset="bindScreenReset" bindconfirm="bindScreenConfirm" />
 <wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />

@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/inquiry/project/index",
     "pages/customer/list/index",
-    "pages/customer/follow/index",
     "pages/customer/new/index",
+    "pages/customer/follow/index",
     "pages/customer/follow-list/index",
     "pages/customer/follow-list-all/index",
     "pages/customer/look/index",

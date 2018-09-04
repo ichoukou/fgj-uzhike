@@ -2,7 +2,8 @@
 const { $Message } = require('../../../components/base/index');
 import data from '../new//pickerData';       // 保存所有选项数据
 import _fgj from '../../../utils/util.js';
-import { GetCustNeedByID, InsertCustNeed, UpdateCustNeed } from '../../../api/customer/add-need';
+import { GetCustNeedByID, InsertCustNeed, UpdateCustNeed, UpCustomerNeed } from '../../../api/customer/add-need';
+import { GetCustNeedByCustID } from '../../../api/customer/detail';
 import { CheckLogin } from '../../../api/public';
 
 Page({
@@ -11,6 +12,7 @@ Page({
       CustID: '',
       CustNeedID: '',     // 有这个ID就是编辑
     },
+    needData: [],       // 存储所有的需求数据
     unit: '万元',       // 判断需求类型决定显示 元 还是 万元
     Area: ['请选择', '请选择', '请选择'],     // 区域
     pickerNeedType: data.pickerNeedType,
@@ -43,7 +45,7 @@ Page({
   },
   onLoad: function (options) {
     console.log(options)
-    let { CustID, CustNeedID } = options;
+    let { CustID, CustNeedID, NeedType } = options;
 
     this.data.paramsCustNeed.CustID = CustID;   // 关联ID
 
@@ -52,12 +54,23 @@ Page({
       this.data.paramsCustNeed.CustNeedID = CustNeedID;
       this.GetCustNeedByID(CustNeedID);
     }
+
+    /**
+     * 获取所有的跟进
+     * 要把需求添加到主体数据内
+     */
+    this.GetCustNeedByCustID(CustID);
+    console.log('onLoad')
   },
   onReady: function () {
 
   },
   onShow: function () {
-
+    // 发送请求之后，如果权限不足回跳到登陆页面，登陆成功返回之后，可以再次上传
+    this.setData({
+      loading: false,
+      disabled: false,
+    });
   },
   // 根据CustNeedID获取客户需求
   GetCustNeedByID(CustNeedID) {
@@ -108,6 +121,18 @@ Page({
 
       } else {
         $Message({ content: res.data.msg, type: 'error' });
+      }
+    })
+  },
+  // 获取所有的跟进数据
+  GetCustNeedByCustID(CustID) {
+    GetCustNeedByCustID({
+      CustID
+    }).then(res => {
+      if (res.data.result === 'success') {
+        this.data.needData = res.data.temptable;
+      } else {
+        this.data.needData = [];
       }
     })
   },
@@ -207,22 +232,9 @@ Page({
 
     paramsCustNeed[type] = e.detail.value;
 
-    this.filterInputData(paramsCustNeed, type);   // 处理输入的数据
-
     this.setData({
       paramsCustNeed
     });
-  },
-  // 处理输入的数据
-  filterInputData(obj, types) {
-    if (obj.MaxSquare && Number(obj.MinSquare) > Number(obj.MaxSquare)) {
-      $Message({ content: '最小面积不能大于最大面积', type: 'warning' });
-      obj.MaxSquare = obj.MinSquare = '';
-    }
-    if (obj.MaxPrice && Number(obj.MinPrice) > Number(obj.MaxPrice)) {
-      $Message({ content: '最低价位不能高于最高价位', type: 'warning' });
-      obj.MaxPrice = obj.MinPrice = '';
-    }
   },
   // 完成
   submit() {
@@ -234,14 +246,9 @@ Page({
       return false;
     }
 
-    // 检查是否为登录状态
-    CheckLogin(res=> {
+    // 先检查是否为登录状态
+    CheckLogin().then(res => {
       if (res.data.result === 'success') {
-
-        this.setData({
-          loading: true,
-          disabled: true
-        });
 
         // 处理数据价位，用作上传，元
         if (params.NeedType === '求购') {
@@ -252,7 +259,7 @@ Page({
         if (params.CustNeedID) {
           this.UpdateCustNeed(params);          // 编辑
         } else {
-          this.InsertCustNeed(params);    // 新建
+          this.InsertCustNeed(params);          // 新建
         }
       } else {
         wx.showToast({
@@ -266,10 +273,29 @@ Page({
           })
         }, 1000);
       }
-    });
+    })
   },
   // 新建需求
   InsertCustNeed(params) {
+    let needData = this.data.needData;
+    let mapNeedType = needData.map(item => item.NeedType);
+
+    // 判断需求类型是否重复
+    if (mapNeedType.indexOf(params.NeedType) !== -1) {
+      $Message({ content: '不能添加重复的需求类型', type: 'error' });
+      return false;
+    }
+
+    /**
+     * 单独修改客户需求到客户主体
+     */
+    needData.push(params);
+    this.UpCustomerNeed(needData);
+
+    this.setData({
+      loading: true,
+      disabled: true
+    });
     wx.showLoading({ title: '添加中' });
     InsertCustNeed(params).then(res => {
       wx.hideLoading();
@@ -307,6 +333,28 @@ Page({
   },
   // 编辑需求
   UpdateCustNeed(params) {
+    let needData = this.data.needData;
+    let newNeedData = needData.filter(item => item.CustNeedID !== params.CustNeedID);
+    let mapNeedType = newNeedData.map(item => item.NeedType);
+
+    // 判断需求类型是否重复
+    if (mapNeedType.indexOf(params.NeedType) !== -1) {
+      $Message({ content: '不能添加重复的需求类型', type: 'error' });
+      return false;
+    }
+
+    /**
+     * 单独修改客户需求到客户主体
+     * 先删掉正在编辑的，再添加进去
+     * 这里的逻辑极其繁琐，做好心理准备
+     */
+    newNeedData.push(params);
+    this.UpCustomerNeed(newNeedData);
+
+    this.setData({
+      loading: true,
+      disabled: true
+    });
     wx.showLoading({ title: '修改中' });
     UpdateCustNeed(params).then(res => {
       wx.hideLoading();
@@ -324,6 +372,78 @@ Page({
         $Message({ content: res.data.msg, type: 'error' });
       }
     });
+  },
+  // 单独修改客户需求到客户主体
+  UpCustomerNeed(needData) {
+    let params = this.addCustNeedData(needData)
+    params.CustID = this.data.paramsCustNeed.CustID;
+
+    UpCustomerNeed(params).then(res => {
+      if (res.data.result === 'success') {
+        console.log('上传成功')
+      } else {
+        $Message({ content: res.data.msg, type: 'error' });
+      }
+    });
+  },
+  // 在主体内容上附加需求数据， 返回拼接好的数据
+  addCustNeedData() {
+    let needData = this.data.needData;
+    let custNeedObj = {
+      NeedType: '',
+      PropertyType: '',
+      Area: '',
+      Room: '',
+      MinGSquare: 0,
+      MaxGSquare: 0,
+      MinZSquare: 0,
+      MaxZSquare: 0,
+      MinXSquare: 0,
+      MaxXSquare: 0,
+      MinGPrice: 0,
+      MaxGPrice: 0,
+      MinZPrice: 0,
+      MaxZPrice: 0,
+      MinXPrice: 0,
+      MaxXPrice: 0,
+    };
+
+    needData.forEach(item => {
+      for (let key of Object.keys(item)) {
+        // 只针对部分字段做拼接
+        if (key === 'NeedType' || key === 'PropertyType' || key === 'Area' || key === 'Room') {
+          if (custNeedObj[key]) {
+            custNeedObj[key] = custNeedObj[key] + '|' + item[key]
+          } else {
+            custNeedObj[key] = '|' + item[key]
+          }
+        }
+      }
+      // 面积和价位有对应的字段，根据类型对应
+      switch (item.NeedType) {
+        case '求购':
+          custNeedObj.MinGSquare = item.MinSquare;
+          custNeedObj.MaxGSquare = item.MaxSquare;
+          custNeedObj.MinGPrice = item.MinPrice;
+          custNeedObj.MaxGPrice = item.MaxPrice;
+          break;
+        case '求租':
+          custNeedObj.MinZSquare = item.MinSquare;
+          custNeedObj.MaxZSquare = item.MaxSquare;
+          custNeedObj.MinZPrice = item.MinPrice;
+          custNeedObj.MaxZPrice = item.MaxPrice;
+          break;
+        case '装修':
+          custNeedObj.MinXSquare = item.MinSquare;
+          custNeedObj.MaxXSquare = item.MaxSquare;
+          custNeedObj.MinXPrice = item.MinPrice;
+          custNeedObj.MaxXPrice = item.MaxPrice;
+          break;
+        default:
+          console.log('你敢走到这里来试试');
+      }
+    });
+    return custNeedObj
   },
   // 验证数据
   verifyData(data) {
@@ -363,6 +483,19 @@ Page({
       result.msg = '请填写最大价位';
       return result;
     };
+
+    if (Number(data.MinSquare) > Number(data.MaxSquare)) {
+      // data.MaxSquare = data.MinSquare = '';
+      result.msg = '最小面积不能大于最大面积';
+      return result;
+    }
+    if (Number(data.MinPrice) > Number(data.MaxPrice)) {
+      // $Message({ content: '最低价位不能高于最高价位', type: 'warning' });
+      // data.MaxPrice = data.MinPrice = '';
+      result.msg = '最低价位不能高于最高价位';
+      return result;
+    }
+
     result.status = true;
     result.msg = '验证通过';
 

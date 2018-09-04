@@ -53,7 +53,10 @@ Page({
     
   },
   onShow: function () {
-    
+    this.setData({
+      loading: false,
+      disabled: false,
+    });
   },
   // 监听input改变——客户需求数据
   changeInput(e) {

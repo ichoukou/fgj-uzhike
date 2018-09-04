@@ -6,7 +6,7 @@ import _fgj from '../../../utils/util';
 
 import { InsertCustomer, GetCustByID, GetCustNeedByCustID, GetCustomerLinkByCustID, UpCustomer } from '../../../api/customer/new';
 import { DelCustLink } from '../../../api/customer/add-link';
-import { DelCustNeed } from '../../../api/customer/add-need';
+import { DelCustNeed, UpCustomerNeed } from '../../../api/customer/add-need';
 
 // 临时ID
 const guid = new GUID();
@@ -59,6 +59,11 @@ Page({
   onReady: function () {
   },
   onShow: function () {
+    // 发送请求之后，如果权限不足回跳到登陆页面，登陆成功返回之后，可以再次上传
+    this.setData({
+      loading: false,
+      disabled: false,
+    });
     // 有CustID就是编辑
     let CustID = this.data.CustID;
     if (CustID) {
@@ -94,8 +99,10 @@ Page({
   },
   // 添加需求
   bindOpenNeed() {
+    let paramsCustomer = this.data.paramsCustomer;
+
     wx.navigateTo({
-      url: '../add-need/index?CustID=' + this.data.paramsCustomer.CustID
+      url: `../add-need/index?CustID=${paramsCustomer.CustID}`
     });
   },
   // 修改需求
@@ -126,6 +133,7 @@ Page({
               _this.setData({
                 paramsCustNeed
               });
+              _this.UpCustomerNeed(paramsCustNeed);
             } else {
               $Message({ content: '删除失败', type: 'error' });
             }
@@ -282,7 +290,13 @@ Page({
   },
   // 添加客户——主体数据
   InsertCustomer() {
-    InsertCustomer(this.data.paramsCustomer).then(res => {
+    let { paramsCustomer, paramsCustNeed } = this.data;
+    // 在主体内容上附加需求数据
+    let custNeedObj = this.addCustNeedData(paramsCustNeed);
+    // 拼接到主体数据内
+    let params = Object.assign({}, paramsCustomer, custNeedObj);
+
+    InsertCustomer(params).then(res => {
       wx.hideLoading();
       this.setData({
         loading: false,
@@ -328,6 +342,77 @@ Page({
     else {
       this.UpCustomer();      // 编辑
     }
+  },
+  // 单独修改客户需求到客户主体
+  UpCustomerNeed(needData) {
+    let params = this.addCustNeedData(needData)
+    params.CustID = this.data.CustID;
+
+    UpCustomerNeed(params).then(res => {
+      if (res.data.result === 'success') {
+        console.log('上传成功')
+      } else {
+        $Message({ content: res.data.msg, type: 'error' });
+      }
+    });
+  },
+  // 在主体内容上附加需求数据， 返回拼接好的数据
+  addCustNeedData(needData) {
+    let custNeedObj = {
+      NeedType: '',
+      PropertyType: '',
+      Area: '',
+      Room: '',
+      MinGSquare: 0,
+      MaxGSquare: 0,
+      MinZSquare: 0,
+      MaxZSquare: 0,
+      MinXSquare: 0,
+      MaxXSquare: 0,
+      MinGPrice: 0,
+      MaxGPrice: 0,
+      MinZPrice: 0,
+      MaxZPrice: 0,
+      MinXPrice: 0,
+      MaxXPrice: 0,
+    };
+
+    needData.forEach(item => {
+      for (let key of Object.keys(item)) {
+        // 只针对部分字段做拼接
+        if (key === 'NeedType' || key === 'PropertyType' || key === 'Area' || key === 'Room') {
+          if (custNeedObj[key]) {
+            custNeedObj[key] = custNeedObj[key] + '|' + item[key]
+          } else {
+            custNeedObj[key] = '|' + item[key]
+          }
+        }
+      }
+      // 面积和价位有对应的字段，根据类型对应
+      switch (item.NeedType) {
+        case '求购':
+          custNeedObj.MinGSquare = item.MinSquare;
+          custNeedObj.MaxGSquare = item.MaxSquare;
+          custNeedObj.MinGPrice = item.MinPrice;
+          custNeedObj.MaxGPrice = item.MaxPrice;
+          break;
+        case '求租':
+          custNeedObj.MinZSquare = item.MinSquare;
+          custNeedObj.MaxZSquare = item.MaxSquare;
+          custNeedObj.MinZPrice = item.MinPrice;
+          custNeedObj.MaxZPrice = item.MaxPrice;
+          break;
+        case '装修':
+          custNeedObj.MinXSquare = item.MinSquare;
+          custNeedObj.MaxXSquare = item.MaxSquare;
+          custNeedObj.MinXPrice = item.MinPrice;
+          custNeedObj.MaxXPrice = item.MaxPrice;
+          break;
+        default:
+          console.log('你敢走到这里来试试');
+      }
+    });
+    return custNeedObj
   },
   // 验证数据
   verifyData(data) {

@@ -88,6 +88,7 @@
 }
 .list-wrap {
   overflow: hidden;
+  padding-bottom: 20rpx;
 }
 .list {
   position: absolute;
@@ -98,14 +99,15 @@
   z-index: 1;
 }
 .list-item {
+  overflow: hidden;
   position: relative;
   padding: 0 24rpx; 
 }
 .list-baseinfo {
   overflow: hidden;
   position: relative;
-  height: 374rpx;
-  margin: 20rpx 0;
+  margin-top: 20rpx;
+  height: 414rpx;
   background: #fff;
   border-radius: 8rpx;
   box-shadow: 0 2rpx 6rpx rgba(255, 205, 164, .3);
@@ -157,11 +159,22 @@
 .tel {
   margin-left: 18rpx;
   font-size: 30rpx;
-  flex: 1;
   transition: color .3s;
 }
+.icon-star {
+  margin-left: 4rpx;
+  font-size: 30rpx;
+  color: rgb(255, 176, 0);
+}
 .icon-gengduo1 {
+  margin-left: auto;
   color: #c1c1c1;
+}
+.list__remark {
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 24rpx;
+  color: #666;
 }
 .row-item {
   margin-left: 30rpx;
@@ -219,6 +232,8 @@
   font-size: 18rpx;
 }
 
+/* 下面是黎聪写的样式 */
+
 /* 打开跟进 */
 .open-follow .list-baseinfo {
   transform: scale(.9);
@@ -249,7 +264,7 @@
   right: 20rpx;
   padding: 20rpx;
   box-shadow: 0 0 6rpx rgba(255,205,164,.5);
-  height: 294rpx;
+  height: 334rpx;
   background-color: #fff;
   opacity: 0;
   transform-origin: 50% 100%;
@@ -376,4 +391,37 @@
   font-size: 24rpx;
   color: rgb(210,210,210);
   transform: rotate(-90deg);
+}
+
+/* 报备操作样式 */
+/* 角标 */
+.list__check {
+  position: absolute;
+  bottom: -24rpx;
+  right: -20rpx;
+  border-radius: 0 0 8rpx 0;
+  border: 35rpx solid rgba(254, 108, 27, 1);
+  border-left-color: transparent;
+  border-top-color: transparent;
+  width: 0;
+  height: 0;
+}
+.icon-check {
+  position: absolute;
+  font-size: 30rpx;
+  color: #fff;
+}
+.fixed-btn {
+  position: fixed;
+  bottom: 60rpx;
+  right: 20rpx;
+  z-index: 10;
+  border-radius: 50%;
+  width: 70rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  background-color: #fe495b;
+  font-size: 30rpx;
+  color: #fff;
 }

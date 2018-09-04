@@ -1,0 +1,106 @@
+/* 切换 */
+.tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid rgb(245, 245, 245);
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  background-color: #fff;
+}
+.tab__item {
+  flex: 1;
+  font-size: 30rpx;
+  color: #c1c1c1;
+}
+.tab__item.active {
+  color: #333;
+}
+.tab__line {
+  position: absolute;
+  bottom: 8rpx;
+  left: 0;
+  width: 50%;
+}
+.tab__line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 8rpx;
+  width: 180rpx;
+  height: 8rpx;
+  background-color: #FA7730;
+  background-image: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+}
+
+/* 项目列表 */
+.project-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10rpx;
+}
+.project__item {
+  padding: 10rpx;
+  width: 50%;
+}
+.project__content {
+  overflow: hidden;
+  border-radius: 8rpx;
+  background-color: #fff;
+}
+.project__top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  padding: 0 20rpx;
+  width: 100%;
+  height: 80rpx;
+  overflow: hidden;
+}
+.project__bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+}
+.project__name {
+  max-width: 240rpx;
+  line-height: 80rpx;
+  font-size: 32rpx;
+  color: #fff;
+}
+.project__btn {
+  margin: 10rpx 0 0 auto;
+  border: 1rpx solid #fff;
+  border-radius: 50%;
+  width: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 24rpx;
+  color: #fff;
+  white-space: nowrap;
+  text-align: center;
+}
+.project__info {
+  display: flex;
+  padding: 20rpx;
+}
+.project__left,
+.project__right {
+  flex: 1;
+}
+.project__info-title {
+  font-size: 24rpx;
+  color: #c1c1c1;
+}
+.project__desc {
+  display: block;
+  padding-top: 10rpx;
+  font-size: 30rpx;
+  color: #333;
+}

@@ -109,6 +109,8 @@ Page({
       if (res.data.result === 'success') {
         let data = res.data.temptable || [];
 
+        this.fillterData(data);     // 处理分页数据
+
         this.setData({
           listData: data,
           loading: true,
@@ -134,6 +136,8 @@ Page({
       if (res.data.result === 'success') {
         let data = res.data.temptable || [];
 
+        this.fillterData(data);     // 处理分页数据
+
         this.setData({
           listData: listData.concat(data),
           scrollLower: true
@@ -144,6 +148,17 @@ Page({
         })
       };
     })
+  },
+  // 处理分页数据
+  fillterData(data) {
+    data.forEach(item => {
+      if (item.Area) {
+        item.Area = item.Area.replace(/\|/, '');
+      }
+      if (item.Room) {
+        item.Room = item.Room.replace(/\|/, '');
+      }
+    });
   },
   // 打开添加页面
   bindOpenAdd() {

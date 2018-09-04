@@ -7,7 +7,7 @@ import { URL_PATH } from '../../../utils/config';
 
 Page({
   data: {
-    CustID: '',
+    CustID: '',       // 客户ID
     custData: {},     // 客户主体数据
     needData: [],     // 客户需求数据
     followData: [],   // 跟进数据
@@ -158,9 +158,11 @@ Page({
   },
   // 添加需求
   bindOpenAddneed() {
+    let { CustID, custData } = this.data;
+
     wx.navigateTo({
-      url: '../add-need/index?CustID=' + this.data.CustID
-    })
+      url: `../add-need/index?CustID=${CustID}&NeedType=${custData.NeedType}`
+    });
   },
   // 添加关联人
   bindOpenAddLink() {

@@ -1,0 +1,74 @@
+<!-- 切换 -->
+<view class="tab">
+  <text class="tab__item active">报备项目</text>
+  <text class="tab__item">报备列表</text>
+  <text class="tab__line"></text>
+</view>
+<!-- 报备项目 -->
+<view class="tab-page">
+  <search height="120rpx" bindquery="bindQuery" placeholder="搜索你想找的项目"></search>
+  <!-- 项目列表 -->
+  <view class="project-list">
+    <view class="project__item">
+      <view class="project__content">
+        <view class="project__top">
+          <image  class="project__bg-img" src="../../../images/emp-img.jpg"></image>
+          <text class="project__name text-ellipsis">聚仁国际</text>
+          <text class="project__btn">报备</text>
+        </view>
+        <view class="project__info">
+          <view class="project__left">
+            <text class="project__info-title">已报</text>
+            <text class="project__desc">102人</text>
+          </view>
+          <view class="project__right">
+            <text class="project__info-title">最近到期时间</text>
+            <text class="project__desc">23:23:10</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="project__item">
+      <view class="project__content">
+        <view class="project__top">
+          <image  class="project__bg-img" src="../../../images/emp-img.jpg"></image>
+          <text class="project__name text-ellipsis">聚仁国际</text>
+          <text class="project__btn">报备</text>
+        </view>
+        <view class="project__info">
+          <view class="project__left">
+            <text class="project__info-title">已报</text>
+            <text class="project__desc">102人</text>
+          </view>
+          <view class="project__right">
+            <text class="project__info-title">最近到期时间</text>
+            <text class="project__desc">23:23:10</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="project__item">
+      <view class="project__content">
+        <view class="project__top">
+          <image  class="project__bg-img" src="../../../images/emp-img.jpg"></image>
+          <text class="project__name text-ellipsis">聚仁国际</text>
+          <text class="project__btn">报备</text>
+        </view>
+        <view class="project__info">
+          <view class="project__left">
+            <text class="project__info-title">已报</text>
+            <text class="project__desc">102人</text>
+          </view>
+          <view class="project__right">
+            <text class="project__info-title">最近到期时间</text>
+            <text class="project__desc">23:23:10</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 报备列表 -->
+<view class="tab-page" hidden="true">
+  <search height="120rpx" bindquery="bindQuery" placeholder="搜索你想找的项目"></search>
+</view>
