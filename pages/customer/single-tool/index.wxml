@@ -1,0 +1,41 @@
+
+<search height="100rpx" bindquery="bindQuery" placeholder="请输入手机号搜索"></search>
+<!-- 切换 -->
+<view class="tab">
+  <text class="tab__item {{tabCut === 0 ? 'active' : ''}}" data-index="0" bindtap="bindTabCut">接待详细</text>
+  <text class="tab__item {{tabCut === 1 ? 'active' : ''}}" data-index="1" bindtap="bindTabCut">报备详细</text>
+  <text class="tab__line" style="transform: translate3d({{tabCut * 100}}%, 0, 0)"></text>
+</view>
+
+<!-- 报备项目 -->
+<view class="tab-page" hidden="{{tabCut !== 0}}">
+  <!-- 项目列表 -->
+  <view class="reception-wrap">
+    <scroll-view scroll-y style="height: 100%;" bindscrolltolower="receptionListLower">
+      <view class="reception-list">
+        <view class="reception__item" wx:for="{{[1, 2]}}" wx:key="{{index}}">
+          <!-- 接待 -->
+        </view>
+      </view>
+      <empty wx:if="{{isLoading1 && !receptionData.length}}"></empty>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 报备列表 -->
+<view class="tab-page" hidden="{{tabCut !== 1}}">
+  <!-- 列表 -->
+  <view class="inquiry-wrap">
+    <scroll-view scroll-y style="height: 100%;" bindscrolltolower="inquiryListLower">
+      <view class="inquiry-list">
+        <view class="inquiry__item" wx:for="{{[1, 2, 3]}}" wx:key="{{index}}">
+          报备
+        </view>
+      </view>
+      <empty wx:if="{{isLoading2 && !inquiryData.length}}"></empty>
+    </scroll-view>
+  </view>
+</view>
+
+<wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />
+<i-message id="message" />

@@ -218,6 +218,7 @@
   font-weight: normal;
 }
 .icon {
+  margin: 0 auto;
   width: 54rpx;
   height: 54rpx;
   line-height: 54rpx;
@@ -417,6 +418,7 @@
   right: 20rpx;
   z-index: 10;
   border-radius: 50%;
+  /* box-shadow: 0 4rpx 8rpx rgba(209, 209, 209, .4); */
   width: 70rpx;
   height: 70rpx;
   line-height: 70rpx;

@@ -85,25 +85,44 @@ Page({
     ],
     onceTime: null,
     loading: false,
+    isInquiryMore: true,  // 是否有更多报备列表数据
     scrollLower: false,    // 显示上滑加载中
+    checkedData: [],       // 存储批量操作选中的客户ID
   },
   onLoad: function (options) {
+    console.log(options)
   },
   onReady: function () {
     this.$wuxBackdrop = $wuxBackdrop('#wux-backdrop', this);
     this.screenMore = this.selectComponent('#screenMore');
   },
   onShow: function () {
-    this.GetCustPage();
+    this.data.isInquiryMore = true;
+    this.getCheckedData();    // 获取批量操作已选中的客户ID
+  },
+  // 获取批量操作已选中的客户ID
+  getCheckedData() {
+    wx.getStorage({
+      key: 'checkedData',
+      success: function (res) {
+        console.log('checkedData', res.data)
+        this.data.checkedData = res.data;
+      }.bind(this),
+      complete: function () {
+        this.GetCustPage();     // 获取客户分页数据
+      }.bind(this)
+    });
+  },
+  onHide: function () {
   },
   // 获取客户分页数据
   GetCustPage() {
-    let { params } = this.data;
+    let { params, checkedData } = this.data;
 
     this.setData({
       loading: false
     });
-
+    this.data.isInquiryMore = true;
     params.page = 1;
     GetCustPage(params).then(res => {
       if (res.data.result === 'success') {
@@ -113,6 +132,7 @@ Page({
 
         this.setData({
           listData: data,
+          checkedData,
           loading: true,
           scrollLower: true
         });
@@ -127,7 +147,13 @@ Page({
   },
   // 列表滚动到底部，加载下一页
   bindscrolltolower(e) {
-    let { params, listData } = this.data;
+    let { params, listData, isInquiryMore } = this.data;
+
+    if (!isInquiryMore) {
+      console.log('没有更多数据')
+      return false;
+    }
+
     this.setData({
       scrollLower: false
     });
@@ -141,22 +167,28 @@ Page({
         this.setData({
           listData: listData.concat(data),
           scrollLower: true
-        })
+        });
       } else {
         this.setData({
           scrollLower: true
-        })
+        });
+        this.data.isInquiryMore = false;
       };
     })
   },
   // 处理分页数据
   fillterData(data) {
+    let checkedData = this.data.checkedData;
+
     data.forEach(item => {
       if (item.Area) {
         item.Area = item.Area.replace(/\|/, '');
       }
       if (item.Room) {
         item.Room = item.Room.replace(/\|/, '');
+      }
+      if (checkedData.indexOf(item.CustID) !== -1) {
+        item.checked = true;
       }
     });
   },
@@ -361,5 +393,49 @@ Page({
         console.log(res.errMsg)
       }
     })
-  }
+  },
+
+  /**
+   * 处理报备相关功能
+   */
+  // 点击批量操作
+  bindBatchOperation(e) {
+    let { item, index } = e.currentTarget.dataset;
+    let { listData, checkedData } = this.data;
+    let subIndex = checkedData.indexOf(item.CustID);    // 当前点击的客户在已选中的数据里面的下标
+
+    // 判断当前点击的客户是否已存在
+    if (subIndex === -1) {
+      checkedData.push(item.CustID);
+      item.checked = true;
+    } else {
+      checkedData.splice(subIndex, 1);
+      item.checked = false;
+    }
+
+    // 修改数据状态
+    listData.splice(index, 1, item);
+
+    this.setData({
+      listData,
+      checkedData
+    });
+  },
+  // 点击浮动的操作按钮，去批量操作
+  catchFixedBtn() {
+    let checkedData = this.data.checkedData;
+
+    console.log(checkedData);
+
+    // 缓存选中的客户ID
+    wx.setStorage({
+      key: 'checkedData',
+      data: checkedData,
+      success() {
+        wx.navigateTo({
+          url: '/pages/inquiry/batch/index',
+        });
+      }
+    });
+  },
 })

@@ -2,6 +2,10 @@
   "navigationBarTitleText": "报备",
   "usingComponents": {
     "search": "/components/search/index",
-    "loading": "/components/loading/index"
+    "loading": "/components/loading/index",
+    "empty": "/components/empty/index",
+    "wux-animation-group": "/components/animation-group/index",
+    "wux-backdrop": "/components/backdrop/index",
+    "i-message": "/components/message/index"
   }
 }

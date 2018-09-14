@@ -18,7 +18,7 @@
           data-parent-Note="{{item.PurviewNote}}"
           bindtap="bindOpenTable" 
           bindtouchstart="handlerStart" 
-          catchtouchmove="handlerMove" 
+          bindtouchmove="handlerMove" 
           bindtouchend="handlerEnd" 
           style="transform: translate3d({{item.offsetLeft}}rpx, 0, 0)">
           {{item.PurviewNote}}

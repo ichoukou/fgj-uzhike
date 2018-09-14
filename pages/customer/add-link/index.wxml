@@ -3,7 +3,7 @@
     <view class="item-list">
       <view class="item-title">
         客户姓名
-        <span class="star">*</span>
+        <text class="star">*</text>
       </view>
       <input 
         type="text" 
@@ -18,7 +18,7 @@
     <view class="item-list">
       <view class="item-title">
         手机号
-        <span class="star">*</span>
+        <text class="star">*</text>
       </view>
       <input 
         type="number" 
@@ -33,7 +33,7 @@
     <view class="item-list">
       <view class="item-title">
         选择关系
-        <span class="star">*</span>
+        <text class="star">*</text>
       </view>
       <picker 
         bindchange="bindPickerChange" 

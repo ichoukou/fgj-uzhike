@@ -1,0 +1,99 @@
+<view class="input-wrap">
+  <view class="input__list">
+    <text class="input__title">接待项目</text>
+    <view class="input__content">
+      <picker 
+        bindchange="bindPickerParamsChange" 
+        range="{{pickerProjectID}}" 
+        value="{{pickerProjectIDIndex}}" 
+        range-key="ProjectName"
+      >
+        <view class="input__picker {{pickerProjectIDIndex === 0 ? '' : 'color'}}">
+          {{pickerProjectID[pickerProjectIDIndex].ProjectName}}
+          <text class="iconfont icon-jiantou2 icon__arrow"></text>
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class="input__list">
+    <text class="input__title">姓名</text>
+    <view class="input__content">
+      <input 
+          type="number" 
+          placeholder="请输入姓名"
+          value="{{params.CustName}}"
+          data-type="CustName" 
+          bindblur="changeCustTel"
+        ></input>
+    </view>
+  </view>
+  <view class="input__list">
+    <text class="input__title">电话</text>
+    <view class="input__content">
+      <input 
+          type="number" 
+          placeholder="请输入电话"
+          value="{{params.CustTel}}"
+          data-type="CustTel" 
+          bindblur="changeCustTel"
+        ></input>
+    </view>
+  </view>
+</view>
+<view class="main">
+  <!-- 已添加的随行人员容器 -->
+  <view class="personnel">
+    <view class="personnel__list" wx:for="{{FollowPerson}}" wx:key="{{index}}">
+      <text class="personnel__name">{{item.Sex}}</text>
+      <text class="personnel__tel">{{item.Tel}}</text>
+      <text class="iconfont icon-jianhao personnel__icon g-extend-after" data-index="{{index}}" bindtap="bindRemovePerson"></text>
+    </view>
+  </view>
+  <!-- 添加随行人员 -->
+  <view class="accompany" bindtap="bindAddPreson">
+    <text class="accompany__title">添加随行人员</text>
+    <text class="iconfont icon-tianjia accompany__icon"></text>
+  </view>
+</view>
+<view class="footer">
+  <button class="btn-primery" disabled="{{disabled}}" bindtap="submit">
+    {{disabled ? '添加中...' : '完成'}}
+  </button>
+</view>
+
+<!-- 输入随行人员信息 -->
+<lc-modal id="followPersonModeal">
+  <view class="accompany-modal">
+    <view class="modal__title">添加随行人员</view>
+    <view class="modal__content">
+      <view class="modal__item">
+        <picker 
+          bindchange="bindPickerPersonChange" 
+          range="{{pickerSex}}" 
+          value="{{pickerSexIndex}}" 
+          range-key="label"
+        >
+          <view class="modal__picker">
+            {{pickerSex[pickerSexIndex].label}}
+            <text class="iconfont icon-jiantou2 modal__arrow"></text>
+          </view>
+        </picker>
+      </view>
+      <view class="modal__item">
+        <input 
+          class="modal__input" 
+          type="number" 
+          placeholder="请输入电话"
+          value="{{pickerObj.Tel}}"
+          bindblur="changeInput"
+        ></input>
+      </view>
+    </view>
+    <view class="modal__operation">
+      <text class="modal__btn" bindtap="bindPersonCancel">取消</text>
+      <text class="modal__btn" bindtap="bindPersonConfirm">确定</text>
+    </view>
+  </view>
+</lc-modal>
+
+<i-message id="message" />

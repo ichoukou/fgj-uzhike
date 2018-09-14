@@ -8,6 +8,10 @@ Component({
     placeholder: {
       type: String,
       value: '搜索关键字'
+    },
+    zIndex: {
+      type: String,
+      value: ''
     }
   },
   data: {

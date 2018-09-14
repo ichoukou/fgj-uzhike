@@ -53,6 +53,13 @@
     <text class="position__icon iconfont icon-dingwei"></text>
     <text class="position__text">{{Position}}</text>
   </view>
+  <!-- 提醒时间 -->
+  <view class="position" hidden="{{!AlertDate}}">
+    <text class="position__title">提醒时间：</text>
+    <text class="position__icon iconfont icon-naozhong"></text>
+    <text class="position__text">{{AlertDate}}</text>
+    <text class="AlertDate__clear iconfont icon-guanbi" bindtap="bindClearDate"></text>
+  </view>
 </view>
 
 <view class="footer" style="bottom: {{keyboardHeight}}px">
@@ -62,6 +69,17 @@
     <text class="footer__icon iconfont icon-zhaopian" data-type="album" bindtap="updateImage"></text>
     <text class="footer__icon iconfont icon-yuyin" bindtap="bindOpenRecord"></text>
     <text class="footer__icon iconfont icon-dingwei" bindtap="bindOpenLocation"></text>
+    <view class="footer__icon iconfont icon-naozhong">
+      <picker 
+          mode="date" 
+          value="{{AlertDate}}" 
+          start="{{nowDate}}" 
+          end="{{nowDate}}" 
+          bindchange="bindDateChange"
+        >
+          <view class="date__picker"></view>
+        </picker>
+    </view>
     <text class="footer__send" bindtap="bindSend">发送</text>
   </view>
   <!-- 录音 -->

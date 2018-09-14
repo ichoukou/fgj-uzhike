@@ -57,6 +57,10 @@ const _fgj = {
     if (type === 'number-dot') {
       return /^\d+[\.]?[\d]*$/.test(value)
     }
+    // 手机号验证前五后二位
+    if (type === 'phone-mark') {
+      return /^1[3-9]{4}\*{4}\d{2}$/.test(value);
+    }
     // 手机号验证
     if (type === 'phone') {
       return /^1[3-9]\d{9}$/.test(value);

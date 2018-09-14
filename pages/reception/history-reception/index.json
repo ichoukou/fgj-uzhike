@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "历史接待",
+  "usingComponents": {
+    "i-message": "/components/message/index",
+    "lc-modal": "/components/lc-modal/index"
+  }
+}

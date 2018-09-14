@@ -1,0 +1,98 @@
+<!-- 操作类型 -->
+<view class="type-wrap">
+  <scroll-view scroll-x>
+    <view class="type">
+      <text 
+        class="type__item {{typeCut === index ? 'active' : ''}}" 
+        wx:for="{{typeData}}" 
+        wx:key="{{index}}"
+        data-index="{{index}}"
+        bindtap="bindTypeCut"
+      >{{item}}</text>
+      <view class="type__line" style="transform: translate3d({{typeCut * 100}}%, 0, 0)"></view>
+    </view>
+  </scroll-view>
+</view>
+<!-- 选择报备项目 -->
+<view class="project" bindtap="bindOpenProject">
+  <text class="project__title">报备项目</text>
+  <text class="project__desc {{projectData.ProjectName ? 'active' : ''}}">{{projectData.ProjectName ? projectData.ProjectName : '请选择'}}</text>
+  <text class="project__ask">({{projectData.ask}})</text>
+  <text class="iconfont icon-fanhui icon__arrow"></text>
+</view>
+<!-- 可操作的客户列表 -->
+<view class="inquiry">
+  <view class="inquiry__top" bindtap="bindOpenList">
+    <view class="inquiry__title">可操作客户</view>
+    <text class="iconfont icon-tianjia icon__add"></text>
+  </view>
+  <!-- 列表 -->
+  <view class="inquiry-list">
+    <scroll-view scroll-y style="height: 100%;">
+      <checkbox-group bindchange="checkboxChange">
+        <view  class="inquiry__item" wx:for="{{batchData}}" wx:key="{{index}}">
+          <label class="checkbox">
+            <view 
+              class="inquiry__text" 
+              data-id="{{item.CustID}}" 
+              bindtouchstart="handlerStart" 
+              bindtouchmove="handlerMove" 
+              bindtouchend="handlerEnd" 
+              style="transform: translate3d({{item.offsetLeft}}rpx, 0, 0)">
+                <checkbox color="#ff6714" value="{{item.CustID}}" checked="{{item.checked}}"/>
+                <view class="inquiry__info">
+                  <view>
+                    <text class="inquiry__name">{{item.CustName}}</text>
+                    <text class="inquiry__tel">{{item.Tel}}</text>
+                  </view>
+                  <view class="inquiry__desc text-ellipsis">{{item.Remark}}</view>
+                </view>
+            </view>
+          </label>
+          <view class="inquiry__operation" data-index="{{index}}" data-item="{{item}}" bindtap="bindRemove">
+            <text class="inquiry__button">删除</text>
+          </view>
+        </view>
+      </checkbox-group>
+      <empty wx:if="{{!batchData.length && loading}}" desc="没有可操作的客户"></empty>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 底部操作按钮 -->
+<view class="foot">
+  <!-- 全选 -->
+  <view class="foot__checkbox">
+    <checkbox-group bindchange="checkboxChangeAll">
+      <label class="checkbox">
+        <checkbox color="#ff6714" checked="{{isAllChecked}}"/>全选
+      </label>
+    </checkbox-group>
+  </view>
+  <view class="foot__btn-wrap">
+    <text class="foot__btn foot__btn-remove" bindtap="bindRemoveAll">删除</text>
+    <text class="foot__btn foot__btn-confirm" bindtap="bindConfirm">完成</text>
+  </view>
+</view>
+
+<!-- 报备结果弹窗 -->
+<view class="result" hidden="{{!isShowResult}}" animation="{{animationInquiryData}}">
+  <view class="result__top">
+    报备结果
+    <canvas class="result__circle" style="width: 100%; height: 100rpx;" canvas-id="result_circle"></canvas>
+  </view>
+  <view class="result__content">
+    <view class="result__item" wx:for="{{operationData}}" wx:key="{{index}}">
+      <text class="result__title">{{item.EmpName}}</text>
+      <text class="result__tel">{{item.Tel}}</text>
+      <text class="result__status" hidden="{{item.inquiryStatus}}">正在报备...</text>
+      <text class="result__status success" hidden="{{item.inquiryStatus !== 1}}">报备成功</text>
+      <text class="result__status error" hidden="{{item.inquiryStatus !== 2}}">报备失败</text>
+    </view>
+  </view>
+  <view class="result__confirm" bindtap="bindResultConfirm">确定</view>
+</view>
+<!-- 遮罩 -->
+<view class="shade" hidden="{{!isShowShade}}" animation="{{animationShadeData}}"></view>
+
+<i-message id="message" />

@@ -1,6 +1,7 @@
 @import "../../font/iconfont.wxss";
 
 .search {
+  position: relative;
   padding: 20rpx 30rpx;
   background-color: #fff;
 }

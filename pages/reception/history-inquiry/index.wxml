@@ -1,0 +1,28 @@
+<view class="content">
+  <view class="item" wx:for="{{listData}}" wx:key="{{index}}" hidden="{{item.isHide && isShowMore}}">
+    <view class="item__top">
+      <view class="item__left">
+        <text class="item__name">{{item.CustName}}</text>
+        <text class="item__tel">{{item.CustTel}}</text>
+        <view class="item__desc text-ellipsis">到访记录时间：{{item.RegDate}}</view>
+      </view>
+      <view class="item__right" wx:if="{{item.isSendMsg}}">
+        <text class="item__btn" data-item="{{item}}" bindtap="bindSendInform">发送通知</text>
+      </view>
+    </view>
+    <view class="item__text">
+      <text class="item__text-list">{{item.CShortName}}</text>
+      <text class="item__text-list">{{item.DeptName}}</text>
+      <text class="item__text-list">{{item.EmpName}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="more" hidden="{{!isShowMore}}" bindtap="bindMore">
+  <text class="more__text">查看更多历史报备》</text>
+</view>
+
+<loading hidden="{{loading}}" type="static"></loading>
+<empty wx:if="{{loading && !listData.length}}"></empty>
+
+<i-message id="message" />

@@ -1,0 +1,131 @@
+
+<search height="100rpx" bindquery="bindQuery" zIndex="1002" placeholder="搜索你想找的项目"></search>
+<!-- 筛选 -->
+<view class="screen">
+  <view class="screen__list {{screenIndex == 0 ? 'active' : ''}}" data-index="0" bindtap="bindScreenClick">
+    <text class="screen__text text-ellipsis">{{params.ProjectID ? params.ProjectIDLabel : '部门'}}</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list {{screenIndex == 1 ? 'active' : ''}}" data-index="1" bindtap="bindScreenClick">
+    <text class="screen__text text-ellipsis">{{params.data ? params.dataLabel : '时间'}}</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list {{screenIndex == 2 ? 'active' : ''}}" data-index="2" bindtap="bindScreenClick">
+    <text class="screen__text text-ellipsis">{{params.ProjectName ? params.ProjectName : '项目'}}</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+  <view class="screen__list {{screenIndex == 3 ? 'active' : ''}}" data-index="3" bindtap="bindScreenClick">
+    <text class="screen__text text-ellipsis">{{params.order ? params.orderLabel : '排序'}}</text>
+    <text class="iconfont icon-fanhui icon-arrow"></text>
+  </view>
+</view>
+<!-- 展开的筛选条件 -->
+<wux-animation-group wux-class="screen-detail" in="{{screenOpen}}" class-names="wux-animate--slideInDown">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="screen-detail__item" hidden="{{screenIndex !== 0}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="ProjectID">
+        <label class="radio screen-detail__list" wx:for="{{ProjectID}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+    <view class="screen-detail__item" hidden="{{screenIndex !== 1}}">
+      <view class="screen__date">
+        <picker 
+          mode="date" 
+          value="{{params.Begindate}}" 
+          start="2013-09-01" 
+          end="{{nowDate}}" 
+          data-types="Begindate" 
+          bindchange="bindDateChange"
+        >
+          <view class="date__picker">
+            请选择开始时间: {{params.Begindate}}
+            <text 
+              class="iconfont icon-guanbi g-extend-after icon__clear" 
+              hidden="{{!params.Begindate}}" 
+              data-types="Begindate" 
+              catchtap="bindClearDate"
+            ></text>
+          </view>
+        </picker>
+        <picker 
+          mode="date" 
+          value="{{params.Enddate}}" 
+          start="2013-09-01" 
+          end="{{nowDate}}" 
+          data-types="Enddate" 
+          bindchange="bindDateChange"
+        >
+          <view class="date__picker">
+            请选择结束时间: {{params.Enddate}}
+            <text 
+              class="iconfont icon-guanbi g-extend-after icon__clear" 
+              hidden="{{!params.Enddate}}" 
+              data-types="Enddate" 
+              catchtap="bindClearDate"
+            ></text>
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="screen-detail__item" hidden="{{screenIndex !== 2}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="ProjectID">
+        <label class="radio screen-detail__list" wx:for="{{ProjectID}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+    <view class="screen-detail__item" hidden="{{screenIndex !== 3}}">
+      <radio-group class="radio-group" bindchange="bindRadioChange" data-type="order">
+        <label class="radio screen-detail__list" wx:for="{{order}}" wx:key="{{index}}">
+          <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
+        </label>
+      </radio-group>
+    </view>
+  </scroll-view>
+</wux-animation-group>
+<!-- 列表 -->
+<view class="reception-wrap">
+  <scroll-view scroll-y style="height: 100%;" bindscrolltolower="bindscrolltolower">
+    <view class="reception-list">
+      <view class="reception__item" wx:for="{{listData}}" wx:key="{{index}}">
+        <view class="reception__top">
+          <view class="reception__top-l">
+            <text class="reception__name">{{item.CustName}}</text>
+            <text class="reception__tel">{{item.CustTel}}</text>
+            <view class="reception__project">{{item.ProjectName}}</view>
+          </view>
+          <view class="reception__top-r">
+            <text class="iconfont icon-gengduo1 icon__more g-extend-after" data-item="{{item}}" bindtap="bindOperation"></text>
+          </view>
+        </view>
+        <view class="reception__text">
+          <view class="reception__row">
+            <view class="reception__line">
+              <view class="reception__title">到访次数：</view>
+              <view class="reception__time">{{item.VisitCount}}</view>
+            </view>
+            <view class="reception__line">
+              <view class="reception__title">接待人：</view>
+              <view class="reception__time">{{item.LastReceptionPerson}}</view>
+            </view>
+          </view>
+          <view class="reception__row">
+            <view class="reception__title">到访时间：</view>
+            <view class="reception__time">{{item.ReceptionDate}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <loading hidden="{{loading}}" type="static"></loading>
+    <empty wx:if="{{loading && !listData.length}}"></empty>
+  </scroll-view>
+</view>
+
+<view class="select-dept">
+  <select-dept id="selectDept" bindconfirm="bindSelectConfirm"></select-dept>
+</view>
+
+<i-message id="message" />
+<wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />

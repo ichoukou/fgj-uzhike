@@ -1,0 +1,64 @@
+
+.content {
+  padding: 20rpx 0;
+}
+.item {
+  overflow: hidden;
+  position: relative;
+  padding: 20rpx 26rpx;
+  width: 100%;
+  background-color: #fff;
+}
+.item + .item {
+  border-top: 1rpx solid #e6e6e6;
+}
+.item__top {
+  display: flex;
+  align-items: center;
+}
+.item__left {
+  flex: 1;
+}
+.item__right {
+  display: flex;
+  align-items: center;
+}
+.item__btn {
+  display: inline-block;
+  padding: 20rpx;
+  border-radius: 60rpx;
+  font-size: 24rpx;
+  color: #fff;
+  background-color: #fe6c1b;
+}
+.item__name {
+  font-size: 30rpx;
+  color: #333;
+}
+.item__tel {
+  padding-left: 20rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.item__desc {
+  padding-top: 10rpx;
+  font-size: 24rpx;
+  color: #c1c1c1;
+}
+.item__text {
+  margin-top: 20rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.item__text-list {
+  margin-right: 20rpx;
+}
+
+/* 查看更多历史报备 */
+.more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100rpx;
+  background-color: #fff;
+}

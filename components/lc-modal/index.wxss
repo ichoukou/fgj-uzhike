@@ -1,0 +1,29 @@
+@import "../../style/btn.wxss";
+
+.modal {
+  /* display: none; */
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1001;
+}
+.modal-content {
+  position: absolute;
+  top: 26%;
+  right: 12.5%;
+  left: 12.5%;
+  z-index: 2;
+  border-radius: 8rpx;
+  width: 75%;
+  background-color: #fff;
+}
+.modal-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}

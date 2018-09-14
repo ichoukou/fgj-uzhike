@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "跟进",
+  "usingComponents": {
+    "i-message": "/components/message/index"
+  }
+}

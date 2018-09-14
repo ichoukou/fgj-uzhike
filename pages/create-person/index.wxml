@@ -22,7 +22,7 @@
         <input class="person__input" type="text" placeholder="请填写姓名" />
       </view>
     </view>
-    <view class="person__list"> 
+    <view class="person__list">
       <text class="person__title">电话</text>
       <view class="person__content">
         <input class="person__input" type="number" placeholder="请填写电话号码" />
@@ -46,8 +46,10 @@
     </view>
   </view>
   <view class="submit">
-    <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="warn"><text hidden="{{loading}}">立即注册</text></button>
-  </view> 
+    <button class="btn-primery" loading="{{loading}}" disabled="{{disabled}}" bindtap="warn">
+      <text hidden="{{loading}}">立即注册</text>
+    </button>
+  </view>
 </view>
 
 <i-message id="message" />

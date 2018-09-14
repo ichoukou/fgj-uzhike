@@ -1,0 +1,62 @@
+<!-- <search height="100rpx" bindquery="bindQuery" placeholder="搜索你想找的项目"></search>  -->
+<view class="inform-list">
+  <scroll-view scroll-y style="height: 100%;">
+    <view class="inform__space">
+      <checkbox-group bindchange="checkboxChange">
+        <view class="inform__item" wx:for="{{listData}}" wx:key="{{index}}">
+          <label class="checkbox">
+            <view class="inform__content">
+                <checkbox color="#ff6714" value="{{item.ProjectReceptionUnionID}}" checked="{{item.checked}}"/>
+                <view class="inform__info">
+                  <view class="inform__top">
+                    <view class="inform__left">
+                      <text class="inform__name">{{item.CustName}}</text>
+                      <text class="inform__tel">{{item.CustTel}}</text>
+                      <view class="inform__desc text-ellipsis">{{item.ProjectName}}</view>
+                    </view>
+                    <view class="inform__right">
+                      <text 
+                        class="inform__btn {{item.proType === 0 ? 'active' : ''}}" 
+                        data-index="{{index}}"
+                        data-types="0" 
+                        catchtap="catchSelectType"
+                      >约访</text>
+                      <text 
+                        class="inform__btn {{item.proType === 1 ? 'active' : ''}}" 
+                        data-index="{{index}}"
+                        data-types="1" 
+                        catchtap="catchSelectType"
+                      >带访</text>
+                    </view>
+                  </view>
+                  <view class="inform__text">
+                    <text class="inform__text-list">{{item.CShortName}}</text>
+                    <text class="inform__text-list">{{item.DeptName}}</text>
+                    <text class="inform__text-list">{{item.EmpName}}</text>
+                  </view>
+                </view>
+            </view>
+          </label>
+        </view>
+      </checkbox-group>
+    </view>
+    <empty wx:if="{{!listData.length && loading}}" desc="没有有效的报备客户"></empty>
+  </scroll-view>
+</view>
+<!-- 底部操作按钮 -->
+<view class="foot">
+  <!-- 全选 -->
+  <view class="foot__checkbox">
+    <checkbox-group bindchange="checkboxChangeAll">
+      <label class="checkbox">
+        <checkbox color="#ff6714" checked="{{isAllChecked}}"/>全选
+      </label>
+    </checkbox-group>
+  </view>
+  <view class="foot__btn-wrap">
+    <text class="foot__btn foot__btn-remove" bindtap="bindNext">跳过</text>
+    <text class="foot__btn foot__btn-confirm" wx:if="{{listData.length}}" bindtap="submit">发送</text>
+  </view>
+</view>
+
+<i-message id="message" />

@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "接待列表",
+  "usingComponents": {
+    "wux-animation-group": "/components/animation-group/index",
+    "wux-backdrop": "/components/backdrop/index",
+    "search": "/components/search/index",
+    "loading": "/components/loading/index",
+    "empty": "/components/empty/index",
+    "i-message": "/components/message/index",
+    "select-dept": "/components/select-dept/index"
+  }
+}

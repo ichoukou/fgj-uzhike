@@ -1,0 +1,149 @@
+/* 切换 */
+.tab {
+  position: relative;
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  border-top: 1rpx solid rgb(245, 245, 245);
+  border-bottom: 1rpx solid rgb(245, 245, 245);
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  background-color: #fff;
+}
+.tab__item {
+  flex: 1;
+  font-size: 30rpx;
+  color: #c1c1c1;
+}
+.tab__item.active {
+  color: #333;
+}
+.tab__line {
+  position: absolute;
+  bottom: 8rpx;
+  left: 0;
+  width: 50%;
+  transition: transform .3s;
+}
+.tab__line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  border-radius: 8rpx;
+  width: 180rpx;
+  height: 8rpx;
+  background-color: #FA7730;
+  background-image: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+}
+
+/* 接待详细 */
+.reception-wrap {
+  position: absolute;
+  top: 188rpx;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.reception-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10rpx;
+}
+.reception__item {
+}
+
+/* 报备详细 */
+.inquiry-wrap {
+  position: absolute;
+  top: 288rpx;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.inquiry-list {
+  overflow: hidden;
+  padding: 0 24rpx;
+}
+.inquiry__item {
+  margin: 20rpx 0;
+  padding: 20rpx;
+  border-radius: 8rpx;
+  box-shadow: 0 4rpx 8rpx rgba(209, 209, 209, .4);
+  background-color: #fff;
+}
+.inquiry__top {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx dotted #f5f5f5;
+}
+.inquiry__top::after,
+.inquiry__top::before {
+  content: "";
+  position: absolute;
+  bottom: -15rpx;
+  border-radius: 50%;
+  width: 30rpx;
+  height: 30rpx;
+  background-color: #F8F8F8;
+}
+.inquiry__top::after {
+  left: -35rpx;
+}
+.inquiry__top::before {
+  right: -35rpx;
+}
+.inquiry__top-l {
+  flex: 1;
+}
+.inquiry__name {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #121212;
+}
+.inquiry__tel {
+  padding-left: 20rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.inquiry__project {
+  padding-top: 12rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.inquiry__btn {
+  margin-left: 20rpx;
+  padding: 16rpx 26rpx;
+  border-radius: 60rpx;
+  font-size: 30rpx;
+  color: #fff;
+  background-color: #fe6c1b;
+}
+/* .inquiry__text {
+} */
+.inquiry__row {
+  display: flex;
+  align-items: center;
+  margin-top: 20rpx;
+}
+.inquiry__title {
+  font-size: 24rpx;
+  color: #c1c1c1;
+}
+.inquiry__time {
+  font-size: 30rpx;
+  color: #333;
+}
+.inquiry__tag {
+  margin-left: 20rpx;
+  border: 1rpx solid #fa4d31;
+  border-radius: 30rpx;
+  padding: 4rpx 8rpx;
+  font-size: 20rpx;
+  color: #fa4d31;
+}

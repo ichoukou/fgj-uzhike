@@ -33,10 +33,12 @@ Page({
     Position: '',             // 地理位置
     IsShowShade: false,       // 是否显示遮罩
     currentRecordPlay: -1,    // 当前需要播放的单条语音
+    nowDate: new Date(),      // 当前日期
+    AlertDate: '',            // 提醒时间
   },
   onLoad: function (options) {
     console.log(options)
-    this.data.CustID = options.CustID;
+    this.data.CustID = options.CustID || 'EE9C2BD01133EFA6FB38C7BF33BC8BFB';
   },
   onReady: function () {
     this.recorderManager = wx.getRecorderManager();
@@ -57,6 +59,7 @@ Page({
     params.CustID = data.CustID;
     params.FollowContent = data.FollowContent;
     params.Position = data.Position;
+    params.AlertDate = data.AlertDate;
 
     // 上传主体内容，必须有一样
     if (params.FollowContent || data.imageData.length || data.recordData.length) {
@@ -150,12 +153,8 @@ Page({
   },
   // 输入框聚焦时触发
   bindfocusText(e) {
-    // let height = e.detail.height || '';
-    // let keyboardHeight = height
-
     this.setData({
       IsShowRecord: false,
-      // keyboardHeight: e.detail.height || 0,
     });
     setTimeout(() => {
       this.setData({
@@ -476,6 +475,21 @@ Page({
         console.log(err);
       }
     });
+  },
+
+  // 设置提醒时间
+  bindDateChange(e) {
+    let value = e.detail.value;
+
+    this.setData({
+      AlertDate: value
+    });
+  },
+  // 删除提醒时间
+  bindClearDate() {
+    this.setData({
+      AlertDate: ''
+    })
   },
 
   // 点击遮罩

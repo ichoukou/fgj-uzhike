@@ -425,7 +425,8 @@ Page({
       result.msg = '请填写客户名称';
       return result;
     }
-    if (!_fgj.verify(data.Tel, 'phone')) {
+    // 验证正常手机号码，或前五后二位手机号码
+    if (!_fgj.verify(data.Tel, 'phone') && !_fgj.verify(data.Tel, 'phone-mark')) {
       result.msg = '手机号格式有误';
       return result;
     }

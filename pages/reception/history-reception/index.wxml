@@ -1,0 +1,66 @@
+<view class="content">
+  <view class="item" wx:for="{{listData}}" wx:key="{{index}}">
+    <view class="item__top">
+      <view class="top__list">
+        <text class="top__title">接待类型</text>
+        <text class="top__desc">{{item.ReceptionType}}</text>
+      </view>
+      <view class="top__list">
+        <text class="top__title">接待人</text>
+        <text class="top__desc">{{item.EmpName}}</text>
+      </view>
+      <view class="top__list top__time">
+        <text class="top__title">接待时间</text>
+        <text class="top__desc">{{item.RegDate}}</text>
+      </view>
+    </view>
+    <view class="accompany-add" data-item="{{item}}" bindtap="bindAddPerson">
+      <text class="iconfont icon-tianjia"></text>添加随行人员
+    </view>
+    <view class="accompany-list" wx:for="{{item.FollowPersonData}}" wx:for-item="list" wx:key="{{index}}">
+      <text class="accompany__sex">{{list.Sex}}</text>
+      <text class="accompany__tel">{{list.Tel}}</text>
+      <text class="iconfont icon-jianhao personnel__icon g-extend-after" data-item="{{item}}" data-index="{{index}}" bindtap="bindRemovePerson"></text>
+    </view>
+  </view>
+</view>
+
+<!-- 输入随行人员信息 -->
+<lc-modal id="followPersonModeal">
+  <view class="accompany-modal">
+    <view class="modal__title">添加随行人员</view>
+    <view class="modal__content">
+      <view class="modal__item">
+        <picker 
+          bindchange="bindPickerPersonChange" 
+          range="{{pickerSex}}" 
+          value="{{pickerSexIndex}}" 
+          range-key="label"
+        >
+          <view class="modal__picker">
+            {{pickerSex[pickerSexIndex].label}}
+            <text class="iconfont icon-jiantou2 modal__arrow"></text>
+          </view>
+        </picker>
+      </view>
+      <view class="modal__item">
+        <input 
+          class="modal__input" 
+          type="number" 
+          placeholder="请输入电话"
+          value="{{pickerObj.Tel}}"
+          bindblur="changeInput"
+        ></input>
+      </view>
+    </view>
+    <view class="modal__operation">
+      <text class="modal__btn" bindtap="bindPersonCancel">取消</text>
+      <text class="modal__btn" bindtap="bindPersonConfirm">确定</text>
+    </view>
+  </view>
+</lc-modal>
+
+<loading hidden="{{loading}}" type="static"></loading>
+<empty wx:if="{{loading && !listData.length}}"></empty>
+
+<i-message id="message" />

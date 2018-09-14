@@ -12,11 +12,11 @@
   <!-- 筛选 -->
   <view class="screen">
     <view class="screen__list" data-index="0" bindtap="bindScreenClick">
-      <text class="screen__text">{{params.typeData ? params.typeData : '类型'}}</text>
+      <text class="screen__text">{{params.typeData ? params.typeData : '求购'}}</text>
       <text class="iconfont icon-fanhui icon-arrow"></text>
     </view>
     <view class="screen__list" data-index="1" bindtap="bindScreenClick">
-      <text class="screen__text">{{params.FlagStatus ? params.FlagStatus : '状态'}}</text>
+      <text class="screen__text">{{params.FlagStatus ? params.FlagStatus : '类型'}}</text>
       <text class="iconfont icon-fanhui icon-arrow"></text>
     </view>
     <view class="screen__list" data-index="2" bindtap="bindScreenClick">
@@ -121,7 +121,7 @@
                 </view>
                 <view class="item-title">加入日程</view>
               </view>
-              <view class="row-item center item-extend">
+              <view class="row-item center item-extend" data-index="{{index}}" data-item="{{item}}" catchtap="bindBatchOperation">
                 <view class="icon">
                   <text class="iconfont icon-piliangcaozuo"></text>
                 </view>
@@ -129,7 +129,7 @@
               </view>
             </view>
             <!-- 添加批量操作选中角标 -->
-            <view class="list__check">
+            <view class="list__check" hidden="{{!item.checked}}">
               <text class="iconfont icon-queren icon-check"></text>
             </view>
           </view>
@@ -166,7 +166,7 @@
 </view>
 
 <!-- 批量操作已选浮动按钮 -->
-<view class="fixed-btn">+1</view>
+<view class="fixed-btn" hidden="{{!checkedData.length}}" catchtap="catchFixedBtn">+{{checkedData.length}}</view>
 
 <screen-more id="screenMore" screenData="{{screenData}}" bindreset="bindScreenReset" bindconfirm="bindScreenConfirm" />
 <wux-backdrop bindclick="bindBackdrop" id="wux-backdrop" />

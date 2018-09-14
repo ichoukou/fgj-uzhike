@@ -1,4 +1,3 @@
-<!--选择部门-->
 <view class="dropdown">
   <view class="dropdown__btn" bindtap="bindTrigger">
     <text>{{title}}</text>

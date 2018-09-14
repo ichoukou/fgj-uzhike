@@ -233,9 +233,9 @@ Page({
     let _this = this;
 
     wx.showActionSheet({
-      itemList: ['编辑', '删除'],
+      itemList: ['编辑', '删除', '添加字典', '字典管理'],
       success: function (res) {
-        console.log(res.tapIndex)
+        // console.log(res.tapIndex)
         switch (res.tapIndex) {
           case 0:
             // 去编辑
@@ -257,6 +257,18 @@ Page({
               }
             })
           break;
+          case 2:
+            // 添加字典
+            wx.navigateTo({
+              url: '/pages/project/add-dictionary/index?EstateID=' + EstateID,
+            });
+          break;
+          case 3:
+            // 字典管理
+            wx.navigateTo({
+              url: '/pages/project/dictionary-management/index?EstateID=' + EstateID,
+            });
+            break;
           default:
             console.log('tapIndex错误')
         }

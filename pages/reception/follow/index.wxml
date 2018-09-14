@@ -1,0 +1,79 @@
+<view class="follow">
+  <!-- 文字跟进 -->
+  <view class="follow__text">
+    <textarea 
+      class="textarea" 
+      value="{{FollowContent}}" 
+      focus 
+      auto-height 
+      adjust-position="{{false}}" 
+      bindfocus="bindfocusText" 
+      bindblur="bindblurText" 
+      bindinput="bindInputText" 
+      placeholder="请输入跟进文字" 
+    />
+  </view>
+  <!-- 语音跟进 -->
+  <view class="voice">
+    <view class="voice__item" wx:for="{{recordData}}" wx:key="{{index}}"> 
+      <view class="voice__play" data-index="{{index}}" bindtap="bindVoicePlay">
+        <text class="iconfont icon-bofang" hidden="{{currentRecordPlay === index}}"></text>
+        <view class="record__animation" hidden="{{currentRecordPlay !== index}}">
+          <text class="record__anim-line"></text>
+          <text class="record__anim-line"></text>
+          <text class="record__anim-line"></text>
+        </view>
+      </view>
+      <text class="voice__time">'{{item.time}}'秒</text>
+      <text class="voice__close iconfont icon-guanbi g-extend-after" data-index="{{index}}" bindtap="bindRemoveVoice"></text>
+    </view>
+  </view>
+  <!-- 图片跟进 -->
+  <view class="picture">
+    <view class="picture__item" wx:for="{{imageData}}" wx:key="{{index}}">
+      <text class="picture__close iconfont icon-guanbi" data-id="{{item.CustFollowFileID}}" data-index="{{index}}" bindtap="bindRemoveImg"></text>
+      <image mode="aspectFill" class="picture__img" src="{{item.path}}"></image>
+    </view>
+  </view>
+</view>
+
+<view class="footer" style="bottom: {{keyboardHeight}}px">
+  <!-- 操作图标 -->
+  <view class="footer__btn">
+    <text class="footer__icon iconfont icon-xiangji" data-type="camera" bindtap="updateImage"></text>
+    <text class="footer__icon iconfont icon-zhaopian" data-type="album" bindtap="updateImage"></text>
+    <text class="footer__icon iconfont icon-yuyin" bindtap="bindOpenRecord"></text>
+    <text class="footer__send" bindtap="bindSend">发送</text>
+  </view>
+  <!-- 录音 -->
+  <view class="record {{IsShowRecord ? 'show' : ''}}">
+    <view class="record__top">
+      <text class="record__time">{{recordDurationTime}}S</text>
+      <text class="record__desc">{{recordDesc}}</text>
+    </view>
+    <view class="record__content">
+      <!-- 删除录音 -->
+      <text class="record__remove iconfont icon-shanchu g-extend-after {{recordStatus === 2 ? 'show' : ''}}" bindtap="bindRemoveRecord"></text>
+      <view class="record__center" bindtap="bindRecordStart">
+        <!-- 开始录音 -->
+        <text class="record__start iconfont icon-yuyin" hidden="{{recordStatus !== 0}}"></text>
+        <!-- 正在录音动画 -->
+        <view class="record__animation" wx:if="{{recordStatus === 1 || recordPlay}}">
+          <text class="record__anim-line"></text>
+          <text class="record__anim-line"></text>
+          <text class="record__anim-line"></text>
+          <text class="record__anim-line"></text>
+          <text class="record__anim-line"></text>
+        </view>
+        <!-- 播放录音 -->
+        <text class="record__start iconfont icon-bofang" hidden="{{recordStatus !== 2 || recordPlay}}"></text>
+      </view>
+      <!-- 保存录音 -->
+      <text class="record__confirm iconfont icon-queren g-extend-after {{recordStatus === 2 ? 'show' : ''}}" bindtap="bindSaveRecord"></text>
+    </view>
+  </view>
+</view>
+<!-- 遮罩 -->
+<view class="shade" hidden="{{!IsShowShade}}" bindtouchstart="bindShade"></view>
+
+<i-message id="message" />

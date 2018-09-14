@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "报备",
+  "usingComponents": {
+    "i-message": "/components/message/index",
+    "empty": "/components/empty/index"
+  }
+}

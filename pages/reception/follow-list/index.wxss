@@ -1,0 +1,145 @@
+
+.follow_content {
+  padding: 0 30rpx;
+  background-color: #fff;
+}
+.follow__list {
+  display: flex;
+  padding: 20rpx 0;
+}
+.follow__list + .follow__list {
+  border-top: 1rpx solid #e6e6e6;
+}
+.follow__head {
+  overflow: hidden;
+  border-radius: 50%;
+  width: 80rpx;
+  height: 80rpx;
+}
+.follow_head-img {
+  width: 100%;
+  height: 100%;
+}
+.follow__right {
+  flex: 1;
+  padding-left: 30rpx;
+}
+.follow__top {
+  display: flex;
+  align-items: center;
+}
+.follow__name {
+  font-size: 30rpx;
+  color: #333;
+}
+.follow_time {
+  margin-left: auto;
+  padding-left: 10rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+.follow_text {
+  margin-top: 20rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  color: #333;
+  background-color: rgb(245,245,245);
+}
+.follow_text-more {
+  color: rgb(250,120,49);
+}
+
+/* 图片跟进 */
+.follow_pic {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -10rpx;
+  padding-top: 20rpx;
+}
+.follow_pic-img {
+  margin: 10rpx;
+  width: 180rpx;
+  height: 180rpx;
+}
+
+/* 语音跟进 */
+.voice {
+  display: flex;
+  align-items: center;
+  margin: 20rpx 0;
+  box-shadow: -1px 1px 4px 0px rgba(255, 189, 103, .3), 1px 1px 4px 0 rgba(250, 119, 48, .3);
+  border-radius: 60rpx;
+  padding: 0 20rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #fff;
+  background-color: #FA7730;
+  background-image: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+}
+.voice_yuyin {
+  font-size: 36rpx;
+}
+.voice_play {
+  margin-left: 8rpx;
+  display: flex;
+  align-items: center;
+}
+.voice_line {
+  opacity: 0;
+  margin: 0 4rpx;
+  border-radius: 4rpx;
+  width: 4rpx;
+  background-color: #fff;
+}
+.voice_line:nth-child(1) {
+  height: 8rpx;
+}
+.voice_line:nth-child(2) {
+  height: 16rpx;
+}
+.voice_line:nth-child(3) {
+  height: 24rpx;
+}
+/* 用voice_line--play这个class控制动画 */
+.voice_line--play .voice_line:nth-child(1) {
+  animation: voice_line 1s .3s linear infinite reverse;
+}
+.voice_line--play .voice_line:nth-child(2) {
+  animation: voice_line 1s .6s linear infinite reverse;
+}
+.voice_line--play .voice_line:nth-child(3) {
+  animation: voice_line 1s .9s linear infinite reverse;
+}
+.voice_text {
+  margin-left: auto;
+  font-size: 32rpx;
+}
+@keyframes voice_line {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* 添加跟进 */
+.open-follow {
+  position: fixed;
+  bottom: 30rpx;
+  right: 30rpx;
+  z-index: 10;
+  border-radius: 50%;
+  width: 80rpx;
+  height: 80rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  background-color: #FA7730;
+  background-image: linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
+  color: #fff;
+}

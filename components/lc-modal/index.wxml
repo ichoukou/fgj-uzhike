@@ -1,0 +1,9 @@
+<!-- 弹出模态框容器 -->
+<wux-animation-group wux-class="modal" in="{{isShow}}" class-names="wux-animate--slideInDown">
+  <view class="modal-content">
+    <slot></slot>
+  </view>
+  <view class="modal-bg" bindtap="clickBackdrop"></view>
+</wux-animation-group>
+
+<wux-backdrop id="wux-backdrop-modal" />
