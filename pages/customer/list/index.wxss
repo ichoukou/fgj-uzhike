@@ -1,3 +1,6 @@
+/* 引入跟进样式 */
+@import "../follow-list/index.wxss";     
+
 .header {
   position: relative;
   z-index: 1002;
@@ -236,21 +239,21 @@
 /* 下面是黎聪写的样式 */
 
 /* 打开跟进 */
-.open-follow .list-baseinfo {
+.open .list-baseinfo {
   transform: scale(.9);
 }
-.open-follow .name,
-.open-follow .tel {
+.open .name,
+.open .tel {
   color: rgb(210,210,210);
 }
-.open-follow .tag {
+.open .tag {
   color: #fff;
   background-color: rgb(210,210,210);
 }
-.open-follow .follow {
+.open .follow {
   opacity: 1;
   transform-origin: 50% 100%;
-  transform: scale(1) translate(0, 80rpx);
+  transform: scale(1) translate(0, 100rpx);
 }
 
 /* 跟进 */
@@ -265,7 +268,7 @@
   right: 20rpx;
   padding: 20rpx;
   box-shadow: 0 0 6rpx rgba(255,205,164,.5);
-  height: 334rpx;
+  height: 314rpx;
   background-color: #fff;
   opacity: 0;
   transform-origin: 50% 100%;
@@ -274,6 +277,7 @@
 }
 .follow_content {
   flex: 1;
+  margin-top: 20rpx;
 }
 .follow_close {
   position: absolute;
@@ -289,6 +293,7 @@
   align-items: center;
 }
 .follow_time {
+  padding-left: 0;
   font-size: 24rpx;
   color: #333;
 }
@@ -301,6 +306,11 @@
   line-height: 1.5;
   color: #333;
   background-color: rgb(245,245,245);
+}
+.follow_desc {
+  text-align: center;
+  font-size: 28rpx;
+  color: #666;
 }
 .follow_text-more {
   color: rgb(250,120,49);

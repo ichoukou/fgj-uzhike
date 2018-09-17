@@ -155,6 +155,22 @@
   padding-left: 10rpx;
   font-size: 30rpx;
 }
+.position__date {
+  position: relative;
+}
+.position__date-desc {
+  margin: 0 10rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.position__date-desc.date {
+  margin: 0 10rpx;
+  border-radius: 4rpx;
+  border: 1rpx solid #fa4d31;
+  padding: 4rpx 8rpx;
+  font-size: 24rpx;
+  color: #fa4d31;
+}
 .AlertDate__clear {
   margin-left: 30rpx;
 }

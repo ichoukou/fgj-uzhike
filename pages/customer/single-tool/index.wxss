@@ -41,109 +41,29 @@
 }
 
 /* 接待详细 */
-.reception-wrap {
+.list-wrap {
   position: absolute;
   top: 188rpx;
   right: 0;
   bottom: 0;
   left: 0;
 }
-.reception-list {
+.list__item {
   display: flex;
-  flex-wrap: wrap;
-  padding: 10rpx;
-}
-.reception__item {
-}
-
-/* 报备详细 */
-.inquiry-wrap {
-  position: absolute;
-  top: 288rpx;
-  right: 0;
-  bottom: 0;
-  left: 0;
-}
-.inquiry-list {
-  overflow: hidden;
-  padding: 0 24rpx;
-}
-.inquiry__item {
-  margin: 20rpx 0;
-  padding: 20rpx;
-  border-radius: 8rpx;
-  box-shadow: 0 4rpx 8rpx rgba(209, 209, 209, .4);
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  width: 100%;
+  font-size: 30rpx;
   background-color: #fff;
 }
-.inquiry__top {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding-bottom: 20rpx;
-  border-bottom: 1rpx dotted #f5f5f5;
+.list__item + .list__item {
+  border-top: 1rpx solid #e6e6e6;
 }
-.inquiry__top::after,
-.inquiry__top::before {
-  content: "";
-  position: absolute;
-  bottom: -15rpx;
-  border-radius: 50%;
-  width: 30rpx;
-  height: 30rpx;
-  background-color: #F8F8F8;
+.list__name,
+.list__type {
+  color: #141414;
 }
-.inquiry__top::after {
-  left: -35rpx;
-}
-.inquiry__top::before {
-  right: -35rpx;
-}
-.inquiry__top-l {
-  flex: 1;
-}
-.inquiry__name {
-  font-size: 36rpx;
-  font-weight: 500;
-  color: #121212;
-}
-.inquiry__tel {
-  padding-left: 20rpx;
-  font-size: 30rpx;
-  color: #333;
-}
-.inquiry__project {
-  padding-top: 12rpx;
-  font-size: 30rpx;
-  color: #333;
-}
-.inquiry__btn {
-  margin-left: 20rpx;
-  padding: 16rpx 26rpx;
-  border-radius: 60rpx;
-  font-size: 30rpx;
-  color: #fff;
-  background-color: #fe6c1b;
-}
-/* .inquiry__text {
-} */
-.inquiry__row {
-  display: flex;
-  align-items: center;
-  margin-top: 20rpx;
-}
-.inquiry__title {
-  font-size: 24rpx;
-  color: #c1c1c1;
-}
-.inquiry__time {
-  font-size: 30rpx;
-  color: #333;
-}
-.inquiry__tag {
-  margin-left: 20rpx;
-  border: 1rpx solid #fa4d31;
-  border-radius: 30rpx;
-  padding: 4rpx 8rpx;
-  font-size: 20rpx;
-  color: #fa4d31;
+.list__date {
+  color: #ff6714;
 }

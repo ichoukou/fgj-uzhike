@@ -86,7 +86,10 @@
         <view class="need__info">
           {{item.NeedType}} / 
           {{item.PropertyType}} /
-          {{item.MinPrice}}-{{item.MaxPrice}}{{item.NeedType === '求购' ? '万元' : '元'}} /
+          {{item.NeedType === '求购' ? item.MinPrice/10000 : item.MinPrice}}
+          -
+          {{item.NeedType === '求购' ? item.MaxPrice/10000 : item.MaxPrice}}
+          {{item.NeedType === '求购' ? '万元' : '元'}} /
           {{item.Room}}
         </view>
       </view>

@@ -238,23 +238,12 @@ Page({
       if (res.data.result === 'success') {
         let paramsCustNeed = this.data.paramsCustNeed;
         let temptable = res.data.temptable;
-
-        this.disposePice(temptable);
         
         this.setData({
           paramsCustNeed: res.data.temptable
         });
       }
     })
-  },
-  // 处理价位单价
-  disposePice(arr = []) {
-    for (let item of arr) {
-      if (item.NeedType === '求购') {
-        item.MinPrice = item.MinPrice / 10000;
-        item.MaxPrice = item.MaxPrice / 10000;
-      }
-    }
   },
   // 根据客户id获取客户关系数据
   GetCustomerLinkByCustID(CustID) {
@@ -271,7 +260,15 @@ Page({
   },
   // 修改客户——主体数据
   UpCustomer() {
-    UpCustomer(this.data.paramsCustomer).then(res => {
+    let { paramsCustomer, paramsCustNeed } = this.data;
+    // 在主体内容上附加需求数据
+    let custNeedObj = this.addCustNeedData(paramsCustNeed);
+    // 拼接到主体数据内
+    let params = Object.assign({}, paramsCustomer, custNeedObj);
+
+    console.log(params)
+
+    UpCustomer(params).then(res => {
       wx.hideLoading();
       this.setData({
         loading: false,
@@ -381,11 +378,7 @@ Page({
       for (let key of Object.keys(item)) {
         // 只针对部分字段做拼接
         if (key === 'NeedType' || key === 'PropertyType' || key === 'Area' || key === 'Room') {
-          if (custNeedObj[key]) {
-            custNeedObj[key] = custNeedObj[key] + '|' + item[key]
-          } else {
-            custNeedObj[key] = '|' + item[key]
-          }
+          custNeedObj[key] ? (custNeedObj[key] = custNeedObj[key] + '|' + item[key]) : custNeedObj[key] = item[key];
         }
       }
       // 面积和价位有对应的字段，根据类型对应

@@ -50,17 +50,16 @@ Page({
     this.data.paramsCustNeed.CustID = CustID;   // 关联ID
 
     // 这里是编辑
-    if (CustNeedID) { 
+    if (CustNeedID) {
       this.data.paramsCustNeed.CustNeedID = CustNeedID;
       this.GetCustNeedByID(CustNeedID);
     }
 
     /**
-     * 获取所有的跟进
+     * 获取所有的需求
      * 要把需求添加到主体数据内
      */
     this.GetCustNeedByCustID(CustID);
-    console.log('onLoad')
   },
   onReady: function () {
 
@@ -124,7 +123,7 @@ Page({
       }
     })
   },
-  // 获取所有的跟进数据
+  // 获取所有的需求数据
   GetCustNeedByCustID(CustID) {
     GetCustNeedByCustID({
       CustID
@@ -224,6 +223,16 @@ Page({
         pickerRoom: data.pickerRoom
       });
     }
+
+    if (value === '求购') {
+      this.setData({
+        unit: '万元'
+      });
+    } else {
+      this.setData({
+        unit: '元'
+      })
+    }
   },
   // 监听input改变
   changeCustNeedInput(e) {
@@ -285,6 +294,10 @@ Page({
       $Message({ content: '不能添加重复的需求类型', type: 'error' });
       return false;
     }
+    this.setData({
+      loading: true,
+      disabled: true
+    });
 
     /**
      * 单独修改客户需求到客户主体
@@ -292,10 +305,6 @@ Page({
     needData.push(params);
     this.UpCustomerNeed(needData);
 
-    this.setData({
-      loading: true,
-      disabled: true
-    });
     wx.showLoading({ title: '添加中' });
     InsertCustNeed(params).then(res => {
       wx.hideLoading();
@@ -309,14 +318,18 @@ Page({
         let pages = getCurrentPages();
         let prevPage = pages[pages.length - 2]; // 上一个页面
         let paramsCustNeed = prevPage.data.paramsCustNeed;
+        
+        // 如果是从客户详细页进入添加，就不需要走下面，修改数据了，下面是新建主体的时候用到
+        if (!paramsCustNeed) {
+          setTimeout(() => {
+            wx.navigateBack();
+          }, 1000);
+          return false
+        }
 
         params.CustNeedID = res.data.CustNeedID;    // 附加CustNeedID，用作删除和编辑
 
-        // 处理价位单价，用作显示，万元
-        if (params.NeedType === '求购') {
-          params.MinPrice = params.MinPrice / 10000;
-          params.MaxPrice = params.MaxPrice / 10000;
-        }
+        console.log('修改上一个页面', params);
 
         paramsCustNeed.push(params);
         prevPage.setData({
@@ -375,7 +388,8 @@ Page({
   },
   // 单独修改客户需求到客户主体
   UpCustomerNeed(needData) {
-    let params = this.addCustNeedData(needData)
+    let params = this.addCustNeedData(needData);
+
     params.CustID = this.data.paramsCustNeed.CustID;
 
     UpCustomerNeed(params).then(res => {
@@ -389,34 +403,13 @@ Page({
   // 在主体内容上附加需求数据， 返回拼接好的数据
   addCustNeedData() {
     let needData = this.data.needData;
-    let custNeedObj = {
-      NeedType: '',
-      PropertyType: '',
-      Area: '',
-      Room: '',
-      MinGSquare: 0,
-      MaxGSquare: 0,
-      MinZSquare: 0,
-      MaxZSquare: 0,
-      MinXSquare: 0,
-      MaxXSquare: 0,
-      MinGPrice: 0,
-      MaxGPrice: 0,
-      MinZPrice: 0,
-      MaxZPrice: 0,
-      MinXPrice: 0,
-      MaxXPrice: 0,
-    };
+    let custNeedObj = {};
 
     needData.forEach(item => {
       for (let key of Object.keys(item)) {
         // 只针对部分字段做拼接
         if (key === 'NeedType' || key === 'PropertyType' || key === 'Area' || key === 'Room') {
-          if (custNeedObj[key]) {
-            custNeedObj[key] = custNeedObj[key] + '|' + item[key]
-          } else {
-            custNeedObj[key] = '|' + item[key]
-          }
+          custNeedObj[key] ? (custNeedObj[key] = custNeedObj[key] + '|' + item[key]) : custNeedObj[key] = item[key];
         }
       }
       // 面积和价位有对应的字段，根据类型对应

@@ -1,5 +1,5 @@
 
-<search height="100rpx" bindquery="bindQuery" placeholder="请输入手机号搜索"></search>
+<search height="100rpx" bindquery="bindQuery" hidden="{{CustTel}}" placeholder="请输入手机号搜索"></search>
 <!-- 切换 -->
 <view class="tab">
   <text class="tab__item {{tabCut === 0 ? 'active' : ''}}" data-index="0" bindtap="bindTabCut">接待详细</text>
@@ -10,12 +10,12 @@
 <!-- 报备项目 -->
 <view class="tab-page" hidden="{{tabCut !== 0}}">
   <!-- 项目列表 -->
-  <view class="reception-wrap">
-    <scroll-view scroll-y style="height: 100%;" bindscrolltolower="receptionListLower">
-      <view class="reception-list">
-        <view class="reception__item" wx:for="{{[1, 2]}}" wx:key="{{index}}">
-          <!-- 接待 -->
-        </view>
+  <view class="list-wrap" style="top: {{CustTel ? '88rpx' : '188rpx'}}">
+    <scroll-view scroll-y style="height: 100%;">
+      <view class="list__item" wx:for="{{receptionData}}" wx:key="{{index}}">
+        <text class="list__name">{{item.EmpName}}</text>
+        <text class="list__type">{{item.ReceptionType}}</text>
+        <text class="list__date">{{item.RegDate}}</text>
       </view>
       <empty wx:if="{{isLoading1 && !receptionData.length}}"></empty>
     </scroll-view>
@@ -25,12 +25,12 @@
 <!-- 报备列表 -->
 <view class="tab-page" hidden="{{tabCut !== 1}}">
   <!-- 列表 -->
-  <view class="inquiry-wrap">
-    <scroll-view scroll-y style="height: 100%;" bindscrolltolower="inquiryListLower">
-      <view class="inquiry-list">
-        <view class="inquiry__item" wx:for="{{[1, 2, 3]}}" wx:key="{{index}}">
-          报备
-        </view>
+  <view class="list-wrap" style="top: {{CustTel ? '88rpx' : '188rpx'}}">
+    <scroll-view scroll-y style="height: 100%;">
+      <view class="list__item" wx:for="{{inquiryData}}" wx:key="{{index}}">
+        <text class="list__name">{{item.EmpName}}</text>
+        <text class="list__type">{{item.DeptName}}</text>
+        <text class="list__date">{{item.DeclareDate}}</text>
       </view>
       <empty wx:if="{{isLoading2 && !inquiryData.length}}"></empty>
     </scroll-view>

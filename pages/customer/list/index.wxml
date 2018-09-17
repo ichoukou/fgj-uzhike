@@ -12,7 +12,7 @@
   <!-- 筛选 -->
   <view class="screen">
     <view class="screen__list" data-index="0" bindtap="bindScreenClick">
-      <text class="screen__text">{{params.typeData ? params.typeData : '求购'}}</text>
+      <text class="screen__text">{{params.NeedType ? params.NeedType : '求购'}}</text>
       <text class="iconfont icon-fanhui icon-arrow"></text>
     </view>
     <view class="screen__list" data-index="1" bindtap="bindScreenClick">
@@ -32,12 +32,11 @@
   <wux-animation-group wux-class="screen-detail" in="{{screenOpen}}" class-names="wux-animate--slideInDown">
     <scroll-view scroll-y style="height: 100%;">
       <view class="screen-detail__item" hidden="{{screenIndex !== 0}}">
-        <radio-group class="radio-group" bindchange="bindRadioChange" data-type="typeData">
-          <label class="radio screen-detail__list" wx:for="{{typeData}}" wx:key="{{index}}">
+        <radio-group class="radio-group" bindchange="bindRadioChange" data-type="NeedType">
+          <label class="radio screen-detail__list" wx:for="{{NeedType}}" wx:key="{{index}}">
             <radio color="#ff6714" value="{{item.value}}" checked="{{item.checked}}"/>{{item.label}}
           </label>
         </radio-group>
-        <!-- <loading hidden="{{typeData.length}}" /> -->
       </view>
       <view class="screen-detail__item" hidden="{{screenIndex !== 1}}">
         <radio-group class="radio-group" bindchange="bindRadioChange" data-type="FlagStatus">
@@ -59,7 +58,7 @@
   <!-- 客户列表 -->
   <scroll-view scroll-y class="list" bindscrolltolower="bindscrolltolower">
     <view class="list-wrap">
-      <view class="list-item {{item.isOpenFollow ? 'open-follow' : ''}}" wx:for="{{listData}}" wx:key="{{index}}">
+      <view class="list-item {{item.isOpenFollow ? 'open' : ''}}" wx:for="{{listData}}" wx:key="{{index}}">
         <view class="list-baseinfo" data-CustID="{{item.CustID}}" bindtap="bindOpenDetail">
           <view class="tag tag-c">C</view>
           <!-- 基本内容 -->
@@ -103,17 +102,17 @@
                 </view>
                 <view class="item-title">跟进</view>
               </view>
-              <view class="row-item center item-extend">
+              <view class="row-item center item-extend" data-tel="{{item.Tel}}" catchtap="bindPhoneCall">
                 <view class="icon">
                   <text class="iconfont icon-bohao"></text>
                 </view>
                 <view class="item-title">拨号</view>
               </view>
-              <view class="row-item center item-extend">
+              <view class="row-item center item-extend" data-tel="{{item.Tel}}" catchtap="bindOpenSingleTool">
                 <view class="icon">
                   <text class="iconfont icon-daikan"></text>
                 </view>
-                <view class="item-title">带看</view>
+                <view class="item-title">明细</view>
               </view>
               <view class="row-item center item-extend">
                 <view class="icon">
@@ -139,13 +138,47 @@
           <text class="follow_close iconfont icon-guanbi" data-index="{{index}}" catchtap="bindCloseFollow"></text>
           <!-- 展示三条跟进内容 -->
           <view class="follow_content">
-            <view class="follow_list">
-              <view class="follow_time">{{followOneData.FollowDate}}</view>
+              <view class="follow_time">{{item.followOneData.FollowDate}}</view>
               <!-- 文字跟进 -->
-              <view class="follow_text" wx:if="{{followOneData.FollowContent}}">
-                {{followOneData.FollowContent}}
+              <view class="follow_text" wx:if="{{item.followOneData.FollowContent}}">{{item.followOneData.FollowContent}}</view>
+              <!-- 图片跟进 -->
+              <view class="follow_pic" wx:if="{{item.followOneData.imageData.length}}">
+                <image 
+                  wx:for="{{item.followOneData.imageData}}" 
+                  wx:key="{{index}}"
+                  wx:for-item="img"
+                  class="follow_pic-img" 
+                  mode="widthFix" 
+                  src="{{img}}" 
+                  data-current="{{img}}"
+                  data-item="{{item}}"
+                  bindtap="bindPreviewImage"
+                ></image>
               </view>
-            </view>
+              <!-- 语音跟进 -->
+              <view 
+                class="voice"
+                style="width: {{audio.time < 15 ? '25%' : audio.time / 30 * 80 + '%'}}"
+                wx:if="{{item.followOneData.audioData.length}}"
+                wx:for="{{item.followOneData.audioData}}" 
+                wx:for-item="audio"
+                wx:for-index="audioIndex"
+                wx:key="{{audioIndex}}"
+                data-audio="{{audio}}"
+                data-index="{{index}}"
+                data-audio-index="{{audioIndex}}"
+                bindtap="bindPlayAudio"
+              >
+                <text class="voice_yuyin iconfont icon-yuyin"></text>
+                <view class="voice_play {{isPlayAudio === (index + '' + audioIndex) ? 'voice_line--play' : ''}}">
+                  <text class="voice_line"></text>
+                  <text class="voice_line"></text>
+                  <text class="voice_line"></text>
+                </view>
+                <text class="voice_text">{{audio.time}}s</text>
+              </view>
+              <loading type="static" wx:if="{{!item.followLoading && !item.followOneData.FollowContent && !item.followOneData.imageData.length && !item.followOneData.audioData.length}}"></loading>
+            <view wx:if="{{item.followLoading && !item.followOneData.FollowContent && !item.followOneData.imageData.length && !item.followOneData.audioData.length}}" class="follow_desc">暂时没有跟进内容</view>
           </view>
           <!-- 更多跟进按钮 -->
           <view class="follow_more-btn">

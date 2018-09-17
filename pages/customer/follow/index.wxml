@@ -52,12 +52,22 @@
   <view class="position" hidden="{{!Position}}">
     <text class="position__icon iconfont icon-dingwei"></text>
     <text class="position__text">{{Position}}</text>
+    <text class="AlertDate__clear iconfont icon-guanbi" bindtap="bindClearPosition"></text>
   </view>
   <!-- 提醒时间 -->
-  <view class="position" hidden="{{!AlertDate}}">
+  <view class="position" hidden="{{!remindWeek}}">
     <text class="position__title">提醒时间：</text>
     <text class="position__icon iconfont icon-naozhong"></text>
-    <text class="position__text">{{AlertDate}}</text>
+    <text class="position__text">{{remindWeek}}</text>
+    <view class="position__date">
+      <picker 
+        mode="time" 
+        value="{{remindTime}}"
+        bindchange="bindDateChange"
+      >
+        <view class="position__date-desc {{remindTime ? '': 'date'}}">{{remindTime ? remindTime : '请选择时间'}}</view>
+      </picker>
+    </view>
     <text class="AlertDate__clear iconfont icon-guanbi" bindtap="bindClearDate"></text>
   </view>
 </view>
@@ -72,10 +82,9 @@
     <view class="footer__icon iconfont icon-naozhong">
       <picker 
           mode="date" 
-          value="{{AlertDate}}" 
+          value="{{remindWeek}}" 
           start="{{nowDate}}" 
-          end="{{nowDate}}" 
-          bindchange="bindDateChange"
+          bindchange="bindWeekChange"
         >
           <view class="date__picker"></view>
         </picker>

@@ -29,7 +29,7 @@
       <!-- 语音跟进 -->
       <view 
         class="voice"
-        style="width: 150px"
+        style="width: {{audio.time < 15 ? '25%' : audio.time / 30 * 80 + '%'}}"
         wx:if="{{item.audioData.length}}"
         wx:for="{{item.audioData}}" 
         wx:for-item="audio"

@@ -34,11 +34,13 @@ Page({
     IsShowShade: false,       // 是否显示遮罩
     currentRecordPlay: -1,    // 当前需要播放的单条语音
     nowDate: new Date(),      // 当前日期
-    AlertDate: '',            // 提醒时间
+    remindWeek: '',            // 提醒日期
+    remindTime: '',            // 提醒时间
+    AlertDate: '',            // 最终拼接起来的提醒时间
   },
   onLoad: function (options) {
     console.log(options)
-    this.data.CustID = options.CustID || 'EE9C2BD01133EFA6FB38C7BF33BC8BFB';
+    this.data.CustID = options.CustID || '63FB7BC5C133EFA91039A6FFC7ACF4A5';
   },
   onReady: function () {
     this.recorderManager = wx.getRecorderManager();
@@ -54,12 +56,17 @@ Page({
     let data = this.data;
     let params = {};
 
+    if (!data.remindTime) {
+      $Message({ content: '请选择具体时间', type: 'error' });
+      return false;
+    }
+
     params.CustFollowID = data.CustFollowID;
     params.FollowType = data.typeData[data.typeIndex];
     params.CustID = data.CustID;
     params.FollowContent = data.FollowContent;
     params.Position = data.Position;
-    params.AlertDate = data.AlertDate;
+    params.AlertDate = data.remindWeek + ' ' + data.remindTime;
 
     // 上传主体内容，必须有一样
     if (params.FollowContent || data.imageData.length || data.recordData.length) {
@@ -67,7 +74,6 @@ Page({
     } else {
       $Message({ content: '请上传跟进内容', type: 'error' });
     }
-    
   },
   // 添加客户跟进文件，time是语音秒数
   InserCustomerFollowFile(FileType, FileUrl, time = '') {
@@ -133,6 +139,9 @@ Page({
       FollowContent: '',
       recordData: [],
       imageData: [],
+      Position: '',
+      remindWeek: '',
+      remindTime: '',
     });
   },
   // 切换类型
@@ -476,19 +485,34 @@ Page({
       }
     });
   },
+  // 清除地理位置
+  bindClearPosition() {
+    this.setData({
+      Position: ''
+    })
+  },
 
+  // 设置提醒日期
+  bindWeekChange(e) {
+    let value = e.detail.value;
+
+    this.setData({
+      remindWeek: value
+    });
+  },
   // 设置提醒时间
   bindDateChange(e) {
     let value = e.detail.value;
 
     this.setData({
-      AlertDate: value
+      remindTime: value
     });
   },
   // 删除提醒时间
   bindClearDate() {
     this.setData({
-      AlertDate: ''
+      remindWeek: '',
+      remindTime: ''
     })
   },
 
