@@ -44,7 +44,8 @@ Component({
       });
       
       this.triggerEvent('change', {
-        value: ArrValue
+        value: ArrValue,
+        items
       });
     },
     // 数据回填

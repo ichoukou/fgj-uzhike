@@ -34,7 +34,6 @@
   <view class="content">
     <view class="item-flex need-title">
       <view class="title">个人需求</view>
-      <view class="iconfont icon-tianjia icon__add-need" bindtap="bindOpenAddneed"></view>
     </view>
     <view class="item">
       <view class="des">类型</view>

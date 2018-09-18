@@ -1,0 +1,18 @@
+<search height="100rpx"></search>
+<view class="message-wrap">
+  <view class="message__item" wx:for="{{[1, 2, 3]}}" wx:key="{{index}}">
+    <view class="message__left">
+      <image class="message__img" mode="aspectFill" src="../../../images/emp-img.jpg"></image>
+    </view>
+    <view class="message__right">
+      <view class="message__top">
+        <text class="message__title">报备提醒</text>
+        <text class="message__time">2018/9/18 20:00</text>
+       </view>
+      <view class="message__content">
+        <text class="message__desc">您有一条报备即将到期，请注意查看</text>
+        <text class="message__number">3</text>
+      </view>
+    </view>
+  </view>
+</view>

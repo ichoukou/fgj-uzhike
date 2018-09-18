@@ -14,7 +14,7 @@
         placeholder-class="phcolor" 
         placeholder="请填写" 
         value="{{paramsCustomer.CustName}}" 
-        data-type="CustName" 
+        data-types="CustName" 
         bindblur="changeCustomerInput"
        />
     </view>
@@ -28,7 +28,7 @@
         placeholder-class="phcolor" 
         placeholder="请填写" 
         value="{{paramsCustomer.Tel}}" 
-        data-type="Tel" 
+        data-types="Tel" 
         bindblur="changeCustomerInput"
        />
     </view>
@@ -41,7 +41,7 @@
         value="{{pickerGradeIndex}}" 
         range="{{pickerGrade}}" 
         range-key="label"
-        data-type="Grade" 
+        data-types="Grade" 
       >
         <view class="picker">
           {{pickerGrade[pickerGradeIndex].label}}
@@ -57,21 +57,145 @@
         placeholder-class="phcolor" 
         placeholder="请填写" 
         value="{{paramsCustomer.Remark}}" 
-        data-type="Remark" 
+        data-types="Remark" 
         bindblur="changeCustomerInput"
         />
     </view>
   </view>
   <!-- 需求信息 -->
   <view class="title">需求信息</view>
-  <view class="input-item add" bindtap="bindOpenNeed">
+  <view class="input-item add" bindtap="bindAddNeed">
     <view class="input-title">添加需求
     <text class="star">*</text></view>
-    
     <text class="iconfont icon-tianjia"></text>
   </view>
   <!-- 已添加的需求 -->
-  <view class="need-wrap">
+  <view class="need" wx:for="{{paramsCustNeed}}" wx:key="{{index}}">
+    <view class="need__title">
+      <text class="need__number">需求 {{index + 1}}</text>
+      <text class="iconfont icon-jianhao need__icon-close" data-index="{{index}}" bindtap="bindClearNeed"></text>
+    </view>
+    <view class="list">
+      <text class="list__title title--required">需求类型</text>
+      <view class="list__text">
+        <picker 
+          bindchange="bindPickerCustNeedChange" 
+          range="{{pickerNeedData[index].pickerNeedType}}" 
+          value="{{pickerNeedData[index].pickerNeedTypeIndex}}" 
+          range-key="label"
+          data-index="{{index}}"
+          data-types="NeedType" 
+        >
+          <view class="list__picker {{pickerNeedData[index].pickerNeedTypeIndex === 0 ? '' : 'list__picker--text'}}">
+            {{pickerNeedData[index].pickerNeedType[pickerNeedData[index].pickerNeedTypeIndex].label}}
+          </view>
+        </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list">
+      <text class="list__title title--required">区域</text>
+      <view class="list__text">
+        <picker bindchange="bindAreaChange" data-index="{{index}}" mode="region" value="{{pickerNeedData[index].Area}}" custom-item="{{customItem}}">
+          <view class="list__picker list__picker--text">
+            {{pickerNeedData[index].Area[2]}}
+          </view>
+        </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list list__checkbox">
+      <text class="list__title title--required">产权性质</text>
+      <lc-checkbox items="{{pickerNeedData[index].propertyType}}" value="{{item.PropertyType}}" data-index="{{index}}" bindchange="changeCheckbox"></lc-checkbox>
+    </view>
+    <view class="list">
+      <text class="list__title title--required">户型</text>
+      <view class="list__text">
+        <picker 
+          bindchange="bindPickerCustNeedChange" 
+          range="{{pickerNeedData[index].pickerRoom}}" 
+          value="{{pickerNeedData[index].pickerRoomIndex}}" 
+          range-key="label"
+          data-index="{{index}}"
+          data-types="Room" 
+        >
+          <view class="list__picker {{pickerNeedData[index].pickerRoomIndex === 0 ? '' : 'list__picker--text'}}">
+            {{pickerNeedData[index].pickerRoom[pickerNeedData[index].pickerRoomIndex].label}}
+          </view>
+        </picker>
+      </view>
+      <text class="iconfont icon-jiantou2 list__arrow"></text>
+    </view>
+    <view class="list special">
+      <text class="list__title title--required">面积</text>
+      <view class="list__text">
+        <input 
+          type="number" 
+          class="special__input" 
+          placeholder-class="phcolor" 
+          placeholder="最小面积" 
+          value="{{item.MinSquare}}" 
+          data-types="MinSquare" 
+          data-index="{{index}}"
+          bindblur="changeCustNeedInput"
+        />
+        <text class="special__line"></text>
+        <input 
+          type="number" 
+          class="special__input" 
+          placeholder-class="phcolor" 
+          placeholder="最大面积" 
+          value="{{item.MaxSquare}}" 
+          data-types="MaxSquare" 
+          data-index="{{index}}"
+          bindblur="changeCustNeedInput"
+        />
+        <text class="special__unit">㎡</text>
+      </view>
+    </view>
+    <view class="list special">
+      <text class="list__title title--required">价位</text>
+      <view class="list__text">
+        <input 
+          type="number" 
+          class="special__input" 
+          placeholder-class="phcolor" 
+          placeholder="最低价位" 
+          value="{{item.MinPrice}}" 
+          data-types="MinPrice" 
+          data-index="{{index}}"
+          bindblur="changeCustNeedInput"
+        />
+        <text class="special__line"></text>
+        <input 
+          type="number" 
+          class="special__input" 
+          placeholder-class="phcolor" 
+          placeholder="最高价位" 
+          value="{{item.MaxPrice}}" 
+          data-types="MaxPrice" 
+          data-index="{{index}}"
+          bindblur="changeCustNeedInput"
+        />
+        <text class="special__unit">{{pickerNeedData[index].unit}}</text>
+      </view>
+    </view>
+    <view class="list list--remark">
+      <text class="list__title">备注</text>
+      <view class="list__remark">
+        <textarea 
+          auto-height 
+          placeholder="请填写备注" 
+          class="list__textarea" 
+          value="{{item.Remark}}"
+          data-types="Remark" 
+          data-index="{{index}}"
+          bindblur="changeCustNeedInput"
+        ></textarea>
+      </view>
+    </view>
+  </view>
+  <!-- <view class="need-wrap">
     <view 
       class="need__list" 
       wx:for="{{paramsCustNeed}}" 
@@ -98,9 +222,9 @@
         <text class="iconfont icon-jianhao need__icon-close"></text>
       </view>
     </view>
-  </view>
+  </view> -->
 
-  <view class="input-item add" bindtap="bindOpenLink">
+  <view class="input-item add add-link" bindtap="bindOpenLink">
     <view class="input-title">添加关联人 
     </view>
     <text class="iconfont icon-tianjia"></text>
@@ -130,7 +254,7 @@
         placeholder-class="phcolor" 
         placeholder="请填写" 
         value="{{paramsCustomer.Age}}" 
-        data-type="Age" 
+        data-types="Age" 
         bindblur="changeCustomerInput"
        />
     </view>
@@ -141,7 +265,7 @@
         value="{{pickerMarriageIndex}}" 
         range="{{pickerMarriage}}" 
         range-key="label"
-        data-type="Marriage" 
+        data-types="Marriage" 
       >
         <view class="picker">
           {{pickerMarriage[pickerMarriageIndex].label}}
@@ -156,7 +280,7 @@
         range="{{pickerChildren}}" 
         value="{{pickerChildrenIndex}}" 
         range-key="label"
-        data-type="Children" 
+        data-types="Children" 
       >
         <view class="picker">
           {{pickerChildren[pickerChildrenIndex].label}}
@@ -171,7 +295,7 @@
         range="{{pickerIncome}}" 
         value="{{pickerIncomeIndex}}" 
         range-key="label"
-        data-type="Income" 
+        data-types="Income" 
       >
         <view class="picker">
           {{pickerIncome[pickerIncomeIndex].label}}
@@ -186,7 +310,7 @@
         range="{{pickerOccupation}}" 
         value="{{pickerOccupationIndex}}" 
         range-key="label"
-        data-type="Occupation" 
+        data-types="Occupation" 
       >
         <view class="picker">
           {{pickerOccupation[pickerOccupationIndex].label}}
@@ -201,7 +325,7 @@
         range="{{pickerRest}}" 
         value="{{pickerRestIndex}}" 
         range-key="label"
-        data-type="Rest" 
+        data-types="Rest" 
       >
         <view class="picker">
           {{pickerRest[pickerRestIndex].label}}
@@ -216,7 +340,7 @@
         range="{{pickerAssets}}" 
         value="{{pickerAssetsIndex}}" 
         range-key="label"
-        data-type="Assets" 
+        data-types="Assets" 
       >
         <view class="picker">
           {{pickerAssets[pickerAssetsIndex].label}}
@@ -231,7 +355,7 @@
         range="{{pickerInvestment}}" 
         value="{{pickerInvestmentIndex}}" 
         range-key="label"
-        data-type="Investment" 
+        data-types="Investment" 
       >
         <view class="picker">
           {{pickerInvestment[pickerInvestmentIndex].label}}
@@ -246,7 +370,7 @@
         range="{{pickerDecision}}" 
         value="{{pickerDecisionIndex}}" 
         range-key="label"
-        data-type="Decision" 
+        data-types="Decision" 
       >
         <view class="picker">
           {{pickerDecision[pickerDecisionIndex].label}}
@@ -262,7 +386,7 @@
         placeholder-class="phcolor" 
         placeholder="请填写" 
         value="{{paramsCustomer.CompanyName}}" 
-        data-type="CompanyName" 
+        data-types="CompanyName" 
         bindblur="changeCustomerInput"
        />
     </view>
@@ -273,7 +397,7 @@
         range="{{pickerLookHouse}}" 
         value="{{pickerLookHouseIndex}}" 
         range-key="label"
-        data-type="LookHouse" 
+        data-types="LookHouse" 
       >
         <view class="picker">
           {{pickerLookHouse[pickerLookHouseIndex].label}}
@@ -294,7 +418,7 @@
         placeholder-class="phcolor" 
         placeholder="请填写" 
         value="{{paramsCustomer.Address}}" 
-        data-type="Address" 
+        data-types="Address" 
         bindblur="changeCustomerInput"
        />
     </view>
@@ -306,7 +430,7 @@
         placeholder-class="phcolor" 
         placeholder="请填写" 
         value="{{paramsCustomer.Email}}" 
-        data-type="Email" 
+        data-types="Email" 
         bindblur="changeCustomerInput"
        />
     </view>
@@ -317,7 +441,7 @@
         range="{{pickerSource}}" 
         value="{{pickerSourceIndex}}" 
         range-key="label"
-        data-type="Source" 
+        data-types="Source" 
       >
         <view class="picker">
           {{pickerSource[pickerSourceIndex].label}}

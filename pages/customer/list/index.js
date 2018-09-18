@@ -194,35 +194,17 @@ Page({
     let checkedData = this.data.checkedData;
 
     data.forEach(item => {
-      if (item.Area) {
-        item.Area = item.Area.split('|')[0];
-      }
-      if (item.Room) {
-        item.Room = item.Room.split('|')[0];
-      }
-      item.NeedType = item.NeedType.split('|')[0];
-      // 处理价位和面积
-      switch (item.NeedType) {
-        case '求购':
-          item.MinSquare = item.MinGSquare;
-          item.MaxSquare = item.MaxGSquare;
-          item.MinPrice = item.MinGPrice / 10000;
-          item.MaxPrice = item.MaxGPrice / 10000;
-          break;
-        case '求租':
-          item.MinSquare = item.MinZSquare;
-          item.MaxSquare = item.MaxZSquare;
-          item.MinPrice = item.MinZPrice;
-          item.MaxPrice = item.MaxZPrice;
-          break;
-        case '装修':
-          item.MinSquare = item.MinXSquare;
-          item.MaxSquare = item.MaxXSquare;
-          item.MinPrice = item.MinXPrice;
-          item.MaxPrice = item.MaxXPrice;
-          break;
-        default:
-          console.log('你敢走到这里来试试');
+      for (let key of Object.keys(item)) {
+        if (item.GNeedType === '1') {
+          item[key.replace(/^G/, '')] = item[key];      // 去掉首字母，已做显示
+          item.NeedType = '求购';
+        }
+        if (item.ZNeedType === '1') {
+          item[key.replace(/^Z/, '')] = item[key];      // 去掉首字母，已做显示
+        }
+        if (item.XNeedType === '1') {
+          item[key.replace(/^X/, '')] = item[key];      // 去掉首字母，已做显示
+        }
       }
 
       // 批量操作是否选中

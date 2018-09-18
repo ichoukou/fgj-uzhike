@@ -47,7 +47,15 @@ Page({
       if (res.statusCode === 200) {
         let openID = res.data.openid
         app.globalData.openID = openID
-        this.weChatLoginVerification(openID)
+
+        wx.setStorageSync('token', res.data.Token);
+
+        $Message({ content: '登陆成功', type: 'success' });
+
+        setTimeout(() => {
+          wx.navigateBack();
+        }, 1200);
+        // this.weChatLoginVerification(openID)
       } else {
         $Message({ content: '获取code失败', type: 'error' });
         wx.hideLoading();

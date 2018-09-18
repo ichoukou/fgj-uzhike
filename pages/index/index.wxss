@@ -2,12 +2,12 @@
 page {
   background-color: #fa7730;
 }
-.container {
+/* .container {
   position: absolute;
   width: 100%;
   top: 0;
-  bottom: 96rpx;
-}
+  bottom: 0;
+} */
 .top {
   position: absolute;
   top: -128rpx;
@@ -75,34 +75,4 @@ image {
   width: 100%;
   min-height: 100%;
   background: #fff;
-}
-
-.footer {
-  position: fixed;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  height: 96rpx;
-  bottom: 0;
-  background: #fff;
-}
-.footer-item {
-  flex: 1;
-  text-align: center; 
-  color: #bababa;
-}
-.ba {
-  width: 40rpx;
-  height: 40rpx;
-}
-.footer-title {
-  font-size: 18rpx;
-}
-.cur {
-  background:  linear-gradient(90deg, #FFBD67 0%, #FA7730 100%);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-.navigator-hover {
-  background-color: transparent;
 }

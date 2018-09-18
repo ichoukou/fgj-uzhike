@@ -73,7 +73,10 @@
             <view class="row">
               <view class="row-item">
                 <view class="title">报价</view>
-                <view class="val">{{item.MinPrice}}-{{item.MaxPrice}}{{item.NeedType === '求购' ? '万元' : '元'}}</view>
+                <view class="val">
+                {{item.NeedType === '求购' ? item.MinPrice / 10000 : item.MinPrice}}-
+                {{item.NeedType === '求购' ? item.MaxPrice / 10000 : item.MaxPrice}}
+                {{item.NeedType === '求购' ? '万元' : '元'}}</view>
               </view>
               <view class="row-item">
                 <view class="title">面积</view>

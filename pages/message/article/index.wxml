@@ -1,0 +1,29 @@
+<view class="article">
+  <text class="article__title">如何成功的找到一个优质的客户一定要巴拉巴拉巴巴拉巴拉巴巴拉</text>
+  <view class="article__affil">
+    <text class="article__class">知识小课堂</text>
+    <text class="article__date">2018/9/18 20:26</text>
+  </view>
+  <view class="article__content">
+    <view class="article__text">"和在网络上发布信息这几种。在你实在无聊的时候推荐试试。相对来说就没那么实在。</view>
+    <view class="article__text">"相对来说,经常会有人问你,因为这两种都是主动找我们,接触几次就能知道对方的需求急不急,打听一下行情之类的,这种客人也很实在。其次就是在网络上发布信息他打电话到你手机上去咨询的首先,以及上街派发宣传单张,就是你没事就佩带好工牌到小区里面和附近去逛。而我们打电话和派传单的呢。</view>
+    <view class="article__text">地产经纪找客人的方法无非几种。打小区业主电话。任何一个客人在没有跟你成交之前。你只要首先把量给做上去了。</view>
+  </view>
+</view>
+<view class="footer">
+  <text class="footer__read">阅读12</text>
+  <view class="footer__operation">
+    <view class="footer__btn">
+      <text class="footer__icon">赞</text>
+      <text class="footer__text">点赞</text>
+    </view>
+    <view class="footer__btn">
+    <text class="footer__icon iconfont icon-xiazai"></text>
+    <text class="footer__text">分享</text>
+    </view>
+    <view class="footer__btn">
+    <text class="footer__icon iconfont icon-xiazai"></text>
+    <text class="footer__text">收藏</text>
+    </view>
+  </view>
+</view>

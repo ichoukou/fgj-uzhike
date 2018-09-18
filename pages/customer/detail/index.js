@@ -156,14 +156,6 @@ Page({
       phoneNumber: this.data.custData.Tel
     })
   },
-  // 添加需求
-  bindOpenAddneed() {
-    let { CustID, custData } = this.data;
-
-    wx.navigateTo({
-      url: `../add-need/index?CustID=${CustID}&NeedType=${custData.NeedType}`
-    });
-  },
   // 添加关联人
   bindOpenAddLink() {
     wx.navigateTo({

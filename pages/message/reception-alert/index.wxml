@@ -1,0 +1,17 @@
+<view class="reception-alert">
+  <view class="alert__item" wx:for="{{[1, 2, 3]}}" wx:key="{{index}}">
+    <view class="alert__content">
+      <view class="alert__space">
+        <view class="alert__title">到访提醒</view>
+        <view class="alert__time">2018/9/10 20:00:00</view>
+        <view class="alert__text">你的客户</view>
+        <view class="alert__info">黎聪/13699531996/艾溪湖一号</view>
+        <view class="alert__text">已到访</view>
+      </view>
+      <view class="alert__more">查看详细》</view>
+    </view>
+    <view class="alert__date">
+      <text class="alert__data-text">9月18日 20:17</text>
+    </view>
+  </view>
+</view>

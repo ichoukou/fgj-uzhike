@@ -72,7 +72,6 @@ textarea {
   margin-left: 20rpx;
 }
 .add {
-  margin-top: 20rpx;
   padding: 0 24rpx;
 }
 .add .input-title {
@@ -105,7 +104,7 @@ textarea {
   margin-top: 20rpx;
 }
 /* 已添加的需求 */
-.need-wrap {
+/* .need-wrap {
   background-color: #fff;
 }
 .need__list {
@@ -131,9 +130,13 @@ textarea {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
+} */
 
 /* 关联人 */
+.add.add-link {
+  margin-top: 20rpx;
+  border-top: none;
+}
 .link-wrap {
   background-color: #fff;
 }
@@ -201,6 +204,113 @@ textarea {
   font-size: 40rpx;
   color: rgb(201,201,201);
 }
+
+/* 添加需求 */
+.need {
+  margin-top: 10rpx;
+}
+.need__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1rpx solid rgb(230,230,230);
+  height: 80rpx;
+  font-size: 24rpx;
+}
+.need .list {
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  width: 100%;
+  min-height: 130rpx;
+  background-color: #fff;
+}
+.need .list__checkbox {
+  display: block;
+  padding: 20rpx 30rpx;
+}
+.need .list + .list {
+  border-top: 1rpx solid rgb(230,230,230);
+}
+.need .list__title {
+  min-width: 320rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.need .intention .list__title,
+.need .special .list__title {
+  min-width: 220rpx;
+}
+.need .title--required {
+  position: relative;
+}
+.need .title--required::after {
+  content: "*";
+  padding-left: 8rpx;
+  font-size: 40rpx;
+  color: #ff6714;
+}
+.need .list__text {
+  flex: 1;
+  font-size: 30rpx;
+  color: #999;
+  line-height: 130rpx;
+  overflow: hidden;
+}
+.need .list__picker--text {
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.need .list__arrow {
+  font-size: 30rpx;
+  color: rgb(210,210,210);
+  transform: rotate(180deg);
+}
+.need .special .list__text {
+  display: flex;
+  align-items: center;
+}
+.need .special__input {
+  border-radius: 8rpx;
+  max-width: 173rpx;
+  min-height: 60rpx;
+  color: #333;
+  line-height: 60rpx;
+  text-align: center;
+  background-color: rgb(245,245,245);
+}
+.need .special__line {
+  display: inline-block;
+  margin: 0 18rpx;
+  border-radius: 3rpx;
+  width: 32rpx;
+  height: 3rpx;
+  background-color: #666;
+}
+.need .special__unit {
+  padding-left: 18rpx;
+  font-size: 30rpx;
+  color: #666;
+  white-space: nowrap;
+}
+.need .list--remark {
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+  height: auto;
+}
+.need .list--remark .list__title {
+  margin: 20rpx 0;
+}
+.need .list__textarea {
+  padding: 20rpx;
+}
+.need .list__remark {
+  width: 100%;
+}
+
 /* 完成按钮 */
 .footer {
   position: fixed;

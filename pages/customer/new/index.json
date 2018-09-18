@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "添加客户",
   "usingComponents": {
-    "i-message": "/components/message/index"
+    "i-message": "/components/message/index",
+    "lc-checkbox": "/components/lc-checkbox/index"
   }
 }

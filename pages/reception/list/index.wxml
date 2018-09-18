@@ -108,7 +108,7 @@
             </view>
             <view class="reception__line">
               <view class="reception__title">接待人：</view>
-              <view class="reception__time">{{item.LastReceptionPerson}}</view>
+              <view class="reception__time">{{item.EmpName}}</view>
             </view>
           </view>
           <view class="reception__row">

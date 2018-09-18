@@ -129,18 +129,3 @@
   <view class="split"></view>
   </view>
 </scroll-view>
-
-<view class="footer" catchtap="changeStyle">
-  <view class="footer-item {{ num == 1 ? 'cur' : '' }}" data-num="1">
-    <image class="ba" src="../../images/icon/{{ num == 1 ? 'ba-1.jpg' : 'ba-2.jpg' }}" data-num="1" />
-    <view class="footer-title" data-num="1">工作台</view>
-  </view>
-  <view class="footer-item {{ num == 2 ? 'cur' : '' }}" data-num="2" >
-    <image class="ba" src="../../images/icon/{{ num == 2 ? 'ba-2.1.jpg' : 'ba-1-18.jpg' }}" data-num="2" />
-    <view class="footer-title" data-num="2">事项</view>
-  </view>
-  <view class="footer-item {{ num == 3 ? 'cur' : '' }}" data-num="3">
-    <image class="ba" src="../../images/icon/{{ num == 3 ? 'ba-2.2.png' : 'ba-1.png' }}" data-num="2" />
-    <view class="footer-title" data-num="3">我的</view>
-  </view>
-</view>
